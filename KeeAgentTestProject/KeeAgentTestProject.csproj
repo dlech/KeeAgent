@@ -49,12 +49,22 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="KeeAgentExtInitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PuttyKeyListDialogTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\keepass2\KeePass\KeePass.csproj">
       <Project>{10938016-DEE2-4A25-9A5A-8FD3444379CA}</Project>
       <Name>KeePass</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\KeePassPluginTestUtil\KeePassPluginTestUtil\KeePassPluginTestUtil.csproj">
+      <Project>{7B11CC40-373F-4C20-99A5-DD70F3317D5C}</Project>
+      <Name>KeePassPluginTestUtil</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\libs\PageantSharp\PageantSharp\PageantSharp.csproj">
+      <Project>{9163B6B6-0603-4C6E-BC67-7111ED8CDDE1}</Project>
+      <Name>PageantSharp</Name>
     </ProjectReference>
     <ProjectReference Include="..\KeeAgent\KeeAgent.csproj">
       <Project>{742863F2-52ED-41E0-92A1-8EEA60EB75EF}</Project>

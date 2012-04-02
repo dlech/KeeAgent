@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("ssh authentication agent for KeePass2")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("David Lechner")]
-[assembly: AssemblyProduct("KeeAgent")]
+[assembly: AssemblyProduct("KeePass Plugin")]
 [assembly: AssemblyCopyright("2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

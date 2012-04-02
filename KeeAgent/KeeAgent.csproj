@@ -6,10 +6,10 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{742863F2-52ED-41E0-92A1-8EEA60EB75EF}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>dlech.KeeAgent</RootNamespace>
-    <AssemblyName>dlech.KeeAgent</AssemblyName>
+    <RootNamespace>KeeAgent</RootNamespace>
+    <AssemblyName>KeeAgent</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -34,11 +34,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>dlech.KeeAgent.FakePutty</StartupObject>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="FakePutty.cs" />
-    <Compile Include="KeeAgentEx.cs" />
+    <Compile Include="Translatable.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Translatable.resx</DependentUpon>
+    </Compile>
+    <Compile Include="UI\PuttyKeyListDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\PuttyKeyListDialog.Designer.cs">
+      <DependentUpon>PuttyKeyListDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KeeAgentExt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -57,6 +68,15 @@
       <Project>{9163B6B6-0603-4C6E-BC67-7111ED8CDDE1}</Project>
       <Name>PageantSharp</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Translatable.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Translatable.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\PuttyKeyListDialog.resx">
+      <DependentUpon>PuttyKeyListDialog.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
