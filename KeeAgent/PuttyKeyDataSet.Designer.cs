@@ -279,9 +279,9 @@ namespace KeeAgent {
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class PuttyKeysDataTable : global::System.Data.TypedTableBase<PuttyKeysRow> {
             
-            private global::System.Data.DataColumn columnType;
+            private global::System.Data.DataColumn columnKeyType;
             
-            private global::System.Data.DataColumn columnEncryption;
+            private global::System.Data.DataColumn columnEncryptionType;
             
             private global::System.Data.DataColumn columnComment;
             
@@ -290,6 +290,10 @@ namespace KeeAgent {
             private global::System.Data.DataColumn columnPrivateKey;
             
             private global::System.Data.DataColumn columnPrivateMAC;
+            
+            private global::System.Data.DataColumn columnDbPath;
+            
+            private global::System.Data.DataColumn columnFileName;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -326,17 +330,17 @@ namespace KeeAgent {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn TypeColumn {
+            public global::System.Data.DataColumn KeyTypeColumn {
                 get {
-                    return this.columnType;
+                    return this.columnKeyType;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn EncryptionColumn {
+            public global::System.Data.DataColumn EncryptionTypeColumn {
                 get {
-                    return this.columnEncryption;
+                    return this.columnEncryptionType;
                 }
             }
             
@@ -369,6 +373,22 @@ namespace KeeAgent {
             public global::System.Data.DataColumn PrivateMACColumn {
                 get {
                     return this.columnPrivateMAC;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn DbPathColumn {
+                get {
+                    return this.columnDbPath;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn FileNameColumn {
+                get {
+                    return this.columnFileName;
                 }
             }
             
@@ -409,15 +429,17 @@ namespace KeeAgent {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PuttyKeysRow AddPuttyKeysRow(string Type, string Encryption, string Comment, string PublicKey, string PrivateKey, string PrivateMAC) {
+            public PuttyKeysRow AddPuttyKeysRow(string KeyType, string EncryptionType, string Comment, string PublicKey, string PrivateKey, string PrivateMAC, string DbPath, string FileName) {
                 PuttyKeysRow rowPuttyKeysRow = ((PuttyKeysRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        Type,
-                        Encryption,
+                        KeyType,
+                        EncryptionType,
                         Comment,
                         PublicKey,
                         PrivateKey,
-                        PrivateMAC};
+                        PrivateMAC,
+                        DbPath,
+                        FileName};
                 rowPuttyKeysRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowPuttyKeysRow);
                 return rowPuttyKeysRow;
@@ -440,21 +462,23 @@ namespace KeeAgent {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             internal void InitVars() {
-                this.columnType = base.Columns["Type"];
-                this.columnEncryption = base.Columns["Encryption"];
+                this.columnKeyType = base.Columns["KeyType"];
+                this.columnEncryptionType = base.Columns["EncryptionType"];
                 this.columnComment = base.Columns["Comment"];
                 this.columnPublicKey = base.Columns["PublicKey"];
                 this.columnPrivateKey = base.Columns["PrivateKey"];
                 this.columnPrivateMAC = base.Columns["PrivateMAC"];
+                this.columnDbPath = base.Columns["DbPath"];
+                this.columnFileName = base.Columns["FileName"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             private void InitClass() {
-                this.columnType = new global::System.Data.DataColumn("Type", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnType);
-                this.columnEncryption = new global::System.Data.DataColumn("Encryption", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnEncryption);
+                this.columnKeyType = new global::System.Data.DataColumn("KeyType", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnKeyType);
+                this.columnEncryptionType = new global::System.Data.DataColumn("EncryptionType", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnEncryptionType);
                 this.columnComment = new global::System.Data.DataColumn("Comment", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnComment);
                 this.columnPublicKey = new global::System.Data.DataColumn("PublicKey", typeof(string), null, global::System.Data.MappingType.Element);
@@ -463,6 +487,17 @@ namespace KeeAgent {
                 base.Columns.Add(this.columnPrivateKey);
                 this.columnPrivateMAC = new global::System.Data.DataColumn("PrivateMAC", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnPrivateMAC);
+                this.columnDbPath = new global::System.Data.DataColumn("DbPath", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDbPath);
+                this.columnFileName = new global::System.Data.DataColumn("FileName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFileName);
+                this.columnKeyType.Caption = "Key Type";
+                this.columnEncryptionType.Caption = "Encryption Type";
+                this.columnPublicKey.Caption = "Public Key";
+                this.columnPrivateKey.Caption = "Private Key";
+                this.columnPrivateMAC.Caption = "Private MAC";
+                this.columnDbPath.Caption = "Database Path";
+                this.columnFileName.Caption = "File Name";
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -605,33 +640,33 @@ namespace KeeAgent {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Type {
+            public string KeyType {
                 get {
                     try {
-                        return ((string)(this[this.tablePuttyKeys.TypeColumn]));
+                        return ((string)(this[this.tablePuttyKeys.KeyTypeColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Type\' in table \'PuttyKeys\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'KeyType\' in table \'PuttyKeys\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablePuttyKeys.TypeColumn] = value;
+                    this[this.tablePuttyKeys.KeyTypeColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Encryption {
+            public string EncryptionType {
                 get {
                     try {
-                        return ((string)(this[this.tablePuttyKeys.EncryptionColumn]));
+                        return ((string)(this[this.tablePuttyKeys.EncryptionTypeColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Encryption\' in table \'PuttyKeys\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'EncryptionType\' in table \'PuttyKeys\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablePuttyKeys.EncryptionColumn] = value;
+                    this[this.tablePuttyKeys.EncryptionTypeColumn] = value;
                 }
             }
             
@@ -701,26 +736,58 @@ namespace KeeAgent {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsTypeNull() {
-                return this.IsNull(this.tablePuttyKeys.TypeColumn);
+            public string DbPath {
+                get {
+                    try {
+                        return ((string)(this[this.tablePuttyKeys.DbPathColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'DbPath\' in table \'PuttyKeys\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePuttyKeys.DbPathColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetTypeNull() {
-                this[this.tablePuttyKeys.TypeColumn] = global::System.Convert.DBNull;
+            public string FileName {
+                get {
+                    try {
+                        return ((string)(this[this.tablePuttyKeys.FileNameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'FileName\' in table \'PuttyKeys\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePuttyKeys.FileNameColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsEncryptionNull() {
-                return this.IsNull(this.tablePuttyKeys.EncryptionColumn);
+            public bool IsKeyTypeNull() {
+                return this.IsNull(this.tablePuttyKeys.KeyTypeColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetEncryptionNull() {
-                this[this.tablePuttyKeys.EncryptionColumn] = global::System.Convert.DBNull;
+            public void SetKeyTypeNull() {
+                this[this.tablePuttyKeys.KeyTypeColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsEncryptionTypeNull() {
+                return this.IsNull(this.tablePuttyKeys.EncryptionTypeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetEncryptionTypeNull() {
+                this[this.tablePuttyKeys.EncryptionTypeColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -769,6 +836,30 @@ namespace KeeAgent {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetPrivateMACNull() {
                 this[this.tablePuttyKeys.PrivateMACColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsDbPathNull() {
+                return this.IsNull(this.tablePuttyKeys.DbPathColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetDbPathNull() {
+                this[this.tablePuttyKeys.DbPathColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsFileNameNull() {
+                return this.IsNull(this.tablePuttyKeys.FileNameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetFileNameNull() {
+                this[this.tablePuttyKeys.FileNameColumn] = global::System.Convert.DBNull;
             }
         }
         

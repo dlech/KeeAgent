@@ -153,23 +153,62 @@
   <data name="keyDataGridView.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
   </data>
-  <data name="typeDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
-    <value>Type</value>
+  <metadata name="DbPath.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="DbPath.HeaderText" xml:space="preserve">
+    <value>Path</value>
   </data>
-  <data name="encryptionDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
-    <value>Encryption</value>
+  <data name="DbPath.Width" type="System.Int32, mscorlib">
+    <value>54</value>
+  </data>
+  <metadata name="FileName.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="FileName.HeaderText" xml:space="preserve">
+    <value>File Name</value>
+  </data>
+  <data name="FileName.Width" type="System.Int32, mscorlib">
+    <value>79</value>
   </data>
   <data name="commentDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
     <value>Comment</value>
   </data>
-  <data name="publicKeyDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
-    <value>PublicKey</value>
+  <data name="commentDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
+    <value>76</value>
   </data>
-  <data name="privateKeyDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
-    <value>PrivateKey</value>
+  <metadata name="KeyType.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="KeyType.HeaderText" xml:space="preserve">
+    <value>Type</value>
   </data>
-  <data name="privateMACDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
-    <value>PrivateMAC</value>
+  <data name="KeyType.Width" type="System.Int32, mscorlib">
+    <value>56</value>
+  </data>
+  <metadata name="EncryptionType.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="EncryptionType.HeaderText" xml:space="preserve">
+    <value>Encryption</value>
+  </data>
+  <data name="EncryptionType.Width" type="System.Int32, mscorlib">
+    <value>82</value>
+  </data>
+  <metadata name="Size.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="Size.HeaderText" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="Size.Width" type="System.Int32, mscorlib">
+    <value>52</value>
+  </data>
+  <data name="PrivateMAC.HeaderText" xml:space="preserve">
+    <value>Fingerprint</value>
+  </data>
+  <data name="PrivateMAC.Width" type="System.Int32, mscorlib">
+    <value>81</value>
   </data>
   <metadata name="puttyKeyBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>159, 17</value>
@@ -198,6 +237,9 @@
   <data name="&gt;&gt;keyDataGridView.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <metadata name="puttyKeyDataSet.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -210,42 +252,6 @@
   <data name="$this.Text" xml:space="preserve">
     <value>SSH Key List</value>
   </data>
-  <data name="&gt;&gt;typeDataGridViewTextBoxColumn.Name" xml:space="preserve">
-    <value>typeDataGridViewTextBoxColumn</value>
-  </data>
-  <data name="&gt;&gt;typeDataGridViewTextBoxColumn.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;encryptionDataGridViewTextBoxColumn.Name" xml:space="preserve">
-    <value>encryptionDataGridViewTextBoxColumn</value>
-  </data>
-  <data name="&gt;&gt;encryptionDataGridViewTextBoxColumn.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;commentDataGridViewTextBoxColumn.Name" xml:space="preserve">
-    <value>commentDataGridViewTextBoxColumn</value>
-  </data>
-  <data name="&gt;&gt;commentDataGridViewTextBoxColumn.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;publicKeyDataGridViewTextBoxColumn.Name" xml:space="preserve">
-    <value>publicKeyDataGridViewTextBoxColumn</value>
-  </data>
-  <data name="&gt;&gt;publicKeyDataGridViewTextBoxColumn.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;privateKeyDataGridViewTextBoxColumn.Name" xml:space="preserve">
-    <value>privateKeyDataGridViewTextBoxColumn</value>
-  </data>
-  <data name="&gt;&gt;privateKeyDataGridViewTextBoxColumn.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;privateMACDataGridViewTextBoxColumn.Name" xml:space="preserve">
-    <value>privateMACDataGridViewTextBoxColumn</value>
-  </data>
-  <data name="&gt;&gt;privateMACDataGridViewTextBoxColumn.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;puttyKeyBindingSource.Name" xml:space="preserve">
     <value>puttyKeyBindingSource</value>
   </data>
@@ -257,6 +263,48 @@
   </data>
   <data name="&gt;&gt;puttyKeyDataSet.Type" xml:space="preserve">
     <value>KeeAgent.PuttyKeyDataSet, PuttyKeyDataSet.Designer.cs, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;DbPath.Name" xml:space="preserve">
+    <value>DbPath</value>
+  </data>
+  <data name="&gt;&gt;DbPath.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;FileName.Name" xml:space="preserve">
+    <value>FileName</value>
+  </data>
+  <data name="&gt;&gt;FileName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;commentDataGridViewTextBoxColumn.Name" xml:space="preserve">
+    <value>commentDataGridViewTextBoxColumn</value>
+  </data>
+  <data name="&gt;&gt;commentDataGridViewTextBoxColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;KeyType.Name" xml:space="preserve">
+    <value>KeyType</value>
+  </data>
+  <data name="&gt;&gt;KeyType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;EncryptionType.Name" xml:space="preserve">
+    <value>EncryptionType</value>
+  </data>
+  <data name="&gt;&gt;EncryptionType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Size.Name" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="&gt;&gt;Size.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PrivateMAC.Name" xml:space="preserve">
+    <value>PrivateMAC</value>
+  </data>
+  <data name="&gt;&gt;PrivateMAC.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>PuttyKeyListDialog</value>
