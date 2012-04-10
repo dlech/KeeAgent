@@ -281,15 +281,11 @@ namespace KeeAgent {
             
             private global::System.Data.DataColumn columnKeyType;
             
-            private global::System.Data.DataColumn columnEncryptionType;
+            private global::System.Data.DataColumn columnKeySize;
+            
+            private global::System.Data.DataColumn columnFingerprint;
             
             private global::System.Data.DataColumn columnComment;
-            
-            private global::System.Data.DataColumn columnPublicKey;
-            
-            private global::System.Data.DataColumn columnPrivateKey;
-            
-            private global::System.Data.DataColumn columnPrivateMAC;
             
             private global::System.Data.DataColumn columnDbPath;
             
@@ -338,9 +334,17 @@ namespace KeeAgent {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn EncryptionTypeColumn {
+            public global::System.Data.DataColumn KeySizeColumn {
                 get {
-                    return this.columnEncryptionType;
+                    return this.columnKeySize;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn FingerprintColumn {
+                get {
+                    return this.columnFingerprint;
                 }
             }
             
@@ -349,30 +353,6 @@ namespace KeeAgent {
             public global::System.Data.DataColumn CommentColumn {
                 get {
                     return this.columnComment;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn PublicKeyColumn {
-                get {
-                    return this.columnPublicKey;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn PrivateKeyColumn {
-                get {
-                    return this.columnPrivateKey;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn PrivateMACColumn {
-                get {
-                    return this.columnPrivateMAC;
                 }
             }
             
@@ -429,15 +409,13 @@ namespace KeeAgent {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PuttyKeysRow AddPuttyKeysRow(string KeyType, string EncryptionType, string Comment, string PublicKey, string PrivateKey, string PrivateMAC, string DbPath, string FileName) {
+            public PuttyKeysRow AddPuttyKeysRow(string KeyType, int KeySize, string Fingerprint, string Comment, string DbPath, string FileName) {
                 PuttyKeysRow rowPuttyKeysRow = ((PuttyKeysRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         KeyType,
-                        EncryptionType,
+                        KeySize,
+                        Fingerprint,
                         Comment,
-                        PublicKey,
-                        PrivateKey,
-                        PrivateMAC,
                         DbPath,
                         FileName};
                 rowPuttyKeysRow.ItemArray = columnValuesArray;
@@ -463,11 +441,9 @@ namespace KeeAgent {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             internal void InitVars() {
                 this.columnKeyType = base.Columns["KeyType"];
-                this.columnEncryptionType = base.Columns["EncryptionType"];
+                this.columnKeySize = base.Columns["KeySize"];
+                this.columnFingerprint = base.Columns["Fingerprint"];
                 this.columnComment = base.Columns["Comment"];
-                this.columnPublicKey = base.Columns["PublicKey"];
-                this.columnPrivateKey = base.Columns["PrivateKey"];
-                this.columnPrivateMAC = base.Columns["PrivateMAC"];
                 this.columnDbPath = base.Columns["DbPath"];
                 this.columnFileName = base.Columns["FileName"];
             }
@@ -477,25 +453,18 @@ namespace KeeAgent {
             private void InitClass() {
                 this.columnKeyType = new global::System.Data.DataColumn("KeyType", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnKeyType);
-                this.columnEncryptionType = new global::System.Data.DataColumn("EncryptionType", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnEncryptionType);
+                this.columnKeySize = new global::System.Data.DataColumn("KeySize", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnKeySize);
+                this.columnFingerprint = new global::System.Data.DataColumn("Fingerprint", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFingerprint);
                 this.columnComment = new global::System.Data.DataColumn("Comment", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnComment);
-                this.columnPublicKey = new global::System.Data.DataColumn("PublicKey", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnPublicKey);
-                this.columnPrivateKey = new global::System.Data.DataColumn("PrivateKey", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnPrivateKey);
-                this.columnPrivateMAC = new global::System.Data.DataColumn("PrivateMAC", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnPrivateMAC);
                 this.columnDbPath = new global::System.Data.DataColumn("DbPath", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnDbPath);
                 this.columnFileName = new global::System.Data.DataColumn("FileName", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnFileName);
                 this.columnKeyType.Caption = "Key Type";
-                this.columnEncryptionType.Caption = "Encryption Type";
-                this.columnPublicKey.Caption = "Public Key";
-                this.columnPrivateKey.Caption = "Private Key";
-                this.columnPrivateMAC.Caption = "Private MAC";
+                this.columnKeySize.Caption = "Size";
                 this.columnDbPath.Caption = "Database Path";
                 this.columnFileName.Caption = "File Name";
             }
@@ -656,17 +625,33 @@ namespace KeeAgent {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string EncryptionType {
+            public int KeySize {
                 get {
                     try {
-                        return ((string)(this[this.tablePuttyKeys.EncryptionTypeColumn]));
+                        return ((int)(this[this.tablePuttyKeys.KeySizeColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'EncryptionType\' in table \'PuttyKeys\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'KeySize\' in table \'PuttyKeys\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablePuttyKeys.EncryptionTypeColumn] = value;
+                    this[this.tablePuttyKeys.KeySizeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Fingerprint {
+                get {
+                    try {
+                        return ((string)(this[this.tablePuttyKeys.FingerprintColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Fingerprint\' in table \'PuttyKeys\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePuttyKeys.FingerprintColumn] = value;
                 }
             }
             
@@ -683,54 +668,6 @@ namespace KeeAgent {
                 }
                 set {
                     this[this.tablePuttyKeys.CommentColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string PublicKey {
-                get {
-                    try {
-                        return ((string)(this[this.tablePuttyKeys.PublicKeyColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'PublicKey\' in table \'PuttyKeys\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablePuttyKeys.PublicKeyColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string PrivateKey {
-                get {
-                    try {
-                        return ((string)(this[this.tablePuttyKeys.PrivateKeyColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'PrivateKey\' in table \'PuttyKeys\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablePuttyKeys.PrivateKeyColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string PrivateMAC {
-                get {
-                    try {
-                        return ((string)(this[this.tablePuttyKeys.PrivateMACColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'PrivateMAC\' in table \'PuttyKeys\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablePuttyKeys.PrivateMACColumn] = value;
                 }
             }
             
@@ -780,14 +717,26 @@ namespace KeeAgent {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsEncryptionTypeNull() {
-                return this.IsNull(this.tablePuttyKeys.EncryptionTypeColumn);
+            public bool IsKeySizeNull() {
+                return this.IsNull(this.tablePuttyKeys.KeySizeColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetEncryptionTypeNull() {
-                this[this.tablePuttyKeys.EncryptionTypeColumn] = global::System.Convert.DBNull;
+            public void SetKeySizeNull() {
+                this[this.tablePuttyKeys.KeySizeColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsFingerprintNull() {
+                return this.IsNull(this.tablePuttyKeys.FingerprintColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetFingerprintNull() {
+                this[this.tablePuttyKeys.FingerprintColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -800,42 +749,6 @@ namespace KeeAgent {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetCommentNull() {
                 this[this.tablePuttyKeys.CommentColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsPublicKeyNull() {
-                return this.IsNull(this.tablePuttyKeys.PublicKeyColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetPublicKeyNull() {
-                this[this.tablePuttyKeys.PublicKeyColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsPrivateKeyNull() {
-                return this.IsNull(this.tablePuttyKeys.PrivateKeyColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetPrivateKeyNull() {
-                this[this.tablePuttyKeys.PrivateKeyColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsPrivateMACNull() {
-                return this.IsNull(this.tablePuttyKeys.PrivateMACColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetPrivateMACNull() {
-                this[this.tablePuttyKeys.PrivateMACColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

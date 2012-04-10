@@ -6,19 +6,19 @@ using System.Windows.Forms;
 using System.Drawing;
 using KeePass.Plugins;
 using dlech.PageantSharp;
-using KeeAgent.UI;
+using KeeAgent.UI; 
 
 namespace KeeAgent
 {
 	public sealed class KeeAgentExt : Plugin
 	{
 		private IPluginHost pluginHost;
-		private PageantWindow pageant;
+		private WinPageant pageant;
 
 		public override bool Initialize(IPluginHost host)
 		{
 			try {
-				this.pageant = new PageantWindow();
+				this.pageant = new WinPageant(null, null);
 			} catch (Exception ex) {
 				// TODO show error message
 				return false;

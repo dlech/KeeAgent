@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>KeeAgent</RootNamespace>
     <AssemblyName>KeeAgent</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,6 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="KeeAgentUtil.cs" />
+    <Compile Include="PpkKeyMap.cs" />
     <Compile Include="PuttyKeyDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -86,6 +87,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\DataSources\PpkKeyMap.datasource" />
     <None Include="PuttyKeyDataSet.xsc">
       <DependentUpon>PuttyKeyDataSet.xsd</DependentUpon>
     </None>
@@ -98,6 +100,7 @@
       <DependentUpon>PuttyKeyDataSet.xsd</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

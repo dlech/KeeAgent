@@ -31,18 +31,24 @@
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PuttyKeyListDialog));
 			this.closeButton = new System.Windows.Forms.Button();
 			this.keyDataGridView = new System.Windows.Forms.DataGridView();
+			this.ppkKeyMapBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ppkKeyMapBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
 			this.puttyKeyBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.puttyKeyDataSet = new KeeAgent.PuttyKeyDataSet();
-			this.DbPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.FileName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.puttyKeysBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.keyTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.keySizeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.fingerprintDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.commentDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.KeyType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.EncryptionType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.Size = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.PrivateMAC = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dbPathDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.fileNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.keyDataGridView)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.ppkKeyMapBindingSource)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.ppkKeyMapBindingSource1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.puttyKeyBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.puttyKeyDataSet)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.puttyKeysBindingSource)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// closeButton
@@ -60,44 +66,70 @@
 			this.keyDataGridView.AutoGenerateColumns = false;
 			this.keyDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.keyDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.DbPath,
-            this.FileName,
+            this.keyTypeDataGridViewTextBoxColumn,
+            this.keySizeDataGridViewTextBoxColumn,
+            this.fingerprintDataGridViewTextBoxColumn,
             this.commentDataGridViewTextBoxColumn,
-            this.KeyType,
-            this.EncryptionType,
-            this.Size,
-            this.PrivateMAC});
-			this.keyDataGridView.DataSource = this.puttyKeyBindingSource;
+            this.dbPathDataGridViewTextBoxColumn,
+            this.fileNameDataGridViewTextBoxColumn});
+			this.keyDataGridView.DataSource = this.puttyKeysBindingSource;
 			this.keyDataGridView.Name = "keyDataGridView";
 			this.keyDataGridView.ReadOnly = true;
 			this.keyDataGridView.RowHeadersVisible = false;
-			this.keyDataGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.keyDataGridView_CellFormatting);
+			// 
+			// ppkKeyMapBindingSource
+			// 
+			this.ppkKeyMapBindingSource.DataSource = typeof(System.Collections.Generic.KeyValuePair<string, dlech.PageantSharp.PpkKey>);
+			// 
+			// dataGridViewTextBoxColumn1
+			// 
+			this.dataGridViewTextBoxColumn1.DataPropertyName = "Value";
+			resources.ApplyResources(this.dataGridViewTextBoxColumn1, "dataGridViewTextBoxColumn1");
+			this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+			this.dataGridViewTextBoxColumn1.ReadOnly = true;
+			// 
+			// ppkKeyMapBindingSource1
+			// 
+			this.ppkKeyMapBindingSource1.DataSource = typeof(System.Collections.Generic.KeyValuePair<string, KeePassLib.PwUuid>);
 			// 
 			// puttyKeyBindingSource
 			// 
-			this.puttyKeyBindingSource.DataMember = "PuttyKeys";
 			this.puttyKeyBindingSource.DataSource = this.puttyKeyDataSet;
+			this.puttyKeyBindingSource.Position = 0;
 			// 
 			// puttyKeyDataSet
 			// 
 			this.puttyKeyDataSet.DataSetName = "PuttyKeyDataSet";
 			this.puttyKeyDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
 			// 
-			// DbPath
+			// puttyKeysBindingSource
 			// 
-			this.DbPath.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.DbPath.DataPropertyName = "DbPath";
-			resources.ApplyResources(this.DbPath, "DbPath");
-			this.DbPath.Name = "DbPath";
-			this.DbPath.ReadOnly = true;
+			this.puttyKeysBindingSource.DataMember = "PuttyKeys";
+			this.puttyKeysBindingSource.DataSource = this.puttyKeyDataSet;
 			// 
-			// FileName
+			// keyTypeDataGridViewTextBoxColumn
 			// 
-			this.FileName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.FileName.DataPropertyName = "FileName";
-			resources.ApplyResources(this.FileName, "FileName");
-			this.FileName.Name = "FileName";
-			this.FileName.ReadOnly = true;
+			this.keyTypeDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.keyTypeDataGridViewTextBoxColumn.DataPropertyName = "KeyType";
+			resources.ApplyResources(this.keyTypeDataGridViewTextBoxColumn, "keyTypeDataGridViewTextBoxColumn");
+			this.keyTypeDataGridViewTextBoxColumn.Name = "keyTypeDataGridViewTextBoxColumn";
+			this.keyTypeDataGridViewTextBoxColumn.ReadOnly = true;
+			// 
+			// keySizeDataGridViewTextBoxColumn
+			// 
+			this.keySizeDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.keySizeDataGridViewTextBoxColumn.DataPropertyName = "KeySize";
+			resources.ApplyResources(this.keySizeDataGridViewTextBoxColumn, "keySizeDataGridViewTextBoxColumn");
+			this.keySizeDataGridViewTextBoxColumn.Name = "keySizeDataGridViewTextBoxColumn";
+			this.keySizeDataGridViewTextBoxColumn.ReadOnly = true;
+			// 
+			// fingerprintDataGridViewTextBoxColumn
+			// 
+			this.fingerprintDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.fingerprintDataGridViewTextBoxColumn.DataPropertyName = "Fingerprint";
+			resources.ApplyResources(this.fingerprintDataGridViewTextBoxColumn, "fingerprintDataGridViewTextBoxColumn");
+			this.fingerprintDataGridViewTextBoxColumn.Name = "fingerprintDataGridViewTextBoxColumn";
+			this.fingerprintDataGridViewTextBoxColumn.ReadOnly = true;
 			// 
 			// commentDataGridViewTextBoxColumn
 			// 
@@ -107,37 +139,21 @@
 			this.commentDataGridViewTextBoxColumn.Name = "commentDataGridViewTextBoxColumn";
 			this.commentDataGridViewTextBoxColumn.ReadOnly = true;
 			// 
-			// KeyType
+			// dbPathDataGridViewTextBoxColumn
 			// 
-			this.KeyType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.KeyType.DataPropertyName = "KeyType";
-			resources.ApplyResources(this.KeyType, "KeyType");
-			this.KeyType.Name = "KeyType";
-			this.KeyType.ReadOnly = true;
+			this.dbPathDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.dbPathDataGridViewTextBoxColumn.DataPropertyName = "DbPath";
+			resources.ApplyResources(this.dbPathDataGridViewTextBoxColumn, "dbPathDataGridViewTextBoxColumn");
+			this.dbPathDataGridViewTextBoxColumn.Name = "dbPathDataGridViewTextBoxColumn";
+			this.dbPathDataGridViewTextBoxColumn.ReadOnly = true;
 			// 
-			// EncryptionType
+			// fileNameDataGridViewTextBoxColumn
 			// 
-			this.EncryptionType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.EncryptionType.DataPropertyName = "EncryptionType";
-			resources.ApplyResources(this.EncryptionType, "EncryptionType");
-			this.EncryptionType.Name = "EncryptionType";
-			this.EncryptionType.ReadOnly = true;
-			// 
-			// Size
-			// 
-			this.Size.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.Size.DataPropertyName = "PrivateKey";
-			resources.ApplyResources(this.Size, "Size");
-			this.Size.Name = "Size";
-			this.Size.ReadOnly = true;
-			// 
-			// PrivateMAC
-			// 
-			this.PrivateMAC.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.PrivateMAC.DataPropertyName = "PrivateMAC";
-			resources.ApplyResources(this.PrivateMAC, "PrivateMAC");
-			this.PrivateMAC.Name = "PrivateMAC";
-			this.PrivateMAC.ReadOnly = true;
+			this.fileNameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.fileNameDataGridViewTextBoxColumn.DataPropertyName = "FileName";
+			resources.ApplyResources(this.fileNameDataGridViewTextBoxColumn, "fileNameDataGridViewTextBoxColumn");
+			this.fileNameDataGridViewTextBoxColumn.Name = "fileNameDataGridViewTextBoxColumn";
+			this.fileNameDataGridViewTextBoxColumn.ReadOnly = true;
 			// 
 			// PuttyKeyListDialog
 			// 
@@ -151,8 +167,11 @@
 			this.ShowInTaskbar = false;
 			this.Shown += new System.EventHandler(this.PuttyKeyListDialog_Shown);
 			((System.ComponentModel.ISupportInitialize)(this.keyDataGridView)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.ppkKeyMapBindingSource)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.ppkKeyMapBindingSource1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.puttyKeyBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.puttyKeyDataSet)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.puttyKeysBindingSource)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -165,12 +184,15 @@
 		private System.Windows.Forms.DataGridView keyDataGridView;
 		private System.Windows.Forms.DataGridViewTextBoxColumn typeDataGridViewTextBoxColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn encryptionDataGridViewTextBoxColumn;
-		private System.Windows.Forms.DataGridViewTextBoxColumn DbPath;
-		private System.Windows.Forms.DataGridViewTextBoxColumn FileName;
+		private System.Windows.Forms.BindingSource ppkKeyMapBindingSource;
+		private System.Windows.Forms.BindingSource ppkKeyMapBindingSource1;
+		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+		private System.Windows.Forms.DataGridViewTextBoxColumn keyTypeDataGridViewTextBoxColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn keySizeDataGridViewTextBoxColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn fingerprintDataGridViewTextBoxColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn commentDataGridViewTextBoxColumn;
-		private System.Windows.Forms.DataGridViewTextBoxColumn KeyType;
-		private System.Windows.Forms.DataGridViewTextBoxColumn EncryptionType;
-		private System.Windows.Forms.DataGridViewTextBoxColumn Size;
-		private System.Windows.Forms.DataGridViewTextBoxColumn PrivateMAC;
+		private System.Windows.Forms.DataGridViewTextBoxColumn dbPathDataGridViewTextBoxColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn fileNameDataGridViewTextBoxColumn;
+		private System.Windows.Forms.BindingSource puttyKeysBindingSource;
 	}
 }
