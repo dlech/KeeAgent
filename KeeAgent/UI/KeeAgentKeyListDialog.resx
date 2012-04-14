@@ -190,7 +190,7 @@
     <value>79</value>
   </data>
   <metadata name="puttyKeysBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>735, 17</value>
+    <value>173, 15</value>
   </metadata>
   <metadata name="puttyKeyDataSet.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
@@ -216,18 +216,9 @@
   <data name="&gt;&gt;keyDataGridView.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <metadata name="ppkKeyMapBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>338, 17</value>
-  </metadata>
   <data name="dataGridViewTextBoxColumn1.HeaderText" xml:space="preserve">
     <value>Value</value>
   </data>
-  <metadata name="ppkKeyMapBindingSource1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>533, 17</value>
-  </metadata>
-  <metadata name="puttyKeyBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>159, 17</value>
-  </metadata>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -239,42 +230,6 @@
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>SSH Key List</value>
-  </data>
-  <data name="&gt;&gt;ppkKeyMapBindingSource.Name" xml:space="preserve">
-    <value>ppkKeyMapBindingSource</value>
-  </data>
-  <data name="&gt;&gt;ppkKeyMapBindingSource.Type" xml:space="preserve">
-    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;dataGridViewTextBoxColumn1.Name" xml:space="preserve">
-    <value>dataGridViewTextBoxColumn1</value>
-  </data>
-  <data name="&gt;&gt;dataGridViewTextBoxColumn1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;ppkKeyMapBindingSource1.Name" xml:space="preserve">
-    <value>ppkKeyMapBindingSource1</value>
-  </data>
-  <data name="&gt;&gt;ppkKeyMapBindingSource1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;puttyKeyBindingSource.Name" xml:space="preserve">
-    <value>puttyKeyBindingSource</value>
-  </data>
-  <data name="&gt;&gt;puttyKeyBindingSource.Type" xml:space="preserve">
-    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;puttyKeyDataSet.Name" xml:space="preserve">
-    <value>puttyKeyDataSet</value>
-  </data>
-  <data name="&gt;&gt;puttyKeyDataSet.Type" xml:space="preserve">
-    <value>KeeAgent.PuttyKeyDataSet, PuttyKeyDataSet.Designer.cs, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;puttyKeysBindingSource.Name" xml:space="preserve">
-    <value>puttyKeysBindingSource</value>
-  </data>
-  <data name="&gt;&gt;puttyKeysBindingSource.Type" xml:space="preserve">
-    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;keyTypeDataGridViewTextBoxColumn.Name" xml:space="preserve">
     <value>keyTypeDataGridViewTextBoxColumn</value>
@@ -310,6 +265,24 @@
     <value>fileNameDataGridViewTextBoxColumn</value>
   </data>
   <data name="&gt;&gt;fileNameDataGridViewTextBoxColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;puttyKeysBindingSource.Name" xml:space="preserve">
+    <value>puttyKeysBindingSource</value>
+  </data>
+  <data name="&gt;&gt;puttyKeysBindingSource.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;puttyKeyDataSet.Name" xml:space="preserve">
+    <value>puttyKeyDataSet</value>
+  </data>
+  <data name="&gt;&gt;puttyKeyDataSet.Type" xml:space="preserve">
+    <value>KeeAgent.PuttyKeyDataSet, PuttyKeyDataSet.Designer.cs, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewTextBoxColumn1.Name" xml:space="preserve">
+    <value>dataGridViewTextBoxColumn1</value>
+  </data>
+  <data name="&gt;&gt;dataGridViewTextBoxColumn1.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">

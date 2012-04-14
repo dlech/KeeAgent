@@ -25,7 +25,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -38,23 +38,22 @@
     </StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="KeeAgentUtil.cs" />
-    <Compile Include="PpkKeyMap.cs" />
-    <Compile Include="PuttyKeyDataSet.Designer.cs">
+    <Compile Include="KeeAgentKey.cs" />
+    <Compile Include="KeeAgentKeyDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>PuttyKeyDataSet.xsd</DependentUpon>
+      <DependentUpon>KeeAgentKeyDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="Translatable.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Translatable.resx</DependentUpon>
     </Compile>
-    <Compile Include="UI\PuttyKeyListDialog.cs">
+    <Compile Include="UI\KeeAgentKeyListDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\PuttyKeyListDialog.Designer.cs">
-      <DependentUpon>PuttyKeyListDialog.cs</DependentUpon>
+    <Compile Include="UI\KeeAgentKeyListDialog.Designer.cs">
+      <DependentUpon>KeeAgentKeyListDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="KeeAgentExt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -82,25 +81,26 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Translatable.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\PuttyKeyListDialog.resx">
-      <DependentUpon>PuttyKeyListDialog.cs</DependentUpon>
+    <EmbeddedResource Include="UI\KeeAgentKeyListDialog.resx">
+      <DependentUpon>KeeAgentKeyListDialog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\DataSources\PpkKeyMap.datasource" />
-    <None Include="PuttyKeyDataSet.xsc">
-      <DependentUpon>PuttyKeyDataSet.xsd</DependentUpon>
+    <None Include="KeeAgentKeyDataSet.xsc">
+      <DependentUpon>KeeAgentKeyDataSet.xsd</DependentUpon>
     </None>
-    <None Include="PuttyKeyDataSet.xsd">
+    <None Include="KeeAgentKeyDataSet.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>PuttyKeyDataSet.Designer.cs</LastGenOutput>
+      <LastGenOutput>KeeAgentKeyDataSet.Designer.cs</LastGenOutput>
     </None>
-    <None Include="PuttyKeyDataSet.xss">
-      <DependentUpon>PuttyKeyDataSet.xsd</DependentUpon>
+    <None Include="KeeAgentKeyDataSet.xss">
+      <DependentUpon>KeeAgentKeyDataSet.xsd</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Properties\DataSources\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

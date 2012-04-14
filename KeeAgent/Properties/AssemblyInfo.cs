@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("KeeAgent")]
-[assembly: AssemblyDescription("ssh authentication agent for KeePass2")]
+[assembly: AssemblyDescription("ssh authentication agent plugin for KeePass2")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("David Lechner")]
 [assembly: AssemblyProduct("KeePass Plugin")]

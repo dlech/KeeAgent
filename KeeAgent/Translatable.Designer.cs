@@ -61,6 +61,15 @@ namespace KeeAgent {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pageant is already running. KeeAgent plugin will not be loaded..
+        /// </summary>
+        internal static string ErrPageantRunning {
+            get {
+                return ResourceManager.GetString("ErrPageantRunning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to KeeAgent.
         /// </summary>
         internal static string KeeAgentMenuItem {
