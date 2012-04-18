@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xs:schema id="PuttyKeyDataSet" targetNamespace="http://tempuri.org/PuttyKeyDataSet.xsd" xmlns:mstns="http://tempuri.org/PuttyKeyDataSet.xsd" xmlns="http://tempuri.org/PuttyKeyDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+<xs:schema id="KeyDataSet" targetNamespace="http://tempuri.org/KeyDataSet.xsd" xmlns:mstns="http://tempuri.org/KeyDataSet.xsd" xmlns="http://tempuri.org/KeyDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
   <xs:annotation>
     <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
       <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
@@ -9,10 +9,10 @@
       </DataSource>
     </xs:appinfo>
   </xs:annotation>
-  <xs:element name="PuttyKeyDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="PuttyKeyDataSet" msprop:Generator_UserDSName="PuttyKeyDataSet">
+  <xs:element name="KeyDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="KeyDataSet" msprop:Generator_UserDSName="KeyDataSet">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="PuttyKeys" msprop:Generator_TableClassName="PuttyKeysDataTable" msprop:Generator_TableVarName="tablePuttyKeys" msprop:Generator_TablePropName="PuttyKeys" msprop:Generator_RowDeletingName="PuttyKeysRowDeleting" msprop:Generator_UserTableName="PuttyKeys" msprop:Generator_RowChangingName="PuttyKeysRowChanging" msprop:Generator_RowEvHandlerName="PuttyKeysRowChangeEventHandler" msprop:Generator_RowDeletedName="PuttyKeysRowDeleted" msprop:Generator_RowEvArgName="PuttyKeysRowChangeEvent" msprop:Generator_RowChangedName="PuttyKeysRowChanged" msprop:Generator_RowClassName="PuttyKeysRow">
+        <xs:element name="Keys" msprop:Generator_TableClassName="KeysDataTable" msprop:Generator_TableVarName="tableKeys" msprop:Generator_TablePropName="Keys" msprop:Generator_RowDeletingName="KeysRowDeleting" msprop:Generator_UserTableName="Keys" msprop:Generator_RowChangingName="KeysRowChanging" msprop:Generator_RowEvHandlerName="KeysRowChangeEventHandler" msprop:Generator_RowDeletedName="KeysRowDeleted" msprop:Generator_RowEvArgName="KeysRowChangeEvent" msprop:Generator_RowChangedName="KeysRowChanged" msprop:Generator_RowClassName="KeysRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="KeyType" msdata:Caption="Key Type" msprop:Generator_ColumnVarNameInTable="columnKeyType" msprop:Generator_ColumnPropNameInRow="KeyType" msprop:Generator_ColumnPropNameInTable="KeyTypeColumn" msprop:Generator_UserColumnName="KeyType" type="xs:string" minOccurs="0" />

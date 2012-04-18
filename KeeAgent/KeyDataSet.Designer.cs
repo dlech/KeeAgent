@@ -20,17 +20,17 @@ namespace KeeAgent {
     [global::System.ComponentModel.DesignerCategoryAttribute("code")]
     [global::System.ComponentModel.ToolboxItem(true)]
     [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema")]
-    [global::System.Xml.Serialization.XmlRootAttribute("PuttyKeyDataSet")]
+    [global::System.Xml.Serialization.XmlRootAttribute("KeyDataSet")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
-    public partial class KeeAgentKeyDataSet : global::System.Data.DataSet {
+    public partial class KeyDataSet : global::System.Data.DataSet {
         
-        private PuttyKeysDataTable tablePuttyKeys;
+        private KeysDataTable tableKeys;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public KeeAgentKeyDataSet() {
+        public KeyDataSet() {
             this.BeginInit();
             this.InitClass();
             global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
@@ -41,7 +41,7 @@ namespace KeeAgent {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        protected KeeAgentKeyDataSet(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+        protected KeyDataSet(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                 base(info, context, false) {
             if ((this.IsBinarySerialized(info, context) == true)) {
                 this.InitVars(false);
@@ -54,8 +54,8 @@ namespace KeeAgent {
             if ((this.DetermineSchemaSerializationMode(info, context) == global::System.Data.SchemaSerializationMode.IncludeSchema)) {
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXmlSchema(new global::System.Xml.XmlTextReader(new global::System.IO.StringReader(strSchema)));
-                if ((ds.Tables["PuttyKeys"] != null)) {
-                    base.Tables.Add(new PuttyKeysDataTable(ds.Tables["PuttyKeys"]));
+                if ((ds.Tables["Keys"] != null)) {
+                    base.Tables.Add(new KeysDataTable(ds.Tables["Keys"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -79,9 +79,9 @@ namespace KeeAgent {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public PuttyKeysDataTable PuttyKeys {
+        public KeysDataTable Keys {
             get {
-                return this.tablePuttyKeys;
+                return this.tableKeys;
             }
         }
         
@@ -127,7 +127,7 @@ namespace KeeAgent {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public override global::System.Data.DataSet Clone() {
-            KeeAgentKeyDataSet cln = ((KeeAgentKeyDataSet)(base.Clone()));
+            KeyDataSet cln = ((KeyDataSet)(base.Clone()));
             cln.InitVars();
             cln.SchemaSerializationMode = this.SchemaSerializationMode;
             return cln;
@@ -152,8 +152,8 @@ namespace KeeAgent {
                 this.Reset();
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXml(reader);
-                if ((ds.Tables["PuttyKeys"] != null)) {
-                    base.Tables.Add(new PuttyKeysDataTable(ds.Tables["PuttyKeys"]));
+                if ((ds.Tables["Keys"] != null)) {
+                    base.Tables.Add(new KeysDataTable(ds.Tables["Keys"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -188,10 +188,10 @@ namespace KeeAgent {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         internal void InitVars(bool initTable) {
-            this.tablePuttyKeys = ((PuttyKeysDataTable)(base.Tables["PuttyKeys"]));
+            this.tableKeys = ((KeysDataTable)(base.Tables["Keys"]));
             if ((initTable == true)) {
-                if ((this.tablePuttyKeys != null)) {
-                    this.tablePuttyKeys.InitVars();
+                if ((this.tableKeys != null)) {
+                    this.tableKeys.InitVars();
                 }
             }
         }
@@ -199,18 +199,18 @@ namespace KeeAgent {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitClass() {
-            this.DataSetName = "PuttyKeyDataSet";
+            this.DataSetName = "KeyDataSet";
             this.Prefix = "";
-            this.Namespace = "http://tempuri.org/PuttyKeyDataSet.xsd";
+            this.Namespace = "http://tempuri.org/KeyDataSet.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
-            this.tablePuttyKeys = new PuttyKeysDataTable();
-            base.Tables.Add(this.tablePuttyKeys);
+            this.tableKeys = new KeysDataTable();
+            base.Tables.Add(this.tableKeys);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private bool ShouldSerializePuttyKeys() {
+        private bool ShouldSerializeKeys() {
             return false;
         }
         
@@ -225,7 +225,7 @@ namespace KeeAgent {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedDataSetSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-            KeeAgentKeyDataSet ds = new KeeAgentKeyDataSet();
+            KeyDataSet ds = new KeyDataSet();
             global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
             global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
             global::System.Xml.Schema.XmlSchemaAny any = new global::System.Xml.Schema.XmlSchemaAny();
@@ -270,14 +270,14 @@ namespace KeeAgent {
         }
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public delegate void PuttyKeysRowChangeEventHandler(object sender, PuttyKeysRowChangeEvent e);
+        public delegate void KeysRowChangeEventHandler(object sender, KeysRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class PuttyKeysDataTable : global::System.Data.TypedTableBase<PuttyKeysRow> {
+        public partial class KeysDataTable : global::System.Data.TypedTableBase<KeysRow> {
             
             private global::System.Data.DataColumn columnKeyType;
             
@@ -293,8 +293,8 @@ namespace KeeAgent {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PuttyKeysDataTable() {
-                this.TableName = "PuttyKeys";
+            public KeysDataTable() {
+                this.TableName = "Keys";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -302,7 +302,7 @@ namespace KeeAgent {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal PuttyKeysDataTable(global::System.Data.DataTable table) {
+            internal KeysDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -319,7 +319,7 @@ namespace KeeAgent {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected PuttyKeysDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected KeysDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
             }
@@ -383,34 +383,34 @@ namespace KeeAgent {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PuttyKeysRow this[int index] {
+            public KeysRow this[int index] {
                 get {
-                    return ((PuttyKeysRow)(this.Rows[index]));
+                    return ((KeysRow)(this.Rows[index]));
                 }
             }
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event PuttyKeysRowChangeEventHandler PuttyKeysRowChanging;
+            public event KeysRowChangeEventHandler KeysRowChanging;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event PuttyKeysRowChangeEventHandler PuttyKeysRowChanged;
+            public event KeysRowChangeEventHandler KeysRowChanged;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event PuttyKeysRowChangeEventHandler PuttyKeysRowDeleting;
+            public event KeysRowChangeEventHandler KeysRowDeleting;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event PuttyKeysRowChangeEventHandler PuttyKeysRowDeleted;
+            public event KeysRowChangeEventHandler KeysRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void AddPuttyKeysRow(PuttyKeysRow row) {
+            public void AddKeysRow(KeysRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PuttyKeysRow AddPuttyKeysRow(string KeyType, int KeySize, string Fingerprint, string Comment, string DbPath, string FileName) {
-                PuttyKeysRow rowPuttyKeysRow = ((PuttyKeysRow)(this.NewRow()));
+            public KeysRow AddKeysRow(string KeyType, int KeySize, string Fingerprint, string Comment, string DbPath, string FileName) {
+                KeysRow rowKeysRow = ((KeysRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         KeyType,
                         KeySize,
@@ -418,15 +418,15 @@ namespace KeeAgent {
                         Comment,
                         DbPath,
                         FileName};
-                rowPuttyKeysRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowPuttyKeysRow);
-                return rowPuttyKeysRow;
+                rowKeysRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowKeysRow);
+                return rowKeysRow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                PuttyKeysDataTable cln = ((PuttyKeysDataTable)(base.Clone()));
+                KeysDataTable cln = ((KeysDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -434,7 +434,7 @@ namespace KeeAgent {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new PuttyKeysDataTable();
+                return new KeysDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -471,28 +471,28 @@ namespace KeeAgent {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PuttyKeysRow NewPuttyKeysRow() {
-                return ((PuttyKeysRow)(this.NewRow()));
+            public KeysRow NewKeysRow() {
+                return ((KeysRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new PuttyKeysRow(builder);
+                return new KeysRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Type GetRowType() {
-                return typeof(PuttyKeysRow);
+                return typeof(KeysRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.PuttyKeysRowChanged != null)) {
-                    this.PuttyKeysRowChanged(this, new PuttyKeysRowChangeEvent(((PuttyKeysRow)(e.Row)), e.Action));
+                if ((this.KeysRowChanged != null)) {
+                    this.KeysRowChanged(this, new KeysRowChangeEvent(((KeysRow)(e.Row)), e.Action));
                 }
             }
             
@@ -500,8 +500,8 @@ namespace KeeAgent {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.PuttyKeysRowChanging != null)) {
-                    this.PuttyKeysRowChanging(this, new PuttyKeysRowChangeEvent(((PuttyKeysRow)(e.Row)), e.Action));
+                if ((this.KeysRowChanging != null)) {
+                    this.KeysRowChanging(this, new KeysRowChangeEvent(((KeysRow)(e.Row)), e.Action));
                 }
             }
             
@@ -509,8 +509,8 @@ namespace KeeAgent {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.PuttyKeysRowDeleted != null)) {
-                    this.PuttyKeysRowDeleted(this, new PuttyKeysRowChangeEvent(((PuttyKeysRow)(e.Row)), e.Action));
+                if ((this.KeysRowDeleted != null)) {
+                    this.KeysRowDeleted(this, new KeysRowChangeEvent(((KeysRow)(e.Row)), e.Action));
                 }
             }
             
@@ -518,14 +518,14 @@ namespace KeeAgent {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.PuttyKeysRowDeleting != null)) {
-                    this.PuttyKeysRowDeleting(this, new PuttyKeysRowChangeEvent(((PuttyKeysRow)(e.Row)), e.Action));
+                if ((this.KeysRowDeleting != null)) {
+                    this.KeysRowDeleting(this, new KeysRowChangeEvent(((KeysRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void RemovePuttyKeysRow(PuttyKeysRow row) {
+            public void RemoveKeysRow(KeysRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -534,7 +534,7 @@ namespace KeeAgent {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                KeeAgentKeyDataSet ds = new KeeAgentKeyDataSet();
+                KeyDataSet ds = new KeyDataSet();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -552,7 +552,7 @@ namespace KeeAgent {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "PuttyKeysDataTable";
+                attribute2.FixedValue = "KeysDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -596,15 +596,15 @@ namespace KeeAgent {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class PuttyKeysRow : global::System.Data.DataRow {
+        public partial class KeysRow : global::System.Data.DataRow {
             
-            private PuttyKeysDataTable tablePuttyKeys;
+            private KeysDataTable tableKeys;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal PuttyKeysRow(global::System.Data.DataRowBuilder rb) : 
+            internal KeysRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tablePuttyKeys = ((PuttyKeysDataTable)(this.Table));
+                this.tableKeys = ((KeysDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -612,14 +612,14 @@ namespace KeeAgent {
             public string KeyType {
                 get {
                     try {
-                        return ((string)(this[this.tablePuttyKeys.KeyTypeColumn]));
+                        return ((string)(this[this.tableKeys.KeyTypeColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'KeyType\' in table \'PuttyKeys\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'KeyType\' in table \'Keys\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablePuttyKeys.KeyTypeColumn] = value;
+                    this[this.tableKeys.KeyTypeColumn] = value;
                 }
             }
             
@@ -628,14 +628,14 @@ namespace KeeAgent {
             public int KeySize {
                 get {
                     try {
-                        return ((int)(this[this.tablePuttyKeys.KeySizeColumn]));
+                        return ((int)(this[this.tableKeys.KeySizeColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'KeySize\' in table \'PuttyKeys\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'KeySize\' in table \'Keys\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablePuttyKeys.KeySizeColumn] = value;
+                    this[this.tableKeys.KeySizeColumn] = value;
                 }
             }
             
@@ -644,14 +644,14 @@ namespace KeeAgent {
             public string Fingerprint {
                 get {
                     try {
-                        return ((string)(this[this.tablePuttyKeys.FingerprintColumn]));
+                        return ((string)(this[this.tableKeys.FingerprintColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Fingerprint\' in table \'PuttyKeys\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Fingerprint\' in table \'Keys\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablePuttyKeys.FingerprintColumn] = value;
+                    this[this.tableKeys.FingerprintColumn] = value;
                 }
             }
             
@@ -660,14 +660,14 @@ namespace KeeAgent {
             public string Comment {
                 get {
                     try {
-                        return ((string)(this[this.tablePuttyKeys.CommentColumn]));
+                        return ((string)(this[this.tableKeys.CommentColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Comment\' in table \'PuttyKeys\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Comment\' in table \'Keys\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablePuttyKeys.CommentColumn] = value;
+                    this[this.tableKeys.CommentColumn] = value;
                 }
             }
             
@@ -676,14 +676,14 @@ namespace KeeAgent {
             public string DbPath {
                 get {
                     try {
-                        return ((string)(this[this.tablePuttyKeys.DbPathColumn]));
+                        return ((string)(this[this.tableKeys.DbPathColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'DbPath\' in table \'PuttyKeys\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'DbPath\' in table \'Keys\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablePuttyKeys.DbPathColumn] = value;
+                    this[this.tableKeys.DbPathColumn] = value;
                 }
             }
             
@@ -692,87 +692,87 @@ namespace KeeAgent {
             public string FileName {
                 get {
                     try {
-                        return ((string)(this[this.tablePuttyKeys.FileNameColumn]));
+                        return ((string)(this[this.tableKeys.FileNameColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'FileName\' in table \'PuttyKeys\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'FileName\' in table \'Keys\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablePuttyKeys.FileNameColumn] = value;
+                    this[this.tableKeys.FileNameColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsKeyTypeNull() {
-                return this.IsNull(this.tablePuttyKeys.KeyTypeColumn);
+                return this.IsNull(this.tableKeys.KeyTypeColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetKeyTypeNull() {
-                this[this.tablePuttyKeys.KeyTypeColumn] = global::System.Convert.DBNull;
+                this[this.tableKeys.KeyTypeColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsKeySizeNull() {
-                return this.IsNull(this.tablePuttyKeys.KeySizeColumn);
+                return this.IsNull(this.tableKeys.KeySizeColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetKeySizeNull() {
-                this[this.tablePuttyKeys.KeySizeColumn] = global::System.Convert.DBNull;
+                this[this.tableKeys.KeySizeColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsFingerprintNull() {
-                return this.IsNull(this.tablePuttyKeys.FingerprintColumn);
+                return this.IsNull(this.tableKeys.FingerprintColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetFingerprintNull() {
-                this[this.tablePuttyKeys.FingerprintColumn] = global::System.Convert.DBNull;
+                this[this.tableKeys.FingerprintColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsCommentNull() {
-                return this.IsNull(this.tablePuttyKeys.CommentColumn);
+                return this.IsNull(this.tableKeys.CommentColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetCommentNull() {
-                this[this.tablePuttyKeys.CommentColumn] = global::System.Convert.DBNull;
+                this[this.tableKeys.CommentColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsDbPathNull() {
-                return this.IsNull(this.tablePuttyKeys.DbPathColumn);
+                return this.IsNull(this.tableKeys.DbPathColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetDbPathNull() {
-                this[this.tablePuttyKeys.DbPathColumn] = global::System.Convert.DBNull;
+                this[this.tableKeys.DbPathColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsFileNameNull() {
-                return this.IsNull(this.tablePuttyKeys.FileNameColumn);
+                return this.IsNull(this.tableKeys.FileNameColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetFileNameNull() {
-                this[this.tablePuttyKeys.FileNameColumn] = global::System.Convert.DBNull;
+                this[this.tableKeys.FileNameColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -780,22 +780,22 @@ namespace KeeAgent {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public class PuttyKeysRowChangeEvent : global::System.EventArgs {
+        public class KeysRowChangeEvent : global::System.EventArgs {
             
-            private PuttyKeysRow eventRow;
+            private KeysRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PuttyKeysRowChangeEvent(PuttyKeysRow row, global::System.Data.DataRowAction action) {
+            public KeysRowChangeEvent(KeysRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PuttyKeysRow Row {
+            public KeysRow Row {
                 get {
                     return this.eventRow;
                 }

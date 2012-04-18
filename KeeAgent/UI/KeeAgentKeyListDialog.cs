@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using KeePassLib;
@@ -23,7 +22,7 @@ namespace KeeAgent.UI
 		{
 			InitializeComponent();
 
-			IEnumerable<KeeAgentKey> keyList = ext.GetKeyList();
+			IEnumerable<KeeAgentKey> keyList = ext.GetKeeAgentKeyList();
 
 			foreach (KeeAgentKey key in keyList) {
 				PwEntry entry = ext.pluginHost.Database.RootGroup.FindEntry(key.Uuid, true);
@@ -46,7 +45,7 @@ namespace KeeAgent.UI
 					}
 
 					/* add info to data grid view */
-					puttyKeyDataSet.PuttyKeys.AddPuttyKeysRow(
+					keyDataSet.Keys.AddKeysRow(
 						key.Algorithm.KeyExchangeAlgorithm,
 						key.Algorithm.KeySize,
 						fingerprint,

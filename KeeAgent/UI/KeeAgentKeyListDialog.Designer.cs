@@ -37,12 +37,12 @@
 			this.commentDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.dbPathDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.fileNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.puttyKeysBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.puttyKeyDataSet = new KeeAgent.KeeAgentKeyDataSet();
+			this.keysBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.keyDataSet = new KeeAgent.KeyDataSet();
 			this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.keyDataGridView)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.puttyKeysBindingSource)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.puttyKeyDataSet)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.keysBindingSource)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.keyDataSet)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// closeButton
@@ -66,7 +66,7 @@
             this.commentDataGridViewTextBoxColumn,
             this.dbPathDataGridViewTextBoxColumn,
             this.fileNameDataGridViewTextBoxColumn});
-			this.keyDataGridView.DataSource = this.puttyKeysBindingSource;
+			this.keyDataGridView.DataSource = this.keysBindingSource;
 			this.keyDataGridView.Name = "keyDataGridView";
 			this.keyDataGridView.ReadOnly = true;
 			this.keyDataGridView.RowHeadersVisible = false;
@@ -119,15 +119,15 @@
 			this.fileNameDataGridViewTextBoxColumn.Name = "fileNameDataGridViewTextBoxColumn";
 			this.fileNameDataGridViewTextBoxColumn.ReadOnly = true;
 			// 
-			// puttyKeysBindingSource
+			// keysBindingSource
 			// 
-			this.puttyKeysBindingSource.DataMember = "PuttyKeys";
-			this.puttyKeysBindingSource.DataSource = this.puttyKeyDataSet;
+			this.keysBindingSource.DataMember = "Keys";
+			this.keysBindingSource.DataSource = this.keyDataSet;
 			// 
-			// puttyKeyDataSet
+			// keyDataSet
 			// 
-			this.puttyKeyDataSet.DataSetName = "PuttyKeyDataSet";
-			this.puttyKeyDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+			this.keyDataSet.DataSetName = "DataSet";
+			this.keyDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
 			// 
 			// dataGridViewTextBoxColumn1
 			// 
@@ -136,7 +136,7 @@
 			this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
 			this.dataGridViewTextBoxColumn1.ReadOnly = true;
 			// 
-			// PuttyKeyListDialog
+			// KeeAgentKeyListDialog
 			// 
 			resources.ApplyResources(this, "$this");
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -144,12 +144,12 @@
 			this.Controls.Add(this.closeButton);
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
-			this.Name = "PuttyKeyListDialog";
+			this.Name = "KeeAgentKeyListDialog";
 			this.ShowInTaskbar = false;
 			this.Shown += new System.EventHandler(this.PuttyKeyListDialog_Shown);
 			((System.ComponentModel.ISupportInitialize)(this.keyDataGridView)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.puttyKeysBindingSource)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.puttyKeyDataSet)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.keysBindingSource)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.keyDataSet)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -157,7 +157,7 @@
 		#endregion
 
 		private System.Windows.Forms.Button closeButton;
-		private KeeAgentKeyDataSet puttyKeyDataSet;
+		private KeyDataSet keyDataSet;
 		private System.Windows.Forms.DataGridView keyDataGridView;
 		private System.Windows.Forms.DataGridViewTextBoxColumn typeDataGridViewTextBoxColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn encryptionDataGridViewTextBoxColumn;
@@ -168,6 +168,6 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn commentDataGridViewTextBoxColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dbPathDataGridViewTextBoxColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn fileNameDataGridViewTextBoxColumn;
-		private System.Windows.Forms.BindingSource puttyKeysBindingSource;
+		private System.Windows.Forms.BindingSource keysBindingSource;
 	}
 }

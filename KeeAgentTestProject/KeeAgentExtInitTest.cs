@@ -3,6 +3,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using KeePass.Plugins;
 using KeePassPluginTestUtil;
+using System.Reflection;
+using System.IO;
+using System.Windows.Forms;
+using System.Threading;
 
 namespace KeeAgentTestProject
 {
@@ -65,7 +69,7 @@ namespace KeeAgentTestProject
 		//
 		#endregion
 
-
+		
 		/// <summary>
 		///A test for Initialize
 		///</summary>
@@ -83,6 +87,24 @@ namespace KeeAgentTestProject
 			} catch (Exception ex) {
 				Assert.Fail(ex.ToString());
 			}
+		}
+
+
+		/// <summary>
+		///A test for creating and loading plgx
+		///</summary>
+		[TestMethod()]
+		public void PlgxTest()
+		{
+			/* create .plgx file */
+			FileInfo assmFile = new FileInfo(Assembly.GetExecutingAssembly().Location);
+			DirectoryInfo projectDir = new DirectoryInfo(Path.Combine(assmFile.Directory.FullName, @"..\..\..\KeeAgent"));
+			string plgxFilePath = Path.Combine(projectDir.Parent.FullName, "KeeAgent.plgx");			
+			File.Delete(plgxFilePath);
+			KeePassControl.CreatePlgx(projectDir.FullName, null, "3.5", null, "8", null, null);
+			Assert.IsTrue(File.Exists(plgxFilePath));
+			MessageBox.Show("start keepass");
+			KeePassControl.LoadPlgx(plgxFilePath);
 		}
 	}
 }

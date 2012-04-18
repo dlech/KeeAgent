@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
@@ -13,6 +12,7 @@ using System.IO;
 using System.Security;
 using KeePassLib.Cryptography;
 using System.Diagnostics;
+using KeePassLib.Utility;
 
 namespace KeeAgent
 {
@@ -29,10 +29,10 @@ namespace KeeAgent
 			this.pluginHost = host;
 
 			try {
-				this.pageant = new WinPageant(GetKeyList, GetSSH2Key);
+				this.pageant = new WinPageant(GetPpkKeyList, GetSSH2Key);
 				result = true;
 			} catch (Exception) {
-				InvokeMainWindow(new MethodInvoker(ShowPageantRunningErrorMessage));
+				ShowPageantRunningErrorMessage();
 				result = false;
 			}
 
@@ -46,12 +46,14 @@ namespace KeeAgent
 			if (this.pageant != null) {
 				this.pageant.Dispose();
 			}
-			RemoveMenuItems();
+			InvokeMainWindow(new MethodInvoker(RemoveMenuItems));
 		}
+
+
 
 		private void ShowPageantRunningErrorMessage()
 		{
-			MessageBox.Show(Translatable.ErrPageantRunning, string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error);
+			MessageService.ShowWarning(new object[] { Translatable.ErrPageantRunning });
 		}
 
 		private void AddMenuItems()
@@ -111,7 +113,12 @@ namespace KeeAgent
 			}
 		}
 
-		internal IEnumerable<KeeAgentKey> GetKeyList()
+		internal IEnumerable<PpkKey> GetPpkKeyList()
+		{
+			return (IEnumerable<PpkKey>)GetKeeAgentKeyList();
+		}
+
+		internal IEnumerable<KeeAgentKey> GetKeeAgentKeyList()
 		{
 			List<KeeAgentKey> keyList = new List<KeeAgentKey>();
 
@@ -174,7 +181,10 @@ namespace KeeAgent
 			 * a single key as we are doing here. 
 			 */
 
-			IEnumerable<PpkKey> ppkKeyList = GetKeyList();
+			/* TODO add popup notification when key is being requested 
+			 */
+
+			IEnumerable<PpkKey> ppkKeyList = GetPpkKeyList();
 			PpkKey result = null;
 			foreach (PpkKey ppkKey in ppkKeyList) {
 				if (result == null) {
