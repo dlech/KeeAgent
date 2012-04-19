@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>KeeAgent</RootNamespace>
     <AssemblyName>KeeAgent</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -79,9 +79,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="PageantSharp35, Version=0.1.0.0, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="PageantSharp, Version=0.1.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\libs\PageantSharp\PageantSharp\bin\$(Configuration)\PageantSharp35.dll</HintPath>
+      <HintPath>.\PageantSharp.dll</HintPath> <!-- This is for building .plgx -->
+      <HintPath>..\..\libs\PageantSharp\PageantSharp\bin\$(Configuration)\PageantSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
