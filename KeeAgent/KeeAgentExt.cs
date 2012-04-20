@@ -66,7 +66,7 @@ namespace KeeAgent
 			keeAgentMenuItem.Text = Translatable.KeeAgentMenuItem;
 
 			if (pageant != null) {
-				/* create childern menu items */
+				/* create children menu items */
 				ToolStripMenuItem keeAgentListPuttyKeysMenuItem = new ToolStripMenuItem();
 				keeAgentListPuttyKeysMenuItem.Text = Translatable.ShowPuttyKeysMenuItem;
 				keeAgentListPuttyKeysMenuItem.ToolTipText = Translatable.ShowPuttyKeysMenuItemToolTip;
