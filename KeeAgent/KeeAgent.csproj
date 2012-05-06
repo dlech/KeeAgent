@@ -69,19 +69,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Translatable.resx</DependentUpon>
     </Compile>
-    <Compile Include="UI\KeeAgentKeyListDialog.cs">
+    <Compile Include="UI\KeyListDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\KeeAgentKeyListDialog.Designer.cs">
-      <DependentUpon>KeeAgentKeyListDialog.cs</DependentUpon>
+    <Compile Include="UI\KeyListDialog.Designer.cs">
+      <DependentUpon>KeyListDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="KeeAgentExt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\UIHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="PageantSharp, Version=0.1.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\PageantSharp.dll</HintPath> <!-- This is for building .plgx -->
+      <HintPath>.\PageantSharp.dll</HintPath>
+      <!-- This is for building .plgx -->
       <HintPath>..\..\libs\PageantSharp\PageantSharp\bin\$(Configuration)\PageantSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -96,8 +98,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Translatable.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\KeeAgentKeyListDialog.resx">
-      <DependentUpon>KeeAgentKeyListDialog.cs</DependentUpon>
+    <EmbeddedResource Include="UI\KeyListDialog.resx">
+      <DependentUpon>KeyListDialog.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

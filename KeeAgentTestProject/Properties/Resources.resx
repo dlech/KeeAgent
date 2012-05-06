@@ -124,4 +124,7 @@
   <data name="withPassphrase_ppk" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\withPassphrase.ppk;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="dsa_ppk" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dsa.ppk;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

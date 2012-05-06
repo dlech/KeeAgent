@@ -1,6 +1,6 @@
 ﻿namespace KeeAgent.UI
 {
-	partial class KeeAgentKeyListDialog
+	partial class KeyListDialog
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -28,7 +28,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(KeeAgentKeyListDialog));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(KeyListDialog));
 			this.closeButton = new System.Windows.Forms.Button();
 			this.keyDataGridView = new System.Windows.Forms.DataGridView();
 			this.keyTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();

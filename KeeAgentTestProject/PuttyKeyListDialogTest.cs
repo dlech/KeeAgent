@@ -58,10 +58,16 @@ namespace KeeAgentTestProject
 			withoutPassEntry.Strings.Set(PwDefs.TitleField, new ProtectedString(true, "without-passphrase"));
 			withoutPassEntry.Binaries.Set("withoutPass.ppk", new ProtectedBinary(true, Resources.withoutPassphrase_ppk));
 
+			PwEntry dsaPassEntry = new PwEntry(true, true);
+			dsaPassEntry.Strings.Set(PwDefs.TitleField, new ProtectedString(true, "dsa-with-passphrase"));
+			dsaPassEntry.Binaries.Set("dsaWithPass.ppk", new ProtectedBinary(true, Resources.dsa_ppk));
+			dsaPassEntry.Strings.Set(PwDefs.PasswordField, new ProtectedString(true, "KeeAgent"));
+
 			PwGroup puttyGroup = new PwGroup();
 			puttyGroup.Name = "Putty";
 			puttyGroup.AddEntry(withPassEntry, true);
 			puttyGroup.AddEntry(withoutPassEntry, true);
+			puttyGroup.AddEntry(dsaPassEntry, true);
 
 			pluginHost.Database.RootGroup.AddGroup(puttyGroup, true);
 			pluginHost.MainWindow.Invoke(new MethodInvoker(delegate()

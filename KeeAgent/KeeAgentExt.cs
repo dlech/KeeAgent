@@ -13,6 +13,7 @@ using System.Security;
 using KeePassLib.Cryptography;
 using System.Diagnostics;
 using KeePassLib.Utility;
+using System.Reflection;
 
 namespace KeeAgent
 {
@@ -21,14 +22,17 @@ namespace KeeAgent
 		internal IPluginHost pluginHost;
 		private WinPageant pageant;
 		private ToolStripMenuItem keeAgentMenuItem;
+		private UIHelper uiHelper;
 
 		public override bool Initialize(IPluginHost host)
 		{
 			bool result;
 
 			this.pluginHost = host;
+			this.uiHelper = new UIHelper(this.pluginHost);
 
 			try {
+				// TODO check OS - currently only works on Windows
 				this.pageant = new WinPageant(GetPpkKeyList, GetSSH2Key);
 				result = true;
 			} catch (Exception) {
@@ -63,7 +67,7 @@ namespace KeeAgent
 
 			/* create parent menu item */
 			keeAgentMenuItem = new ToolStripMenuItem();
-			keeAgentMenuItem.Text = Translatable.KeeAgentMenuItem;
+			keeAgentMenuItem.Text = Assembly.GetExecutingAssembly().GetName().Name;
 
 			if (pageant != null) {
 				/* create children menu items */
@@ -97,7 +101,7 @@ namespace KeeAgent
 
 		private void keeAgentListPuttyKeysMenuItem_Click(object source, EventArgs e)
 		{
-			KeeAgentKeyListDialog dialog = new KeeAgentKeyListDialog(this);
+			KeyListDialog dialog = new KeyListDialog(this);
 			DialogResult result = dialog.ShowDialog(pluginHost.MainWindow);
 			dialog.Dispose();
 		}
@@ -120,6 +124,8 @@ namespace KeeAgent
 
 		internal IEnumerable<KeeAgentKey> GetKeeAgentKeyList()
 		{
+			pluginHost.MainWindow.NotifyUserActivity();
+
 			List<KeeAgentKey> keyList = new List<KeeAgentKey>();
 
 			if (this.pluginHost != null && this.pluginHost.Database != null) {
@@ -130,7 +136,7 @@ namespace KeeAgent
 						/* handle PuTTY Private Key files */
 
 						if (bin.Key.EndsWith(".ppk")) {
-							try {
+							try { 
 								SecureString passphrase = null;
 								CryptoRandomStream crsRandomSource;
 								ProtectedString passphraseFromKeepass = entry.Strings.Get(PwDefs.PasswordField);
@@ -175,13 +181,13 @@ namespace KeeAgent
 
 		internal PpkKey GetSSH2Key(byte[] fingerprint)
 		{
+			pluginHost.MainWindow.NotifyUserActivity();
 
+			this.uiHelper.ShowNotification(Translatable.NotifyKeyFetched);
+			
 			/* TODO it would probably be better if we cached the fingerprints and mapped them
 			 * to the PwEntry Uuid rather than regenerating the full list to get
 			 * a single key as we are doing here. 
-			 */
-
-			/* TODO add popup notification when key is being requested 
 			 */
 
 			IEnumerable<PpkKey> ppkKeyList = GetPpkKeyList();

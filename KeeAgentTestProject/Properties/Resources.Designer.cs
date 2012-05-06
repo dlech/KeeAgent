@@ -60,6 +60,13 @@ namespace KeeAgentTestProject.Properties {
             }
         }
         
+        internal static byte[] dsa_ppk {
+            get {
+                object obj = ResourceManager.GetObject("dsa_ppk", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] withoutPassphrase_ppk {
             get {
                 object obj = ResourceManager.GetObject("withoutPassphrase_ppk", resourceCulture);

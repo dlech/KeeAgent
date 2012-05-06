@@ -70,11 +70,11 @@ namespace KeeAgent {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to KeeAgent.
+        ///   Looks up a localized string similar to SSH key was fetched by another application..
         /// </summary>
-        internal static string KeeAgentMenuItem {
+        internal static string NotifyKeyFetched {
             get {
-                return ResourceManager.GetString("KeeAgentMenuItem", resourceCulture);
+                return ResourceManager.GetString("NotifyKeyFetched", resourceCulture);
             }
         }
         

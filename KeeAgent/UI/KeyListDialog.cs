@@ -13,12 +13,13 @@ using System.IO;
 using KeePassLib.Cryptography;
 using System.Diagnostics;
 using System.Security;
+using System.Security.Cryptography;
 
 namespace KeeAgent.UI
 {
-	public partial class KeeAgentKeyListDialog : Form
+	public partial class KeyListDialog : Form
 	{
-		public KeeAgentKeyListDialog(KeeAgentExt ext)
+		public KeyListDialog(KeeAgentExt ext)
 		{
 			InitializeComponent();
 
@@ -44,9 +45,17 @@ namespace KeeAgent.UI
 						fingerprint = string.Empty;
 					}
 
+					string algorithm = null;
+					if (typeof(RSA).IsInstanceOfType(key.Algorithm)) {
+						algorithm = PpkFile.PublicKeyAlgorithms.ssh_rsa;
+					}
+					if (typeof(DSA).IsInstanceOfType(key.Algorithm)) {
+						algorithm = PpkFile.PublicKeyAlgorithms.ssh_dss;
+					}
+
 					/* add info to data grid view */
 					keyDataSet.Keys.AddKeysRow(
-						key.Algorithm.KeyExchangeAlgorithm,
+						algorithm,
 						key.Algorithm.KeySize,
 						fingerprint,
 						key.Comment,
