@@ -14,6 +14,7 @@ using KeePassLib.Cryptography;
 using System.Diagnostics;
 using KeePassLib.Utility;
 using System.Reflection;
+using KeeAgent.Properties;
 
 namespace KeeAgent
 {
@@ -53,6 +54,18 @@ namespace KeeAgent
 			InvokeMainWindow(new MethodInvoker(RemoveMenuItems));
 		}
 
+		public override Image SmallIcon
+		{
+			get { return Resources.KeeAgentIcon; }
+		}
+	
+		/// <summary>
+		/// Returns url for automatic updating of plugin
+		/// </summary>
+		public override string UpdateUrl
+		{
+			get { return "http://updates.lechnology.com/KeePassPlugins"; }
+		}
 
 
 		private void ShowPageantRunningErrorMessage()
