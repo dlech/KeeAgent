@@ -15,6 +15,8 @@ using System.Diagnostics;
 using KeePassLib.Utility;
 using System.Reflection;
 using KeeAgent.Properties;
+using KeePass;
+using KeePass.App;
 
 namespace KeeAgent
 {
@@ -182,6 +184,10 @@ namespace KeeAgent
 								KeeAgentKey key = new KeeAgentKey(ppkKey, entry.Uuid, bin.Key);
 								keyList.Add(key);
 							} catch (Exception ex) {
+                                if (Program.CommandLineArgs[AppDefs.CommandLineOptions.Debug] != null)
+                                {
+                                    MessageService.ShowWarning("Error while loading key from ", entry.Strings.Get(PwDefs.TitleField).ReadString(), ex.ToString());
+                                }
 								Debug.Fail(ex.ToString());
 								// ignore errors - for now
 							}

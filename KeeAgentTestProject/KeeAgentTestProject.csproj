@@ -80,6 +80,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\4095-bits.ppk" />
     <None Include="Resources\dsa.ppk" />
     <None Include="Resources\withoutPassphrase.ppk" />
     <None Include="Resources\withPassphrase.ppk" />

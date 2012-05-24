@@ -127,4 +127,7 @@
   <data name="dsa_ppk" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\dsa.ppk;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="_4095_bits_ppk" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\4095-bits.ppk;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

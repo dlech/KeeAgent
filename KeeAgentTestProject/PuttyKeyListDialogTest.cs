@@ -8,6 +8,7 @@ using KeeAgent;
 using System.Windows.Forms;
 using KeeAgentTestProject.Properties;
 using KeePassLib.Security;
+using System.Security.Cryptography;
 
 namespace KeeAgentTestProject
 {
@@ -54,6 +55,7 @@ namespace KeeAgentTestProject
 			withPassEntry.Strings.Set(PwDefs.TitleField, new ProtectedString(true, "with-passphrase"));
 			withPassEntry.Binaries.Set("withPass.ppk", new ProtectedBinary(true, Resources.withPassphrase_ppk));
 			withPassEntry.Strings.Set(PwDefs.PasswordField, new ProtectedString(true, "KeeAgent"));
+
 			PwEntry withoutPassEntry = new PwEntry(true, true);
 			withoutPassEntry.Strings.Set(PwDefs.TitleField, new ProtectedString(true, "without-passphrase"));
 			withoutPassEntry.Binaries.Set("withoutPass.ppk", new ProtectedBinary(true, Resources.withoutPassphrase_ppk));
@@ -63,11 +65,17 @@ namespace KeeAgentTestProject
 			dsaPassEntry.Binaries.Set("dsaWithPass.ppk", new ProtectedBinary(true, Resources.dsa_ppk));
 			dsaPassEntry.Strings.Set(PwDefs.PasswordField, new ProtectedString(true, "KeeAgent"));
 
+            PwEntry nonStandardLengthPassEntry = new PwEntry(true, true);
+            nonStandardLengthPassEntry.Strings.Set(PwDefs.TitleField, new ProtectedString(true, "4095-bits"));
+            nonStandardLengthPassEntry.Binaries.Set("4095-bits.ppk", new ProtectedBinary(true, Resources._4095_bits_ppk));
+            nonStandardLengthPassEntry.Strings.Set(PwDefs.PasswordField, new ProtectedString(true, "KeeAgent"));
+
 			PwGroup puttyGroup = new PwGroup();
 			puttyGroup.Name = "Putty";
 			puttyGroup.AddEntry(withPassEntry, true);
 			puttyGroup.AddEntry(withoutPassEntry, true);
 			puttyGroup.AddEntry(dsaPassEntry, true);
+            puttyGroup.AddEntry(nonStandardLengthPassEntry, true);
 
 			pluginHost.Database.RootGroup.AddGroup(puttyGroup, true);
 			pluginHost.MainWindow.Invoke(new MethodInvoker(delegate()
@@ -109,6 +117,6 @@ namespace KeeAgentTestProject
 			keeAgent.Initialize(pluginHost);
 			MessageBox.Show("Click OK when done");
 			keeAgent.Terminate();
-		}
+		}       
 	}
 }
