@@ -64,7 +64,7 @@
       <Project>{10938016-DEE2-4A25-9A5A-8FD3444379CA}</Project>
       <Name>KeePass</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\KeePassPluginTestUtil\KeePassPluginTestUtil\KeePassPluginTestUtil.csproj">
+    <ProjectReference Include="..\..\libs\KeePassPluginTestUtil\KeePassPluginTestUtil\KeePassPluginTestUtil.csproj">
       <Project>{7B11CC40-373F-4C20-99A5-DD70F3317D5C}</Project>
       <Name>KeePassPluginTestUtil</Name>
     </ProjectReference>
