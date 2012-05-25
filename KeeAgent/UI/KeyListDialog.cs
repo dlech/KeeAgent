@@ -14,6 +14,7 @@ using KeePassLib.Cryptography;
 using System.Diagnostics;
 using System.Security;
 using System.Security.Cryptography;
+using Org.BouncyCastle.Crypto.Parameters;
 
 namespace KeeAgent.UI
 {
@@ -46,17 +47,17 @@ namespace KeeAgent.UI
 					}
 
 					string algorithm = null;
-					if (typeof(RSA).IsInstanceOfType(key.Algorithm)) {
+                    if (key.KeyParameters.Public is RsaKeyParameters) {
 						algorithm = PpkFile.PublicKeyAlgorithms.ssh_rsa;
 					}
-					if (typeof(DSA).IsInstanceOfType(key.Algorithm)) {
+					if (key.KeyParameters.Public is DsaPublicKeyParameters) {
 						algorithm = PpkFile.PublicKeyAlgorithms.ssh_dss;
 					}
 
 					/* add info to data grid view */
 					keyDataSet.Keys.AddKeysRow(
 						algorithm,
-						key.Algorithm.KeySize,
+                        key.Size,
 						fingerprint,
 						key.Comment,
 						path,

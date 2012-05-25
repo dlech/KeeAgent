@@ -43,7 +43,7 @@ namespace KeeAgent
 			}
 
 			this.ppkKey = ppkKey; // keep reference to ppkKey so that it is not disposed by GC
-			this.Algorithm = ppkKey.Algorithm;
+            this.KeyParameters = ppkKey.KeyParameters;
 			this.Comment = ppkKey.Comment;
 			this.Uuid = uuid;
 			this.Filename = fileName;

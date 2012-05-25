@@ -85,7 +85,13 @@
     <Compile Include="UI\UIHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="PageantSharp, Version=0.1.0.0, Culture=neutral, processorArchitecture=x86">
+  <Reference Include="crypto">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\crypto.dll</HintPath>
+      <!-- This is for building .plgx -->
+      <HintPath>..\..\libs\BountyCastleCrypto1.7\crypto\bin\$(Configuration)\crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="PageantSharp">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\PageantSharp.dll</HintPath>
       <!-- This is for building .plgx -->
