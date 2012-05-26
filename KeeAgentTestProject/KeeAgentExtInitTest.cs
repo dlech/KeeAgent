@@ -101,7 +101,11 @@ namespace KeeAgentTestProject
 			DirectoryInfo projectDir = new DirectoryInfo(Path.Combine(assmFile.Directory.FullName, @"..\..\..\KeeAgent"));
 			string plgxFilePath = Path.Combine(projectDir.Parent.FullName, "KeeAgent.plgx");			
 			File.Delete(plgxFilePath);
-			KeePassControl.CreatePlgx(projectDir.FullName, null, "4.0", "Windows", null, null, null);
+            PlgxBuildOptions buildOptions = new PlgxBuildOptions();
+            buildOptions.projectPath = projectDir.FullName;
+            buildOptions.dotnetVersion = "4.0";
+            buildOptions.os = "Windows";
+			KeePassControl.CreatePlgx(buildOptions);
 			Assert.IsTrue(File.Exists(plgxFilePath));
 
 			// TODO loading plgx this way (below) does not work

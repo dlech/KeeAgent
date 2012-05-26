@@ -120,6 +120,10 @@
   <data name="ErrPageantRunning" xml:space="preserve">
     <value>Pageant is already running. KeeAgent plugin will not be loaded.</value>
   </data>
+  <data name="KeeAgent" xml:space="preserve">
+    <value>KeeAgent</value>
+    <comment>Name of plugin</comment>
+  </data>
   <data name="NotifyKeyFetched" xml:space="preserve">
     <value>SSH key was fetched by another application.</value>
   </data>

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Windows.Forms;
 using KeePass.Plugins;
-using System.Windows.Forms;
-using System.Reflection;
 
 namespace KeeAgent.UI
 {
@@ -26,7 +21,7 @@ namespace KeeAgent.UI
 		public void ShowNotification(string message) {
 			MethodInvoker invoker = delegate() {
 				this.pluginHost.MainWindow.MainNotifyIcon.ShowBalloonTip(
-					5000, Assembly.GetExecutingAssembly().GetName().Name,
+					5000, Translatable.KeeAgent,
 					message, ToolTipIcon.Info);
 			};
 			InvokeMainWindow(invoker);

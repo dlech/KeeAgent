@@ -1,0 +1,14 @@
+v0.1.4 (2012-05-26)
+-------------------
+* Fixed compatibility with KeePass 2.17
+
+
+v0.1.3 (2012-05-25)
+-------------------
+* Fixed bug where DSA keys larger than 1024bits and some RSA keys
+  did not work.
+
+
+v0.1.2 (2012-05-08)
+-------------------
+* Inital public realease.

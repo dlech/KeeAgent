@@ -159,8 +159,6 @@
 		private System.Windows.Forms.Button closeButton;
 		private KeyDataSet keyDataSet;
 		private System.Windows.Forms.DataGridView keyDataGridView;
-		private System.Windows.Forms.DataGridViewTextBoxColumn typeDataGridViewTextBoxColumn;
-		private System.Windows.Forms.DataGridViewTextBoxColumn encryptionDataGridViewTextBoxColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
 		private System.Windows.Forms.DataGridViewTextBoxColumn keyTypeDataGridViewTextBoxColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn keySizeDataGridViewTextBoxColumn;

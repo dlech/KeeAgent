@@ -1,22 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
-using System.Drawing;
-using KeePass.Plugins;
-using dlech.PageantSharp;
-using KeeAgent.UI;
-using KeePassLib;
-using KeePassLib.Security;
-using System.IO;
-using System.Security;
-using KeePassLib.Cryptography;
 using System.Diagnostics;
-using KeePassLib.Utility;
-using System.Reflection;
+using System.Drawing;
+using System.Security;
+using System.Windows.Forms;
+using dlech.PageantSharp;
 using KeeAgent.Properties;
-using KeePass;
-using KeePass.App;
+using KeeAgent.UI;
+using KeePass.Plugins;
+using KeePassLib;
+using KeePassLib.Cryptography;
+using KeePassLib.Security;
+using KeePassLib.Utility;
 
 namespace KeeAgent
 {
@@ -63,8 +58,8 @@ namespace KeeAgent
 
         /// <summary>
         /// Returns url for automatic updating of plugin
-        /// </summary>
-        public override string UpdateUrl
+        /// </summary> 
+        public new string UpdateUrl //using new instead of override for KP 2.17 compatibility
         {
             get { return "http://updates.lechnology.com/KeePassPlugins"; }
         }
@@ -82,7 +77,7 @@ namespace KeeAgent
 
             /* create parent menu item */
             keeAgentMenuItem = new ToolStripMenuItem();
-            keeAgentMenuItem.Text = Assembly.GetExecutingAssembly().GetName().Name;
+            keeAgentMenuItem.Text = Translatable.KeeAgent;
 
             if (pageant != null) {
                 /* create children menu items */
@@ -152,23 +147,13 @@ namespace KeeAgent
 
                         if (bin.Key.EndsWith(".ppk")) {
                             try {
-                                SecureString passphrase = null;
-                                CryptoRandomStream crsRandomSource;
-                                ProtectedString passphraseFromKeepass = entry.Strings.Get(PwDefs.PasswordField);
-                                if (passphraseFromKeepass != null) {
-                                    /* use random bytes to protect passphrase in memory */
-                                    byte[] randomBytes = CryptoRandom.Instance.GetRandomBytes(256);
-                                    crsRandomSource = new CryptoRandomStream(CrsAlgorithm.Salsa20, randomBytes);
-                                    byte[] passphraseBytes = passphraseFromKeepass.ReadXorredString(crsRandomSource);
-                                    crsRandomSource = new CryptoRandomStream(CrsAlgorithm.Salsa20, randomBytes);
-                                    randomBytes = crsRandomSource.GetRandomBytes((uint)passphraseBytes.Length);
-                                    passphrase = new SecureString();
-                                    /* convert passphrase from KeePass protected format to .NET protected format */
-                                    for (int i = 0; i < passphraseBytes.Length; i++) {
-                                        passphrase.AppendChar((char)(passphraseBytes[i] ^ randomBytes[i]));
-                                    }
-                                    Array.Clear(passphraseBytes, 0, passphraseBytes.Length);
+                                SecureString passphrase = new SecureString();
+                                byte[] passphraseBytes = entry.Strings.Get(PwDefs.PasswordField).ReadUtf8();                                 
+                                /* convert passphrase from KeePass protected format to .NET protected format */
+                                for (int i = 0; i < passphraseBytes.Length; i++) {
+                                    passphrase.AppendChar((char)(passphraseBytes[i]));
                                 }
+                                Array.Clear(passphraseBytes, 0, passphraseBytes.Length);
 
                                 PpkFile.GetPassphraseCallback getPassphrase = delegate()
                                 {
