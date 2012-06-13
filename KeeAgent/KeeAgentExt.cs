@@ -12,6 +12,7 @@ using KeePassLib;
 using KeePassLib.Cryptography;
 using KeePassLib.Security;
 using KeePassLib.Utility;
+using KeePass.UI;
 
 namespace KeeAgent
 {
@@ -137,10 +138,11 @@ namespace KeeAgent
             pluginHost.MainWindow.NotifyUserActivity();
 
             List<KeeAgentKey> keyList = new List<KeeAgentKey>();
+            List<PwDatabase> databases;
+            databases = this.pluginHost.MainWindow.DocumentManager.GetOpenDatabases();
 
-            if (this.pluginHost != null && this.pluginHost.Database != null) {
-
-                foreach (PwEntry entry in this.pluginHost.Database.RootGroup.GetEntries(true)) {
+            foreach (PwDatabase database in databases) {
+                foreach (PwEntry entry in database.RootGroup.GetEntries(true)) {
                     foreach (KeyValuePair<string, ProtectedBinary> bin in entry.Binaries) {
 
                         /* handle PuTTY Private Key files */
@@ -148,7 +150,7 @@ namespace KeeAgent
                         if (bin.Key.EndsWith(".ppk")) {
                             try {
                                 SecureString passphrase = new SecureString();
-                                byte[] passphraseBytes = entry.Strings.Get(PwDefs.PasswordField).ReadUtf8();                                 
+                                byte[] passphraseBytes = entry.Strings.Get(PwDefs.PasswordField).ReadUtf8();
                                 /* convert passphrase from KeePass protected format to .NET protected format */
                                 for (int i = 0; i < passphraseBytes.Length; i++) {
                                     passphrase.AppendChar((char)(passphraseBytes[i]));
