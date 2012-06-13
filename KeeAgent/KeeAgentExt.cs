@@ -39,7 +39,7 @@ namespace KeeAgent
                 result = false;
             }
 
-            InvokeMainWindow(new MethodInvoker(AddMenuItems));
+            AddMenuItems();
 
             return result;
         }
@@ -49,7 +49,7 @@ namespace KeeAgent
             if (this.pageant != null) {
                 this.pageant.Dispose();
             }
-            InvokeMainWindow(new MethodInvoker(RemoveMenuItems));
+            RemoveMenuItems();
         }
 
         public override Image SmallIcon
@@ -115,18 +115,7 @@ namespace KeeAgent
             KeyListDialog dialog = new KeyListDialog(this);
             DialogResult result = dialog.ShowDialog(pluginHost.MainWindow);
             dialog.Dispose();
-        }
-
-        private void InvokeMainWindow(MethodInvoker methodInvoker)
-        {
-            Form mainWindow = this.pluginHost.MainWindow;
-
-            if (mainWindow.InvokeRequired) {
-                mainWindow.Invoke(methodInvoker);
-            } else {
-                methodInvoker.Invoke();
-            }
-        }
+        }        
 
         internal IEnumerable<PpkKey> GetPpkKeyList()
         {
