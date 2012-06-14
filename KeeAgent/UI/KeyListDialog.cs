@@ -27,14 +27,22 @@ namespace KeeAgent.UI
 			IEnumerable<KeeAgentKey> keyList = ext.GetKeeAgentKeyList();
 
 			foreach (KeeAgentKey key in keyList) {
-				PwEntry entry = ext.pluginHost.Database.RootGroup.FindEntry(key.Uuid, true);
+                PwEntry entry = null;
+                List<PwDatabase> databases = ext.pluginHost.MainWindow.DocumentManager.GetOpenDatabases();
+                foreach (PwDatabase database in databases) {
+                    // make sure we are looking in the right database
+                    if (database.IOConnectionInfo.Path == key.DbPath) {
+                        entry = database.RootGroup.FindEntry(key.Uuid, true);
+                        break;
+                    }
+                }
 				if (entry != null) {
 
 					/* build group path string */
-					string path = entry.Strings.Get(PwDefs.TitleField).ReadString();
+					string groupPath = entry.Strings.Get(PwDefs.TitleField).ReadString();
 					PwGroup parentGroup = entry.ParentGroup;
 					while (parentGroup != null) {
-						path = Path.Combine(parentGroup.Name, path);
+						groupPath = Path.Combine(parentGroup.Name, groupPath);
 						parentGroup = parentGroup.ParentGroup;
 					}
 
@@ -60,8 +68,9 @@ namespace KeeAgent.UI
                         key.Size,
 						fingerprint,
 						key.Comment,
-						path,
-						key.Filename
+                        key.DbPath,
+						groupPath,
+						key.KeyFileName
 					);
 				}
 
@@ -76,5 +85,10 @@ namespace KeeAgent.UI
 				this.Icon = this.Owner.Icon;
 			}
 		}
+
+        private void keyDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
 	}
 }

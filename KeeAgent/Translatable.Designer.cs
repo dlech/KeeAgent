@@ -88,6 +88,15 @@ namespace KeeAgent {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Options.
+        /// </summary>
+        internal static string OptionsMenuItem {
+            get {
+                return ResourceManager.GetString("OptionsMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to List PuTTY Keys.
         /// </summary>
         internal static string ShowPuttyKeysMenuItem {

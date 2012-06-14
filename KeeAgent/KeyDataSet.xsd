@@ -19,8 +19,9 @@
               <xs:element name="KeySize" msdata:Caption="Size" msprop:Generator_ColumnVarNameInTable="columnKeySize" msprop:Generator_ColumnPropNameInRow="KeySize" msprop:Generator_ColumnPropNameInTable="KeySizeColumn" msprop:Generator_UserColumnName="KeySize" type="xs:int" minOccurs="0" />
               <xs:element name="Fingerprint" msprop:Generator_ColumnVarNameInTable="columnFingerprint" msprop:Generator_ColumnPropNameInRow="Fingerprint" msprop:Generator_ColumnPropNameInTable="FingerprintColumn" msprop:Generator_UserColumnName="Fingerprint" type="xs:string" minOccurs="0" />
               <xs:element name="Comment" msprop:Generator_ColumnVarNameInTable="columnComment" msprop:Generator_ColumnPropNameInRow="Comment" msprop:Generator_ColumnPropNameInTable="CommentColumn" msprop:Generator_UserColumnName="Comment" type="xs:string" minOccurs="0" />
+              <xs:element name="DbName" msprop:Generator_ColumnVarNameInTable="columnDbName" msprop:Generator_ColumnPropNameInRow="DbName" msprop:Generator_ColumnPropNameInTable="DbNameColumn" msprop:Generator_UserColumnName="DbName" type="xs:string" minOccurs="0" />
               <xs:element name="DbPath" msdata:Caption="Database Path" msprop:Generator_ColumnVarNameInTable="columnDbPath" msprop:Generator_ColumnPropNameInRow="DbPath" msprop:Generator_ColumnPropNameInTable="DbPathColumn" msprop:Generator_UserColumnName="DbPath" type="xs:string" minOccurs="0" />
-              <xs:element name="FileName" msdata:Caption="File Name" msprop:Generator_ColumnVarNameInTable="columnFileName" msprop:Generator_ColumnPropNameInRow="FileName" msprop:Generator_ColumnPropNameInTable="FileNameColumn" msprop:Generator_UserColumnName="FileName" type="xs:string" minOccurs="0" />
+              <xs:element name="FileName" msdata:Caption="File Name" msprop:Generator_ColumnVarNameInTable="columnFileName" msprop:Generator_ColumnPropNameInRow="FileName" msprop:Generator_ColumnPropNameInTable="FileNameColumn" msprop:Generator_UserColumnName="FileName" type="xs:string" minOccurs="0" />              
             </xs:sequence>
           </xs:complexType>
         </xs:element>

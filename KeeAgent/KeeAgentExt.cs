@@ -138,17 +138,23 @@ namespace KeeAgent
 
                         if (bin.Key.EndsWith(".ppk")) {
                             try {
-                                SecureString passphrase = new SecureString();
-                                byte[] passphraseBytes = entry.Strings.Get(PwDefs.PasswordField).ReadUtf8();
-                                /* convert passphrase from KeePass protected format to .NET protected format */
-                                for (int i = 0; i < passphraseBytes.Length; i++) {
-                                    passphrase.AppendChar((char)(passphraseBytes[i]));
+                                SecureString ssPassphrase = null;
+                                ProtectedString psPassphrase = entry.Strings.Get(PwDefs.PasswordField);
+                                if (psPassphrase != null) {
+                                    byte[] passphraseBytes = psPassphrase.ReadUtf8();
+                                    /* convert passphrase from KeePass protected format to .NET protected format */
+                                    ssPassphrase = new SecureString();
+                                    for (int i = 0; i < passphraseBytes.Length; i++) {
+                                        ssPassphrase.AppendChar((char)(passphraseBytes[i]));
+                                    }
+                                    Array.Clear(passphraseBytes, 0, passphraseBytes.Length);
                                 }
-                                Array.Clear(passphraseBytes, 0, passphraseBytes.Length);
+
+                                string dbPath = database.IOConnectionInfo.Path;
 
                                 PpkFile.GetPassphraseCallback getPassphrase = delegate()
                                 {
-                                    return passphrase;
+                                    return ssPassphrase;
                                 };
 
                                 PpkFile.WarnOldFileFormatCallback warnUser = delegate()
@@ -157,7 +163,7 @@ namespace KeeAgent
                                 };
 
                                 PpkKey ppkKey = PpkFile.ParseData(bin.Value.ReadData(), getPassphrase, warnUser);
-                                KeeAgentKey key = new KeeAgentKey(ppkKey, entry.Uuid, bin.Key);
+                                KeeAgentKey key = new KeeAgentKey(ppkKey, dbPath, entry.Uuid, bin.Key);
                                 keyList.Add(key);
                             } catch (Exception ex) {
                                 MessageService.ShowWarning("Error while loading key from ", entry.Strings.Get(PwDefs.TitleField).ReadString(), ex.ToString());
@@ -178,8 +184,11 @@ namespace KeeAgent
             this.uiHelper.ShowNotification(Translatable.NotifyKeyFetched);
 
             /* TODO it would probably be better if we cached the fingerprints and mapped them
-             * to the PwEntry Uuid rather than regenerating the full list to get
-             * a single key as we are doing here. 
+             * to the database path and the PwEntry Uuid rather than regenerating the full list
+             * to get a single key as we are doing here.
+             * 
+             * Also, there is the problem of duplicate fingerprints. We are currently just
+             * selecting the first match.
              */
 
             IEnumerable<PpkKey> ppkKeyList = GetPpkKeyList();

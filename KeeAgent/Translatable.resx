@@ -127,6 +127,9 @@
   <data name="NotifyKeyFetched" xml:space="preserve">
     <value>SSH key was fetched by another application.</value>
   </data>
+  <data name="OptionsMenuItem" xml:space="preserve">
+    <value>Options</value>
+  </data>
   <data name="ShowPuttyKeysMenuItem" xml:space="preserve">
     <value>List PuTTY Keys</value>
   </data>

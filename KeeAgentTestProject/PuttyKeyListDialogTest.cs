@@ -78,6 +78,7 @@ namespace KeeAgentTestProject
             puttyGroup.AddEntry(nonStandardLengthPassEntry, true);
 
 			pluginHost.Database.RootGroup.AddGroup(puttyGroup, true);
+
 			pluginHost.MainWindow.Invoke(new MethodInvoker(delegate()
 			{
 				pluginHost.MainWindow.UpdateUI(false, null, true, puttyGroup, true, puttyGroup, false);
@@ -114,19 +115,17 @@ namespace KeeAgentTestProject
 		public void PuttyKeyListDialogGeneralTest()
 		{
             Plugin keeAgent = new KeeAgentExt();
-            MethodInvoker methodInvoker = new MethodInvoker(delegate()
+            KeePassControl.InvokeMainWindow((MethodInvoker)delegate()
             {                
                 keeAgent.Initialize(pluginHost);
             });
-            KeePassControl.InvokeMainWindow(methodInvoker);
 
             MessageBox.Show("Click OK when done");
 
-            methodInvoker = new MethodInvoker(delegate()
+            KeePassControl.InvokeMainWindow((MethodInvoker)delegate()
             {
                 keeAgent.Terminate();
             });
-            KeePassControl.InvokeMainWindow(methodInvoker);
 		}       
 	}
 }
