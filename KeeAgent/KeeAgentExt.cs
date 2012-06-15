@@ -115,7 +115,7 @@ namespace KeeAgent
             KeyListDialog dialog = new KeyListDialog(this);
             DialogResult result = dialog.ShowDialog(pluginHost.MainWindow);
             dialog.Dispose();
-        }        
+        }
 
         internal IEnumerable<PpkKey> GetPpkKeyList()
         {
@@ -131,7 +131,13 @@ namespace KeeAgent
             databases = this.pluginHost.MainWindow.DocumentManager.GetOpenDatabases();
 
             foreach (PwDatabase database in databases) {
-                foreach (PwEntry entry in database.RootGroup.GetEntries(true)) {
+                foreach (PwEntry entry in database.RootGroup.GetEntries(true)) {   
+                 
+                    if (database.RecycleBinEnabled && (entry.ParentGroup.Uuid == database.RecycleBinUuid)) {
+                        // ignore entries in recycle bin
+                        continue;
+                    }
+
                     foreach (KeyValuePair<string, ProtectedBinary> bin in entry.Binaries) {
 
                         /* handle PuTTY Private Key files */
