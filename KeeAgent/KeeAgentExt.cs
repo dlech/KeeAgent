@@ -131,11 +131,22 @@ namespace KeeAgent
             databases = this.pluginHost.MainWindow.DocumentManager.GetOpenDatabases();
 
             foreach (PwDatabase database in databases) {
-                foreach (PwEntry entry in database.RootGroup.GetEntries(true)) {   
-                 
-                    if (database.RecycleBinEnabled && (entry.ParentGroup.Uuid == database.RecycleBinUuid)) {
-                        // ignore entries in recycle bin
-                        continue;
+                foreach (PwEntry entry in database.RootGroup.GetEntries(true)) {
+                    
+                    if (database.RecycleBinEnabled) {
+                        bool skipEntry = false;
+                        PwGroup testGroup = entry.ParentGroup;
+                        while (testGroup != null) {
+                            if (testGroup.Uuid.EqualsValue(database.RecycleBinUuid)) {
+                                // ignore entries in recycle bin
+                                skipEntry = true;
+                                break;
+                            }
+                            testGroup = testGroup.ParentGroup;
+                        }
+                        if (skipEntry) {
+                            continue;
+                        }
                     }
 
                     foreach (KeyValuePair<string, ProtectedBinary> bin in entry.Binaries) {
