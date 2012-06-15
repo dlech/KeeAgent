@@ -39,12 +39,15 @@ namespace KeeAgent.UI
 				if (entry != null) {
 
 					/* build group path string */
-					string groupPath = entry.Strings.Get(PwDefs.TitleField).ReadString();
+                    string groupPath = string.Empty;
 					PwGroup parentGroup = entry.ParentGroup;
 					while (parentGroup != null) {
 						groupPath = Path.Combine(parentGroup.Name, groupPath);
 						parentGroup = parentGroup.ParentGroup;
 					}
+
+                    /* get entry title */
+                    string entryTitle = entry.Strings.Get(PwDefs.TitleField).ReadString();
 
 					/* get fingerprint */
 					string fingerprint;
@@ -70,6 +73,7 @@ namespace KeeAgent.UI
 						key.Comment,
                         key.DbPath,
 						groupPath,
+                        entryTitle,
 						key.KeyFileName
 					);
 				}

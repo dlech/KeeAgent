@@ -14,109 +14,110 @@ namespace KeeAgentTestProject
 {
 
 
-	/// <summary>
-	///This is a test class for PuttyKeyListDialogTest and is intended
-	///to contain all PuttyKeyListDialogTest Unit Tests
-	///</summary>
-	[TestClass()]
-	public class PuttyKeyListDialogTest
-	{
-		private static IPluginHost pluginHost;
+    /// <summary>
+    ///This is a test class for PuttyKeyListDialogTest and is intended
+    ///to contain all PuttyKeyListDialogTest Unit Tests
+    ///</summary>
+    [TestClass()]
+    public class PuttyKeyListDialogTest
+    {
+        private static IPluginHost pluginHost;
 
-		private TestContext testContextInstance;
+        private TestContext testContextInstance;
 
-		/// <summary>
-		///Gets or sets the test context which provides
-		///information about and functionality for the current test run.
-		///</summary>
-		public TestContext TestContext
-		{
-			get
-			{
-				return testContextInstance;
-			}
-			set
-			{
-				testContextInstance = value;
-			}
-		}
+        /// <summary>
+        ///Gets or sets the test context which provides
+        ///information about and functionality for the current test run.
+        ///</summary>
+        public TestContext TestContext
+        {
+            get
+            {
+                return testContextInstance;
+            }
+            set
+            {
+                testContextInstance = value;
+            }
+        }
 
-		#region Additional test attributes
-		// 
-		//You can use the following additional attributes as you write your tests:
-		//
-		//Use ClassInitialize to run code before running the first test in the class
-		[ClassInitialize()]
-		public static void MyClassInitialize(TestContext testContext)
-		{
-			pluginHost = KeePassControl.StartKeePass();
+        #region Additional test attributes
+        // 
+        //You can use the following additional attributes as you write your tests:
+        //
+        //Use ClassInitialize to run code before running the first test in the class
+        [ClassInitialize()]
+        public static void MyClassInitialize(TestContext testContext)
+        {
+            pluginHost = KeePassControl.StartKeePass();
 
-			PwEntry withPassEntry = new PwEntry(true, true);
-			withPassEntry.Strings.Set(PwDefs.TitleField, new ProtectedString(true, "with-passphrase"));
-			withPassEntry.Binaries.Set("withPass.ppk", new ProtectedBinary(true, Resources.withPassphrase_ppk));
-			withPassEntry.Strings.Set(PwDefs.PasswordField, new ProtectedString(true, "KeeAgent"));
+            PwEntry withPassEntry = new PwEntry(true, true);
+            withPassEntry.Strings.Set(PwDefs.TitleField, new ProtectedString(true, "with-passphrase"));
+            withPassEntry.Binaries.Set("withPass.ppk", new ProtectedBinary(true, Resources.withPassphrase_ppk));
+            withPassEntry.Strings.Set(PwDefs.PasswordField, new ProtectedString(true, "KeeAgent"));
 
-			PwEntry withoutPassEntry = new PwEntry(true, true);
-			withoutPassEntry.Strings.Set(PwDefs.TitleField, new ProtectedString(true, "without-passphrase"));
-			withoutPassEntry.Binaries.Set("withoutPass.ppk", new ProtectedBinary(true, Resources.withoutPassphrase_ppk));
+            PwEntry withoutPassEntry = new PwEntry(true, true);
+            withoutPassEntry.Strings.Set(PwDefs.TitleField, new ProtectedString(true, "without-passphrase"));
+            withoutPassEntry.Binaries.Set("withoutPass.ppk", new ProtectedBinary(true, Resources.withoutPassphrase_ppk));
 
-			PwEntry dsaPassEntry = new PwEntry(true, true);
-			dsaPassEntry.Strings.Set(PwDefs.TitleField, new ProtectedString(true, "dsa-with-passphrase"));
-			dsaPassEntry.Binaries.Set("dsaWithPass.ppk", new ProtectedBinary(true, Resources.dsa_ppk));
-			dsaPassEntry.Strings.Set(PwDefs.PasswordField, new ProtectedString(true, "KeeAgent"));
+            PwEntry dsaPassEntry = new PwEntry(true, true);
+            dsaPassEntry.Strings.Set(PwDefs.TitleField, new ProtectedString(true, "dsa-with-passphrase"));
+            dsaPassEntry.Binaries.Set("dsaWithPass.ppk", new ProtectedBinary(true, Resources.dsa_ppk));
+            dsaPassEntry.Strings.Set(PwDefs.PasswordField, new ProtectedString(true, "KeeAgent"));
 
             PwEntry nonStandardLengthPassEntry = new PwEntry(true, true);
             nonStandardLengthPassEntry.Strings.Set(PwDefs.TitleField, new ProtectedString(true, "4095-bits"));
             nonStandardLengthPassEntry.Binaries.Set("4095-bits.ppk", new ProtectedBinary(true, Resources._4095_bits_ppk));
             nonStandardLengthPassEntry.Strings.Set(PwDefs.PasswordField, new ProtectedString(true, "KeeAgent"));
 
-			PwGroup puttyGroup = new PwGroup();
-			puttyGroup.Name = "Putty";
-			puttyGroup.AddEntry(withPassEntry, true);
-			puttyGroup.AddEntry(withoutPassEntry, true);
-			puttyGroup.AddEntry(dsaPassEntry, true);
+            PwGroup puttyGroup = new PwGroup();
+            puttyGroup.Name = "Putty";
+            puttyGroup.Uuid = new PwUuid(true);
+            puttyGroup.AddEntry(withPassEntry, true);
+            puttyGroup.AddEntry(withoutPassEntry, true);
+            puttyGroup.AddEntry(dsaPassEntry, true);
             puttyGroup.AddEntry(nonStandardLengthPassEntry, true);
 
-			pluginHost.Database.RootGroup.AddGroup(puttyGroup, true);
+            pluginHost.Database.RootGroup.AddGroup(puttyGroup, true);
 
-			pluginHost.MainWindow.Invoke(new MethodInvoker(delegate()
-			{
-				pluginHost.MainWindow.UpdateUI(false, null, true, puttyGroup, true, puttyGroup, false);
-			}
-			));
-		}
+            pluginHost.MainWindow.Invoke(new MethodInvoker(delegate()
+            {
+                pluginHost.MainWindow.UpdateUI(false, null, true, puttyGroup, true, puttyGroup, false);
+            }
+            ));
+        }
 
-		//Use ClassCleanup to run code after all tests in a class have run
-		[ClassCleanup()]
-		public static void MyClassCleanup()
-		{
-			KeePassControl.ExitAll();
-		}
+        //Use ClassCleanup to run code after all tests in a class have run
+        [ClassCleanup()]
+        public static void MyClassCleanup()
+        {
+            KeePassControl.ExitAll();
+        }
 
-		//Use TestInitialize to run code before running each test
-		//[TestInitialize()]
-		//public void MyTestInitialize()
-		//{
-		//}
-		//
-		//Use TestCleanup to run code after each test has run
-		//[TestCleanup()]
-		//public void MyTestCleanup()
-		//{
-		//}
-		//
-		#endregion
+        //Use TestInitialize to run code before running each test
+        //[TestInitialize()]
+        //public void MyTestInitialize()
+        //{
+        //}
+        //
+        //Use TestCleanup to run code after each test has run
+        //[TestCleanup()]
+        //public void MyTestCleanup()
+        //{
+        //}
+        //
+        #endregion
 
 
-		/// <summary>
-		///A test for PuttyKeyListDialog 
-		///</summary>
-		[TestMethod()]
-		public void PuttyKeyListDialogGeneralTest()
-		{
+        /// <summary>
+        ///A test for PuttyKeyListDialog 
+        ///</summary>
+        [TestMethod()]
+        public void PuttyKeyListDialogGeneralTest()
+        {
             Plugin keeAgent = new KeeAgentExt();
             KeePassControl.InvokeMainWindow((MethodInvoker)delegate()
-            {                
+            {
                 keeAgent.Initialize(pluginHost);
             });
 
@@ -126,6 +127,6 @@ namespace KeeAgentTestProject
             {
                 keeAgent.Terminate();
             });
-		}       
-	}
+        }
+    }
 }

@@ -289,7 +289,9 @@ namespace KeeAgent {
             
             private global::System.Data.DataColumn columnDbName;
             
-            private global::System.Data.DataColumn columnDbPath;
+            private global::System.Data.DataColumn columnGroup;
+            
+            private global::System.Data.DataColumn columnEntry;
             
             private global::System.Data.DataColumn columnFileName;
             
@@ -368,9 +370,17 @@ namespace KeeAgent {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn DbPathColumn {
+            public global::System.Data.DataColumn GroupColumn {
                 get {
-                    return this.columnDbPath;
+                    return this.columnGroup;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn EntryColumn {
+                get {
+                    return this.columnEntry;
                 }
             }
             
@@ -419,7 +429,7 @@ namespace KeeAgent {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public KeysRow AddKeysRow(string KeyType, int KeySize, string Fingerprint, string Comment, string DbName, string DbPath, string FileName) {
+            public KeysRow AddKeysRow(string KeyType, int KeySize, string Fingerprint, string Comment, string DbName, string Group, string Entry, string FileName) {
                 KeysRow rowKeysRow = ((KeysRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         KeyType,
@@ -427,7 +437,8 @@ namespace KeeAgent {
                         Fingerprint,
                         Comment,
                         DbName,
-                        DbPath,
+                        Group,
+                        Entry,
                         FileName};
                 rowKeysRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowKeysRow);
@@ -456,7 +467,8 @@ namespace KeeAgent {
                 this.columnFingerprint = base.Columns["Fingerprint"];
                 this.columnComment = base.Columns["Comment"];
                 this.columnDbName = base.Columns["DbName"];
-                this.columnDbPath = base.Columns["DbPath"];
+                this.columnGroup = base.Columns["Group"];
+                this.columnEntry = base.Columns["Entry"];
                 this.columnFileName = base.Columns["FileName"];
             }
             
@@ -473,13 +485,14 @@ namespace KeeAgent {
                 base.Columns.Add(this.columnComment);
                 this.columnDbName = new global::System.Data.DataColumn("DbName", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnDbName);
-                this.columnDbPath = new global::System.Data.DataColumn("DbPath", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnDbPath);
+                this.columnGroup = new global::System.Data.DataColumn("Group", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnGroup);
+                this.columnEntry = new global::System.Data.DataColumn("Entry", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnEntry);
                 this.columnFileName = new global::System.Data.DataColumn("FileName", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnFileName);
                 this.columnKeyType.Caption = "Key Type";
                 this.columnKeySize.Caption = "Size";
-                this.columnDbPath.Caption = "Database Path";
                 this.columnFileName.Caption = "File Name";
             }
             
@@ -703,17 +716,33 @@ namespace KeeAgent {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string DbPath {
+            public string Group {
                 get {
                     try {
-                        return ((string)(this[this.tableKeys.DbPathColumn]));
+                        return ((string)(this[this.tableKeys.GroupColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'DbPath\' in table \'Keys\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Group\' in table \'Keys\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableKeys.DbPathColumn] = value;
+                    this[this.tableKeys.GroupColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Entry {
+                get {
+                    try {
+                        return ((string)(this[this.tableKeys.EntryColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Entry\' in table \'Keys\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableKeys.EntryColumn] = value;
                 }
             }
             
@@ -795,14 +824,26 @@ namespace KeeAgent {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsDbPathNull() {
-                return this.IsNull(this.tableKeys.DbPathColumn);
+            public bool IsGroupNull() {
+                return this.IsNull(this.tableKeys.GroupColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetDbPathNull() {
-                this[this.tableKeys.DbPathColumn] = global::System.Convert.DBNull;
+            public void SetGroupNull() {
+                this[this.tableKeys.GroupColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsEntryNull() {
+                return this.IsNull(this.tableKeys.EntryColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetEntryNull() {
+                this[this.tableKeys.EntryColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

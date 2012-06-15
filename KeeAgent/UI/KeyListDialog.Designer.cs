@@ -39,7 +39,8 @@
             this.fingerprintDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.commentDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fileNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dbPathDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Group = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Entry = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DbName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.keyDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.keysBindingSource)).BeginInit();
@@ -66,7 +67,8 @@
             this.fingerprintDataGridViewTextBoxColumn,
             this.commentDataGridViewTextBoxColumn,
             this.fileNameDataGridViewTextBoxColumn,
-            this.dbPathDataGridViewTextBoxColumn,
+            this.Group,
+            this.Entry,
             this.DbName});
             this.keyDataGridView.DataSource = this.keysBindingSource;
             this.keyDataGridView.Name = "keyDataGridView";
@@ -131,13 +133,21 @@
             this.fileNameDataGridViewTextBoxColumn.Name = "fileNameDataGridViewTextBoxColumn";
             this.fileNameDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // dbPathDataGridViewTextBoxColumn
+            // Group
             // 
-            this.dbPathDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.dbPathDataGridViewTextBoxColumn.DataPropertyName = "DbPath";
-            resources.ApplyResources(this.dbPathDataGridViewTextBoxColumn, "dbPathDataGridViewTextBoxColumn");
-            this.dbPathDataGridViewTextBoxColumn.Name = "dbPathDataGridViewTextBoxColumn";
-            this.dbPathDataGridViewTextBoxColumn.ReadOnly = true;
+            this.Group.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.Group.DataPropertyName = "Group";
+            resources.ApplyResources(this.Group, "Group");
+            this.Group.Name = "Group";
+            this.Group.ReadOnly = true;
+            // 
+            // Entry
+            // 
+            this.Entry.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.Entry.DataPropertyName = "Entry";
+            resources.ApplyResources(this.Entry, "Entry");
+            this.Entry.Name = "Entry";
+            this.Entry.ReadOnly = true;
             // 
             // DbName
             // 
@@ -177,7 +187,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn fingerprintDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn commentDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn fileNameDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dbPathDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Group;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Entry;
         private System.Windows.Forms.DataGridViewTextBoxColumn DbName;
 	}
 }

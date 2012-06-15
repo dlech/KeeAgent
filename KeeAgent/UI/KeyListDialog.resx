@@ -183,11 +183,23 @@
   <data name="fileNameDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
     <value>79</value>
   </data>
-  <data name="dbPathDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
-    <value>Group Path</value>
+  <metadata name="Group.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="Group.HeaderText" xml:space="preserve">
+    <value>Group</value>
   </data>
-  <data name="dbPathDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
-    <value>86</value>
+  <data name="Group.Width" type="System.Int32, mscorlib">
+    <value>61</value>
+  </data>
+  <metadata name="Entry.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="Entry.HeaderText" xml:space="preserve">
+    <value>Entry</value>
+  </data>
+  <data name="Entry.Width" type="System.Int32, mscorlib">
+    <value>56</value>
   </data>
   <metadata name="DbName.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -225,9 +237,6 @@
   <data name="&gt;&gt;keyDataGridView.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <metadata name="keyDataSet.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <data name="dataGridViewTextBoxColumn1.HeaderText" xml:space="preserve">
     <value>Value</value>
   </data>
@@ -291,10 +300,16 @@
   <data name="&gt;&gt;fileNameDataGridViewTextBoxColumn.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;dbPathDataGridViewTextBoxColumn.Name" xml:space="preserve">
-    <value>dbPathDataGridViewTextBoxColumn</value>
+  <data name="&gt;&gt;Group.Name" xml:space="preserve">
+    <value>Group</value>
   </data>
-  <data name="&gt;&gt;dbPathDataGridViewTextBoxColumn.Type" xml:space="preserve">
+  <data name="&gt;&gt;Group.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Entry.Name" xml:space="preserve">
+    <value>Entry</value>
+  </data>
+  <data name="&gt;&gt;Entry.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;DbName.Name" xml:space="preserve">
