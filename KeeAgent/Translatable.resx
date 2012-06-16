@@ -120,6 +120,17 @@
   <data name="ErrPageantRunning" xml:space="preserve">
     <value>Pageant is already running. KeeAgent plugin will not be loaded.</value>
   </data>
+  <data name="ErrParsingKey" xml:space="preserve">
+    <value>Error while loading key from entry '{0}' in group '{1}' in database '{2}'</value>
+    <comment>{0}=entry title, {1}=group path, {2}=database file path or url</comment>
+  </data>
+  <data name="ErrPpkFileException" xml:space="preserve">
+    <value>Error '{0}' occured while parsing file '{1}'</value>
+    <comment>{0}=error type, {1}=ppk file name</comment>
+  </data>
+  <data name="ErrUnknown" xml:space="preserve">
+    <value>Unknown Error</value>
+  </data>
   <data name="KeeAgent" xml:space="preserve">
     <value>KeeAgent</value>
     <comment>Name of plugin</comment>

@@ -70,6 +70,33 @@ namespace KeeAgent {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error while loading key from entry &apos;{0}&apos; in group &apos;{1}&apos; in database &apos;{2}&apos;.
+        /// </summary>
+        internal static string ErrParsingKey {
+            get {
+                return ResourceManager.GetString("ErrParsingKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error &apos;{0}&apos; occured while parsing file &apos;{1}&apos;.
+        /// </summary>
+        internal static string ErrPpkFileException {
+            get {
+                return ResourceManager.GetString("ErrPpkFileException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown Error.
+        /// </summary>
+        internal static string ErrUnknown {
+            get {
+                return ResourceManager.GetString("ErrUnknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to KeeAgent.
         /// </summary>
         internal static string KeeAgent {

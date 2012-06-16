@@ -13,6 +13,7 @@ using KeePassLib.Cryptography;
 using KeePassLib.Security;
 using KeePassLib.Utility;
 using KeePass.UI;
+using KeePass.App;
 
 namespace KeeAgent
 {
@@ -119,10 +120,15 @@ namespace KeeAgent
 
         internal IEnumerable<PpkKey> GetPpkKeyList()
         {
-            return (IEnumerable<PpkKey>)GetKeeAgentKeyList();
+            return (IEnumerable<PpkKey>)GetKeeAgentKeyList(true);
         }
 
         internal IEnumerable<KeeAgentKey> GetKeeAgentKeyList()
+        {
+            return GetKeeAgentKeyList(false);
+        }
+
+        internal IEnumerable<KeeAgentKey> GetKeeAgentKeyList(bool suppressErrorMessage)
         {
             pluginHost.MainWindow.NotifyUserActivity();
 
@@ -132,7 +138,7 @@ namespace KeeAgent
 
             foreach (PwDatabase database in databases) {
                 foreach (PwEntry entry in database.RootGroup.GetEntries(true)) {
-                    
+
                     if (database.RecycleBinEnabled) {
                         bool skipEntry = false;
                         PwGroup testGroup = entry.ParentGroup;
@@ -183,9 +189,25 @@ namespace KeeAgent
                                 KeeAgentKey key = new KeeAgentKey(ppkKey, dbPath, entry.Uuid, bin.Key);
                                 keyList.Add(key);
                             } catch (Exception ex) {
-                                MessageService.ShowWarning("Error while loading key from ", entry.Strings.Get(PwDefs.TitleField).ReadString(), ex.ToString());
+                                if (!suppressErrorMessage) {
+                                    string errorMessage = string.Format(Translatable.ErrParsingKey,
+                                        entry.Strings.Get(PwDefs.TitleField).ReadString(),
+                                        entry.ParentGroup.GetFullPath(),
+                                        database.IOConnectionInfo.GetDisplayName());
+                                    string details = Translatable.ErrUnknown;
+                                    if (ex is PpkFileException) {
+                                        PpkFileException ppkFileEx = (PpkFileException)ex;
+                                        details = string.Format(Translatable.ErrPpkFileException, 
+                                            ppkFileEx.Error.ToString(),
+                                            bin.Key);
+                                    }
+                                    string debugInfo = null;
+                                    if (pluginHost.CommandLineArgs[AppDefs.CommandLineOptions.Debug] != null) {
+                                        debugInfo = ex.ToString();
+                                    }
+                                    MessageService.ShowWarning(errorMessage, details, debugInfo);
+                                }
                                 Debug.Fail(ex.ToString());
-                                // ignore errors - for now
                             }
                         } // end .ppk file
                     }
