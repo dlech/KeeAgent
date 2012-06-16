@@ -18,7 +18,7 @@ using System.IO;
 
 namespace KeeAgent
 {
-    public sealed class KeeAgentExt : Plugin
+    public sealed partial class KeeAgentExt : Plugin
     {
         internal IPluginHost pluginHost;
         private WinPageant pageant;
@@ -58,15 +58,6 @@ namespace KeeAgent
         {
             get { return Resources.KeeAgentIcon; }
         }
-
-        /// <summary>
-        /// Returns url for automatic updating of plugin
-        /// </summary> 
-        public new string UpdateUrl //using new instead of override for KP 2.17 compatibility
-        {
-            get { return "http://updates.lechnology.com/KeePassPlugins"; }
-        }
-
 
         private void ShowPageantRunningErrorMessage()
         {
@@ -198,7 +189,7 @@ namespace KeeAgent
                                     string details = Translatable.ErrUnknown;
                                     if (ex is PpkFileException) {
                                         PpkFileException ppkFileEx = (PpkFileException)ex;
-                                        details = string.Format(Translatable.ErrPpkFileException, 
+                                        details = string.Format(Translatable.ErrPpkFileException,
                                             ppkFileEx.Error.ToString(),
                                             bin.Key);
                                     }
