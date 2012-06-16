@@ -1,3 +1,10 @@
+v0.1.5 (2012-06-16)
+-------------------
+* Fixed broken update notification
+* Added support for multiple simultaneous databases
+* Improved error message for bad key files
+
+
 v0.1.4 (2012-05-26)
 -------------------
 * Fixed compatibility with KeePass 2.17
@@ -11,4 +18,4 @@ v0.1.3 (2012-05-25)
 
 v0.1.2 (2012-05-08)
 -------------------
-* Inital public realease.
+* Initial public release.
