@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using KeeAgentTestProject.Properties;
 using KeePassLib.Security;
 using System.Security.Cryptography;
+using System.Threading;
 
 namespace KeeAgentTestProject
 {
@@ -56,6 +57,11 @@ namespace KeeAgentTestProject
             withPassEntry.Binaries.Set("withPass.ppk", new ProtectedBinary(true, Resources.withPassphrase_ppk));
             withPassEntry.Strings.Set(PwDefs.PasswordField, new ProtectedString(true, "KeeAgent"));
 
+            PwEntry withBadPassEntry = new PwEntry(true, true);
+            withBadPassEntry.Strings.Set(PwDefs.TitleField, new ProtectedString(true, "with-bad-passphrase"));
+            withBadPassEntry.Binaries.Set("withBadPass.ppk", new ProtectedBinary(true, Resources.withPassphrase_ppk));
+            withBadPassEntry.Strings.Set(PwDefs.PasswordField, new ProtectedString(true, "BadPass"));
+
             PwEntry withoutPassEntry = new PwEntry(true, true);
             withoutPassEntry.Strings.Set(PwDefs.TitleField, new ProtectedString(true, "without-passphrase"));
             withoutPassEntry.Binaries.Set("withoutPass.ppk", new ProtectedBinary(true, Resources.withoutPassphrase_ppk));
@@ -70,13 +76,18 @@ namespace KeeAgentTestProject
             nonStandardLengthPassEntry.Binaries.Set("4095-bits.ppk", new ProtectedBinary(true, Resources._4095_bits_ppk));
             nonStandardLengthPassEntry.Strings.Set(PwDefs.PasswordField, new ProtectedString(true, "KeeAgent"));
 
-            PwGroup puttyGroup = new PwGroup();
-            puttyGroup.Name = "Putty";
-            puttyGroup.Uuid = new PwUuid(true);
-            puttyGroup.AddEntry(withPassEntry, true);
-            puttyGroup.AddEntry(withoutPassEntry, true);
-            puttyGroup.AddEntry(dsaPassEntry, true);
-            puttyGroup.AddEntry(nonStandardLengthPassEntry, true);
+            PwGroup rsaGroup = new PwGroup(true, true, "RSA", PwIcon.Key);
+            rsaGroup.AddEntry(withPassEntry, true);
+            rsaGroup.AddEntry(withBadPassEntry, true);
+            rsaGroup.AddEntry(withoutPassEntry, true);
+
+            PwGroup dsaGroup = new PwGroup(true, true, "DSA", PwIcon.Key);
+            dsaGroup.AddEntry(dsaPassEntry, true);
+            dsaGroup.AddEntry(nonStandardLengthPassEntry, true);
+
+            PwGroup puttyGroup = new PwGroup(true, true, "Putty", PwIcon.Key);
+            puttyGroup.AddGroup(rsaGroup, true);
+            puttyGroup.AddGroup(dsaGroup, true);
 
             pluginHost.Database.RootGroup.AddGroup(puttyGroup, true);
 
@@ -121,7 +132,9 @@ namespace KeeAgentTestProject
                 keeAgent.Initialize(pluginHost);
             });
 
-            MessageBox.Show("Click OK when done");
+            while (KeePass.Program.MainForm != null && KeePass.Program.MainForm.Visible == true) {
+                Thread.Sleep(500);
+            }
 
             KeePassControl.InvokeMainWindow((MethodInvoker)delegate()
             {

@@ -38,13 +38,8 @@ namespace KeeAgent.UI
                 }
 				if (entry != null) {
 
-					/* build group path string */
-                    string groupPath = string.Empty;
-					PwGroup parentGroup = entry.ParentGroup;
-					while (parentGroup != null) {
-						groupPath = Path.Combine(parentGroup.Name, groupPath);
-						parentGroup = parentGroup.ParentGroup;
-					}
+					/* get group path */
+                    string groupPath = entry.ParentGroup.GetFullPath();					
 
                     /* get entry title */
                     string entryTitle = entry.Strings.Get(PwDefs.TitleField).ReadString();
