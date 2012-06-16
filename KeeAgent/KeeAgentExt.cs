@@ -14,6 +14,7 @@ using KeePassLib.Security;
 using KeePassLib.Utility;
 using KeePass.UI;
 using KeePass.App;
+using System.IO;
 
 namespace KeeAgent
 {
@@ -192,7 +193,7 @@ namespace KeeAgent
                                 if (!suppressErrorMessage) {
                                     string errorMessage = string.Format(Translatable.ErrParsingKey,
                                         entry.Strings.Get(PwDefs.TitleField).ReadString(),
-                                        entry.ParentGroup.GetFullPath(),
+                                        entry.ParentGroup.GetFullPath(Path.DirectorySeparatorChar.ToString(), false),
                                         database.IOConnectionInfo.GetDisplayName());
                                     string details = Translatable.ErrUnknown;
                                     if (ex is PpkFileException) {

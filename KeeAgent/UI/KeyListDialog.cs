@@ -39,7 +39,7 @@ namespace KeeAgent.UI
 				if (entry != null) {
 
 					/* get group path */
-                    string groupPath = entry.ParentGroup.GetFullPath();					
+                    string groupPath = entry.ParentGroup.GetFullPath(Path.DirectorySeparatorChar.ToString(), false);					
 
                     /* get entry title */
                     string entryTitle = entry.Strings.Get(PwDefs.TitleField).ReadString();
