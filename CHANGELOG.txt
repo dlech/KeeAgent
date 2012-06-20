@@ -3,6 +3,7 @@ v0.1.5 (2012-06-16)
 * Fixed broken update notification
 * Added support for multiple simultaneous databases
 * Improved error message for bad key files
+* Now ignores entries in Recycle Bin
 
 
 v0.1.4 (2012-05-26)

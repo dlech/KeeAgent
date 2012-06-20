@@ -21,6 +21,8 @@ namespace KeeAgent
     public sealed partial class KeeAgentExt : Plugin
     {
         internal IPluginHost pluginHost;
+        internal Options options;
+
         private WinPageant pageant;
         private ToolStripMenuItem keeAgentMenuItem;
         private UIHelper uiHelper;
@@ -30,6 +32,7 @@ namespace KeeAgent
             bool result;
 
             this.pluginHost = host;
+            this.options = new Options(); //TODO persist options
             this.uiHelper = new UIHelper(this.pluginHost);
 
             try {
@@ -80,8 +83,13 @@ namespace KeeAgent
                 keeAgentListPuttyKeysMenuItem.ToolTipText = Translatable.ShowPuttyKeysMenuItemToolTip;
                 keeAgentListPuttyKeysMenuItem.Click += new EventHandler(keeAgentListPuttyKeysMenuItem_Click);
 
+                ToolStripMenuItem keeAgentOptionsMenuItem = new ToolStripMenuItem();
+                keeAgentOptionsMenuItem.Text = Translatable.OptionsMenuItem;
+                keeAgentOptionsMenuItem.Click += new EventHandler(keeAgentOptionsMenuItem_Click);
+
                 /* add children to parent */
                 keeAgentMenuItem.DropDownItems.Add(keeAgentListPuttyKeysMenuItem);
+                keeAgentMenuItem.DropDownItems.Add(keeAgentOptionsMenuItem);
             } else {
                 keeAgentMenuItem.Enabled = false;
             }
@@ -106,6 +114,13 @@ namespace KeeAgent
         private void keeAgentListPuttyKeysMenuItem_Click(object source, EventArgs e)
         {
             KeyListDialog dialog = new KeyListDialog(this);
+            DialogResult result = dialog.ShowDialog(pluginHost.MainWindow);
+            dialog.Dispose();
+        }
+
+        private void keeAgentOptionsMenuItem_Click(object source, EventArgs e)
+        {
+            OptionsDialog dialog = new OptionsDialog(this);
             DialogResult result = dialog.ShowDialog(pluginHost.MainWindow);
             dialog.Dispose();
         }
@@ -199,7 +214,6 @@ namespace KeeAgent
                                     }
                                     MessageService.ShowWarning(errorMessage, details, debugInfo);
                                 }
-                                Debug.Fail(ex.ToString());
                             }
                         } // end .ppk file
                     }
@@ -211,9 +225,7 @@ namespace KeeAgent
         internal PpkKey GetSSH2Key(byte[] fingerprint)
         {
             pluginHost.MainWindow.NotifyUserActivity();
-
-            this.uiHelper.ShowNotification(Translatable.NotifyKeyFetched);
-
+            
             /* TODO it would probably be better if we cached the fingerprints and mapped them
              * to the database path and the PwEntry Uuid rather than regenerating the full list
              * to get a single key as we are doing here.
@@ -222,9 +234,9 @@ namespace KeeAgent
              * selecting the first match.
              */
 
-            IEnumerable<PpkKey> ppkKeyList = GetPpkKeyList();
-            PpkKey result = null;
-            foreach (PpkKey ppkKey in ppkKeyList) {
+            IEnumerable<KeeAgentKey> ppkKeyList = GetKeeAgentKeyList();
+            KeeAgentKey result = null;
+            foreach (KeeAgentKey ppkKey in ppkKeyList) {
                 if (result == null) {
                     try {
                         byte[] testFingerprint = ppkKey.GetFingerprint();
@@ -250,7 +262,45 @@ namespace KeeAgent
                 }
             }
 
-            return result;
+            if 
+                (confirmKeyRequest(result)) {
+                return result;
+            } else {
+                result.Dispose();
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Asks for confirmation or notifies user of key request 
+        /// depending on option selected
+        /// </summary>
+        /// <param name="key">The key being requested</param>
+        /// <returns>true if the request was allowed by the user</returns>
+        public bool confirmKeyRequest(KeeAgentKey key)
+        {
+            switch (this.options.Notification) {
+                case NotificationOptions.AlwaysAsk:
+                case NotificationOptions.AskOnce:
+                    if (this.options.Notification == NotificationOptions.AskOnce) {
+                        // TODO implement request memory
+                    }
+                    // trick to make sure dialog shows in front of other applications
+                    this.pluginHost.MainWindow.TopMost = true;
+                    this.pluginHost.MainWindow.TopMost = false;
+                    DialogResult result = MessageBox.Show(Translatable.ConfirmKeyFetch, string.Empty,
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    return result == DialogResult.Yes;
+                case NotificationOptions.Balloon:
+                    string notifyText = string.Format(Translatable.NotifyKeyFetched, key.Comment);
+                    this.uiHelper.ShowBalloonNotification(notifyText);
+                    return true;
+                case NotificationOptions.Never:
+                    return true;
+                default:
+                    Debug.Fail("Unsupported option");
+                    return false;
+            }
         }
 
     } // class

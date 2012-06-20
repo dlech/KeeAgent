@@ -1,12 +1,14 @@
 ﻿using System.Windows.Forms;
 using KeePass.Plugins;
+using System;
+using System.Runtime.InteropServices;
 
 namespace KeeAgent.UI
 {
 	public class UIHelper
 	{
 		private IPluginHost pluginHost;
-
+        
 		public UIHelper(IPluginHost pluginHost)
 		{
 			this.pluginHost = pluginHost;
@@ -18,7 +20,7 @@ namespace KeeAgent.UI
 		/// Currently, this is only via the notification icon.
 		/// </summary>
 		/// <param name="message">The message to display</param>
-		public void ShowNotification(string message) {
+		public void ShowBalloonNotification(string message) {
 			MethodInvoker invoker = delegate() {
 				this.pluginHost.MainWindow.MainNotifyIcon.ShowBalloonTip(
 					5000, Translatable.KeeAgent,

@@ -89,6 +89,28 @@ namespace KeeAgentTestProject
 			}
 		}
 
+        /// <summary>
+        ///A test for persistance of options
+        ///</summary>
+        [TestMethod()]
+        public void OptionsPersistanceTest()
+        {
+            NotificationOptions expected = NotificationOptions.AlwaysAsk;
+
+            IPluginHost host = KeePassControl.StartKeePass();
+            KeeAgentExt target = new KeeAgentExt();
+            KeePassControl.InvokeMainWindow((MethodInvoker)delegate()
+            {
+                target.Initialize(host);
+                target.options.Notification = expected;
+                host.MainWindow.SaveConfig();
+                // TODO quit KeePass app - having trouble with --exit-all
+                Thread.Sleep(500);
+                host = KeePassControl.StartSecondKeePass();
+                target.Initialize(host);
+            });
+            Assert.AreEqual(expected, target.options);
+        }
 
 		/// <summary>
 		///A test for creating and loading plgx

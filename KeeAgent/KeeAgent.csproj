@@ -64,6 +64,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>KeyDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="NotificationOptions.cs" />
+    <Compile Include="Options.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

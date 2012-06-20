@@ -117,6 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ConfirmKeyFetch" xml:space="preserve">
+    <value>Another application is requesting SSH key '{0}'. Do you want to allow this?</value>
+    <comment>{0} is the key comment</comment>
+  </data>
   <data name="ErrPageantRunning" xml:space="preserve">
     <value>Pageant is already running. KeeAgent plugin will not be loaded.</value>
   </data>
@@ -136,7 +140,8 @@
     <comment>Name of plugin</comment>
   </data>
   <data name="NotifyKeyFetched" xml:space="preserve">
-    <value>SSH key was fetched by another application.</value>
+    <value>SSH key '{0}' was fetched by another application.</value>
+    <comment>{0} is the key comment</comment>
   </data>
   <data name="OptionsMenuItem" xml:space="preserve">
     <value>Options</value>
