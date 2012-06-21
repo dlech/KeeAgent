@@ -50,7 +50,7 @@ namespace KeeAgentTestProject
         [ClassInitialize()]
         public static void MyClassInitialize(TestContext testContext)
         {
-            pluginHost = KeePassControl.StartKeePass();
+            pluginHost = KeePassControl.StartKeePass(true, true, 2);
 
             PwEntry withPassEntry = new PwEntry(true, true);
             withPassEntry.Strings.Set(PwDefs.TitleField, new ProtectedString(true, "with-passphrase"));

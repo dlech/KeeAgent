@@ -144,7 +144,7 @@
     <comment>{0} is the key comment</comment>
   </data>
   <data name="OptionsMenuItem" xml:space="preserve">
-    <value>Options</value>
+    <value>Options...</value>
   </data>
   <data name="ShowPuttyKeysMenuItem" xml:space="preserve">
     <value>List PuTTY Keys</value>

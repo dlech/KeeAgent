@@ -124,7 +124,7 @@ namespace KeeAgent {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Options.
+        ///   Looks up a localized string similar to Options....
         /// </summary>
         internal static string OptionsMenuItem {
             get {

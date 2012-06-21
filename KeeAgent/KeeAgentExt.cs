@@ -32,8 +32,9 @@ namespace KeeAgent
             bool result;
 
             this.pluginHost = host;
-            this.options = new Options(); //TODO persist options
             this.uiHelper = new UIHelper(this.pluginHost);
+
+            loadOptions();
 
             try {
                 // TODO check OS - currently only works on Windows
@@ -43,7 +44,7 @@ namespace KeeAgent
                 ShowPageantRunningErrorMessage();
                 result = false;
             }
-
+            
             AddMenuItems();
 
             return result;
@@ -300,6 +301,26 @@ namespace KeeAgent
                 default:
                     Debug.Fail("Unsupported option");
                     return false;
+            }
+        }
+
+        internal void saveOptions()
+        {
+            this.pluginHost.CustomConfig.SetString("KeeAgent.Notification", this.options.Notification.ToString());
+        }
+
+        private void loadOptions()
+        {
+            this.options = new Options();
+
+            NotificationOptions defaultNotificationValue = NotificationOptions.Balloon;
+            NotificationOptions configNotificationValue;
+            if (Enum.TryParse<NotificationOptions>(
+                this.pluginHost.CustomConfig.GetString("KeeAgent.Notification",
+                defaultNotificationValue.ToString()), out configNotificationValue)) {
+                this.options.Notification = configNotificationValue;
+            } else {
+                this.options.Notification = defaultNotificationValue;
             }
         }
 
