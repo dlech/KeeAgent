@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.IO;
 
 namespace KeeAgent.UI
 {
@@ -20,6 +21,14 @@ namespace KeeAgent.UI
             this.selectedOptions = (Options)this.ext.options.Clone();
 
             InitializeComponent();
+
+            if (!ext.debug) {
+                label1.Visible = false;
+                textBox1.Visible = false;
+                button3.Visible = false;
+            } else {
+                textBox1.Text = this.ext.options.LogFileName;
+            }
 
             switch (this.selectedOptions.Notification) {
                 case NotificationOptions.AlwaysAsk:
@@ -66,6 +75,21 @@ namespace KeeAgent.UI
             this.ext.options = selectedOptions;
             this.ext.saveOptions();
             Close();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog fileDialog = new SaveFileDialog();
+            fileDialog.Title = "Save log file to...";
+            fileDialog.FileName = "KeeAgent.log";
+            fileDialog.Filter = "Log file (*.log)|*.log|All files (*.*)|*.*";
+            fileDialog.DefaultExt = "log";
+            fileDialog.InitialDirectory = this.ext.options.LogFileName;
+            DialogResult result = fileDialog.ShowDialog();
+            if (result == DialogResult.OK) {
+                textBox1.Text = fileDialog.FileName;
+            }
+            fileDialog.Dispose();
         }
     }
 }
