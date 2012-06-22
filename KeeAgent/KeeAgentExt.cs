@@ -326,6 +326,10 @@ namespace KeeAgent
         {
             this.pluginHost.CustomConfig.SetString("KeeAgent.Notification",
                 this.options.Notification.ToString());
+            this.pluginHost.CustomConfig.SetBool("KeeAgent.LoggingEnabled",
+                this.options.LoggingEnabled);
+            this.pluginHost.CustomConfig.SetString("KeeAgent.LogFile",
+                this.options.Notification.ToString());
         }
 
         private void loadOptions()
@@ -346,13 +350,19 @@ namespace KeeAgent
 
             /* Log File Options */
 
-            string defaultLogFileName = Path.Combine(
+            bool defaultLoggingEnabledValue = false;
+            bool configFileLoggingEnabledValue =
+                this.pluginHost.CustomConfig.GetBool("KeeAgent.LoggingEnabled",
+                defaultLoggingEnabledValue);
+            this.options.LoggingEnabled = configFileLoggingEnabledValue;
+
+            string defaultLogFileNameValue = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
                 "KeeAgent.log");
             string configFileLogFileNameValue =
                 this.pluginHost.CustomConfig.GetString("KeeAgent.LogFile");
             if (string.IsNullOrEmpty(configFileLogFileNameValue)) {
-                this.options.LogFileName = defaultLogFileName;
+                this.options.LogFileName = defaultLogFileNameValue;
             } else {
                 this.options.LogFileName = configFileLogFileNameValue;
             }
@@ -360,10 +370,12 @@ namespace KeeAgent
 
         internal void Log(string message)
         {
-            try {
-                File.AppendAllText(options.LogFileName,
-                    DateTime.Now + ": " + message + "\n");
-            } catch { }
+            if (this.options.LoggingEnabled) {
+                try {
+                    File.AppendAllText(options.LogFileName,
+                        DateTime.Now + ": " + message + "\n");
+                } catch { }
+            }
         }
 
     } // class

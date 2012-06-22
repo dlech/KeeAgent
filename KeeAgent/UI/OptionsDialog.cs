@@ -23,10 +23,10 @@ namespace KeeAgent.UI
             InitializeComponent();
 
             if (!ext.debug) {
-                label1.Visible = false;
-                textBox1.Visible = false;
-                button3.Visible = false;
+                groupBox1.Visible = false;
             } else {
+                checkBox1.Checked = this.selectedOptions.LoggingEnabled;
+                DisableLogFileControls(checkBox1.Checked);
                 textBox1.Text = this.ext.options.LogFileName;
             }
 
@@ -90,6 +90,24 @@ namespace KeeAgent.UI
                 textBox1.Text = fileDialog.FileName;
             }
             fileDialog.Dispose();
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            this.selectedOptions.LoggingEnabled = checkBox1.Checked;
+            DisableLogFileControls(checkBox1.Checked);
+
+        }
+
+        /// <summary>
+        /// Disables log file controls when Logging Enabled is not checked
+        /// </summary>
+        /// <param name="state">the state of the checkbox</param>
+        private void DisableLogFileControls(bool state)
+        {            
+                label1.Enabled = state;
+                textBox1.Enabled = state;
+                button3.Enabled = state;
         }
     }
 }
