@@ -28,6 +28,11 @@ namespace KeeAgent
         private ToolStripMenuItem keeAgentMenuItem;
         private UIHelper uiHelper;
 
+        private const string pluginName = "KeeAgent";
+        private const string notificationOptionName = pluginName + ".Notification";
+        private const string logginEnabledOptionName = pluginName + ".LoggingEnabled";
+        private const string logFileNameOptionName = pluginName + ".LogFileName";
+
         public override bool Initialize(IPluginHost host)
         {
             bool result;
@@ -36,9 +41,9 @@ namespace KeeAgent
             this.uiHelper = new UIHelper(this.pluginHost);
             this.debug = (this.pluginHost.CommandLineArgs[AppDefs.CommandLineOptions.Debug] != null);
 
-            if (debug) Log("Loading KeeAgent...");
-
             loadOptions();
+
+            if (debug) Log("Loading KeeAgent...");
 
             try {
                 // TODO check OS - currently only works on Windows
@@ -324,12 +329,15 @@ namespace KeeAgent
 
         internal void saveOptions()
         {
-            this.pluginHost.CustomConfig.SetString("KeeAgent.Notification",
+            this.pluginHost.CustomConfig.SetString(
+                KeeAgentExt.notificationOptionName,
                 this.options.Notification.ToString());
-            this.pluginHost.CustomConfig.SetBool("KeeAgent.LoggingEnabled",
+            this.pluginHost.CustomConfig.SetBool(
+                KeeAgentExt.logginEnabledOptionName,
                 this.options.LoggingEnabled);
-            this.pluginHost.CustomConfig.SetString("KeeAgent.LogFile",
-                this.options.Notification.ToString());
+            this.pluginHost.CustomConfig.SetString(
+                KeeAgentExt.logFileNameOptionName,
+                this.options.LogFileName);
         }
 
         private void loadOptions()
@@ -338,11 +346,14 @@ namespace KeeAgent
 
             /* Notification Option */
 
-            NotificationOptions defaultNotificationValue = NotificationOptions.Balloon;
+            NotificationOptions defaultNotificationValue =
+                NotificationOptions.Balloon;
             NotificationOptions configFileNotificationValue;
             if (Enum.TryParse<NotificationOptions>(
-                this.pluginHost.CustomConfig.GetString("KeeAgent.Notification",
-                defaultNotificationValue.ToString()), out configFileNotificationValue)) {
+                this.pluginHost.CustomConfig.GetString(
+                KeeAgentExt.notificationOptionName,
+                defaultNotificationValue.ToString()),
+                out configFileNotificationValue)) {
                 this.options.Notification = configFileNotificationValue;
             } else {
                 this.options.Notification = defaultNotificationValue;
@@ -352,7 +363,8 @@ namespace KeeAgent
 
             bool defaultLoggingEnabledValue = false;
             bool configFileLoggingEnabledValue =
-                this.pluginHost.CustomConfig.GetBool("KeeAgent.LoggingEnabled",
+                this.pluginHost.CustomConfig.GetBool(
+                KeeAgentExt.logginEnabledOptionName,
                 defaultLoggingEnabledValue);
             this.options.LoggingEnabled = configFileLoggingEnabledValue;
 
@@ -360,7 +372,8 @@ namespace KeeAgent
                 Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
                 "KeeAgent.log");
             string configFileLogFileNameValue =
-                this.pluginHost.CustomConfig.GetString("KeeAgent.LogFile");
+                this.pluginHost.CustomConfig.GetString(
+                KeeAgentExt.logFileNameOptionName);
             if (string.IsNullOrEmpty(configFileLogFileNameValue)) {
                 this.options.LogFileName = defaultLogFileNameValue;
             } else {

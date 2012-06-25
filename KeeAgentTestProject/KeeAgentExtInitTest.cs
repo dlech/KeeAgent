@@ -109,25 +109,34 @@ namespace KeeAgentTestProject
         [TestMethod()]
         public void OptionsPersistanceTest()
         {
-            NotificationOptions expected = NotificationOptions.AlwaysAsk;
+            /* expected values */
+            NotificationOptions expectedNotification = NotificationOptions.AlwaysAsk;
+            bool expectedLoggingEnabled = true;
+            string expectedLogFileName = @"C:\TEMP";
+
+
             IPluginHost host = KeePassControl.StartKeePass();
             KeeAgentExt target = new KeeAgentExt();
             KeePassControl.InvokeMainWindow((MethodInvoker)delegate()
             {
                 target.Initialize(host);
-                target.options.Notification = expected;
+                target.options.Notification = expectedNotification;
+                target.options.LoggingEnabled = expectedLoggingEnabled;
+                target.options.LogFileName = expectedLogFileName;
                 target.saveOptions();
-                //host.MainWindow.SaveConfig();                
+                host.MainWindow.SaveConfig();            
             });
-            Thread.Sleep(1000);
-            KeePassControl.ExitAll();
-            Thread.Sleep(500);
-            host = KeePassControl.StartSecondKeePass();
+            host = KeePassControl.StartKeePass(true, false, 1);
             KeePassControl.InvokeMainWindow((MethodInvoker)delegate()
             {
                 target.Initialize(host);
             });
-            Assert.AreEqual(expected, target.options.Notification);
+
+            Assert.AreEqual(expectedNotification, target.options.Notification);
+            Assert.AreEqual(expectedLoggingEnabled, target.options.LoggingEnabled);
+            Assert.AreEqual(expectedLogFileName, target.options.LogFileName);
+
+            KeePassControl.ExitAll();
         }
 
         /// <summary>

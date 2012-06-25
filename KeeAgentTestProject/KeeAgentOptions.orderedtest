@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="KeeAgentOptions" storage="c:\users\david\dev\dotnet\keeagent\keeagenttestproject\keeagentoptions.orderedtest" id="3d59d615-77d7-47c0-86e0-257780ee5f3b" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Execution id="8bc1a996-9b45-468c-90b2-31a26dca44fa" />
+  <TestLinks>
+    <TestLink id="b40e4968-3ef5-880f-5104-811eff3f9d3f" name="TestSettingOptions" storage="bin\debug\keeagenttestproject.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="b40e4968-3ef5-880f-5104-811eff3f9d3f" name="TestSettingOptions" storage="bin\debug\keeagenttestproject.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="e9bdac76-32cf-972e-261d-78c605f391b1" name="TestLoadingOptions" storage="bin\debug\keeagenttestproject.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>
