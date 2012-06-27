@@ -29,10 +29,13 @@ namespace KeeAgentTestProject
             KeePassControl.ExitAll();
         }
 
+        /// <summary>
+        /// Tests if options are saved when keypass is closed and reopened
+        /// </summary>
         [TestMethod]
         public void TestOptionsPersistance()
         {
-            string optionsPropertyName = "KEEAGENT_OPTIONS";
+            const string optionsPropertyName = "KEEAGENT_OPTIONS";
 
             /* these values should all be different from the default values */
             NotificationOptions requestedNotification =
@@ -59,28 +62,16 @@ namespace KeeAgentTestProject
             });
             KeePassControl.ExitAll();
 
-            AppDomain testDomain = AppDomain.CreateDomain("TestSettingOptions Domain", 
-                AppDomain.CurrentDomain.Evidence, AppDomain.CurrentDomain.SetupInformation);
-            Thread testDomainThread = new Thread((ThreadStart)delegate()
+            KeePassAppDomain testDomain = new KeePassAppDomain();
+            testDomain.StartKeePass(true, false, 1, false);
+            // TODO get this working
+            testDomain.InvokeMainForm(delegate
             {
-                testDomain.ExecuteAssembly(Assembly.GetAssembly(typeof(KeePass.Program)).Location);
-            });
-            testDomainThread.SetApartmentState(ApartmentState.STA);
-            testDomainThread.Start();            
-            testDomain.DoCallBack(delegate()
-            {
-                while (KeePass.Program.MainForm == null || !KeePass.Program.MainForm.Visible) {
-                    
-                }
-                //Thread.Sleep(2000);
-                KeeAgentExt target2 = new KeeAgentExt();
-                KeePassControl.InvokeMainWindow((MethodInvoker)delegate()
-                {
-                    IPluginHost pluginHost2 = KeePass.Program.MainForm.PluginHost;
-                    target2.Initialize(pluginHost2);
-                    AppDomain.CurrentDomain.SetData(optionsPropertyName, target2.options);
-                });
-            });
+                //KeeAgentExt target2 = new KeeAgentExt();
+                //IPluginHost pluginHost2 = KeePass.Program.MainForm.PluginHost;
+                //target2.Initialize(pluginHost2);
+                //AppDomain.CurrentDomain.SetData(optionsPropertyName, target2.options);
+            });            
             Options actual = (Options)testDomain.GetData(optionsPropertyName);
             Assert.AreEqual(requestedNotification, actual.Notification);
             Assert.AreEqual(requestedLoggingEnabled, actual.LoggingEnabled);
