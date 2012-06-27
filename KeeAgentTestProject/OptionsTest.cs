@@ -13,7 +13,7 @@ using System.Threading;
 namespace KeeAgentTestProject
 {
     [TestClass]
-    public class SetOptionsTest
+    public class OptionsTest
     {
         private static IPluginHost pluginHost;
 
@@ -30,8 +30,10 @@ namespace KeeAgentTestProject
         }
 
         [TestMethod]
-        public void TestSettingOptions()
+        public void TestOptionsPersistance()
         {
+            string optionsPropertyName = "KEEAGENT_OPTIONS";
+
             /* these values should all be different from the default values */
             NotificationOptions requestedNotification =
                 NotificationOptions.AlwaysAsk;
@@ -74,11 +76,15 @@ namespace KeeAgentTestProject
                 KeeAgentExt target2 = new KeeAgentExt();
                 KeePassControl.InvokeMainWindow((MethodInvoker)delegate()
                 {
-                    // TODO figure out how to pass data back to test
+                    IPluginHost pluginHost2 = KeePass.Program.MainForm.PluginHost;
+                    target2.Initialize(pluginHost2);
+                    AppDomain.CurrentDomain.SetData(optionsPropertyName, target2.options);
                 });
             });
-            
-            
+            Options actual = (Options)testDomain.GetData(optionsPropertyName);
+            Assert.AreEqual(requestedNotification, actual.Notification);
+            Assert.AreEqual(requestedLoggingEnabled, actual.LoggingEnabled);
+            Assert.AreEqual(requestedLogFileName, actual.LogFileName);
         }
     }
 }

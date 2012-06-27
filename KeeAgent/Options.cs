@@ -5,6 +5,7 @@ using System.ComponentModel;
 
 namespace KeeAgent
 {
+    [Serializable]
     public class Options : ICloneable
     {
         public Options()
