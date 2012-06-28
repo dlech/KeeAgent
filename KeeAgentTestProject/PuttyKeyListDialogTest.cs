@@ -132,7 +132,8 @@ namespace KeeAgentTestProject
                 keeAgent.Initialize(pluginHost);
             });
 
-            while (KeePass.Program.MainForm != null && KeePass.Program.MainForm.Visible == true) {
+            while (KeePass.Program.MainForm != null &&
+                KeePass.Program.MainForm.Visible == true) {
                 Thread.Sleep(500);
             }
 
