@@ -17,9 +17,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PageantSharp", "..\libs\PageantSharp\PageantSharp\PageantSharp.csproj", "{9163B6B6-0603-4C6E-BC67-7111ED8CDDE1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PageantSharp", "PageantSharp\PageantSharp\PageantSharp.csproj", "{9163B6B6-0603-4C6E-BC67-7111ED8CDDE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeePassPluginTestUtil", "..\libs\KeePassPluginTestUtil\KeePassPluginTestUtil\KeePassPluginTestUtil.csproj", "{7B11CC40-373F-4C20-99A5-DD70F3317D5C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeePassPluginTestUtil", "KeePassPluginTestUtil\KeePassPluginTestUtil\KeePassPluginTestUtil.csproj", "{7B11CC40-373F-4C20-99A5-DD70F3317D5C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PreBuild", "PreBuild\PreBuild.csproj", "{AE8E4C04-E965-406C-AF9B-D14986964A4B}"
 EndProject
