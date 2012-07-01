@@ -64,14 +64,17 @@
     <ProjectReference Include="..\..\keepass2\KeePass\KeePass.csproj">
       <Project>{10938016-DEE2-4A25-9A5A-8FD3444379CA}</Project>
       <Name>KeePass</Name>
+      <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\libs\KeePassPluginTestUtil\KeePassPluginTestUtil\KeePassPluginTestUtil.csproj">
+    <ProjectReference Include="..\KeePassPluginTestUtil\KeePassPluginTestUtil\KeePassPluginTestUtil.csproj">
       <Project>{7B11CC40-373F-4C20-99A5-DD70F3317D5C}</Project>
       <Name>KeePassPluginTestUtil</Name>
+      <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\KeeAgent\KeeAgent.csproj">
       <Project>{742863F2-52ED-41E0-92A1-8EEA60EB75EF}</Project>
       <Name>KeeAgent</Name>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

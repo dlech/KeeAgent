@@ -23,25 +23,7 @@ namespace KeeAgentTestProject
     public class PuttyKeyListDialogTest
     {
         private static IPluginHost pluginHost;
-
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
+              
         #region Additional test attributes
         // 
         //You can use the following additional attributes as you write your tests:
@@ -78,7 +60,7 @@ namespace KeeAgentTestProject
 
             PwGroup rsaGroup = new PwGroup(true, true, "RSA", PwIcon.Key);
             rsaGroup.AddEntry(withPassEntry, true);
-            rsaGroup.AddEntry(withBadPassEntry, true);
+            //rsaGroup.AddEntry(withBadPassEntry, true);
             rsaGroup.AddEntry(withoutPassEntry, true);
 
             PwGroup dsaGroup = new PwGroup(true, true, "DSA", PwIcon.Key);
@@ -104,19 +86,7 @@ namespace KeeAgentTestProject
         {
             KeePassControl.ExitAll();
         }
-
-        //Use TestInitialize to run code before running each test
-        //[TestInitialize()]
-        //public void MyTestInitialize()
-        //{
-        //}
-        //
-        //Use TestCleanup to run code after each test has run
-        //[TestCleanup()]
-        //public void MyTestCleanup()
-        //{
-        //}
-        //
+        
         #endregion
 
 

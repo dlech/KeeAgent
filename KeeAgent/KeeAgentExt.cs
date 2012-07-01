@@ -26,6 +26,7 @@ namespace KeeAgent
 
     private WinPageant pageant;
     private ToolStripMenuItem keeAgentMenuItem;
+    private HashSet<PwUuid> approvedKeys;
     private UIHelper uiHelper;
 
     private const string pluginName = "KeeAgent";
@@ -46,6 +47,7 @@ namespace KeeAgent
           .CommandLineArgs[AppDefs.CommandLineOptions.Debug] != null);
 
       loadOptions();
+      approvedKeys = new HashSet<PwUuid>();
 
       if (debug) Log("Loading KeeAgent...");
 
@@ -333,16 +335,24 @@ namespace KeeAgent
       switch (this.options.Notification) {
         case NotificationOptions.AlwaysAsk:
         case NotificationOptions.AskOnce:
-          if (this.options.Notification == NotificationOptions.AskOnce) {
-            // TODO implement request memory
+          if (this.options.Notification == NotificationOptions.AskOnce &&
+            approvedKeys.Contains(key.Uuid)) {
+            return true;
           }
           // trick to make sure dialog shows in front of other applications
+          // TODO this could be done better. Right now KeePass stays on top
+          // we need to put it back where it was or find a way to only make
+          // the dialog come to the top
           this.pluginHost.MainWindow.TopMost = true;
           this.pluginHost.MainWindow.TopMost = false;
           DialogResult result = MessageBox.Show(
-              Translatable.ConfirmKeyFetch,
+              string.Format(Translatable.ConfirmKeyFetch, key.Comment),
               string.Empty,
               MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+          if (this.options.Notification == NotificationOptions.AskOnce &&
+            result == DialogResult.Yes) {
+            approvedKeys.Add(key.Uuid);
+          }
           return result == DialogResult.Yes;
         case NotificationOptions.Balloon:
           string notifyText = string.Format(

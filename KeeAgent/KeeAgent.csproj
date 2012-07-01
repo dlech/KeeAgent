@@ -98,7 +98,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\PageantSharp.dll</HintPath>
       <!-- This is for building .plgx -->
-      <HintPath>..\..\libs\PageantSharp\PageantSharp\bin\$(Configuration)\PageantSharp.dll</HintPath>
+      <HintPath>..\PageantSharp\bin\$(Configuration)\PageantSharp.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -144,6 +145,7 @@
     <ProjectReference Include="..\..\keepass2\KeePass\KeePass.csproj">
       <Project>{10938016-DEE2-4A25-9A5A-8FD3444379CA}</Project>
       <Name>KeePass</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
