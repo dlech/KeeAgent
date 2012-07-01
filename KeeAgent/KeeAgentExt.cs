@@ -26,7 +26,7 @@ namespace KeeAgent
 
     private WinPageant pageant;
     private ToolStripMenuItem keeAgentMenuItem;
-    private HashSet<PwUuid> approvedKeys;
+    private List<PwUuid> approvedKeys;
     private UIHelper uiHelper;
 
     private const string pluginName = "KeeAgent";
@@ -47,7 +47,7 @@ namespace KeeAgent
           .CommandLineArgs[AppDefs.CommandLineOptions.Debug] != null);
 
       loadOptions();
-      approvedKeys = new HashSet<PwUuid>();
+      approvedKeys = new List<PwUuid>();
 
       if (debug) Log("Loading KeeAgent...");
 

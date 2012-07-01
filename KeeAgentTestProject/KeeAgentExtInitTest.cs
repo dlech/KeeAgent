@@ -78,8 +78,10 @@ namespace KeeAgentTestProject
        Assembly.GetExecutingAssembly().Location);
       DirectoryInfo projectDir = new DirectoryInfo(
         Path.Combine(assmFile.Directory.FullName, @"..\..\..\KeeAgent"));
+      string tempFile = Path.GetTempFileName();
 
-      /* copy required dll */
+      /* copy required files */
+
       string pageantSharpDllSource =
         Path.Combine(assmFile.Directory.FullName, "PageantSharp.dll");
       string pageantSharpDllDest =
@@ -87,22 +89,35 @@ namespace KeeAgentTestProject
       File.Delete(pageantSharpDllDest);
       File.Copy(pageantSharpDllSource, pageantSharpDllDest);
 
+      string preBuildExeSource =
+        Path.Combine(projectDir.FullName,
+        @"..\PreBuild\bin\Debug\PreBuild.exe");
+      string preBuildExeDest =
+        Path.Combine(projectDir.FullName, "PreBuild.exe");
+      File.Delete(preBuildExeDest);
+      File.Copy(preBuildExeSource, preBuildExeDest);
+
       string plgxFilePath =
           Path.Combine(projectDir.Parent.FullName, "KeeAgent.plgx");
 
-      // use try-catch-finally to make sure dll is deleted when done
+      // use try-catch-finally to make sure manually copied files are deleted
+      // when done
       try {
         /* create .plgx file */
 
         File.Delete(plgxFilePath);
+
         PlgxBuildOptions buildOptions = new PlgxBuildOptions();
         buildOptions.projectPath = projectDir.FullName;
         buildOptions.dotnetVersion = "4.0";
         buildOptions.os = "Windows";
+        buildOptions.preBuild =
+          "\"cmd /c \"\"\"{PLGX_TEMP_DIR}PreBuild.exe\"\"\" {PLGX_TEMP_DIR}" +
+          " > " + tempFile + "\"";
         KeePassControl.CreatePlgx(buildOptions);
-
+                
         Assert.IsTrue(File.Exists(plgxFilePath));
-
+        
         using (KeePassAppDomain testDomain1 = new KeePassAppDomain()) {
           testDomain1.StartKeePass(true, true, 1, true);
           testDomain1.LoadPlgx(plgxFilePath);
@@ -119,8 +134,13 @@ namespace KeeAgentTestProject
         Assert.Fail(ex.ToString());
       } finally {
         File.Delete(pageantSharpDllDest);
+        File.Delete(preBuildExeDest);
         File.Delete(plgxFilePath);
       }
+      
+      /* check to make sure prebuild worked correctly */
+      string versionLine = File.ReadAllLines(tempFile)[0];
+      Assert.IsTrue(versionLine.Contains(PwDefs.VersionString));
     }
   }
 }
