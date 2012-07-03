@@ -23,7 +23,6 @@ namespace PreBuild
       if (args.Length >= 1) {
         int version = GetKeePassVersion();        
         Console.WriteLine("Detected version 2." + version);
-
         // there seems to be a problem using triple-quotes on the argument
         // so we leave them out and if the temp dir contains spaces, we receive
         // it as multiple args then glue it back together with spaces

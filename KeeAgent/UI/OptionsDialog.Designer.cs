@@ -58,9 +58,9 @@
       // 
       // flowLayoutPanel1
       // 
+      resources.ApplyResources(this.flowLayoutPanel1, "flowLayoutPanel1");
       this.flowLayoutPanel1.Controls.Add(this.button1);
       this.flowLayoutPanel1.Controls.Add(this.button2);
-      resources.ApplyResources(this.flowLayoutPanel1, "flowLayoutPanel1");
       this.flowLayoutPanel1.Name = "flowLayoutPanel1";
       // 
       // button1
@@ -157,15 +157,19 @@
       // 
       // OptionsDialog
       // 
+      this.AcceptButton = this.button1;
       resources.ApplyResources(this, "$this");
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.CancelButton = this.button2;
       this.Controls.Add(this.tableLayoutPanel1);
+      this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
       this.MaximizeBox = false;
       this.MinimizeBox = false;
       this.Name = "OptionsDialog";
       this.ShowInTaskbar = false;
       this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
       this.tableLayoutPanel1.ResumeLayout(false);
+      this.tableLayoutPanel1.PerformLayout();
       this.flowLayoutPanel1.ResumeLayout(false);
       this.groupBox1.ResumeLayout(false);
       this.groupBox1.PerformLayout();

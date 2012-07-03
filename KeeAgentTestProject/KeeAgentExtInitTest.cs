@@ -17,6 +17,7 @@ using KeePass.App.Configuration;
 using KeePass.App;
 using KeePass.Ecas;
 using KeePass.Util;
+using System.Diagnostics;
 
 namespace KeeAgentTestProject
 {
@@ -116,14 +117,15 @@ namespace KeeAgentTestProject
           " > " + tempFile + "\"";
         KeePassControl.CreatePlgx(buildOptions);
                 
-        Assert.IsTrue(File.Exists(plgxFilePath));
+        Assert.IsTrue(File.Exists(plgxFilePath),
+          ".plgx file was not created");
         
         using (KeePassAppDomain testDomain1 = new KeePassAppDomain()) {
           testDomain1.StartKeePass(true, true, 1, true);
           testDomain1.LoadPlgx(plgxFilePath);
 
           testDomain1.DoCallBack(delegate()
-          {
+          {            
             // TODO Is there anything we can do here to test that LoadPlgx was
             // successful? Right now, KeePass shows an error dialog if it was
             // not, so the user should know that it failed even though the test
@@ -137,10 +139,12 @@ namespace KeeAgentTestProject
         File.Delete(preBuildExeDest);
         File.Delete(plgxFilePath);
       }
-      
+
       /* check to make sure prebuild worked correctly */
       string versionLine = File.ReadAllLines(tempFile)[0];
-      Assert.IsTrue(versionLine.Contains(PwDefs.VersionString));
+      Assert.IsTrue(versionLine.Contains(PwDefs.VersionString),
+        "PreBuild did not detect correct KeePass version");
+      File.Delete(tempFile);
     }
   }
 }
