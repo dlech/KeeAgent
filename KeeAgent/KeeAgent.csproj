@@ -152,6 +152,25 @@
     <None Include="Resources\KeeAgent.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if $(ConfigurationName) == Release (
+
+del "$(SolutionDir)KeeAgent.plgx"
+
+xcopy /s "$(ProjectDir)." "%25TEMP%25\$(ProjectName)\"
+
+copy "$(TargetDir)PageantSharp.dll" "%25TEMP%25\$(ProjectName)\"
+copy "$(SolutionDir)Prebuild\$(OutDir)PreBuild.exe" "%25TEMP%25\$(ProjectName)\"
+rmdir /s /q "%25TEMP%25\$(ProjectName)\bin"
+rmdir /s /q "%25TEMP%25\$(ProjectName)\obj"
+"c:\Program Files (x86)\KeePass Password Safe 2\keepass.exe" --plgx-create "%25TEMP%25\$(ProjectName)" --plgx-prereq-net:4.0 --plgx-prereq-os:Windows --plgx-build-pre:"cmd /c """{PLGX_TEMP_DIR}PreBuild.exe""" {PLGX_TEMP_DIR}"
+ping localhost &gt; NUL
+rmdir /s /q "%25TEMP%25\$(ProjectName)"
+
+move "%25TEMP%25\$(ProjectName).plgx" $(SolutionDir)
+
+)</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

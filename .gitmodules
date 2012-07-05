@@ -4,3 +4,6 @@
 [submodule "KeePassPluginTestUtil"]
 	path = KeePassPluginTestUtil
 	url = git@github.com:dlech/KeePassPluginTestUtil.git
+[submodule "SharpZipLib"]
+	path = SharpZipLib
+	url = git://git@github.com/dlech/SharpZipLib.git

@@ -143,7 +143,9 @@ namespace KeeAgentTestProject
       /* check to make sure prebuild worked correctly */
       string versionLine = File.ReadAllLines(tempFile)[0];
       Assert.IsTrue(versionLine.Contains(PwDefs.VersionString),
-        "PreBuild did not detect correct KeePass version");
+        "PreBuild did not detect correct KeePass version.\n" + 
+        "Saw: " + versionLine + "\n" +
+        "Expected: " + PwDefs.VersionString);
       File.Delete(tempFile);
     }
   }

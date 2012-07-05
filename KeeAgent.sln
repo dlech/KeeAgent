@@ -2,6 +2,9 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeeAgent", "KeeAgent\KeeAgent.csproj", "{742863F2-52ED-41E0-92A1-8EEA60EB75EF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AE8E4C04-E965-406C-AF9B-D14986964A4B} = {AE8E4C04-E965-406C-AF9B-D14986964A4B}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeePass", "..\keepass2\KeePass\KeePass.csproj", "{10938016-DEE2-4A25-9A5A-8FD3444379CA}"
 EndProject
@@ -11,7 +14,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		CHANGELOG.txt = CHANGELOG.txt
 		KeeAgent.vsmdi = KeeAgent.vsmdi
-		KeeAgentPlgx.bat = KeeAgentPlgx.bat
 		Local.testsettings = Local.testsettings
 		README.txt = README.txt
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
@@ -22,6 +24,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeePassPluginTestUtil", "KeePassPluginTestUtil\KeePassPluginTestUtil\KeePassPluginTestUtil.csproj", "{7B11CC40-373F-4C20-99A5-DD70F3317D5C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PreBuild", "PreBuild\PreBuild.csproj", "{AE8E4C04-E965-406C-AF9B-D14986964A4B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Packager", "Packager\Packager.csproj", "{D226AF31-426D-4599-A72A-513EC82386A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICSharpCode.SharpZLib", "SharpZipLib\src\ICSharpCode.SharpZLib.csproj", "{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -100,6 +106,28 @@ Global
 		{AE8E4C04-E965-406C-AF9B-D14986964A4B}.Release|Mixed Platforms.Build.0 = Release|x86
 		{AE8E4C04-E965-406C-AF9B-D14986964A4B}.Release|x86.ActiveCfg = Release|x86
 		{AE8E4C04-E965-406C-AF9B-D14986964A4B}.Release|x86.Build.0 = Release|x86
+		{D226AF31-426D-4599-A72A-513EC82386A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D226AF31-426D-4599-A72A-513EC82386A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D226AF31-426D-4599-A72A-513EC82386A8}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{D226AF31-426D-4599-A72A-513EC82386A8}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{D226AF31-426D-4599-A72A-513EC82386A8}.Debug|x86.ActiveCfg = Debug|x86
+		{D226AF31-426D-4599-A72A-513EC82386A8}.Debug|x86.Build.0 = Debug|x86
+		{D226AF31-426D-4599-A72A-513EC82386A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D226AF31-426D-4599-A72A-513EC82386A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D226AF31-426D-4599-A72A-513EC82386A8}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{D226AF31-426D-4599-A72A-513EC82386A8}.Release|Mixed Platforms.Build.0 = Release|x86
+		{D226AF31-426D-4599-A72A-513EC82386A8}.Release|x86.ActiveCfg = Release|x86
+		{D226AF31-426D-4599-A72A-513EC82386A8}.Release|x86.Build.0 = Release|x86
+		{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
