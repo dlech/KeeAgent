@@ -74,6 +74,13 @@ namespace KeeAgentTestProject.Properties {
             }
         }
         
+        internal static byte[] non_ascii_passphrase_ppk {
+            get {
+                object obj = ResourceManager.GetObject("non_ascii_passphrase_ppk", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] withoutPassphrase_ppk {
             get {
                 object obj = ResourceManager.GetObject("withoutPassphrase_ppk", resourceCulture);

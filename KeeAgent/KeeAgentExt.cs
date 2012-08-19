@@ -209,18 +209,15 @@ namespace KeeAgent
               try {
                 SecureString ssPassphrase = null;
                 ProtectedString psPassphrase =
-                    entry.Strings.Get(PwDefs.PasswordField);
+                  entry.Strings.Get(PwDefs.PasswordField);
                 if (psPassphrase != null) {
-                  byte[] passphraseBytes =
-                      psPassphrase.ReadUtf8();
-                  /* convert passphrase from KeePass
-                   * protected format to .NET protected
-                   * format */
+                  string passphrase = psPassphrase.ReadString();
+                  /* convert passphrase from KeePass protected format to .NET
+                   * protected format */
                   ssPassphrase = new SecureString();
-                  for (int i = 0; i < passphraseBytes.Length; i++) {
-                    ssPassphrase.AppendChar((char)(passphraseBytes[i]));
+                  for (int i = 0; i < passphrase.Length; i++) {
+                    ssPassphrase.AppendChar(passphrase[i]);                    
                   }
-                  Array.Clear(passphraseBytes, 0, passphraseBytes.Length);
                 }
 
                 string dbPath = database.IOConnectionInfo.Path;
