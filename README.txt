@@ -8,4 +8,4 @@ See http://www.lechnology.com/KeeAgent
 
 COPYRIGHT
 ---------
-(C) 2012 David Lechner<david@lechnology.com>
+(C) 2012 David Lechner <david@lechnology.com>

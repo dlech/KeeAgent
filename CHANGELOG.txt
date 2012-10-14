@@ -1,6 +1,9 @@
-v0.1.6 (2012-??-??)
+v0.2.0 (2012-10-13)
+-------------------
 * Added user notification options
 * Fixed non-ascii characters in passphrase not working
+* Fixed lockup when used in conjunction with IOProtocolExt
+
 
 v0.1.5 (2012-06-16)
 -------------------

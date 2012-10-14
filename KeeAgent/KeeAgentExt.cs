@@ -15,6 +15,7 @@ using KeePassLib.Utility;
 using KeePass.UI;
 using KeePass.App;
 using System.IO;
+using System.Threading;
 
 namespace KeeAgent
 {
@@ -25,6 +26,8 @@ namespace KeeAgent
     internal bool debug;
 
     private WinPageant pageant;
+    private ApplicationContext pageantContext;
+    private Thread pageantThread;
     private ToolStripMenuItem keeAgentMenuItem;
     private List<PwUuid> approvedKeys;
     private UIHelper uiHelper;
@@ -53,16 +56,30 @@ namespace KeeAgent
 
       try {
         // TODO check OS - currently only works on Windows
-        this.pageant = new WinPageant(GetPpkKeyList, GetSSH2Key);
+        
+        this.pageantThread = new Thread(delegate()
+        {
+          try {
+            pageant = new WinPageant(GetPpkKeyList, GetSSH2Key);
+            pageantContext = new ApplicationContext();
+            Application.Run(pageantContext);
+          } catch (Exception ex) {
+            ShowPageantRunningErrorMessage();
+            if (debug) Log(ex.ToString());
+          }
+        });
+        this.pageantThread.Name = "PageantSharp";
+        this.pageantThread.SetApartmentState(ApartmentState.STA);
+        this.pageantThread.Start();
         if (debug) Log("Succeeded");
-        result = true;
-      } catch (Exception) {
-        ShowPageantRunningErrorMessage();
+        result = this.pageantThread.IsAlive;
+      } catch (Exception) {        
         if (debug) Log("Failed");
         result = false;
       }
-
-      AddMenuItems();
+      if (result) {
+        AddMenuItems();
+      }
 
       return result;
     }
@@ -70,8 +87,12 @@ namespace KeeAgent
     public override void Terminate()
     {
       if (debug) Log("Terminating KeeAgent");
-      if (this.pageant != null) {
-        this.pageant.Dispose();
+      if (pageant != null) {
+        // need reference to pageant here so GC doesn't eat it!
+        pageant.Dispose();
+      }
+      if (this.pageantThread.IsAlive) {
+        this.pageantContext.ExitThread();
       }
       RemoveMenuItems();
     }
@@ -97,7 +118,7 @@ namespace KeeAgent
       keeAgentMenuItem = new ToolStripMenuItem();
       keeAgentMenuItem.Text = Translatable.KeeAgent;
 
-      if (pageant != null) {
+      if (this.pageantThread.IsAlive) {
         /* create children menu items */
         ToolStripMenuItem keeAgentListPuttyKeysMenuItem =
             new ToolStripMenuItem();
@@ -216,7 +237,7 @@ namespace KeeAgent
                    * protected format */
                   ssPassphrase = new SecureString();
                   for (int i = 0; i < passphrase.Length; i++) {
-                    ssPassphrase.AppendChar(passphrase[i]);                    
+                    ssPassphrase.AppendChar(passphrase[i]);
                   }
                 }
 
@@ -336,16 +357,20 @@ namespace KeeAgent
             approvedKeys.Contains(key.Uuid)) {
             return true;
           }
-          // trick to make sure dialog shows in front of other applications
-          // TODO this could be done better. Right now KeePass stays on top
-          // we need to put it back where it was or find a way to only make
-          // the dialog come to the top
-          this.pluginHost.MainWindow.TopMost = true;
-          this.pluginHost.MainWindow.TopMost = false;
+          this.pluginHost.MainWindow.Invoke((MethodInvoker)delegate()
+          {
+            // trick to make sure dialog shows in front of other applications
+            // TODO this could be done better. Right now KeePass stays on top
+            // we need to put it back where it was or find a way to only make
+            // the dialog come to the top
+            this.pluginHost.MainWindow.TopMost = true;
+            this.pluginHost.MainWindow.TopMost = false;
+          });
           DialogResult result = MessageBox.Show(
               string.Format(Translatable.ConfirmKeyFetch, key.Comment),
               string.Empty,
               MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
           if (this.options.Notification == NotificationOptions.AskOnce &&
             result == DialogResult.Yes) {
             approvedKeys.Add(key.Uuid);
@@ -424,7 +449,7 @@ namespace KeeAgent
       if (this.options.LoggingEnabled) {
         try {
           File.AppendAllText(options.LogFileName,
-              DateTime.Now + ": " + message + "\n");
+              DateTime.Now + ": " + message + "\r\n");
         } catch { }
       }
     }

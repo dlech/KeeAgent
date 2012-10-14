@@ -14,6 +14,7 @@ using System.Threading;
 namespace KeeAgentTestProject
 {
 
+  /* This test uses obsolete functions - do not copy for new tests */
 
   /// <summary>
   ///This is a test class for PuttyKeyListDialogTest and is intended
@@ -32,6 +33,9 @@ namespace KeeAgentTestProject
     [ClassInitialize()]
     public static void MyClassInitialize(TestContext testContext)
     {
+
+      /* This test uses obsolete functions - do not copy for new tests */
+
       pluginHost = KeePassControl.StartKeePass(true, true, 2);
 
       PwEntry withPassEntry = new PwEntry(true, true);
@@ -102,21 +106,23 @@ namespace KeeAgentTestProject
     [TestMethod()]
     public void PuttyKeyListDialogGeneralTest()
     {
+
+      /* This test uses obsolete functions - do not copy for new tests */
+
       Plugin keeAgent = new KeeAgentExt();
       KeePassControl.InvokeMainWindow((MethodInvoker)delegate()
       {
         keeAgent.Initialize(pluginHost);
+        pluginHost.MainWindow.FormClosed += delegate(Object source, FormClosedEventArgs args)
+        {
+          keeAgent.Terminate();
+        };
       });
 
       while (KeePass.Program.MainForm != null &&
           KeePass.Program.MainForm.Visible == true) {
         Thread.Sleep(500);
-      }
-
-      KeePassControl.InvokeMainWindow((MethodInvoker)delegate()
-      {
-        keeAgent.Terminate();
-      });
+      }      
     }
   }
 }
