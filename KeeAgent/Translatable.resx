@@ -147,9 +147,12 @@
     <value>Options...</value>
   </data>
   <data name="ShowPuttyKeysMenuItem" xml:space="preserve">
-    <value>List PuTTY Keys</value>
+    <value>Manage SSH Keys</value>
   </data>
   <data name="ShowPuttyKeysMenuItemToolTip" xml:space="preserve">
-    <value>Lists all keys in PuTTY Private Key file (.ppk) format</value>
+    <value>Manage SSH Keys used by KeeAgent</value>
+  </data>
+  <data name="UnknownAlgorithm" xml:space="preserve">
+    <value>Unknown Algorithm</value>
   </data>
 </root>

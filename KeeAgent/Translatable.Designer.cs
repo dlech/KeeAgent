@@ -133,7 +133,7 @@ namespace KeeAgent {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to List PuTTY Keys.
+        ///   Looks up a localized string similar to Manage SSH Keys.
         /// </summary>
         internal static string ShowPuttyKeysMenuItem {
             get {
@@ -142,11 +142,20 @@ namespace KeeAgent {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lists all keys in PuTTY Private Key file (.ppk) format.
+        ///   Looks up a localized string similar to Manage SSH Keys used by KeeAgent.
         /// </summary>
         internal static string ShowPuttyKeysMenuItemToolTip {
             get {
                 return ResourceManager.GetString("ShowPuttyKeysMenuItemToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown Algorithm.
+        /// </summary>
+        internal static string UnknownAlgorithm {
+            get {
+                return ResourceManager.GetString("UnknownAlgorithm", resourceCulture);
             }
         }
     }

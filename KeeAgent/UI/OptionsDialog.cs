@@ -18,16 +18,16 @@ namespace KeeAgent.UI
         public OptionsDialog(KeeAgentExt ext)
         {
             this.ext = ext;
-            this.selectedOptions = (Options)this.ext.options.Clone();
+            this.selectedOptions = (Options)this.ext.mOptions.Clone();
 
             InitializeComponent();
 
-            if (!ext.debug) {
+            if (!ext.mDebug) {
                 groupBox1.Visible = false;
             } else {
                 checkBox1.Checked = this.selectedOptions.LoggingEnabled;
                 DisableLogFileControls(checkBox1.Checked);
-                textBox1.Text = this.ext.options.LogFileName;
+                textBox1.Text = this.ext.mOptions.LogFileName;
             }
 
             switch (this.selectedOptions.Notification) {
@@ -73,7 +73,7 @@ namespace KeeAgent.UI
         // OK button
         private void button1_Click(object sender, EventArgs e)
         {
-            this.ext.options = selectedOptions;
+            this.ext.mOptions = selectedOptions;
             this.ext.saveOptions();
             Close();
         }
@@ -85,7 +85,7 @@ namespace KeeAgent.UI
             fileDialog.FileName = "KeeAgent.log";
             fileDialog.Filter = "Log file (*.log)|*.log|All files (*.*)|*.*";
             fileDialog.DefaultExt = "log";
-            fileDialog.InitialDirectory = this.ext.options.LogFileName;
+            fileDialog.InitialDirectory = this.ext.mOptions.LogFileName;
             DialogResult result = fileDialog.ShowDialog();
             if (result == DialogResult.OK) {
                 textBox1.Text = fileDialog.FileName;

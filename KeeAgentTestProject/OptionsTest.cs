@@ -74,16 +74,16 @@ namespace KeeAgentTestProject
             Options td1RequestedOptions = (Options)AppDomain
                 .CurrentDomain.GetData(optionsPropertyName);
             td1KeeAgentExt.Initialize(td1PluginHost);
-            td1KeeAgentExt.options.Notification =
+            td1KeeAgentExt.mOptions.Notification =
                 td1RequestedOptions.Notification;
-            td1KeeAgentExt.options.LoggingEnabled =
+            td1KeeAgentExt.mOptions.LoggingEnabled =
                 td1RequestedOptions.LoggingEnabled;
-            td1KeeAgentExt.options.LogFileName =
+            td1KeeAgentExt.mOptions.LogFileName =
                 td1RequestedOptions.LogFileName;
             td1KeeAgentExt.saveOptions();
             td1PluginHost.MainWindow.SaveConfig();
             AppDomain.CurrentDomain.SetData(optionsPropertyName,
-                td1KeeAgentExt.options);
+                td1KeeAgentExt.mOptions);
           });
         });
       }
@@ -102,7 +102,7 @@ namespace KeeAgentTestProject
                 KeePass.Program.MainForm.PluginHost;
             td2KeeAgentExt.Initialize(td2PluginHost);
             AppDomain.CurrentDomain.SetData(optionsPropertyName,
-                td2KeeAgentExt.options);
+                td2KeeAgentExt.mOptions);
           });
         });
         Options actual = (Options)testDomain2.GetData(optionsPropertyName);

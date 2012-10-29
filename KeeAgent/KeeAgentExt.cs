@@ -2,79 +2,82 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Security;
+using System.Threading;
 using System.Windows.Forms;
 using dlech.PageantSharp;
 using KeeAgent.Properties;
 using KeeAgent.UI;
+using KeePass.App;
 using KeePass.Plugins;
 using KeePassLib;
-using KeePassLib.Cryptography;
 using KeePassLib.Security;
 using KeePassLib.Utility;
-using KeePass.UI;
-using KeePass.App;
-using System.IO;
-using System.Threading;
 
 namespace KeeAgent
 {
   public sealed partial class KeeAgentExt : Plugin
   {
-    internal IPluginHost pluginHost;
-    internal Options options;
-    internal bool debug;
+    internal IPluginHost mPluginHost;
+    internal Options mOptions;
+    internal bool mDebug;
+    internal HashSet<PpkKey> mInMemoryKeys;
 
-    private WinPageant pageant;
-    private ApplicationContext pageantContext;
-    private Thread pageantThread;
-    private ToolStripMenuItem keeAgentMenuItem;
-    private List<PwUuid> approvedKeys;
-    private UIHelper uiHelper;
+    private WinPageant mPageant;
+    private ApplicationContext mPageantContext;
+    private Thread mPageantThread;
+    private ToolStripMenuItem mKeeAgentMenuItem;
+    private List<PwUuid> mApprovedKeys;
+    private UIHelper MUIHelper;
 
-    private const string pluginName = "KeeAgent";
-    private const string notificationOptionName =
-        pluginName + ".Notification";
-    private const string logginEnabledOptionName
-        = pluginName + ".LoggingEnabled";
-    private const string logFileNameOptionName
-        = pluginName + ".LogFileName";
+    private const string cPluginName = "KeeAgent";
+    private const string cNotificationOptionName = cPluginName + ".Notification";
+    private const string cLogginEnabledOptionName = cPluginName + ".LoggingEnabled";
+    private const string cLogFileNameOptionName = cPluginName + ".LogFileName";
 
-    public override bool Initialize(IPluginHost host)
+    public override bool Initialize(IPluginHost aHost)
     {
       bool result;
 
-      this.pluginHost = host;
-      this.uiHelper = new UIHelper(this.pluginHost);
-      this.debug = (this.pluginHost
+      mPluginHost = aHost;
+      MUIHelper = new UIHelper(mPluginHost);
+      mDebug = (mPluginHost
           .CommandLineArgs[AppDefs.CommandLineOptions.Debug] != null);
+      mInMemoryKeys = new HashSet<PpkKey>();
 
       loadOptions();
-      approvedKeys = new List<PwUuid>();
+      mApprovedKeys = new List<PwUuid>();
 
-      if (debug) Log("Loading KeeAgent...");
+      if (mDebug) Log("Loading KeeAgent...");
 
       try {
         // TODO check OS - currently only works on Windows
-        
-        this.pageantThread = new Thread(delegate()
+
+        mPageantThread = new Thread(delegate()
         {
           try {
-            pageant = new WinPageant(GetPpkKeyList, GetSSH2Key);
-            pageantContext = new ApplicationContext();
-            Application.Run(pageantContext);
+            Agent.Callbacks callbacks = new Agent.Callbacks();
+            callbacks.getSSH2KeyList = GetPpkKeyList;
+            callbacks.getSSH2Key = GetSSH2Key;
+            callbacks.addSSH2Key = AddKey;
+            callbacks.removeSSH2Key = RemoveKey;
+            callbacks.removeAllSSH2Keys = RemoveAllKeys;
+            mPageant = new WinPageant(callbacks);
+            mPageantContext = new ApplicationContext();
+            Application.Run(mPageantContext);
           } catch (Exception ex) {
             ShowPageantRunningErrorMessage();
-            if (debug) Log(ex.ToString());
+            if (mDebug) Log(ex.ToString());
           }
         });
-        this.pageantThread.Name = "PageantSharp";
-        this.pageantThread.SetApartmentState(ApartmentState.STA);
-        this.pageantThread.Start();
-        if (debug) Log("Succeeded");
-        result = this.pageantThread.IsAlive;
-      } catch (Exception) {        
-        if (debug) Log("Failed");
+        mPageantThread.Name = "PageantSharp";
+        mPageantThread.SetApartmentState(ApartmentState.STA);
+        mPageantThread.Start();
+        if (mDebug) Log("Succeeded");
+        result = mPageantThread.IsAlive;
+      } catch (Exception) {
+        if (mDebug) Log("Failed");
         result = false;
       }
       if (result) {
@@ -86,13 +89,13 @@ namespace KeeAgent
 
     public override void Terminate()
     {
-      if (debug) Log("Terminating KeeAgent");
-      if (pageant != null) {
+      if (mDebug) Log("Terminating KeeAgent");
+      if (mPageant != null) {
         // need reference to pageant here so GC doesn't eat it!
-        pageant.Dispose();
+        mPageant.Dispose();
       }
-      if (this.pageantThread.IsAlive) {
-        this.pageantContext.ExitThread();
+      if (mPageantThread.IsAlive) {
+        mPageantContext.ExitThread();
       }
       RemoveMenuItems();
     }
@@ -112,13 +115,13 @@ namespace KeeAgent
     private void AddMenuItems()
     {
       /* get Tools menu */
-      ToolStripMenuItem toolsMenu = this.pluginHost.MainWindow.ToolsMenu;
+      ToolStripMenuItem toolsMenu = mPluginHost.MainWindow.ToolsMenu;
 
       /* create parent menu item */
-      keeAgentMenuItem = new ToolStripMenuItem();
-      keeAgentMenuItem.Text = Translatable.KeeAgent;
+      mKeeAgentMenuItem = new ToolStripMenuItem();
+      mKeeAgentMenuItem.Text = Translatable.KeeAgent;
 
-      if (this.pageantThread.IsAlive) {
+      if (mPageantThread.IsAlive) {
         /* create children menu items */
         ToolStripMenuItem keeAgentListPuttyKeysMenuItem =
             new ToolStripMenuItem();
@@ -136,44 +139,44 @@ namespace KeeAgent
             new EventHandler(keeAgentOptionsMenuItem_Click);
 
         /* add children to parent */
-        keeAgentMenuItem.DropDownItems
+        mKeeAgentMenuItem.DropDownItems
             .Add(keeAgentListPuttyKeysMenuItem);
-        keeAgentMenuItem.DropDownItems.Add(keeAgentOptionsMenuItem);
+        mKeeAgentMenuItem.DropDownItems.Add(keeAgentOptionsMenuItem);
       } else {
-        keeAgentMenuItem.Enabled = false;
+        mKeeAgentMenuItem.Enabled = false;
       }
 
       /* add new items to tools menu */
-      toolsMenu.DropDownItems.Add(keeAgentMenuItem);
+      toolsMenu.DropDownItems.Add(mKeeAgentMenuItem);
 
     }
 
     private void RemoveMenuItems()
     {
-      if (this.pluginHost != null &&
-          this.pluginHost.MainWindow != null &&
-          this.keeAgentMenuItem != null) {
+      if (mPluginHost != null &&
+          mPluginHost.MainWindow != null &&
+          mKeeAgentMenuItem != null) {
 
         /* get Tools menu */
         ToolStripMenuItem toolsMenu =
-            this.pluginHost.MainWindow.ToolsMenu;
+            mPluginHost.MainWindow.ToolsMenu;
         /* remove items from tools menu */
-        toolsMenu.DropDownItems.Remove(keeAgentMenuItem);
+        toolsMenu.DropDownItems.Remove(mKeeAgentMenuItem);
       }
     }
 
     private void keeAgentListPuttyKeysMenuItem_Click(
-        object source, EventArgs e)
+        object aSource, EventArgs aEvent)
     {
       KeyListDialog dialog = new KeyListDialog(this);
-      DialogResult result = dialog.ShowDialog(pluginHost.MainWindow);
+      DialogResult result = dialog.ShowDialog(mPluginHost.MainWindow);
       dialog.Dispose();
     }
 
-    private void keeAgentOptionsMenuItem_Click(object source, EventArgs e)
+    private void keeAgentOptionsMenuItem_Click(object aSource, EventArgs aEvent)
     {
       OptionsDialog dialog = new OptionsDialog(this);
-      DialogResult result = dialog.ShowDialog(pluginHost.MainWindow);
+      DialogResult result = dialog.ShowDialog(mPluginHost.MainWindow);
       dialog.Dispose();
     }
 
@@ -186,18 +189,18 @@ namespace KeeAgent
     {
       return GetKeeAgentKeyList(false);
     }
-
+    
     internal IEnumerable<KeeAgentKey> GetKeeAgentKeyList(
-        bool suppressErrorMessage)
+        bool aSuppressErrorMessage)
     {
-      if (debug) Log("Getting Key List...");
-      if (debug) Log("Called from " + new StackTrace().GetFrame(2)
+      if (mDebug) Log("Getting Key List...");
+      if (mDebug) Log("Called from " + new StackTrace().GetFrame(2)
           .GetMethod().Name);
-      pluginHost.MainWindow.NotifyUserActivity();
+      mPluginHost.MainWindow.NotifyUserActivity();
 
       List<KeeAgentKey> keyList = new List<KeeAgentKey>();
       List<PwDatabase> databases;
-      databases = this.pluginHost.MainWindow.DocumentManager
+      databases = mPluginHost.MainWindow.DocumentManager
           .GetOpenDatabases();
 
       foreach (PwDatabase database in databases) {
@@ -258,9 +261,9 @@ namespace KeeAgent
                 KeeAgentKey key = new KeeAgentKey(ppkKey, dbPath, entry.Uuid,
                   bin.Key);
                 keyList.Add(key);
-                if (debug) Log("Found " + PSUtil.ToHex(key.GetFingerprint()));
+                if (mDebug) Log("Found " + PSUtil.ToHex(OpenSsh.GetFingerprint(key.CipherKeyPair)));
               } catch (Exception ex) {
-                if (!suppressErrorMessage || debug) {
+                if (!aSuppressErrorMessage || mDebug) {
                   string errorMessage = string.Format(
                     Translatable.ErrParsingKey,
                       entry.Strings.Get(PwDefs.TitleField).ReadString(),
@@ -275,12 +278,12 @@ namespace KeeAgent
                         bin.Key);
                   }
                   string debugInfo = null;
-                  if (debug) {
+                  if (mDebug) {
                     debugInfo = ex.ToString();
                   }
                   MessageService.ShowWarning(errorMessage, details, debugInfo);
-                  if (debug) Log(errorMessage);
-                  if (debug) Log(details);
+                  if (mDebug) Log(errorMessage);
+                  if (mDebug) Log(details);
                   if (debugInfo != null) Log(debugInfo);
                 }
               }
@@ -291,11 +294,11 @@ namespace KeeAgent
       return keyList;
     }
 
-    internal PpkKey GetSSH2Key(byte[] fingerprint)
+    internal PpkKey GetSSH2Key(byte[] aFingerprint)
     {
-      if (debug) Log("External program requested key " +
-        PSUtil.ToHex(fingerprint));
-      pluginHost.MainWindow.NotifyUserActivity();
+      if (mDebug) Log("External program requested key " +
+        PSUtil.ToHex(aFingerprint));
+      mPluginHost.MainWindow.NotifyUserActivity();
 
       /* TODO it would probably be better if we cached the fingerprints and
        * mapped them to the database path and the PwEntry Uuid rather than
@@ -310,11 +313,11 @@ namespace KeeAgent
       foreach (KeeAgentKey ppkKey in ppkKeyList) {
         if (result == null) {
           try {
-            byte[] testFingerprint = ppkKey.GetFingerprint();
-            if (testFingerprint.Length == fingerprint.Length) {
+            byte[] testFingerprint = OpenSsh.GetFingerprint(ppkKey.CipherKeyPair);
+            if (testFingerprint.Length == aFingerprint.Length) {
               bool match = true;
               for (int i = 0; i < testFingerprint.Length; i++) {
-                if (testFingerprint[i] != fingerprint[i]) {
+                if (testFingerprint[i] != aFingerprint[i]) {
                   match = false;
                   break;
                 }
@@ -332,8 +335,8 @@ namespace KeeAgent
           ppkKey.Dispose();
         }
       }
-      if (debug && result != null) Log("Match found");
-      if (debug && result == null) Log("Match not found");
+      if (mDebug && result != null) Log("Match found");
+      if (mDebug && result == null) Log("Match not found");
       if (result != null && confirmKeyRequest(result)) {
         return result;
       } else {
@@ -342,45 +345,72 @@ namespace KeeAgent
       }
     }
 
+    internal bool AddKey(PpkKey aKey)
+    {
+      mInMemoryKeys.Add(aKey);
+      return true;
+    }
+
+    internal bool RemoveKey(byte[] aFingerprint)
+    {
+      PpkKey removeKey = null;
+      foreach(PpkKey key in mInMemoryKeys) {
+        byte[] itemFingerprint = OpenSsh.GetFingerprint(key.CipherKeyPair);
+        if (itemFingerprint == aFingerprint) {
+          removeKey = key;
+        }
+      }
+      if (removeKey != null) {
+        mInMemoryKeys.Remove(removeKey);
+      }
+      return true;
+    }
+
+    internal bool RemoveAllKeys()
+    {
+      mInMemoryKeys.Clear();
+      return true;
+    }
+
     /// <summary>
     /// Asks for confirmation or notifies user of key request 
     /// depending on option selected
     /// </summary>
-    /// <param name="key">The key being requested</param>
+    /// <param name="aKey">The key being requested</param>
     /// <returns>true if the request was allowed by the user</returns>
-    public bool confirmKeyRequest(KeeAgentKey key)
+    public bool confirmKeyRequest(KeeAgentKey aKey)
     {
-      switch (this.options.Notification) {
+      switch (mOptions.Notification) {
         case NotificationOptions.AlwaysAsk:
         case NotificationOptions.AskOnce:
-          if (this.options.Notification == NotificationOptions.AskOnce &&
-            approvedKeys.Contains(key.Uuid)) {
+          if (mOptions.Notification == NotificationOptions.AskOnce &&
+            mApprovedKeys.Contains(aKey.Uuid)) {
             return true;
           }
-          this.pluginHost.MainWindow.Invoke((MethodInvoker)delegate()
+          mPluginHost.MainWindow.Invoke((MethodInvoker)delegate()
           {
             // trick to make sure dialog shows in front of other applications
             // TODO this could be done better. Right now KeePass stays on top
             // we need to put it back where it was or find a way to only make
             // the dialog come to the top
-            this.pluginHost.MainWindow.TopMost = true;
-            this.pluginHost.MainWindow.TopMost = false;
+            mPluginHost.MainWindow.TopMost = true;
+            mPluginHost.MainWindow.TopMost = false;
           });
           DialogResult result = MessageBox.Show(
-              string.Format(Translatable.ConfirmKeyFetch, key.Comment),
+              string.Format(Translatable.ConfirmKeyFetch, aKey.Comment),
               string.Empty,
               MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-          if (this.options.Notification == NotificationOptions.AskOnce &&
+          if (mOptions.Notification == NotificationOptions.AskOnce &&
             result == DialogResult.Yes) {
-            approvedKeys.Add(key.Uuid);
+            mApprovedKeys.Add(aKey.Uuid);
           }
           return result == DialogResult.Yes;
         case NotificationOptions.Balloon:
           string notifyText = string.Format(
               Translatable.NotifyKeyFetched,
-              key.Comment);
-          this.uiHelper.ShowBalloonNotification(notifyText);
+              aKey.Comment);
+          MUIHelper.ShowBalloonNotification(notifyText);
           return true;
         case NotificationOptions.Never:
           return true;
@@ -392,20 +422,20 @@ namespace KeeAgent
 
     internal void saveOptions()
     {
-      this.pluginHost.CustomConfig.SetString(
-          KeeAgentExt.notificationOptionName,
-          this.options.Notification.ToString());
-      this.pluginHost.CustomConfig.SetBool(
-          KeeAgentExt.logginEnabledOptionName,
-          this.options.LoggingEnabled);
-      this.pluginHost.CustomConfig.SetString(
-          KeeAgentExt.logFileNameOptionName,
-          this.options.LogFileName);
+      mPluginHost.CustomConfig.SetString(
+          KeeAgentExt.cNotificationOptionName,
+          mOptions.Notification.ToString());
+      mPluginHost.CustomConfig.SetBool(
+          KeeAgentExt.cLogginEnabledOptionName,
+          mOptions.LoggingEnabled);
+      mPluginHost.CustomConfig.SetString(
+          KeeAgentExt.cLogFileNameOptionName,
+          mOptions.LogFileName);
     }
 
     private void loadOptions()
     {
-      this.options = new Options();
+      mOptions = new Options();
 
       /* Notification Option */
 
@@ -413,43 +443,43 @@ namespace KeeAgent
           NotificationOptions.Balloon;
       NotificationOptions configFileNotificationValue;
       if (Enum.TryParse<NotificationOptions>(
-          this.pluginHost.CustomConfig.GetString(
-          KeeAgentExt.notificationOptionName,
+          mPluginHost.CustomConfig.GetString(
+          KeeAgentExt.cNotificationOptionName,
           defaultNotificationValue.ToString()),
           out configFileNotificationValue)) {
-        this.options.Notification = configFileNotificationValue;
+        mOptions.Notification = configFileNotificationValue;
       } else {
-        this.options.Notification = defaultNotificationValue;
+        mOptions.Notification = defaultNotificationValue;
       }
 
       /* Log File Options */
 
       bool defaultLoggingEnabledValue = false;
       bool configFileLoggingEnabledValue =
-          this.pluginHost.CustomConfig.GetBool(
-          KeeAgentExt.logginEnabledOptionName,
+          mPluginHost.CustomConfig.GetBool(
+          KeeAgentExt.cLogginEnabledOptionName,
           defaultLoggingEnabledValue);
-      this.options.LoggingEnabled = configFileLoggingEnabledValue;
+      mOptions.LoggingEnabled = configFileLoggingEnabledValue;
 
       string defaultLogFileNameValue = Path.Combine(
           Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
           "KeeAgent.log");
       string configFileLogFileNameValue =
-          this.pluginHost.CustomConfig.GetString(
-          KeeAgentExt.logFileNameOptionName);
+          mPluginHost.CustomConfig.GetString(
+          KeeAgentExt.cLogFileNameOptionName);
       if (string.IsNullOrEmpty(configFileLogFileNameValue)) {
-        this.options.LogFileName = defaultLogFileNameValue;
+        mOptions.LogFileName = defaultLogFileNameValue;
       } else {
-        this.options.LogFileName = configFileLogFileNameValue;
+        mOptions.LogFileName = configFileLogFileNameValue;
       }
     }
 
-    internal void Log(string message)
+    internal void Log(string aMessage)
     {
-      if (this.options.LoggingEnabled) {
+      if (mOptions.LoggingEnabled) {
         try {
-          File.AppendAllText(options.LogFileName,
-              DateTime.Now + ": " + message + "\r\n");
+          File.AppendAllText(mOptions.LogFileName,
+              DateTime.Now + ": " + aMessage + "\r\n");
         } catch { }
       }
     }

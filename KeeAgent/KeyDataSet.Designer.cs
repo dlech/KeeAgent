@@ -24,7 +24,9 @@ namespace KeeAgent {
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
     public partial class KeyDataSet : global::System.Data.DataSet {
         
-        private KeysDataTable tableKeys;
+        private KeeAgentKeysDataTable tableKeeAgentKeys;
+        
+        private MemoryKeysDataTable tableMemoryKeys;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
@@ -54,8 +56,11 @@ namespace KeeAgent {
             if ((this.DetermineSchemaSerializationMode(info, context) == global::System.Data.SchemaSerializationMode.IncludeSchema)) {
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXmlSchema(new global::System.Xml.XmlTextReader(new global::System.IO.StringReader(strSchema)));
-                if ((ds.Tables["Keys"] != null)) {
-                    base.Tables.Add(new KeysDataTable(ds.Tables["Keys"]));
+                if ((ds.Tables["KeeAgentKeys"] != null)) {
+                    base.Tables.Add(new KeeAgentKeysDataTable(ds.Tables["KeeAgentKeys"]));
+                }
+                if ((ds.Tables["MemoryKeys"] != null)) {
+                    base.Tables.Add(new MemoryKeysDataTable(ds.Tables["MemoryKeys"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -79,9 +84,19 @@ namespace KeeAgent {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public KeysDataTable Keys {
+        public KeeAgentKeysDataTable KeeAgentKeys {
             get {
-                return this.tableKeys;
+                return this.tableKeeAgentKeys;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public MemoryKeysDataTable MemoryKeys {
+            get {
+                return this.tableMemoryKeys;
             }
         }
         
@@ -152,8 +167,11 @@ namespace KeeAgent {
                 this.Reset();
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXml(reader);
-                if ((ds.Tables["Keys"] != null)) {
-                    base.Tables.Add(new KeysDataTable(ds.Tables["Keys"]));
+                if ((ds.Tables["KeeAgentKeys"] != null)) {
+                    base.Tables.Add(new KeeAgentKeysDataTable(ds.Tables["KeeAgentKeys"]));
+                }
+                if ((ds.Tables["MemoryKeys"] != null)) {
+                    base.Tables.Add(new MemoryKeysDataTable(ds.Tables["MemoryKeys"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -188,10 +206,16 @@ namespace KeeAgent {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         internal void InitVars(bool initTable) {
-            this.tableKeys = ((KeysDataTable)(base.Tables["Keys"]));
+            this.tableKeeAgentKeys = ((KeeAgentKeysDataTable)(base.Tables["KeeAgentKeys"]));
             if ((initTable == true)) {
-                if ((this.tableKeys != null)) {
-                    this.tableKeys.InitVars();
+                if ((this.tableKeeAgentKeys != null)) {
+                    this.tableKeeAgentKeys.InitVars();
+                }
+            }
+            this.tableMemoryKeys = ((MemoryKeysDataTable)(base.Tables["MemoryKeys"]));
+            if ((initTable == true)) {
+                if ((this.tableMemoryKeys != null)) {
+                    this.tableMemoryKeys.InitVars();
                 }
             }
         }
@@ -204,13 +228,21 @@ namespace KeeAgent {
             this.Namespace = "http://tempuri.org/KeyDataSet.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
-            this.tableKeys = new KeysDataTable();
-            base.Tables.Add(this.tableKeys);
+            this.tableKeeAgentKeys = new KeeAgentKeysDataTable();
+            base.Tables.Add(this.tableKeeAgentKeys);
+            this.tableMemoryKeys = new MemoryKeysDataTable();
+            base.Tables.Add(this.tableMemoryKeys);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private bool ShouldSerializeKeys() {
+        private bool ShouldSerializeKeeAgentKeys() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private bool ShouldSerializeMemoryKeys() {
             return false;
         }
         
@@ -270,14 +302,17 @@ namespace KeeAgent {
         }
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public delegate void KeysRowChangeEventHandler(object sender, KeysRowChangeEvent e);
+        public delegate void KeeAgentKeysRowChangeEventHandler(object sender, KeeAgentKeysRowChangeEvent e);
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public delegate void MemoryKeysRowChangeEventHandler(object sender, MemoryKeysRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class KeysDataTable : global::System.Data.TypedTableBase<KeysRow> {
+        public partial class KeeAgentKeysDataTable : global::System.Data.TypedTableBase<KeeAgentKeysRow> {
             
             private global::System.Data.DataColumn columnKeyType;
             
@@ -297,8 +332,8 @@ namespace KeeAgent {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public KeysDataTable() {
-                this.TableName = "Keys";
+            public KeeAgentKeysDataTable() {
+                this.TableName = "KeeAgentKeys";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -306,7 +341,7 @@ namespace KeeAgent {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal KeysDataTable(global::System.Data.DataTable table) {
+            internal KeeAgentKeysDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -323,7 +358,7 @@ namespace KeeAgent {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected KeysDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected KeeAgentKeysDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
             }
@@ -403,34 +438,34 @@ namespace KeeAgent {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public KeysRow this[int index] {
+            public KeeAgentKeysRow this[int index] {
                 get {
-                    return ((KeysRow)(this.Rows[index]));
+                    return ((KeeAgentKeysRow)(this.Rows[index]));
                 }
             }
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event KeysRowChangeEventHandler KeysRowChanging;
+            public event KeeAgentKeysRowChangeEventHandler KeeAgentKeysRowChanging;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event KeysRowChangeEventHandler KeysRowChanged;
+            public event KeeAgentKeysRowChangeEventHandler KeeAgentKeysRowChanged;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event KeysRowChangeEventHandler KeysRowDeleting;
+            public event KeeAgentKeysRowChangeEventHandler KeeAgentKeysRowDeleting;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event KeysRowChangeEventHandler KeysRowDeleted;
+            public event KeeAgentKeysRowChangeEventHandler KeeAgentKeysRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void AddKeysRow(KeysRow row) {
+            public void AddKeeAgentKeysRow(KeeAgentKeysRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public KeysRow AddKeysRow(string KeyType, int KeySize, string Fingerprint, string Comment, string DbName, string Group, string Entry, string FileName) {
-                KeysRow rowKeysRow = ((KeysRow)(this.NewRow()));
+            public KeeAgentKeysRow AddKeeAgentKeysRow(string KeyType, int KeySize, string Fingerprint, string Comment, string DbName, string Group, string Entry, string FileName) {
+                KeeAgentKeysRow rowKeeAgentKeysRow = ((KeeAgentKeysRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         KeyType,
                         KeySize,
@@ -440,15 +475,15 @@ namespace KeeAgent {
                         Group,
                         Entry,
                         FileName};
-                rowKeysRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowKeysRow);
-                return rowKeysRow;
+                rowKeeAgentKeysRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowKeeAgentKeysRow);
+                return rowKeeAgentKeysRow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                KeysDataTable cln = ((KeysDataTable)(base.Clone()));
+                KeeAgentKeysDataTable cln = ((KeeAgentKeysDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -456,7 +491,7 @@ namespace KeeAgent {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new KeysDataTable();
+                return new KeeAgentKeysDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -498,28 +533,28 @@ namespace KeeAgent {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public KeysRow NewKeysRow() {
-                return ((KeysRow)(this.NewRow()));
+            public KeeAgentKeysRow NewKeeAgentKeysRow() {
+                return ((KeeAgentKeysRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new KeysRow(builder);
+                return new KeeAgentKeysRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Type GetRowType() {
-                return typeof(KeysRow);
+                return typeof(KeeAgentKeysRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.KeysRowChanged != null)) {
-                    this.KeysRowChanged(this, new KeysRowChangeEvent(((KeysRow)(e.Row)), e.Action));
+                if ((this.KeeAgentKeysRowChanged != null)) {
+                    this.KeeAgentKeysRowChanged(this, new KeeAgentKeysRowChangeEvent(((KeeAgentKeysRow)(e.Row)), e.Action));
                 }
             }
             
@@ -527,8 +562,8 @@ namespace KeeAgent {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.KeysRowChanging != null)) {
-                    this.KeysRowChanging(this, new KeysRowChangeEvent(((KeysRow)(e.Row)), e.Action));
+                if ((this.KeeAgentKeysRowChanging != null)) {
+                    this.KeeAgentKeysRowChanging(this, new KeeAgentKeysRowChangeEvent(((KeeAgentKeysRow)(e.Row)), e.Action));
                 }
             }
             
@@ -536,8 +571,8 @@ namespace KeeAgent {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.KeysRowDeleted != null)) {
-                    this.KeysRowDeleted(this, new KeysRowChangeEvent(((KeysRow)(e.Row)), e.Action));
+                if ((this.KeeAgentKeysRowDeleted != null)) {
+                    this.KeeAgentKeysRowDeleted(this, new KeeAgentKeysRowChangeEvent(((KeeAgentKeysRow)(e.Row)), e.Action));
                 }
             }
             
@@ -545,14 +580,14 @@ namespace KeeAgent {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.KeysRowDeleting != null)) {
-                    this.KeysRowDeleting(this, new KeysRowChangeEvent(((KeysRow)(e.Row)), e.Action));
+                if ((this.KeeAgentKeysRowDeleting != null)) {
+                    this.KeeAgentKeysRowDeleting(this, new KeeAgentKeysRowChangeEvent(((KeeAgentKeysRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void RemoveKeysRow(KeysRow row) {
+            public void RemoveKeeAgentKeysRow(KeeAgentKeysRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -579,7 +614,298 @@ namespace KeeAgent {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "KeysDataTable";
+                attribute2.FixedValue = "KeeAgentKeysDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class MemoryKeysDataTable : global::System.Data.TypedTableBase<MemoryKeysRow> {
+            
+            private global::System.Data.DataColumn columnKeyType;
+            
+            private global::System.Data.DataColumn columnKeySize;
+            
+            private global::System.Data.DataColumn columnFingerprint;
+            
+            private global::System.Data.DataColumn columnComment;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public MemoryKeysDataTable() {
+                this.TableName = "MemoryKeys";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal MemoryKeysDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected MemoryKeysDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn KeyTypeColumn {
+                get {
+                    return this.columnKeyType;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn KeySizeColumn {
+                get {
+                    return this.columnKeySize;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn FingerprintColumn {
+                get {
+                    return this.columnFingerprint;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn CommentColumn {
+                get {
+                    return this.columnComment;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public MemoryKeysRow this[int index] {
+                get {
+                    return ((MemoryKeysRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event MemoryKeysRowChangeEventHandler MemoryKeysRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event MemoryKeysRowChangeEventHandler MemoryKeysRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event MemoryKeysRowChangeEventHandler MemoryKeysRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event MemoryKeysRowChangeEventHandler MemoryKeysRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void AddMemoryKeysRow(MemoryKeysRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public MemoryKeysRow AddMemoryKeysRow(string KeyType, int KeySize, string Fingerprint, string Comment) {
+                MemoryKeysRow rowMemoryKeysRow = ((MemoryKeysRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        KeyType,
+                        KeySize,
+                        Fingerprint,
+                        Comment};
+                rowMemoryKeysRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowMemoryKeysRow);
+                return rowMemoryKeysRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                MemoryKeysDataTable cln = ((MemoryKeysDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new MemoryKeysDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal void InitVars() {
+                this.columnKeyType = base.Columns["KeyType"];
+                this.columnKeySize = base.Columns["KeySize"];
+                this.columnFingerprint = base.Columns["Fingerprint"];
+                this.columnComment = base.Columns["Comment"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            private void InitClass() {
+                this.columnKeyType = new global::System.Data.DataColumn("KeyType", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnKeyType);
+                this.columnKeySize = new global::System.Data.DataColumn("KeySize", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnKeySize);
+                this.columnFingerprint = new global::System.Data.DataColumn("Fingerprint", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFingerprint);
+                this.columnComment = new global::System.Data.DataColumn("Comment", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnComment);
+                this.columnKeyType.Caption = "Key Type";
+                this.columnKeySize.Caption = "Size";
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public MemoryKeysRow NewMemoryKeysRow() {
+                return ((MemoryKeysRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new MemoryKeysRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(MemoryKeysRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.MemoryKeysRowChanged != null)) {
+                    this.MemoryKeysRowChanged(this, new MemoryKeysRowChangeEvent(((MemoryKeysRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.MemoryKeysRowChanging != null)) {
+                    this.MemoryKeysRowChanging(this, new MemoryKeysRowChangeEvent(((MemoryKeysRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.MemoryKeysRowDeleted != null)) {
+                    this.MemoryKeysRowDeleted(this, new MemoryKeysRowChangeEvent(((MemoryKeysRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.MemoryKeysRowDeleting != null)) {
+                    this.MemoryKeysRowDeleting(this, new MemoryKeysRowChangeEvent(((MemoryKeysRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void RemoveMemoryKeysRow(MemoryKeysRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                KeyDataSet ds = new KeyDataSet();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "MemoryKeysDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -623,15 +949,15 @@ namespace KeeAgent {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class KeysRow : global::System.Data.DataRow {
+        public partial class KeeAgentKeysRow : global::System.Data.DataRow {
             
-            private KeysDataTable tableKeys;
+            private KeeAgentKeysDataTable tableKeeAgentKeys;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal KeysRow(global::System.Data.DataRowBuilder rb) : 
+            internal KeeAgentKeysRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tableKeys = ((KeysDataTable)(this.Table));
+                this.tableKeeAgentKeys = ((KeeAgentKeysDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -639,14 +965,14 @@ namespace KeeAgent {
             public string KeyType {
                 get {
                     try {
-                        return ((string)(this[this.tableKeys.KeyTypeColumn]));
+                        return ((string)(this[this.tableKeeAgentKeys.KeyTypeColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'KeyType\' in table \'Keys\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'KeyType\' in table \'KeeAgentKeys\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableKeys.KeyTypeColumn] = value;
+                    this[this.tableKeeAgentKeys.KeyTypeColumn] = value;
                 }
             }
             
@@ -655,14 +981,14 @@ namespace KeeAgent {
             public int KeySize {
                 get {
                     try {
-                        return ((int)(this[this.tableKeys.KeySizeColumn]));
+                        return ((int)(this[this.tableKeeAgentKeys.KeySizeColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'KeySize\' in table \'Keys\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'KeySize\' in table \'KeeAgentKeys\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableKeys.KeySizeColumn] = value;
+                    this[this.tableKeeAgentKeys.KeySizeColumn] = value;
                 }
             }
             
@@ -671,14 +997,14 @@ namespace KeeAgent {
             public string Fingerprint {
                 get {
                     try {
-                        return ((string)(this[this.tableKeys.FingerprintColumn]));
+                        return ((string)(this[this.tableKeeAgentKeys.FingerprintColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Fingerprint\' in table \'Keys\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Fingerprint\' in table \'KeeAgentKeys\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableKeys.FingerprintColumn] = value;
+                    this[this.tableKeeAgentKeys.FingerprintColumn] = value;
                 }
             }
             
@@ -687,14 +1013,14 @@ namespace KeeAgent {
             public string Comment {
                 get {
                     try {
-                        return ((string)(this[this.tableKeys.CommentColumn]));
+                        return ((string)(this[this.tableKeeAgentKeys.CommentColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Comment\' in table \'Keys\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Comment\' in table \'KeeAgentKeys\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableKeys.CommentColumn] = value;
+                    this[this.tableKeeAgentKeys.CommentColumn] = value;
                 }
             }
             
@@ -703,14 +1029,14 @@ namespace KeeAgent {
             public string DbName {
                 get {
                     try {
-                        return ((string)(this[this.tableKeys.DbNameColumn]));
+                        return ((string)(this[this.tableKeeAgentKeys.DbNameColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'DbName\' in table \'Keys\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'DbName\' in table \'KeeAgentKeys\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableKeys.DbNameColumn] = value;
+                    this[this.tableKeeAgentKeys.DbNameColumn] = value;
                 }
             }
             
@@ -719,14 +1045,14 @@ namespace KeeAgent {
             public string Group {
                 get {
                     try {
-                        return ((string)(this[this.tableKeys.GroupColumn]));
+                        return ((string)(this[this.tableKeeAgentKeys.GroupColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Group\' in table \'Keys\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Group\' in table \'KeeAgentKeys\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableKeys.GroupColumn] = value;
+                    this[this.tableKeeAgentKeys.GroupColumn] = value;
                 }
             }
             
@@ -735,14 +1061,14 @@ namespace KeeAgent {
             public string Entry {
                 get {
                     try {
-                        return ((string)(this[this.tableKeys.EntryColumn]));
+                        return ((string)(this[this.tableKeeAgentKeys.EntryColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Entry\' in table \'Keys\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Entry\' in table \'KeeAgentKeys\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableKeys.EntryColumn] = value;
+                    this[this.tableKeeAgentKeys.EntryColumn] = value;
                 }
             }
             
@@ -751,111 +1077,238 @@ namespace KeeAgent {
             public string FileName {
                 get {
                     try {
-                        return ((string)(this[this.tableKeys.FileNameColumn]));
+                        return ((string)(this[this.tableKeeAgentKeys.FileNameColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'FileName\' in table \'Keys\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'FileName\' in table \'KeeAgentKeys\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableKeys.FileNameColumn] = value;
+                    this[this.tableKeeAgentKeys.FileNameColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsKeyTypeNull() {
-                return this.IsNull(this.tableKeys.KeyTypeColumn);
+                return this.IsNull(this.tableKeeAgentKeys.KeyTypeColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetKeyTypeNull() {
-                this[this.tableKeys.KeyTypeColumn] = global::System.Convert.DBNull;
+                this[this.tableKeeAgentKeys.KeyTypeColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsKeySizeNull() {
-                return this.IsNull(this.tableKeys.KeySizeColumn);
+                return this.IsNull(this.tableKeeAgentKeys.KeySizeColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetKeySizeNull() {
-                this[this.tableKeys.KeySizeColumn] = global::System.Convert.DBNull;
+                this[this.tableKeeAgentKeys.KeySizeColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsFingerprintNull() {
-                return this.IsNull(this.tableKeys.FingerprintColumn);
+                return this.IsNull(this.tableKeeAgentKeys.FingerprintColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetFingerprintNull() {
-                this[this.tableKeys.FingerprintColumn] = global::System.Convert.DBNull;
+                this[this.tableKeeAgentKeys.FingerprintColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsCommentNull() {
-                return this.IsNull(this.tableKeys.CommentColumn);
+                return this.IsNull(this.tableKeeAgentKeys.CommentColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetCommentNull() {
-                this[this.tableKeys.CommentColumn] = global::System.Convert.DBNull;
+                this[this.tableKeeAgentKeys.CommentColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsDbNameNull() {
-                return this.IsNull(this.tableKeys.DbNameColumn);
+                return this.IsNull(this.tableKeeAgentKeys.DbNameColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetDbNameNull() {
-                this[this.tableKeys.DbNameColumn] = global::System.Convert.DBNull;
+                this[this.tableKeeAgentKeys.DbNameColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsGroupNull() {
-                return this.IsNull(this.tableKeys.GroupColumn);
+                return this.IsNull(this.tableKeeAgentKeys.GroupColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetGroupNull() {
-                this[this.tableKeys.GroupColumn] = global::System.Convert.DBNull;
+                this[this.tableKeeAgentKeys.GroupColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsEntryNull() {
-                return this.IsNull(this.tableKeys.EntryColumn);
+                return this.IsNull(this.tableKeeAgentKeys.EntryColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetEntryNull() {
-                this[this.tableKeys.EntryColumn] = global::System.Convert.DBNull;
+                this[this.tableKeeAgentKeys.EntryColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsFileNameNull() {
-                return this.IsNull(this.tableKeys.FileNameColumn);
+                return this.IsNull(this.tableKeeAgentKeys.FileNameColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetFileNameNull() {
-                this[this.tableKeys.FileNameColumn] = global::System.Convert.DBNull;
+                this[this.tableKeeAgentKeys.FileNameColumn] = global::System.Convert.DBNull;
+            }
+        }
+        
+        /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class MemoryKeysRow : global::System.Data.DataRow {
+            
+            private MemoryKeysDataTable tableMemoryKeys;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal MemoryKeysRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableMemoryKeys = ((MemoryKeysDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string KeyType {
+                get {
+                    try {
+                        return ((string)(this[this.tableMemoryKeys.KeyTypeColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'KeyType\' in table \'MemoryKeys\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableMemoryKeys.KeyTypeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int KeySize {
+                get {
+                    try {
+                        return ((int)(this[this.tableMemoryKeys.KeySizeColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'KeySize\' in table \'MemoryKeys\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableMemoryKeys.KeySizeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Fingerprint {
+                get {
+                    try {
+                        return ((string)(this[this.tableMemoryKeys.FingerprintColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Fingerprint\' in table \'MemoryKeys\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableMemoryKeys.FingerprintColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Comment {
+                get {
+                    try {
+                        return ((string)(this[this.tableMemoryKeys.CommentColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Comment\' in table \'MemoryKeys\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableMemoryKeys.CommentColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsKeyTypeNull() {
+                return this.IsNull(this.tableMemoryKeys.KeyTypeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetKeyTypeNull() {
+                this[this.tableMemoryKeys.KeyTypeColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsKeySizeNull() {
+                return this.IsNull(this.tableMemoryKeys.KeySizeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetKeySizeNull() {
+                this[this.tableMemoryKeys.KeySizeColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsFingerprintNull() {
+                return this.IsNull(this.tableMemoryKeys.FingerprintColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetFingerprintNull() {
+                this[this.tableMemoryKeys.FingerprintColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsCommentNull() {
+                return this.IsNull(this.tableMemoryKeys.CommentColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetCommentNull() {
+                this[this.tableMemoryKeys.CommentColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -863,22 +1316,56 @@ namespace KeeAgent {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public class KeysRowChangeEvent : global::System.EventArgs {
+        public class KeeAgentKeysRowChangeEvent : global::System.EventArgs {
             
-            private KeysRow eventRow;
+            private KeeAgentKeysRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public KeysRowChangeEvent(KeysRow row, global::System.Data.DataRowAction action) {
+            public KeeAgentKeysRowChangeEvent(KeeAgentKeysRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public KeysRow Row {
+            public KeeAgentKeysRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public class MemoryKeysRowChangeEvent : global::System.EventArgs {
+            
+            private MemoryKeysRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public MemoryKeysRowChangeEvent(MemoryKeysRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public MemoryKeysRow Row {
                 get {
                     return this.eventRow;
                 }
