@@ -243,28 +243,40 @@
   <data name="inMemoryKeysDataGridView.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
   </data>
-  <data name="dataGridViewTextBoxColumn2.HeaderText" xml:space="preserve">
+  <metadata name="inMemroyKeyTypeDataGridViewTextBoxColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="inMemroyKeyTypeDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
     <value>Key Type</value>
   </data>
-  <data name="dataGridViewTextBoxColumn2.Width" type="System.Int32, mscorlib">
+  <data name="inMemroyKeyTypeDataGridViewTextBoxColumn.Width" type="System.Int32, mscorlib">
     <value>77</value>
   </data>
-  <data name="dataGridViewTextBoxColumn3.HeaderText" xml:space="preserve">
+  <metadata name="inMemoryKeySizeDataGridViewColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="inMemoryKeySizeDataGridViewColumn.HeaderText" xml:space="preserve">
     <value>Size</value>
   </data>
-  <data name="dataGridViewTextBoxColumn3.Width" type="System.Int32, mscorlib">
+  <data name="inMemoryKeySizeDataGridViewColumn.Width" type="System.Int32, mscorlib">
     <value>52</value>
   </data>
-  <data name="dataGridViewTextBoxColumn4.HeaderText" xml:space="preserve">
+  <metadata name="inMemoryKeyFingerprintDataGridViewColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="inMemoryKeyFingerprintDataGridViewColumn.HeaderText" xml:space="preserve">
     <value>Fingerprint</value>
   </data>
-  <data name="dataGridViewTextBoxColumn4.Width" type="System.Int32, mscorlib">
+  <data name="inMemoryKeyFingerprintDataGridViewColumn.Width" type="System.Int32, mscorlib">
     <value>81</value>
   </data>
-  <data name="dataGridViewTextBoxColumn5.HeaderText" xml:space="preserve">
+  <metadata name="inMemoryKeyCommentDataGridViewColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="inMemoryKeyCommentDataGridViewColumn.HeaderText" xml:space="preserve">
     <value>Comment</value>
   </data>
-  <data name="dataGridViewTextBoxColumn5.Width" type="System.Int32, mscorlib">
+  <data name="inMemoryKeyCommentDataGridViewColumn.Width" type="System.Int32, mscorlib">
     <value>76</value>
   </data>
   <data name="inMemoryKeysDataGridView.Location" type="System.Drawing.Point, System.Drawing">
@@ -477,28 +489,28 @@
   <data name="&gt;&gt;dataGridViewTextBoxColumn1.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;dataGridViewTextBoxColumn2.Name" xml:space="preserve">
-    <value>dataGridViewTextBoxColumn2</value>
+  <data name="&gt;&gt;inMemroyKeyTypeDataGridViewTextBoxColumn.Name" xml:space="preserve">
+    <value>inMemroyKeyTypeDataGridViewTextBoxColumn</value>
   </data>
-  <data name="&gt;&gt;dataGridViewTextBoxColumn2.Type" xml:space="preserve">
+  <data name="&gt;&gt;inMemroyKeyTypeDataGridViewTextBoxColumn.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;dataGridViewTextBoxColumn3.Name" xml:space="preserve">
-    <value>dataGridViewTextBoxColumn3</value>
+  <data name="&gt;&gt;inMemoryKeySizeDataGridViewColumn.Name" xml:space="preserve">
+    <value>inMemoryKeySizeDataGridViewColumn</value>
   </data>
-  <data name="&gt;&gt;dataGridViewTextBoxColumn3.Type" xml:space="preserve">
+  <data name="&gt;&gt;inMemoryKeySizeDataGridViewColumn.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;dataGridViewTextBoxColumn4.Name" xml:space="preserve">
-    <value>dataGridViewTextBoxColumn4</value>
+  <data name="&gt;&gt;inMemoryKeyFingerprintDataGridViewColumn.Name" xml:space="preserve">
+    <value>inMemoryKeyFingerprintDataGridViewColumn</value>
   </data>
-  <data name="&gt;&gt;dataGridViewTextBoxColumn4.Type" xml:space="preserve">
+  <data name="&gt;&gt;inMemoryKeyFingerprintDataGridViewColumn.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;dataGridViewTextBoxColumn5.Name" xml:space="preserve">
-    <value>dataGridViewTextBoxColumn5</value>
+  <data name="&gt;&gt;inMemoryKeyCommentDataGridViewColumn.Name" xml:space="preserve">
+    <value>inMemoryKeyCommentDataGridViewColumn</value>
   </data>
-  <data name="&gt;&gt;dataGridViewTextBoxColumn5.Type" xml:space="preserve">
+  <data name="&gt;&gt;inMemoryKeyCommentDataGridViewColumn.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">

@@ -43,10 +43,10 @@
       this.inFileKeyDataSet = new KeeAgent.KeyDataSet();
       this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.inMemoryKeysDataGridView = new System.Windows.Forms.DataGridView();
-      this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.inMemroyKeyTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.inMemoryKeySizeDataGridViewColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.inMemoryKeyFingerprintDataGridViewColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.inMemoryKeyCommentDataGridViewColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.label1 = new System.Windows.Forms.Label();
       this.label2 = new System.Windows.Forms.Label();
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -154,7 +154,7 @@
       // 
       // inFileKeysBindingSource
       // 
-      this.inFileKeysBindingSource.DataMember = "Keys";
+      this.inFileKeysBindingSource.DataMember = "KeeAgentKeys";
       this.inFileKeysBindingSource.DataSource = this.inFileKeyDataSet;
       // 
       // inFileKeyDataSet
@@ -174,49 +174,47 @@
       this.inMemoryKeysDataGridView.AllowUserToAddRows = false;
       this.inMemoryKeysDataGridView.AllowUserToDeleteRows = false;
       resources.ApplyResources(this.inMemoryKeysDataGridView, "inMemoryKeysDataGridView");
-      this.inMemoryKeysDataGridView.AutoGenerateColumns = false;
       this.inMemoryKeysDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
       this.inMemoryKeysDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn2,
-            this.dataGridViewTextBoxColumn3,
-            this.dataGridViewTextBoxColumn4,
-            this.dataGridViewTextBoxColumn5});
-      this.inMemoryKeysDataGridView.DataSource = this.inFileKeysBindingSource;
+            this.inMemroyKeyTypeDataGridViewTextBoxColumn,
+            this.inMemoryKeySizeDataGridViewColumn,
+            this.inMemoryKeyFingerprintDataGridViewColumn,
+            this.inMemoryKeyCommentDataGridViewColumn});
       this.inMemoryKeysDataGridView.Name = "inMemoryKeysDataGridView";
       this.inMemoryKeysDataGridView.ReadOnly = true;
       this.inMemoryKeysDataGridView.RowHeadersVisible = false;
       // 
-      // dataGridViewTextBoxColumn2
+      // inMemroyKeyTypeDataGridViewTextBoxColumn
       // 
-      this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-      this.dataGridViewTextBoxColumn2.DataPropertyName = "KeyType";
-      resources.ApplyResources(this.dataGridViewTextBoxColumn2, "dataGridViewTextBoxColumn2");
-      this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-      this.dataGridViewTextBoxColumn2.ReadOnly = true;
+      this.inMemroyKeyTypeDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+      this.inMemroyKeyTypeDataGridViewTextBoxColumn.DataPropertyName = "Algorithm";
+      resources.ApplyResources(this.inMemroyKeyTypeDataGridViewTextBoxColumn, "inMemroyKeyTypeDataGridViewTextBoxColumn");
+      this.inMemroyKeyTypeDataGridViewTextBoxColumn.Name = "inMemroyKeyTypeDataGridViewTextBoxColumn";
+      this.inMemroyKeyTypeDataGridViewTextBoxColumn.ReadOnly = true;
       // 
-      // dataGridViewTextBoxColumn3
+      // inMemoryKeySizeDataGridViewColumn
       // 
-      this.dataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-      this.dataGridViewTextBoxColumn3.DataPropertyName = "KeySize";
-      resources.ApplyResources(this.dataGridViewTextBoxColumn3, "dataGridViewTextBoxColumn3");
-      this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-      this.dataGridViewTextBoxColumn3.ReadOnly = true;
+      this.inMemoryKeySizeDataGridViewColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+      this.inMemoryKeySizeDataGridViewColumn.DataPropertyName = "Size";
+      resources.ApplyResources(this.inMemoryKeySizeDataGridViewColumn, "inMemoryKeySizeDataGridViewColumn");
+      this.inMemoryKeySizeDataGridViewColumn.Name = "inMemoryKeySizeDataGridViewColumn";
+      this.inMemoryKeySizeDataGridViewColumn.ReadOnly = true;
       // 
-      // dataGridViewTextBoxColumn4
+      // inMemoryKeyFingerprintDataGridViewColumn
       // 
-      this.dataGridViewTextBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-      this.dataGridViewTextBoxColumn4.DataPropertyName = "Fingerprint";
-      resources.ApplyResources(this.dataGridViewTextBoxColumn4, "dataGridViewTextBoxColumn4");
-      this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-      this.dataGridViewTextBoxColumn4.ReadOnly = true;
+      this.inMemoryKeyFingerprintDataGridViewColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+      this.inMemoryKeyFingerprintDataGridViewColumn.DataPropertyName = "Fingerprint";
+      resources.ApplyResources(this.inMemoryKeyFingerprintDataGridViewColumn, "inMemoryKeyFingerprintDataGridViewColumn");
+      this.inMemoryKeyFingerprintDataGridViewColumn.Name = "inMemoryKeyFingerprintDataGridViewColumn";
+      this.inMemoryKeyFingerprintDataGridViewColumn.ReadOnly = true;
       // 
-      // dataGridViewTextBoxColumn5
+      // inMemoryKeyCommentDataGridViewColumn
       // 
-      this.dataGridViewTextBoxColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-      this.dataGridViewTextBoxColumn5.DataPropertyName = "Comment";
-      resources.ApplyResources(this.dataGridViewTextBoxColumn5, "dataGridViewTextBoxColumn5");
-      this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-      this.dataGridViewTextBoxColumn5.ReadOnly = true;
+      this.inMemoryKeyCommentDataGridViewColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+      this.inMemoryKeyCommentDataGridViewColumn.DataPropertyName = "Comment";
+      resources.ApplyResources(this.inMemoryKeyCommentDataGridViewColumn, "inMemoryKeyCommentDataGridViewColumn");
+      this.inMemoryKeyCommentDataGridViewColumn.Name = "inMemoryKeyCommentDataGridViewColumn";
+      this.inMemoryKeyCommentDataGridViewColumn.ReadOnly = true;
       // 
       // label1
       // 
@@ -284,12 +282,13 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Entry;
         private System.Windows.Forms.DataGridViewTextBoxColumn DbName;
         private System.Windows.Forms.DataGridView inMemoryKeysDataGridView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn algorithmDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn inMemroyKeyTypeDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn inMemoryKeySizeDataGridViewColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn inMemoryKeyFingerprintDataGridViewColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn inMemoryKeyCommentDataGridViewColumn;
 	}
 }

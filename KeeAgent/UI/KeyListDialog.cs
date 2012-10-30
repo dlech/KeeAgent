@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using dlech.PageantSharp;
 using KeePassLib;
 using Org.BouncyCastle.Crypto.Parameters;
+using System.ComponentModel;
 
 namespace KeeAgent.UI
 {
@@ -13,6 +14,9 @@ namespace KeeAgent.UI
     public KeyListDialog(KeeAgentExt aExt)
     {
       InitializeComponent();
+
+      inMemoryKeysDataGridView.AutoGenerateColumns = false;
+      inMemoryKeysDataGridView.DataSource = aExt.mInMemoryKeys;
 
       IEnumerable<KeeAgentKey> inDatabaseKeyList = aExt.GetKeeAgentKeyList();
 
@@ -35,12 +39,7 @@ namespace KeeAgent.UI
           string entryTitle = entry.Strings.Get(PwDefs.TitleField).ReadString();
 
           /* get fingerprint */
-          string fingerprint;
-          try {
-            fingerprint = PSUtil.ToHex(OpenSsh.GetFingerprint(key.CipherKeyPair));
-          } catch (Exception) {
-            fingerprint = string.Empty;
-          }
+          string fingerprint = key.Fingerprint;         
 
           string algorithm = null;
           if (key.CipherKeyPair.Public is RsaKeyParameters) {
@@ -67,32 +66,7 @@ namespace KeeAgent.UI
         key.Dispose();
       }
 
-      foreach (PpkKey key in aExt.mInMemoryKeys) {
-        /* get fingerprint */
-        string fingerprint;
-        try {
-          fingerprint = PSUtil.ToHex(OpenSsh.GetFingerprint(key.CipherKeyPair));
-        } catch (Exception) {
-          fingerprint = string.Empty;
-        }
-
-        string algorithm = null;
-        if (key.CipherKeyPair.Public is RsaKeyParameters) {
-          algorithm = OpenSsh.PublicKeyAlgorithms.ssh_rsa;
-        } else if (key.CipherKeyPair.Public is DsaPublicKeyParameters) {
-          algorithm = OpenSsh.PublicKeyAlgorithms.ssh_dss;
-        } else {
-          algorithm = Translatable.UnknownAlgorithm;
-        }
-
-        /* add info to data grid view */
-        inFileKeyDataSet.MemoryKeys.AddMemoryKeysRow(
-          algorithm,
-          key.Size,
-          fingerprint,
-          key.Comment
-        );
-      }
+      
 
     }
 

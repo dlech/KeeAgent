@@ -14,6 +14,7 @@ using KeePass.Plugins;
 using KeePassLib;
 using KeePassLib.Security;
 using KeePassLib.Utility;
+using System.ComponentModel;
 
 namespace KeeAgent
 {
@@ -22,13 +23,13 @@ namespace KeeAgent
     internal IPluginHost mPluginHost;
     internal Options mOptions;
     internal bool mDebug;
-    internal HashSet<PpkKey> mInMemoryKeys;
+    internal BindingList<PpkKey> mInMemoryKeys;
 
     private WinPageant mPageant;
     private ApplicationContext mPageantContext;
     private Thread mPageantThread;
     private ToolStripMenuItem mKeeAgentMenuItem;
-    private List<PwUuid> mApprovedKeys;
+    private List<string> mApprovedKeys;
     private UIHelper MUIHelper;
 
     private const string cPluginName = "KeeAgent";
@@ -44,10 +45,10 @@ namespace KeeAgent
       MUIHelper = new UIHelper(mPluginHost);
       mDebug = (mPluginHost
           .CommandLineArgs[AppDefs.CommandLineOptions.Debug] != null);
-      mInMemoryKeys = new HashSet<PpkKey>();
+      mInMemoryKeys = new BindingList<PpkKey>();
 
       loadOptions();
-      mApprovedKeys = new List<PwUuid>();
+      mApprovedKeys = new List<string>();
 
       if (mDebug) Log("Loading KeeAgent...");
 
@@ -58,6 +59,7 @@ namespace KeeAgent
         {
           try {
             Agent.Callbacks callbacks = new Agent.Callbacks();
+            callbacks.removeAllSSH1Keys = RemoveAllKeys;
             callbacks.getSSH2KeyList = GetPpkKeyList;
             callbacks.getSSH2Key = GetSSH2Key;
             callbacks.addSSH2Key = AddKey;
@@ -182,14 +184,19 @@ namespace KeeAgent
 
     internal IEnumerable<PpkKey> GetPpkKeyList()
     {
-      return (IEnumerable<PpkKey>)GetKeeAgentKeyList(true);
+      List<PpkKey> keyList = new List<PpkKey>();
+      foreach (PpkKey key in mInMemoryKeys) {
+        keyList.Add(key);
+      }
+      keyList.AddRange(GetKeeAgentKeyList(true));
+      return keyList;
     }
 
     internal IEnumerable<KeeAgentKey> GetKeeAgentKeyList()
     {
       return GetKeeAgentKeyList(false);
     }
-    
+
     internal IEnumerable<KeeAgentKey> GetKeeAgentKeyList(
         bool aSuppressErrorMessage)
     {
@@ -261,7 +268,7 @@ namespace KeeAgent
                 KeeAgentKey key = new KeeAgentKey(ppkKey, dbPath, entry.Uuid,
                   bin.Key);
                 keyList.Add(key);
-                if (mDebug) Log("Found " + PSUtil.ToHex(OpenSsh.GetFingerprint(key.CipherKeyPair)));
+                if (mDebug) Log("Found " + key.Fingerprint);
               } catch (Exception ex) {
                 if (!aSuppressErrorMessage || mDebug) {
                   string errorMessage = string.Format(
@@ -297,7 +304,7 @@ namespace KeeAgent
     internal PpkKey GetSSH2Key(byte[] aFingerprint)
     {
       if (mDebug) Log("External program requested key " +
-        PSUtil.ToHex(aFingerprint));
+        aFingerprint.ToHexString());
       mPluginHost.MainWindow.NotifyUserActivity();
 
       /* TODO it would probably be better if we cached the fingerprints and
@@ -308,26 +315,13 @@ namespace KeeAgent
        * just selecting the first match.
        */
 
-      IEnumerable<KeeAgentKey> ppkKeyList = GetKeeAgentKeyList();
-      KeeAgentKey result = null;
-      foreach (KeeAgentKey ppkKey in ppkKeyList) {
+      string requestedFingerprint = aFingerprint.ToHexString();      
+      IEnumerable<PpkKey> ppkKeyList = GetPpkKeyList();
+      PpkKey result = null;
+      foreach (PpkKey ppkKey in ppkKeyList) {
         if (result == null) {
-          try {
-            byte[] testFingerprint = OpenSsh.GetFingerprint(ppkKey.CipherKeyPair);
-            if (testFingerprint.Length == aFingerprint.Length) {
-              bool match = true;
-              for (int i = 0; i < testFingerprint.Length; i++) {
-                if (testFingerprint[i] != aFingerprint[i]) {
-                  match = false;
-                  break;
-                }
-              }
-              if (match) {
-                result = ppkKey;
-              }
-            }
-          } catch (Exception ex) {
-            Debug.Fail(ex.ToString());
+          if (requestedFingerprint == ppkKey.Fingerprint) {
+            result = ppkKey;
           }
         }
         // dispose all keys except for the one match
@@ -337,7 +331,10 @@ namespace KeeAgent
       }
       if (mDebug && result != null) Log("Match found");
       if (mDebug && result == null) Log("Match not found");
-      if (result != null && confirmKeyRequest(result)) {
+      if (result == null) {
+        return null;
+      }
+      if (result != null && ConfirmKeyRequest(result)) {
         return result;
       } else {
         result.Dispose();
@@ -345,30 +342,39 @@ namespace KeeAgent
       }
     }
 
-    internal bool AddKey(PpkKey aKey)
+    internal bool AddKey(PpkKey aKey, bool aConstrained)
     {
-      mInMemoryKeys.Add(aKey);
+      mPluginHost.MainWindow.Invoke((MethodInvoker)delegate()
+      {
+        // TODO implement constrained
+        mInMemoryKeys.Add(aKey);
+      });
       return true;
     }
 
     internal bool RemoveKey(byte[] aFingerprint)
     {
       PpkKey removeKey = null;
-      foreach(PpkKey key in mInMemoryKeys) {
-        byte[] itemFingerprint = OpenSsh.GetFingerprint(key.CipherKeyPair);
-        if (itemFingerprint == aFingerprint) {
+      foreach (PpkKey key in mInMemoryKeys) {
+        if (aFingerprint.ToHexString() == key.Fingerprint) {
           removeKey = key;
         }
       }
       if (removeKey != null) {
-        mInMemoryKeys.Remove(removeKey);
+        mPluginHost.MainWindow.Invoke((MethodInvoker)delegate()
+        {
+          mInMemoryKeys.Remove(removeKey);
+        });
       }
       return true;
     }
 
     internal bool RemoveAllKeys()
     {
-      mInMemoryKeys.Clear();
+      mPluginHost.MainWindow.Invoke((MethodInvoker)delegate()
+      {
+        mInMemoryKeys.Clear();
+      });
       return true;
     }
 
@@ -378,13 +384,13 @@ namespace KeeAgent
     /// </summary>
     /// <param name="aKey">The key being requested</param>
     /// <returns>true if the request was allowed by the user</returns>
-    public bool confirmKeyRequest(KeeAgentKey aKey)
+    public bool ConfirmKeyRequest(PpkKey aKey)
     {
       switch (mOptions.Notification) {
         case NotificationOptions.AlwaysAsk:
         case NotificationOptions.AskOnce:
           if (mOptions.Notification == NotificationOptions.AskOnce &&
-            mApprovedKeys.Contains(aKey.Uuid)) {
+            mApprovedKeys.Contains(aKey.Fingerprint)) {
             return true;
           }
           mPluginHost.MainWindow.Invoke((MethodInvoker)delegate()
@@ -403,7 +409,7 @@ namespace KeeAgent
 
           if (mOptions.Notification == NotificationOptions.AskOnce &&
             result == DialogResult.Yes) {
-            mApprovedKeys.Add(aKey.Uuid);
+            mApprovedKeys.Add(aKey.Fingerprint);
           }
           return result == DialogResult.Yes;
         case NotificationOptions.Balloon:
