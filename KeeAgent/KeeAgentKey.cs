@@ -7,10 +7,10 @@ namespace KeeAgent
   /// <summary>
   /// Adds extra KeePass specific fields to PpkKey class
   /// </summary>
-  public class KeeAgentKey : PpkKey
+  public class KeeAgentKey : SshKey
   {
 
-    private PpkKey mPpkKey;
+    private SshKey mSshKey;
 
     /// <summary>
     /// The the full path name of the db associated with this key
@@ -31,13 +31,13 @@ namespace KeeAgent
     /// <summary>
     /// create new instance of KeeAgentKey
     /// </summary>
-    /// <param name="aPpkKey"></param>
-    public KeeAgentKey(PpkKey aPpkKey, string aDbPath, PwUuid aUuid, string aKeyFileName)
+    /// <param name="aSshKey"></param>
+    public KeeAgentKey(SshKey aSshKey, string aDbPath, PwUuid aUuid, string aKeyFileName)
     {
-      if (aPpkKey == null) {
+      if (aSshKey == null) {
         throw new ArgumentNullException("key");
       }
-      if (aPpkKey == null) {
+      if (aSshKey == null) {
         throw new ArgumentNullException("dbPath");
       }
       if (aUuid == null) {
@@ -47,9 +47,10 @@ namespace KeeAgent
         throw new ArgumentNullException("keyFileName");
       }
 
-      mPpkKey = aPpkKey; // keep reference to ppkKey so that it is not disposed by GC
-      CipherKeyPair = aPpkKey.CipherKeyPair;
-      Comment = aPpkKey.Comment;
+      mSshKey = aSshKey; // keep reference to ppkKey so that it is not disposed by GC
+      Version = aSshKey.Version;
+      CipherKeyPair = aSshKey.CipherKeyPair;
+      Comment = aSshKey.Comment;
       DbPath = aDbPath;
       Uuid = aUuid;
       KeyFileName = aKeyFileName;

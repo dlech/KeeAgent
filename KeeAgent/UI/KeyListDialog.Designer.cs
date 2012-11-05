@@ -50,6 +50,12 @@
       this.label1 = new System.Windows.Forms.Label();
       this.label2 = new System.Windows.Forms.Label();
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+      this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+      this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+      this.lockedStatusIconLabel = new System.Windows.Forms.Label();
+      this.lockedStatusTextLabel = new System.Windows.Forms.Label();
+      this.lockedStatusButton = new System.Windows.Forms.Button();
+      this.noLoadedKeysLabel = new System.Windows.Forms.Label();
       ((System.ComponentModel.ISupportInitialize)(this.inFileKeysDataGridView)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.inFileKeysBindingSource)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.inFileKeyDataSet)).BeginInit();
@@ -58,6 +64,8 @@
       this.splitContainer1.Panel1.SuspendLayout();
       this.splitContainer1.Panel2.SuspendLayout();
       this.splitContainer1.SuspendLayout();
+      this.tableLayoutPanel1.SuspendLayout();
+      this.flowLayoutPanel1.SuspendLayout();
       this.SuspendLayout();
       // 
       // closeButton
@@ -71,6 +79,7 @@
       // 
       this.inFileKeysDataGridView.AllowUserToAddRows = false;
       this.inFileKeysDataGridView.AllowUserToDeleteRows = false;
+      this.inFileKeysDataGridView.AllowUserToResizeRows = false;
       resources.ApplyResources(this.inFileKeysDataGridView, "inFileKeysDataGridView");
       this.inFileKeysDataGridView.AutoGenerateColumns = false;
       this.inFileKeysDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -173,6 +182,7 @@
       // 
       this.inMemoryKeysDataGridView.AllowUserToAddRows = false;
       this.inMemoryKeysDataGridView.AllowUserToDeleteRows = false;
+      this.inMemoryKeysDataGridView.AllowUserToResizeRows = false;
       resources.ApplyResources(this.inMemoryKeysDataGridView, "inMemoryKeysDataGridView");
       this.inMemoryKeysDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
       this.inMemoryKeysDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -183,6 +193,8 @@
       this.inMemoryKeysDataGridView.Name = "inMemoryKeysDataGridView";
       this.inMemoryKeysDataGridView.ReadOnly = true;
       this.inMemoryKeysDataGridView.RowHeadersVisible = false;
+      this.inMemoryKeysDataGridView.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.inMemoryKeysDataGridView_RowsAdded);
+      this.inMemoryKeysDataGridView.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.inMemoryKeysDataGridView_RowsRemoved);
       // 
       // inMemroyKeyTypeDataGridViewTextBoxColumn
       // 
@@ -233,8 +245,9 @@
       // 
       // splitContainer1.Panel1
       // 
-      this.splitContainer1.Panel1.Controls.Add(this.label1);
       this.splitContainer1.Panel1.Controls.Add(this.inMemoryKeysDataGridView);
+      this.splitContainer1.Panel1.Controls.Add(this.label1);
+      this.splitContainer1.Panel1.Controls.Add(this.noLoadedKeysLabel);
       // 
       // splitContainer1.Panel2
       // 
@@ -242,15 +255,56 @@
       this.splitContainer1.Panel2.Controls.Add(this.label2);
       this.splitContainer1.Panel2.Controls.Add(this.closeButton);
       // 
+      // tableLayoutPanel1
+      // 
+      resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
+      this.tableLayoutPanel1.Controls.Add(this.splitContainer1, 0, 1);
+      this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 0, 0);
+      this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+      // 
+      // flowLayoutPanel1
+      // 
+      this.flowLayoutPanel1.Controls.Add(this.lockedStatusIconLabel);
+      this.flowLayoutPanel1.Controls.Add(this.lockedStatusTextLabel);
+      this.flowLayoutPanel1.Controls.Add(this.lockedStatusButton);
+      resources.ApplyResources(this.flowLayoutPanel1, "flowLayoutPanel1");
+      this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+      // 
+      // lockedStatusIconLabel
+      // 
+      resources.ApplyResources(this.lockedStatusIconLabel, "lockedStatusIconLabel");
+      this.lockedStatusIconLabel.Image = global::KeeAgent.Properties.Resources.Locked;
+      this.lockedStatusIconLabel.Name = "lockedStatusIconLabel";
+      // 
+      // lockedStatusTextLabel
+      // 
+      resources.ApplyResources(this.lockedStatusTextLabel, "lockedStatusTextLabel");
+      this.lockedStatusTextLabel.Name = "lockedStatusTextLabel";
+      // 
+      // lockedStatusButton
+      // 
+      resources.ApplyResources(this.lockedStatusButton, "lockedStatusButton");
+      this.lockedStatusButton.Name = "lockedStatusButton";
+      this.lockedStatusButton.UseVisualStyleBackColor = true;
+      this.lockedStatusButton.Click += new System.EventHandler(this.lockedStatusButton_Click);
+      // 
+      // noLoadedKeysLabel
+      // 
+      resources.ApplyResources(this.noLoadedKeysLabel, "noLoadedKeysLabel");
+      this.noLoadedKeysLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+      this.noLoadedKeysLabel.Name = "noLoadedKeysLabel";
+      // 
       // KeyListDialog
       // 
       resources.ApplyResources(this, "$this");
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.Controls.Add(this.splitContainer1);
+      this.Controls.Add(this.tableLayoutPanel1);
       this.MaximizeBox = false;
       this.MinimizeBox = false;
       this.Name = "KeyListDialog";
       this.ShowInTaskbar = false;
+      this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.KeyListDialog_FormClosing);
+      this.Load += new System.EventHandler(this.KeyListDialog_Load);
       this.Shown += new System.EventHandler(this.PuttyKeyListDialog_Shown);
       ((System.ComponentModel.ISupportInitialize)(this.inFileKeysDataGridView)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.inFileKeysBindingSource)).EndInit();
@@ -262,6 +316,9 @@
       this.splitContainer1.Panel2.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
       this.splitContainer1.ResumeLayout(false);
+      this.tableLayoutPanel1.ResumeLayout(false);
+      this.flowLayoutPanel1.ResumeLayout(false);
+      this.flowLayoutPanel1.PerformLayout();
       this.ResumeLayout(false);
 
 		}
@@ -290,5 +347,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn inMemoryKeySizeDataGridViewColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn inMemoryKeyFingerprintDataGridViewColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn inMemoryKeyCommentDataGridViewColumn;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.Label lockedStatusIconLabel;
+        private System.Windows.Forms.Label lockedStatusTextLabel;
+        private System.Windows.Forms.Button lockedStatusButton;
+        private System.Windows.Forms.Label noLoadedKeysLabel;
 	}
 }

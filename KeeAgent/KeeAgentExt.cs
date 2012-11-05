@@ -23,14 +23,14 @@ namespace KeeAgent
     internal IPluginHost mPluginHost;
     internal Options mOptions;
     internal bool mDebug;
-    internal BindingList<PpkKey> mInMemoryKeys;
+    internal BindingList<SshKey> mInMemoryKeys;
+    internal WinPageant mPageant;
 
-    private WinPageant mPageant;
     private ApplicationContext mPageantContext;
     private Thread mPageantThread;
     private ToolStripMenuItem mKeeAgentMenuItem;
     private List<string> mApprovedKeys;
-    private UIHelper MUIHelper;
+    private UIHelper mUIHelper;
 
     private const string cPluginName = "KeeAgent";
     private const string cNotificationOptionName = cPluginName + ".Notification";
@@ -42,12 +42,12 @@ namespace KeeAgent
       bool result;
 
       mPluginHost = aHost;
-      MUIHelper = new UIHelper(mPluginHost);
+      mUIHelper = new UIHelper(mPluginHost);
       mDebug = (mPluginHost
           .CommandLineArgs[AppDefs.CommandLineOptions.Debug] != null);
-      mInMemoryKeys = new BindingList<PpkKey>();
+      mInMemoryKeys = new BindingList<SshKey>();
 
-      loadOptions();
+      LoadOptions();
       mApprovedKeys = new List<string>();
 
       if (mDebug) Log("Loading KeeAgent...");
@@ -59,12 +59,12 @@ namespace KeeAgent
         {
           try {
             Agent.Callbacks callbacks = new Agent.Callbacks();
-            callbacks.removeAllSSH1Keys = RemoveAllKeys;
-            callbacks.getSSH2KeyList = GetPpkKeyList;
-            callbacks.getSSH2Key = GetSSH2Key;
+            callbacks.removeAllSSH1Keys = RemoveAllSsh1Keys;
+            callbacks.getSSH2KeyList = GetSsh2KeyList;
+            callbacks.getSSH2Key = GetSsh2Key;
             callbacks.addSSH2Key = AddKey;
-            callbacks.removeSSH2Key = RemoveKey;
-            callbacks.removeAllSSH2Keys = RemoveAllKeys;
+            callbacks.removeSSH2Key = RemoveSsh2Key;
+            callbacks.removeAllSSH2Keys = RemoveAllSsh2Keys;
             mPageant = new WinPageant(callbacks);
             mPageantContext = new ApplicationContext();
             Application.Run(mPageantContext);
@@ -128,11 +128,9 @@ namespace KeeAgent
         ToolStripMenuItem keeAgentListPuttyKeysMenuItem =
             new ToolStripMenuItem();
         keeAgentListPuttyKeysMenuItem.Text =
-            Translatable.ShowPuttyKeysMenuItem;
-        keeAgentListPuttyKeysMenuItem.ToolTipText =
-            Translatable.ShowPuttyKeysMenuItemToolTip;
+            Translatable.ManageKeeAgentMenuItem;
         keeAgentListPuttyKeysMenuItem.Click +=
-            new EventHandler(keeAgentListPuttyKeysMenuItem_Click);
+            new EventHandler(manageKeeAgentMenuItem_Click);
 
         ToolStripMenuItem keeAgentOptionsMenuItem =
             new ToolStripMenuItem();
@@ -155,20 +153,17 @@ namespace KeeAgent
 
     private void RemoveMenuItems()
     {
-      if (mPluginHost != null &&
-          mPluginHost.MainWindow != null &&
+      if (mPluginHost != null && mPluginHost.MainWindow != null &&
           mKeeAgentMenuItem != null) {
 
         /* get Tools menu */
-        ToolStripMenuItem toolsMenu =
-            mPluginHost.MainWindow.ToolsMenu;
+        ToolStripMenuItem toolsMenu = mPluginHost.MainWindow.ToolsMenu;
         /* remove items from tools menu */
         toolsMenu.DropDownItems.Remove(mKeeAgentMenuItem);
       }
     }
 
-    private void keeAgentListPuttyKeysMenuItem_Click(
-        object aSource, EventArgs aEvent)
+    private void manageKeeAgentMenuItem_Click(object aSource, EventArgs aEvent)
     {
       KeyListDialog dialog = new KeyListDialog(this);
       DialogResult result = dialog.ShowDialog(mPluginHost.MainWindow);
@@ -182,13 +177,24 @@ namespace KeeAgent
       dialog.Dispose();
     }
 
-    internal IEnumerable<PpkKey> GetPpkKeyList()
+    internal IEnumerable<SshKey> GetSsh2KeyList()
     {
-      List<PpkKey> keyList = new List<PpkKey>();
-      foreach (PpkKey key in mInMemoryKeys) {
-        keyList.Add(key);
+      return GetSsh2KeyList(SshVersion.SSH2);
+    }
+
+    private IEnumerable<SshKey> GetSsh2KeyList(SshVersion aVersion)
+    {
+      List<SshKey> keyList = new List<SshKey>();
+      foreach (SshKey inMemoryKey in mInMemoryKeys) {
+        if (inMemoryKey.Version == aVersion) {
+          keyList.Add(inMemoryKey);
+        }
       }
-      keyList.AddRange(GetKeeAgentKeyList(true));
+      foreach (SshKey inDatabaseKey in GetKeeAgentKeyList(true)) {
+        if (inDatabaseKey.Version == aVersion) {
+          keyList.Add(inDatabaseKey);
+        }
+      }
       return keyList;
     }
 
@@ -263,9 +269,9 @@ namespace KeeAgent
                   // we will warn user a different way... won't we???
                 };
 
-                PpkKey ppkKey = PpkFile.ParseData(bin.Value.ReadData(),
+                SshKey sshKey = PpkFile.ParseData(bin.Value.ReadData(),
                   getPassphrase, warnUser);
-                KeeAgentKey key = new KeeAgentKey(ppkKey, dbPath, entry.Uuid,
+                KeeAgentKey key = new KeeAgentKey(sshKey, dbPath, entry.Uuid,
                   bin.Key);
                 keyList.Add(key);
                 if (mDebug) Log("Found " + key.Fingerprint);
@@ -301,7 +307,7 @@ namespace KeeAgent
       return keyList;
     }
 
-    internal PpkKey GetSSH2Key(byte[] aFingerprint)
+    internal SshKey GetSsh2Key(byte[] aFingerprint)
     {
       if (mDebug) Log("External program requested key " +
         aFingerprint.ToHexString());
@@ -315,18 +321,19 @@ namespace KeeAgent
        * just selecting the first match.
        */
 
-      string requestedFingerprint = aFingerprint.ToHexString();      
-      IEnumerable<PpkKey> ppkKeyList = GetPpkKeyList();
-      PpkKey result = null;
-      foreach (PpkKey ppkKey in ppkKeyList) {
+      string requestedFingerprint = aFingerprint.ToHexString();
+      IEnumerable<SshKey> keyList = GetSsh2KeyList();
+      SshKey result = null;
+      foreach (SshKey key in keyList) {
         if (result == null) {
-          if (requestedFingerprint == ppkKey.Fingerprint) {
-            result = ppkKey;
+          if (key.Version == SshVersion.SSH2 && 
+            requestedFingerprint == key.Fingerprint) {
+            result = key;
           }
         }
         // dispose all keys except for the one match
-        if (ppkKey != result) {
-          ppkKey.Dispose();
+        if (key != result) {
+          key.Dispose();
         }
       }
       if (mDebug && result != null) Log("Match found");
@@ -341,39 +348,69 @@ namespace KeeAgent
         return null;
       }
     }
-
-    internal bool AddKey(PpkKey aKey, bool aConstrained)
+    
+    internal bool AddKey(SshKey aKey)
     {
       mPluginHost.MainWindow.Invoke((MethodInvoker)delegate()
       {
-        // TODO implement constrained
+        RemoveKey(PSUtil.FromHex(aKey.Fingerprint, ":"), aKey.Version);
         mInMemoryKeys.Add(aKey);
       });
       return true;
     }
 
-    internal bool RemoveKey(byte[] aFingerprint)
+    internal bool RemoveSsh1Key(byte[] aFingerprint)
     {
-      PpkKey removeKey = null;
-      foreach (PpkKey key in mInMemoryKeys) {
-        if (aFingerprint.ToHexString() == key.Fingerprint) {
+      return RemoveKey(aFingerprint, SshVersion.SSH1);
+    }
+
+    internal bool RemoveSsh2Key(byte[] aFingerprint)
+    {
+      return RemoveKey(aFingerprint, SshVersion.SSH2);
+    }
+
+    private bool RemoveKey(byte[] aFingerprint, SshVersion aVersion)
+    {
+      SshKey removeKey = null;
+      foreach (SshKey key in mInMemoryKeys) {
+        if (key.Version == aVersion &&
+          aFingerprint.ToHexString() == key.Fingerprint) {
           removeKey = key;
         }
       }
-      if (removeKey != null) {
+      bool result = false;
+      if (removeKey != null) {        
         mPluginHost.MainWindow.Invoke((MethodInvoker)delegate()
         {
-          mInMemoryKeys.Remove(removeKey);
+          result = mInMemoryKeys.Remove(removeKey);
         });
       }
-      return true;
+      return result;
     }
 
-    internal bool RemoveAllKeys()
+    internal bool RemoveAllSsh1Keys()
     {
+      return RemoveAllKeys(SshVersion.SSH1);
+    }
+
+    internal bool RemoveAllSsh2Keys()
+    {
+      return RemoveAllKeys(SshVersion.SSH2);
+    }
+
+    private bool RemoveAllKeys(SshVersion aVersion)
+    {
+      List<SshKey> removeKeyList = new List<SshKey>();
+      foreach (SshKey key in mInMemoryKeys) {
+        if (key.Version == aVersion) {
+          removeKeyList.Add(key);
+        }
+      }
       mPluginHost.MainWindow.Invoke((MethodInvoker)delegate()
       {
-        mInMemoryKeys.Clear();
+        foreach (SshKey key in removeKeyList) {
+          mInMemoryKeys.Remove(key);
+        }
       });
       return true;
     }
@@ -384,7 +421,7 @@ namespace KeeAgent
     /// </summary>
     /// <param name="aKey">The key being requested</param>
     /// <returns>true if the request was allowed by the user</returns>
-    public bool ConfirmKeyRequest(PpkKey aKey)
+    public bool ConfirmKeyRequest(SshKey aKey)
     {
       switch (mOptions.Notification) {
         case NotificationOptions.AlwaysAsk:
@@ -416,7 +453,7 @@ namespace KeeAgent
           string notifyText = string.Format(
               Translatable.NotifyKeyFetched,
               aKey.Comment);
-          MUIHelper.ShowBalloonNotification(notifyText);
+          mUIHelper.ShowBalloonNotification(notifyText);
           return true;
         case NotificationOptions.Never:
           return true;
@@ -426,7 +463,7 @@ namespace KeeAgent
       }
     }
 
-    internal void saveOptions()
+    internal void SaveOptions()
     {
       mPluginHost.CustomConfig.SetString(
           KeeAgentExt.cNotificationOptionName,
@@ -439,7 +476,7 @@ namespace KeeAgent
           mOptions.LogFileName);
     }
 
-    private void loadOptions()
+    private void LoadOptions()
     {
       mOptions = new Options();
 

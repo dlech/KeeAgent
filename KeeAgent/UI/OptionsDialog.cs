@@ -74,7 +74,7 @@ namespace KeeAgent.UI
         private void button1_Click(object sender, EventArgs e)
         {
             this.ext.mOptions = selectedOptions;
-            this.ext.saveOptions();
+            this.ext.SaveOptions();
             Close();
         }
 

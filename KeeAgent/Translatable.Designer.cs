@@ -61,6 +61,24 @@ namespace KeeAgent {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lock.
+        /// </summary>
+        internal static string ButtonLock {
+            get {
+                return ResourceManager.GetString("ButtonLock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unlock.
+        /// </summary>
+        internal static string ButtonUnlock {
+            get {
+                return ResourceManager.GetString("ButtonUnlock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Another application is requesting SSH key &apos;{0}&apos;. Do you want to allow this?.
         /// </summary>
         internal static string ConfirmKeyFetch {
@@ -115,6 +133,15 @@ namespace KeeAgent {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manage....
+        /// </summary>
+        internal static string ManageKeeAgentMenuItem {
+            get {
+                return ResourceManager.GetString("ManageKeeAgentMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SSH key &apos;{0}&apos; was fetched by another application..
         /// </summary>
         internal static string NotifyKeyFetched {
@@ -133,20 +160,20 @@ namespace KeeAgent {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage SSH Keys.
+        ///   Looks up a localized string similar to KeeAgent Is Locked.
         /// </summary>
-        internal static string ShowPuttyKeysMenuItem {
+        internal static string StatusLocked {
             get {
-                return ResourceManager.GetString("ShowPuttyKeysMenuItem", resourceCulture);
+                return ResourceManager.GetString("StatusLocked", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage SSH Keys used by KeeAgent.
+        ///   Looks up a localized string similar to KeeAgent is Unlocked.
         /// </summary>
-        internal static string ShowPuttyKeysMenuItemToolTip {
+        internal static string StatusUnlocked {
             get {
-                return ResourceManager.GetString("ShowPuttyKeysMenuItemToolTip", resourceCulture);
+                return ResourceManager.GetString("StatusUnlocked", resourceCulture);
             }
         }
         

@@ -6,14 +6,23 @@ using dlech.PageantSharp;
 using KeePassLib;
 using Org.BouncyCastle.Crypto.Parameters;
 using System.ComponentModel;
+using System.Drawing;
+using KeeAgent.Properties;
 
 namespace KeeAgent.UI
 {
   public partial class KeyListDialog : Form
   {
+    private KeeAgentExt mExt;
+
     public KeyListDialog(KeeAgentExt aExt)
     {
+      mExt = aExt;
+
       InitializeComponent();
+
+      UpdateLockedStatus(this, new Agent.LockEventArgs(mExt.mPageant.IsLocked));
+      UpdateLoadedKeys();
 
       inMemoryKeysDataGridView.AutoGenerateColumns = false;
       inMemoryKeysDataGridView.DataSource = aExt.mInMemoryKeys;
@@ -65,9 +74,23 @@ namespace KeeAgent.UI
 
         key.Dispose();
       }
+    }
 
-      
+    private void UpdateLockedStatus(object aSender, Agent.LockEventArgs aEventArgs)
+    {
+      mExt.mPluginHost.MainWindow.Invoke((MethodInvoker)delegate()
+      {
+        if (aEventArgs.IsLocked) {
+          lockedStatusIconLabel.Image = Resources.Locked;
+          lockedStatusTextLabel.Text = Translatable.StatusLocked;
+          lockedStatusButton.Text = Translatable.ButtonUnlock;
 
+        } else {
+          lockedStatusIconLabel.Image = Resources.Unlocked;
+          lockedStatusTextLabel.Text = Translatable.StatusUnlocked;
+          lockedStatusButton.Text = Translatable.ButtonLock;
+        }
+      });
     }
 
     private void PuttyKeyListDialog_Shown(object aSender, EventArgs aEvent)
@@ -77,6 +100,44 @@ namespace KeeAgent.UI
         Icon = Owner.Icon;
       }
     }
-    
+
+    private void KeyListDialog_Load(object sender, EventArgs e)
+    {
+      mExt.mPageant.Locked += UpdateLockedStatus;
+    }
+
+    private void KeyListDialog_FormClosing(object sender, FormClosingEventArgs e)
+    {
+      mExt.mPageant.Locked -= UpdateLockedStatus;
+    }
+
+    private void lockedStatusButton_Click(object sender, EventArgs e)
+    {
+      // TODO implement password dialog
+      if (mExt.mPageant.IsLocked) {
+        mExt.mPageant.Unlock("test");
+      } else {
+        mExt.mPageant.Lock("test");
+      }
+    }
+
+    private void inMemoryKeysDataGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+    {
+      UpdateLoadedKeys();
+    }
+
+    private void inMemoryKeysDataGridView_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+    {
+      UpdateLoadedKeys();
+      UpdateLoadedKeys();
+    }
+
+    private void UpdateLoadedKeys()
+    {
+      bool noKeys = (inMemoryKeysDataGridView.RowCount == 0);
+      noLoadedKeysLabel.Visible = noKeys;
+      inMemoryKeysDataGridView.Visible = !noKeys;
+    }
+
   }
 }

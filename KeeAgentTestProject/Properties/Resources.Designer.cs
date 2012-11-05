@@ -22,7 +22,7 @@ namespace KeeAgentTestProject.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace KeeAgentTestProject.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("KeeAgentTestProject.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace KeeAgentTestProject.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -60,35 +60,35 @@ namespace KeeAgentTestProject.Properties {
             }
         }
         
-        internal static byte[] _4095_bits_ppk {
+        public static byte[] _4095_bits_ppk {
             get {
                 object obj = ResourceManager.GetObject("_4095_bits_ppk", resourceCulture);
                 return ((byte[])(obj));
             }
         }
         
-        internal static byte[] dsa_ppk {
+        public static byte[] dsa_ppk {
             get {
                 object obj = ResourceManager.GetObject("dsa_ppk", resourceCulture);
                 return ((byte[])(obj));
             }
         }
         
-        internal static byte[] non_ascii_passphrase_ppk {
+        public static byte[] non_ascii_passphrase_ppk {
             get {
                 object obj = ResourceManager.GetObject("non_ascii_passphrase_ppk", resourceCulture);
                 return ((byte[])(obj));
             }
         }
         
-        internal static byte[] withoutPassphrase_ppk {
+        public static byte[] withoutPassphrase_ppk {
             get {
                 object obj = ResourceManager.GetObject("withoutPassphrase_ppk", resourceCulture);
                 return ((byte[])(obj));
             }
         }
         
-        internal static byte[] withPassphrase_ppk {
+        public static byte[] withPassphrase_ppk {
             get {
                 object obj = ResourceManager.GetObject("withPassphrase_ppk", resourceCulture);
                 return ((byte[])(obj));

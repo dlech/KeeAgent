@@ -171,6 +171,15 @@
   <ItemGroup>
     <None Include="Resources\KeeAgent.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KeeAgent.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\locked.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\unlocked.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if $(ConfigurationName) == Release (
