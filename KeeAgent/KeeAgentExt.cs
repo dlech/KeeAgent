@@ -242,7 +242,7 @@ namespace KeeAgent
 
             /* handle PuTTY Private Key files */
 
-            if (bin.Key.EndsWith(".ppk")) {
+            if (bin.Key.EndsWith(".ppk", StringComparison.OrdinalIgnoreCase)) {
               try {
                 SecureString ssPassphrase = null;
                 ProtectedString psPassphrase =
