@@ -96,11 +96,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Translatable.resx</DependentUpon>
     </Compile>
-    <Compile Include="UI\KeyListDialog.cs">
+    <Compile Include="UI\PasswordDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\KeyListDialog.Designer.cs">
-      <DependentUpon>KeyListDialog.cs</DependentUpon>
+    <Compile Include="UI\PasswordDialog.Designer.cs">
+      <DependentUpon>PasswordDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ManageDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ManageDialog.Designer.cs">
+      <DependentUpon>ManageDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="KeeAgentExt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -137,12 +143,15 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Translatable.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\KeyListDialog.resx">
-      <DependentUpon>KeyListDialog.cs</DependentUpon>
+    <EmbeddedResource Include="UI\ManageDialog.resx">
+      <DependentUpon>ManageDialog.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\OptionsDialog.resx">
       <DependentUpon>OptionsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\PasswordDialog.resx">
+      <DependentUpon>PasswordDialog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

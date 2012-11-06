@@ -30,7 +30,7 @@ namespace PreBuild
         Console.WriteLine("Temp Dir: " + tempDir);
 
         // Only KeePass version >= v2.18 supports UpdateUrl
-        // Since there is not a way to pass conditional compliation symbols to
+        // Since there is not a way to pass conditional compilation symbols to
         // the compiler in KeePass, we manually remove the directive lines to
         // get the same effect
         if (version >= 18) {

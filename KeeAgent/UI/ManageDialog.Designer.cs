@@ -1,6 +1,6 @@
 ﻿namespace KeeAgent.UI
 {
-	partial class KeyListDialog
+	partial class ManageDialog
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -28,9 +28,26 @@
 		private void InitializeComponent()
 		{
       this.components = new System.ComponentModel.Container();
-      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(KeyListDialog));
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ManageDialog));
       this.closeButton = new System.Windows.Forms.Button();
       this.inFileKeysDataGridView = new System.Windows.Forms.DataGridView();
+      this.inFileKeysBindingSource = new System.Windows.Forms.BindingSource(this.components);
+      this.inFileKeyDataSet = new KeeAgent.KeyDataSet();
+      this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.inMemoryKeysDataGridView = new System.Windows.Forms.DataGridView();
+      this.label1 = new System.Windows.Forms.Label();
+      this.label2 = new System.Windows.Forms.Label();
+      this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+      this.noLoadedKeysLabel = new System.Windows.Forms.Label();
+      this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+      this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+      this.lockedStatusIconLabel = new System.Windows.Forms.Label();
+      this.lockedStatusTextLabel = new System.Windows.Forms.Label();
+      this.lockedStatusButton = new System.Windows.Forms.Button();
+      this.inMemroyKeyTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.inMemoryKeySizeDataGridViewColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.inMemoryKeyFingerprintDataGridViewColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.inMemoryKeyCommentDataGridViewColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.keyTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.keySizeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.fingerprintDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -39,23 +56,6 @@
       this.Group = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.Entry = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.DbName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.inFileKeysBindingSource = new System.Windows.Forms.BindingSource(this.components);
-      this.inFileKeyDataSet = new KeeAgent.KeyDataSet();
-      this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.inMemoryKeysDataGridView = new System.Windows.Forms.DataGridView();
-      this.inMemroyKeyTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.inMemoryKeySizeDataGridViewColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.inMemoryKeyFingerprintDataGridViewColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.inMemoryKeyCommentDataGridViewColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.label1 = new System.Windows.Forms.Label();
-      this.label2 = new System.Windows.Forms.Label();
-      this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-      this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-      this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-      this.lockedStatusIconLabel = new System.Windows.Forms.Label();
-      this.lockedStatusTextLabel = new System.Windows.Forms.Label();
-      this.lockedStatusButton = new System.Windows.Forms.Button();
-      this.noLoadedKeysLabel = new System.Windows.Forms.Label();
       ((System.ComponentModel.ISupportInitialize)(this.inFileKeysDataGridView)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.inFileKeysBindingSource)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.inFileKeyDataSet)).BeginInit();
@@ -96,6 +96,139 @@
       this.inFileKeysDataGridView.Name = "inFileKeysDataGridView";
       this.inFileKeysDataGridView.ReadOnly = true;
       this.inFileKeysDataGridView.RowHeadersVisible = false;
+      // 
+      // inFileKeysBindingSource
+      // 
+      this.inFileKeysBindingSource.DataMember = "KeeAgentKeys";
+      this.inFileKeysBindingSource.DataSource = this.inFileKeyDataSet;
+      // 
+      // inFileKeyDataSet
+      // 
+      this.inFileKeyDataSet.DataSetName = "DataSet";
+      this.inFileKeyDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+      // 
+      // dataGridViewTextBoxColumn1
+      // 
+      this.dataGridViewTextBoxColumn1.DataPropertyName = "Value";
+      resources.ApplyResources(this.dataGridViewTextBoxColumn1, "dataGridViewTextBoxColumn1");
+      this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+      this.dataGridViewTextBoxColumn1.ReadOnly = true;
+      // 
+      // inMemoryKeysDataGridView
+      // 
+      this.inMemoryKeysDataGridView.AllowUserToAddRows = false;
+      this.inMemoryKeysDataGridView.AllowUserToDeleteRows = false;
+      this.inMemoryKeysDataGridView.AllowUserToResizeRows = false;
+      resources.ApplyResources(this.inMemoryKeysDataGridView, "inMemoryKeysDataGridView");
+      this.inMemoryKeysDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+      this.inMemoryKeysDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.inMemroyKeyTypeDataGridViewTextBoxColumn,
+            this.inMemoryKeySizeDataGridViewColumn,
+            this.inMemoryKeyFingerprintDataGridViewColumn,
+            this.inMemoryKeyCommentDataGridViewColumn});
+      this.inMemoryKeysDataGridView.Name = "inMemoryKeysDataGridView";
+      this.inMemoryKeysDataGridView.ReadOnly = true;
+      this.inMemoryKeysDataGridView.RowHeadersVisible = false;
+      this.inMemoryKeysDataGridView.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.inMemoryKeysDataGridView_RowsAdded);
+      this.inMemoryKeysDataGridView.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.inMemoryKeysDataGridView_RowsRemoved);
+      // 
+      // label1
+      // 
+      resources.ApplyResources(this.label1, "label1");
+      this.label1.Name = "label1";
+      // 
+      // label2
+      // 
+      resources.ApplyResources(this.label2, "label2");
+      this.label2.Name = "label2";
+      // 
+      // splitContainer1
+      // 
+      resources.ApplyResources(this.splitContainer1, "splitContainer1");
+      this.splitContainer1.Name = "splitContainer1";
+      // 
+      // splitContainer1.Panel1
+      // 
+      this.splitContainer1.Panel1.Controls.Add(this.inMemoryKeysDataGridView);
+      this.splitContainer1.Panel1.Controls.Add(this.label1);
+      this.splitContainer1.Panel1.Controls.Add(this.noLoadedKeysLabel);
+      // 
+      // splitContainer1.Panel2
+      // 
+      this.splitContainer1.Panel2.Controls.Add(this.inFileKeysDataGridView);
+      this.splitContainer1.Panel2.Controls.Add(this.label2);
+      this.splitContainer1.Panel2.Controls.Add(this.closeButton);
+      // 
+      // noLoadedKeysLabel
+      // 
+      resources.ApplyResources(this.noLoadedKeysLabel, "noLoadedKeysLabel");
+      this.noLoadedKeysLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+      this.noLoadedKeysLabel.Name = "noLoadedKeysLabel";
+      // 
+      // tableLayoutPanel1
+      // 
+      resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
+      this.tableLayoutPanel1.Controls.Add(this.splitContainer1, 0, 1);
+      this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 0, 0);
+      this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+      // 
+      // flowLayoutPanel1
+      // 
+      this.flowLayoutPanel1.Controls.Add(this.lockedStatusIconLabel);
+      this.flowLayoutPanel1.Controls.Add(this.lockedStatusTextLabel);
+      this.flowLayoutPanel1.Controls.Add(this.lockedStatusButton);
+      resources.ApplyResources(this.flowLayoutPanel1, "flowLayoutPanel1");
+      this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+      // 
+      // lockedStatusIconLabel
+      // 
+      resources.ApplyResources(this.lockedStatusIconLabel, "lockedStatusIconLabel");
+      this.lockedStatusIconLabel.Image = global::KeeAgent.Properties.Resources.Locked;
+      this.lockedStatusIconLabel.Name = "lockedStatusIconLabel";
+      // 
+      // lockedStatusTextLabel
+      // 
+      resources.ApplyResources(this.lockedStatusTextLabel, "lockedStatusTextLabel");
+      this.lockedStatusTextLabel.Name = "lockedStatusTextLabel";
+      // 
+      // lockedStatusButton
+      // 
+      resources.ApplyResources(this.lockedStatusButton, "lockedStatusButton");
+      this.lockedStatusButton.Name = "lockedStatusButton";
+      this.lockedStatusButton.UseVisualStyleBackColor = true;
+      this.lockedStatusButton.Click += new System.EventHandler(this.lockedStatusButton_Click);
+      // 
+      // inMemroyKeyTypeDataGridViewTextBoxColumn
+      // 
+      this.inMemroyKeyTypeDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+      this.inMemroyKeyTypeDataGridViewTextBoxColumn.DataPropertyName = "Algorithm";
+      resources.ApplyResources(this.inMemroyKeyTypeDataGridViewTextBoxColumn, "inMemroyKeyTypeDataGridViewTextBoxColumn");
+      this.inMemroyKeyTypeDataGridViewTextBoxColumn.Name = "inMemroyKeyTypeDataGridViewTextBoxColumn";
+      this.inMemroyKeyTypeDataGridViewTextBoxColumn.ReadOnly = true;
+      // 
+      // inMemoryKeySizeDataGridViewColumn
+      // 
+      this.inMemoryKeySizeDataGridViewColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+      this.inMemoryKeySizeDataGridViewColumn.DataPropertyName = "Size";
+      resources.ApplyResources(this.inMemoryKeySizeDataGridViewColumn, "inMemoryKeySizeDataGridViewColumn");
+      this.inMemoryKeySizeDataGridViewColumn.Name = "inMemoryKeySizeDataGridViewColumn";
+      this.inMemoryKeySizeDataGridViewColumn.ReadOnly = true;
+      // 
+      // inMemoryKeyFingerprintDataGridViewColumn
+      // 
+      this.inMemoryKeyFingerprintDataGridViewColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+      this.inMemoryKeyFingerprintDataGridViewColumn.DataPropertyName = "Fingerprint";
+      resources.ApplyResources(this.inMemoryKeyFingerprintDataGridViewColumn, "inMemoryKeyFingerprintDataGridViewColumn");
+      this.inMemoryKeyFingerprintDataGridViewColumn.Name = "inMemoryKeyFingerprintDataGridViewColumn";
+      this.inMemoryKeyFingerprintDataGridViewColumn.ReadOnly = true;
+      // 
+      // inMemoryKeyCommentDataGridViewColumn
+      // 
+      this.inMemoryKeyCommentDataGridViewColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+      this.inMemoryKeyCommentDataGridViewColumn.DataPropertyName = "Comment";
+      resources.ApplyResources(this.inMemoryKeyCommentDataGridViewColumn, "inMemoryKeyCommentDataGridViewColumn");
+      this.inMemoryKeyCommentDataGridViewColumn.Name = "inMemoryKeyCommentDataGridViewColumn";
+      this.inMemoryKeyCommentDataGridViewColumn.ReadOnly = true;
       // 
       // keyTypeDataGridViewTextBoxColumn
       // 
@@ -161,147 +294,14 @@
       this.DbName.Name = "DbName";
       this.DbName.ReadOnly = true;
       // 
-      // inFileKeysBindingSource
-      // 
-      this.inFileKeysBindingSource.DataMember = "KeeAgentKeys";
-      this.inFileKeysBindingSource.DataSource = this.inFileKeyDataSet;
-      // 
-      // inFileKeyDataSet
-      // 
-      this.inFileKeyDataSet.DataSetName = "DataSet";
-      this.inFileKeyDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-      // 
-      // dataGridViewTextBoxColumn1
-      // 
-      this.dataGridViewTextBoxColumn1.DataPropertyName = "Value";
-      resources.ApplyResources(this.dataGridViewTextBoxColumn1, "dataGridViewTextBoxColumn1");
-      this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-      this.dataGridViewTextBoxColumn1.ReadOnly = true;
-      // 
-      // inMemoryKeysDataGridView
-      // 
-      this.inMemoryKeysDataGridView.AllowUserToAddRows = false;
-      this.inMemoryKeysDataGridView.AllowUserToDeleteRows = false;
-      this.inMemoryKeysDataGridView.AllowUserToResizeRows = false;
-      resources.ApplyResources(this.inMemoryKeysDataGridView, "inMemoryKeysDataGridView");
-      this.inMemoryKeysDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-      this.inMemoryKeysDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.inMemroyKeyTypeDataGridViewTextBoxColumn,
-            this.inMemoryKeySizeDataGridViewColumn,
-            this.inMemoryKeyFingerprintDataGridViewColumn,
-            this.inMemoryKeyCommentDataGridViewColumn});
-      this.inMemoryKeysDataGridView.Name = "inMemoryKeysDataGridView";
-      this.inMemoryKeysDataGridView.ReadOnly = true;
-      this.inMemoryKeysDataGridView.RowHeadersVisible = false;
-      this.inMemoryKeysDataGridView.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.inMemoryKeysDataGridView_RowsAdded);
-      this.inMemoryKeysDataGridView.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.inMemoryKeysDataGridView_RowsRemoved);
-      // 
-      // inMemroyKeyTypeDataGridViewTextBoxColumn
-      // 
-      this.inMemroyKeyTypeDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-      this.inMemroyKeyTypeDataGridViewTextBoxColumn.DataPropertyName = "Algorithm";
-      resources.ApplyResources(this.inMemroyKeyTypeDataGridViewTextBoxColumn, "inMemroyKeyTypeDataGridViewTextBoxColumn");
-      this.inMemroyKeyTypeDataGridViewTextBoxColumn.Name = "inMemroyKeyTypeDataGridViewTextBoxColumn";
-      this.inMemroyKeyTypeDataGridViewTextBoxColumn.ReadOnly = true;
-      // 
-      // inMemoryKeySizeDataGridViewColumn
-      // 
-      this.inMemoryKeySizeDataGridViewColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-      this.inMemoryKeySizeDataGridViewColumn.DataPropertyName = "Size";
-      resources.ApplyResources(this.inMemoryKeySizeDataGridViewColumn, "inMemoryKeySizeDataGridViewColumn");
-      this.inMemoryKeySizeDataGridViewColumn.Name = "inMemoryKeySizeDataGridViewColumn";
-      this.inMemoryKeySizeDataGridViewColumn.ReadOnly = true;
-      // 
-      // inMemoryKeyFingerprintDataGridViewColumn
-      // 
-      this.inMemoryKeyFingerprintDataGridViewColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-      this.inMemoryKeyFingerprintDataGridViewColumn.DataPropertyName = "Fingerprint";
-      resources.ApplyResources(this.inMemoryKeyFingerprintDataGridViewColumn, "inMemoryKeyFingerprintDataGridViewColumn");
-      this.inMemoryKeyFingerprintDataGridViewColumn.Name = "inMemoryKeyFingerprintDataGridViewColumn";
-      this.inMemoryKeyFingerprintDataGridViewColumn.ReadOnly = true;
-      // 
-      // inMemoryKeyCommentDataGridViewColumn
-      // 
-      this.inMemoryKeyCommentDataGridViewColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-      this.inMemoryKeyCommentDataGridViewColumn.DataPropertyName = "Comment";
-      resources.ApplyResources(this.inMemoryKeyCommentDataGridViewColumn, "inMemoryKeyCommentDataGridViewColumn");
-      this.inMemoryKeyCommentDataGridViewColumn.Name = "inMemoryKeyCommentDataGridViewColumn";
-      this.inMemoryKeyCommentDataGridViewColumn.ReadOnly = true;
-      // 
-      // label1
-      // 
-      resources.ApplyResources(this.label1, "label1");
-      this.label1.Name = "label1";
-      // 
-      // label2
-      // 
-      resources.ApplyResources(this.label2, "label2");
-      this.label2.Name = "label2";
-      // 
-      // splitContainer1
-      // 
-      resources.ApplyResources(this.splitContainer1, "splitContainer1");
-      this.splitContainer1.Name = "splitContainer1";
-      // 
-      // splitContainer1.Panel1
-      // 
-      this.splitContainer1.Panel1.Controls.Add(this.inMemoryKeysDataGridView);
-      this.splitContainer1.Panel1.Controls.Add(this.label1);
-      this.splitContainer1.Panel1.Controls.Add(this.noLoadedKeysLabel);
-      // 
-      // splitContainer1.Panel2
-      // 
-      this.splitContainer1.Panel2.Controls.Add(this.inFileKeysDataGridView);
-      this.splitContainer1.Panel2.Controls.Add(this.label2);
-      this.splitContainer1.Panel2.Controls.Add(this.closeButton);
-      // 
-      // tableLayoutPanel1
-      // 
-      resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
-      this.tableLayoutPanel1.Controls.Add(this.splitContainer1, 0, 1);
-      this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 0, 0);
-      this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-      // 
-      // flowLayoutPanel1
-      // 
-      this.flowLayoutPanel1.Controls.Add(this.lockedStatusIconLabel);
-      this.flowLayoutPanel1.Controls.Add(this.lockedStatusTextLabel);
-      this.flowLayoutPanel1.Controls.Add(this.lockedStatusButton);
-      resources.ApplyResources(this.flowLayoutPanel1, "flowLayoutPanel1");
-      this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-      // 
-      // lockedStatusIconLabel
-      // 
-      resources.ApplyResources(this.lockedStatusIconLabel, "lockedStatusIconLabel");
-      this.lockedStatusIconLabel.Image = global::KeeAgent.Properties.Resources.Locked;
-      this.lockedStatusIconLabel.Name = "lockedStatusIconLabel";
-      // 
-      // lockedStatusTextLabel
-      // 
-      resources.ApplyResources(this.lockedStatusTextLabel, "lockedStatusTextLabel");
-      this.lockedStatusTextLabel.Name = "lockedStatusTextLabel";
-      // 
-      // lockedStatusButton
-      // 
-      resources.ApplyResources(this.lockedStatusButton, "lockedStatusButton");
-      this.lockedStatusButton.Name = "lockedStatusButton";
-      this.lockedStatusButton.UseVisualStyleBackColor = true;
-      this.lockedStatusButton.Click += new System.EventHandler(this.lockedStatusButton_Click);
-      // 
-      // noLoadedKeysLabel
-      // 
-      resources.ApplyResources(this.noLoadedKeysLabel, "noLoadedKeysLabel");
-      this.noLoadedKeysLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-      this.noLoadedKeysLabel.Name = "noLoadedKeysLabel";
-      // 
-      // KeyListDialog
+      // ManageDialog
       // 
       resources.ApplyResources(this, "$this");
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.tableLayoutPanel1);
       this.MaximizeBox = false;
       this.MinimizeBox = false;
-      this.Name = "KeyListDialog";
+      this.Name = "ManageDialog";
       this.ShowInTaskbar = false;
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.KeyListDialog_FormClosing);
       this.Load += new System.EventHandler(this.KeyListDialog_Load);
@@ -330,6 +330,17 @@
 		private System.Windows.Forms.DataGridView inFileKeysDataGridView;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.BindingSource inFileKeysBindingSource;
+        private System.Windows.Forms.DataGridView inMemoryKeysDataGridView;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn algorithmDataGridViewTextBoxColumn;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.Label lockedStatusIconLabel;
+        private System.Windows.Forms.Label lockedStatusTextLabel;
+        private System.Windows.Forms.Button lockedStatusButton;
+        private System.Windows.Forms.Label noLoadedKeysLabel;
         private System.Windows.Forms.DataGridViewTextBoxColumn keyTypeDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn keySizeDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn fingerprintDataGridViewTextBoxColumn;
@@ -338,20 +349,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Group;
         private System.Windows.Forms.DataGridViewTextBoxColumn Entry;
         private System.Windows.Forms.DataGridViewTextBoxColumn DbName;
-        private System.Windows.Forms.DataGridView inMemoryKeysDataGridView;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn algorithmDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn inMemroyKeyTypeDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn inMemoryKeySizeDataGridViewColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn inMemoryKeyFingerprintDataGridViewColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn inMemoryKeyCommentDataGridViewColumn;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.Label lockedStatusIconLabel;
-        private System.Windows.Forms.Label lockedStatusTextLabel;
-        private System.Windows.Forms.Button lockedStatusButton;
-        private System.Windows.Forms.Label noLoadedKeysLabel;
 	}
 }

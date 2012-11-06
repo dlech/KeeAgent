@@ -8,14 +8,15 @@ using Org.BouncyCastle.Crypto.Parameters;
 using System.ComponentModel;
 using System.Drawing;
 using KeeAgent.Properties;
+using System.Text;
 
 namespace KeeAgent.UI
 {
-  public partial class KeyListDialog : Form
+  public partial class ManageDialog : Form
   {
     private KeeAgentExt mExt;
 
-    public KeyListDialog(KeeAgentExt aExt)
+    public ManageDialog(KeeAgentExt aExt)
     {
       mExt = aExt;
 
@@ -48,13 +49,13 @@ namespace KeeAgent.UI
           string entryTitle = entry.Strings.Get(PwDefs.TitleField).ReadString();
 
           /* get fingerprint */
-          string fingerprint = key.Fingerprint;         
+          string fingerprint = key.Fingerprint;
 
           string algorithm = null;
           if (key.CipherKeyPair.Public is RsaKeyParameters) {
-            algorithm = OpenSsh.PublicKeyAlgorithms.ssh_rsa;
+            algorithm = OpenSsh.PublicKeyAlgorithm.SSH_RSA.GetName();
           } else if (key.CipherKeyPair.Public is DsaPublicKeyParameters) {
-            algorithm = OpenSsh.PublicKeyAlgorithms.ssh_dss;
+            algorithm = OpenSsh.PublicKeyAlgorithm.SSH_DSS.GetName();
           } else {
             algorithm = Translatable.UnknownAlgorithm;
           }
@@ -113,11 +114,21 @@ namespace KeeAgent.UI
 
     private void lockedStatusButton_Click(object sender, EventArgs e)
     {
-      // TODO implement password dialog
-      if (mExt.mPageant.IsLocked) {
-        mExt.mPageant.Unlock("test");
-      } else {
-        mExt.mPageant.Lock("test");
+      using (PasswordDialog dialog = new PasswordDialog()) {
+        bool success = false;
+        while (!success) {
+          DialogResult result = dialog.ShowDialog();
+          if (result != DialogResult.OK) {
+            return;
+          }
+          PinnedByteArray password = dialog.GetPassword();
+          if (mExt.mPageant.IsLocked) {
+            success = mExt.mPageant.Unlock(Encoding.UTF8.GetString(password.Data));
+          } else {
+            success = mExt.mPageant.Lock(Encoding.UTF8.GetString(password.Data));
+          }
+          password.Clear();
+        }
       }
     }
 
@@ -128,7 +139,6 @@ namespace KeeAgent.UI
 
     private void inMemoryKeysDataGridView_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
     {
-      UpdateLoadedKeys();
       UpdateLoadedKeys();
     }
 
