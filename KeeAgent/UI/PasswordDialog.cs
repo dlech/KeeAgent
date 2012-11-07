@@ -20,8 +20,7 @@ namespace KeeAgent.UI
       InitializeComponent();
 
       mSecureEdit = new SecureEdit();
-      mSecureEdit.Attach(passwordTextBox, PasswordTextChanged, true);
-
+      mSecureEdit.Attach(passwordTextBox, null, true);
     }
 
     public PasswordDialog(string aMessage) : this()
@@ -38,22 +37,19 @@ namespace KeeAgent.UI
     {
       return new PinnedByteArray(mSecureEdit.ToUtf8());
     }
-
-    private void PasswordTextChanged(object aSender, EventArgs aEventArgs)
-    {
-
-    }
-
+        
     /// <summary>
     /// Clean up any resources being used.
     /// </summary>
-    /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+    /// <param name="disposing">
+    /// true if managed resources should be disposed; otherwise, false.
+    /// </param>
     protected override void Dispose(bool disposing)
     {
+      mSecureEdit.Detach();
       if (disposing && (components != null)) {
         components.Dispose();
-      }
-      mSecureEdit.Detach();
+      }      
       base.Dispose(disposing);
     }
 

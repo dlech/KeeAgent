@@ -123,9 +123,9 @@ namespace KeeAgent.UI
           }
           PinnedByteArray password = dialog.GetPassword();
           if (mExt.mPageant.IsLocked) {
-            success = mExt.mPageant.Unlock(Encoding.UTF8.GetString(password.Data));
+            success = mExt.mPageant.Unlock(password.Data);
           } else {
-            success = mExt.mPageant.Lock(Encoding.UTF8.GetString(password.Data));
+            success = mExt.mPageant.Lock(password.Data);
           }
           password.Clear();
         }
