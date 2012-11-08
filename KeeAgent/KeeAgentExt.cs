@@ -327,7 +327,7 @@ namespace KeeAgent
       foreach (SshKey key in keyList) {
         if (result == null) {
           if (key.Version == SshVersion.SSH2 && 
-            requestedFingerprint == key.Fingerprint) {
+            requestedFingerprint == key.Fingerprint.ToHexString()) {
             result = key;
           }
         }
@@ -353,7 +353,7 @@ namespace KeeAgent
     {
       mPluginHost.MainWindow.Invoke((MethodInvoker)delegate()
       {
-        RemoveKey(PSUtil.FromHex(aKey.Fingerprint, ":"), aKey.Version);
+        RemoveKey(aKey.Fingerprint, aKey.Version);
         mInMemoryKeys.Add(aKey);
       });
       return true;
@@ -374,7 +374,7 @@ namespace KeeAgent
       SshKey removeKey = null;
       foreach (SshKey key in mInMemoryKeys) {
         if (key.Version == aVersion &&
-          aFingerprint.ToHexString() == key.Fingerprint) {
+          aFingerprint.ToHexString() == key.Fingerprint.ToHexString()) {
           removeKey = key;
         }
       }
@@ -427,7 +427,7 @@ namespace KeeAgent
         case NotificationOptions.AlwaysAsk:
         case NotificationOptions.AskOnce:
           if (mOptions.Notification == NotificationOptions.AskOnce &&
-            mApprovedKeys.Contains(aKey.Fingerprint)) {
+            mApprovedKeys.Contains(aKey.Fingerprint.ToHexString())) {
             return true;
           }
           mPluginHost.MainWindow.Invoke((MethodInvoker)delegate()
@@ -446,7 +446,7 @@ namespace KeeAgent
 
           if (mOptions.Notification == NotificationOptions.AskOnce &&
             result == DialogResult.Yes) {
-            mApprovedKeys.Add(aKey.Fingerprint);
+            mApprovedKeys.Add(aKey.Fingerprint.ToHexString());
           }
           return result == DialogResult.Yes;
         case NotificationOptions.Balloon:

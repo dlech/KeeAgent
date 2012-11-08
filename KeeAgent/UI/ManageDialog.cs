@@ -49,13 +49,13 @@ namespace KeeAgent.UI
           string entryTitle = entry.Strings.Get(PwDefs.TitleField).ReadString();
 
           /* get fingerprint */
-          string fingerprint = key.Fingerprint;
+          string fingerprint = key.Fingerprint.ToHexString();
 
           string algorithm = null;
           if (key.CipherKeyPair.Public is RsaKeyParameters) {
-            algorithm = OpenSsh.PublicKeyAlgorithm.SSH_RSA.GetName();
+            algorithm = PublicKeyAlgorithm.SSH_RSA.GetIdentifierString();
           } else if (key.CipherKeyPair.Public is DsaPublicKeyParameters) {
-            algorithm = OpenSsh.PublicKeyAlgorithm.SSH_DSS.GetName();
+            algorithm = PublicKeyAlgorithm.SSH_DSS.GetIdentifierString();
           } else {
             algorithm = Translatable.UnknownAlgorithm;
           }
