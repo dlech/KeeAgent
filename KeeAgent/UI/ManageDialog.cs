@@ -4,11 +4,11 @@ using System.IO;
 using System.Windows.Forms;
 using dlech.PageantSharp;
 using KeePassLib;
-using Org.BouncyCastle.Crypto.Parameters;
 using System.ComponentModel;
 using System.Drawing;
 using KeeAgent.Properties;
 using System.Text;
+using System.Collections.Specialized;
 
 namespace KeeAgent.UI
 {
@@ -22,17 +22,16 @@ namespace KeeAgent.UI
 
       InitializeComponent();
 
-      UpdateLockedStatus(this, new Agent.LockEventArgs(mExt.mPageant.IsLocked));
-      UpdateLoadedKeys();
-
       inMemoryKeysDataGridView.AutoGenerateColumns = false;
-      inMemoryKeysDataGridView.DataSource = aExt.mInMemoryKeys;
 
-      IEnumerable<KeeAgentKey> inDatabaseKeyList = aExt.GetKeeAgentKeyList();
+      UpdateLockedStatus(this, new Agent.LockEventArgs(mExt.mPageant.IsLocked));
+      UpdateLoadedKeys();      
+
+      IEnumerable<KeeAgentKey> inDatabaseKeyList = mExt.GetKeeAgentKeyList();
 
       foreach (KeeAgentKey key in inDatabaseKeyList) {
         PwEntry entry = null;
-        List<PwDatabase> databases = aExt.mPluginHost.MainWindow.DocumentManager.GetOpenDatabases();
+        List<PwDatabase> databases = mExt.mPluginHost.MainWindow.DocumentManager.GetOpenDatabases();
         foreach (PwDatabase database in databases) {
           // make sure we are looking in the right database
           if (database.IOConnectionInfo.Path == key.DbPath) {
@@ -51,14 +50,7 @@ namespace KeeAgent.UI
           /* get fingerprint */
           string fingerprint = key.Fingerprint.ToHexString();
 
-          string algorithm = null;
-          if (key.CipherKeyPair.Public is RsaKeyParameters) {
-            algorithm = PublicKeyAlgorithm.SSH_RSA.GetIdentifierString();
-          } else if (key.CipherKeyPair.Public is DsaPublicKeyParameters) {
-            algorithm = PublicKeyAlgorithm.SSH_DSS.GetIdentifierString();
-          } else {
-            algorithm = Translatable.UnknownAlgorithm;
-          }
+          string algorithm = key.Algorithm.GetIdentifierString();          
 
           /* add info to data grid view */
           inFileKeyDataSet.KeeAgentKeys.AddKeeAgentKeysRow(
@@ -105,11 +97,13 @@ namespace KeeAgent.UI
     private void KeyListDialog_Load(object sender, EventArgs e)
     {
       mExt.mPageant.Locked += UpdateLockedStatus;
+      mExt.mPageant.KeyList.CollectionChanged += KeyList_CollectionChanged;
     }
 
     private void KeyListDialog_FormClosing(object sender, FormClosingEventArgs e)
     {
       mExt.mPageant.Locked -= UpdateLockedStatus;
+      mExt.mPageant.KeyList.CollectionChanged -= KeyList_CollectionChanged;
     }
 
     private void lockedStatusButton_Click(object sender, EventArgs e)
@@ -131,23 +125,42 @@ namespace KeeAgent.UI
         }
       }
     }
-
-    private void inMemoryKeysDataGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
-    {
-      UpdateLoadedKeys();
-    }
-
-    private void inMemoryKeysDataGridView_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
-    {
-      UpdateLoadedKeys();
-    }
-
+        
     private void UpdateLoadedKeys()
     {
-      bool noKeys = (inMemoryKeysDataGridView.RowCount == 0);
-      noLoadedKeysLabel.Visible = noKeys;
-      inMemoryKeysDataGridView.Visible = !noKeys;
+      mExt.mPluginHost.MainWindow.Invoke((MethodInvoker)delegate()
+      {
+        // TODO fix cross-thread issues - don't really want to copy keys here
+        inMemoryKeysDataGridView.DataSource = null;
+        ISshKey[] keyList = new ISshKey[mExt.mPageant.KeyList.Count];
+        mExt.mPageant.KeyList.CopyTo(keyList, 0);
+        inMemoryKeysDataGridView.DataSource = keyList;
+        bool noKeys = (inMemoryKeysDataGridView.RowCount == 0);
+        noLoadedKeysLabel.Visible = noKeys;
+        inMemoryKeysDataGridView.Visible = !noKeys;
+      }); ;
     }
+
+    private void KeyList_CollectionChanged(object aSender,
+      NotifyCollectionChangedEventArgs aEventArgs)
+    {
+      UpdateLoadedKeys();
+    }
+
+    private void inMemoryKeysDataGridView_CellFormatting(object sender,
+      DataGridViewCellFormattingEventArgs e)
+    {
+      if (e.Value is PublicKeyAlgorithm) {
+        PublicKeyAlgorithm algorithm = (PublicKeyAlgorithm)e.Value;
+        e.Value = algorithm.GetIdentifierString();
+        e.FormattingApplied = true;
+      } else if (e.Value is byte[]) {
+        byte[] bytes = (byte[])e.Value;
+        e.Value = bytes.ToHexString();
+        e.FormattingApplied = true;
+      }
+    }
+
 
   }
 }

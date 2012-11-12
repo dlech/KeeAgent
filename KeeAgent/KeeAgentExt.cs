@@ -23,7 +23,6 @@ namespace KeeAgent
     internal IPluginHost mPluginHost;
     internal Options mOptions;
     internal bool mDebug;
-    internal BindingList<SshKey> mInMemoryKeys;
     internal WinPageant mPageant;
 
     private ApplicationContext mPageantContext;
@@ -45,8 +44,7 @@ namespace KeeAgent
       mUIHelper = new UIHelper(mPluginHost);
       mDebug = (mPluginHost
           .CommandLineArgs[AppDefs.CommandLineOptions.Debug] != null);
-      mInMemoryKeys = new BindingList<SshKey>();
-
+     
       LoadOptions();
       mApprovedKeys = new List<string>();
 
@@ -57,15 +55,8 @@ namespace KeeAgent
 
         mPageantThread = new Thread(delegate()
         {
-          try {
-            Agent.Callbacks callbacks = new Agent.Callbacks();
-            callbacks.removeAllSSH1Keys = RemoveAllSsh1Keys;
-            callbacks.getSSH2KeyList = GetSsh2KeyList;
-            callbacks.getSSH2Key = GetSsh2Key;
-            callbacks.addSSH2Key = AddKey;
-            callbacks.removeSSH2Key = RemoveSsh2Key;
-            callbacks.removeAllSSH2Keys = RemoveAllSsh2Keys;
-            mPageant = new WinPageant(callbacks);
+          try {           
+            mPageant = new WinPageant();
             mPageantContext = new ApplicationContext();
             Application.Run(mPageantContext);
           } catch (Exception ex) {
@@ -185,7 +176,7 @@ namespace KeeAgent
     private IEnumerable<SshKey> GetSsh2KeyList(SshVersion aVersion)
     {
       List<SshKey> keyList = new List<SshKey>();
-      foreach (SshKey inMemoryKey in mInMemoryKeys) {
+      foreach (SshKey inMemoryKey in mPageant.KeyList) {
         if (inMemoryKey.Version == aVersion) {
           keyList.Add(inMemoryKey);
         }
@@ -354,7 +345,7 @@ namespace KeeAgent
       mPluginHost.MainWindow.Invoke((MethodInvoker)delegate()
       {
         RemoveKey(aKey.Fingerprint, aKey.Version);
-        mInMemoryKeys.Add(aKey);
+        mPageant.KeyList.Add(aKey);
       });
       return true;
     }
@@ -372,7 +363,7 @@ namespace KeeAgent
     private bool RemoveKey(byte[] aFingerprint, SshVersion aVersion)
     {
       SshKey removeKey = null;
-      foreach (SshKey key in mInMemoryKeys) {
+      foreach (SshKey key in mPageant.KeyList) {
         if (key.Version == aVersion &&
           aFingerprint.ToHexString() == key.Fingerprint.ToHexString()) {
           removeKey = key;
@@ -382,7 +373,7 @@ namespace KeeAgent
       if (removeKey != null) {        
         mPluginHost.MainWindow.Invoke((MethodInvoker)delegate()
         {
-          result = mInMemoryKeys.Remove(removeKey);
+          result = mPageant.KeyList.Remove(removeKey);
         });
       }
       return result;
@@ -401,7 +392,7 @@ namespace KeeAgent
     private bool RemoveAllKeys(SshVersion aVersion)
     {
       List<SshKey> removeKeyList = new List<SshKey>();
-      foreach (SshKey key in mInMemoryKeys) {
+      foreach (SshKey key in mPageant.KeyList) {
         if (key.Version == aVersion) {
           removeKeyList.Add(key);
         }
@@ -409,7 +400,7 @@ namespace KeeAgent
       mPluginHost.MainWindow.Invoke((MethodInvoker)delegate()
       {
         foreach (SshKey key in removeKeyList) {
-          mInMemoryKeys.Remove(key);
+          mPageant.KeyList.Remove(key);
         }
       });
       return true;

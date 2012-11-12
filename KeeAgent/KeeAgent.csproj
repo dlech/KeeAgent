@@ -120,6 +120,9 @@
     <Compile Include="UpdateUrl.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto">
+      <HintPath>..\PageantSharp\lib\BouncyCastle\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
     <Reference Include="PageantSharp">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\PageantSharp.dll</HintPath>
