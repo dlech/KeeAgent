@@ -9,6 +9,7 @@ using System.Drawing;
 using KeeAgent.Properties;
 using System.Text;
 using System.Collections.Specialized;
+using System.Collections.ObjectModel;
 
 namespace KeeAgent.UI
 {
@@ -48,7 +49,7 @@ namespace KeeAgent.UI
           string entryTitle = entry.Strings.Get(PwDefs.TitleField).ReadString();
 
           /* get fingerprint */
-          string fingerprint = key.Fingerprint.ToHexString();
+          string fingerprint = key.MD5Fingerprint.ToHexString();
 
           string algorithm = key.Algorithm.GetIdentifierString();          
 
@@ -150,7 +151,29 @@ namespace KeeAgent.UI
     private void inMemoryKeysDataGridView_CellFormatting(object sender,
       DataGridViewCellFormattingEventArgs e)
     {
-      if (e.Value is PublicKeyAlgorithm) {
+      if (e.Value is ObservableCollection<Agent.KeyConstraint>) {
+        ObservableCollection<Agent.KeyConstraint> constraints =
+          (ObservableCollection<Agent.KeyConstraint>)e.Value;
+        e.Value = string.Empty;
+        if (e.ColumnIndex == ConfirmConstraintColumn.Index) {          
+          foreach (Agent.KeyConstraint constraint in constraints) {
+            if (constraint.Type ==
+              Agent.KeyConstraintType.SSH_AGENT_CONSTRAIN_CONFIRM) {
+                e.Value = "*";
+                break;
+            }
+          }          
+        } else if (e.ColumnIndex == LifetimeConstraintColumn.Index) {
+          foreach (Agent.KeyConstraint constraint in constraints) {
+            if (constraint.Type ==
+              Agent.KeyConstraintType.SSH_AGENT_CONSTRAIN_LIFETIME) {
+              e.Value = "*";
+              break;
+            }
+          }          
+        }
+        e.FormattingApplied = true;        
+      } else if (e.Value is PublicKeyAlgorithm) {
         PublicKeyAlgorithm algorithm = (PublicKeyAlgorithm)e.Value;
         e.Value = algorithm.GetIdentifierString();
         e.FormattingApplied = true;

@@ -1,13 +1,15 @@
 ﻿using System;
 using dlech.PageantSharp;
 using KeePassLib;
+using System.Collections.ObjectModel;
+using Org.BouncyCastle.Crypto;
 
 namespace KeeAgent
 {
   /// <summary>
   /// Adds extra KeePass specific fields to PpkKey class
   /// </summary>
-  public class KeeAgentKey : SshKey
+  public class KeeAgentKey : ISshKey
   {
 
     private SshKey mSshKey;
@@ -27,6 +29,7 @@ namespace KeeAgent
     /// </summary>
     public string KeyFileName { get; private set; }
 
+    
 
     /// <summary>
     /// create new instance of KeeAgentKey
@@ -48,12 +51,61 @@ namespace KeeAgent
       }
 
       mSshKey = aSshKey; // keep reference to ppkKey so that it is not disposed by GC
-      Version = aSshKey.Version;
-      CipherKeyPair = aSshKey.CipherKeyPair;
-      Comment = aSshKey.Comment;
       DbPath = aDbPath;
       Uuid = aUuid;
       KeyFileName = aKeyFileName;
+    }
+
+    public PublicKeyAlgorithm Algorithm
+    {
+      get { return mSshKey.Algorithm; }
+    }
+
+    public string Comment
+    {
+      get
+      {
+        return mSshKey.Comment;
+      }
+      set
+      {
+        mSshKey.Comment = value;
+      }
+    }
+
+    public ObservableCollection<Agent.KeyConstraint> Constraints
+    {
+      get { return mSshKey.Constraints; }
+    }
+
+    public AsymmetricKeyParameter GetPrivateKeyParameters()
+    {
+      return mSshKey.GetPrivateKeyParameters();
+    }
+
+    public AsymmetricKeyParameter GetPublicKeyParameters()
+    {
+      return mSshKey.GetPublicKeyParameters();
+    }
+
+    public byte[] MD5Fingerprint
+    {
+      get { return mSshKey.MD5Fingerprint; }
+    }
+
+    public int Size
+    {
+      get { return mSshKey.Size; }
+    }
+
+    public SshVersion Version
+    {
+      get { return mSshKey.Version; }
+    }
+
+    public void Dispose()
+    {
+      mSshKey.Dispose();
     }
   }
 }

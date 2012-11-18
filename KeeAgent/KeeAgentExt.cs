@@ -57,6 +57,7 @@ namespace KeeAgent
         {
           try {           
             mPageant = new WinPageant();
+            mPageant.ConfirmUserPermissionCallback = ConfirmKeyRequest;
             mPageantContext = new ApplicationContext();
             Application.Run(mPageantContext);
           } catch (Exception ex) {
@@ -168,20 +169,20 @@ namespace KeeAgent
       dialog.Dispose();
     }
 
-    internal IEnumerable<SshKey> GetSsh2KeyList()
+    internal IEnumerable<ISshKey> GetSsh2KeyList()
     {
       return GetSsh2KeyList(SshVersion.SSH2);
     }
 
-    private IEnumerable<SshKey> GetSsh2KeyList(SshVersion aVersion)
+    private IEnumerable<ISshKey> GetSsh2KeyList(SshVersion aVersion)
     {
-      List<SshKey> keyList = new List<SshKey>();
+      List<ISshKey> keyList = new List<ISshKey>();
       foreach (SshKey inMemoryKey in mPageant.KeyList) {
         if (inMemoryKey.Version == aVersion) {
           keyList.Add(inMemoryKey);
         }
       }
-      foreach (SshKey inDatabaseKey in GetKeeAgentKeyList(true)) {
+      foreach (KeeAgentKey inDatabaseKey in GetKeeAgentKeyList(true)) {
         if (inDatabaseKey.Version == aVersion) {
           keyList.Add(inDatabaseKey);
         }
@@ -265,7 +266,7 @@ namespace KeeAgent
                 KeeAgentKey key = new KeeAgentKey(sshKey, dbPath, entry.Uuid,
                   bin.Key);
                 keyList.Add(key);
-                if (mDebug) Log("Found " + key.Fingerprint);
+                if (mDebug) Log("Found " + key.MD5Fingerprint);
               } catch (Exception ex) {
                 if (!aSuppressErrorMessage || mDebug) {
                   string errorMessage = string.Format(
@@ -313,12 +314,12 @@ namespace KeeAgent
        */
 
       string requestedFingerprint = aFingerprint.ToHexString();
-      IEnumerable<SshKey> keyList = GetSsh2KeyList();
+      IEnumerable<ISshKey> keyList = GetSsh2KeyList();
       SshKey result = null;
       foreach (SshKey key in keyList) {
         if (result == null) {
           if (key.Version == SshVersion.SSH2 && 
-            requestedFingerprint == key.Fingerprint.ToHexString()) {
+            requestedFingerprint == key.MD5Fingerprint.ToHexString()) {
             result = key;
           }
         }
@@ -339,72 +340,7 @@ namespace KeeAgent
         return null;
       }
     }
-    
-    internal bool AddKey(SshKey aKey)
-    {
-      mPluginHost.MainWindow.Invoke((MethodInvoker)delegate()
-      {
-        RemoveKey(aKey.Fingerprint, aKey.Version);
-        mPageant.KeyList.Add(aKey);
-      });
-      return true;
-    }
 
-    internal bool RemoveSsh1Key(byte[] aFingerprint)
-    {
-      return RemoveKey(aFingerprint, SshVersion.SSH1);
-    }
-
-    internal bool RemoveSsh2Key(byte[] aFingerprint)
-    {
-      return RemoveKey(aFingerprint, SshVersion.SSH2);
-    }
-
-    private bool RemoveKey(byte[] aFingerprint, SshVersion aVersion)
-    {
-      SshKey removeKey = null;
-      foreach (SshKey key in mPageant.KeyList) {
-        if (key.Version == aVersion &&
-          aFingerprint.ToHexString() == key.Fingerprint.ToHexString()) {
-          removeKey = key;
-        }
-      }
-      bool result = false;
-      if (removeKey != null) {        
-        mPluginHost.MainWindow.Invoke((MethodInvoker)delegate()
-        {
-          result = mPageant.KeyList.Remove(removeKey);
-        });
-      }
-      return result;
-    }
-
-    internal bool RemoveAllSsh1Keys()
-    {
-      return RemoveAllKeys(SshVersion.SSH1);
-    }
-
-    internal bool RemoveAllSsh2Keys()
-    {
-      return RemoveAllKeys(SshVersion.SSH2);
-    }
-
-    private bool RemoveAllKeys(SshVersion aVersion)
-    {
-      List<SshKey> removeKeyList = new List<SshKey>();
-      foreach (SshKey key in mPageant.KeyList) {
-        if (key.Version == aVersion) {
-          removeKeyList.Add(key);
-        }
-      }
-      mPluginHost.MainWindow.Invoke((MethodInvoker)delegate()
-      {
-        foreach (SshKey key in removeKeyList) {
-          mPageant.KeyList.Remove(key);
-        }
-      });
-      return true;
-    }
 
     /// <summary>
     /// Asks for confirmation or notifies user of key request 
@@ -412,13 +348,13 @@ namespace KeeAgent
     /// </summary>
     /// <param name="aKey">The key being requested</param>
     /// <returns>true if the request was allowed by the user</returns>
-    public bool ConfirmKeyRequest(SshKey aKey)
+    public bool ConfirmKeyRequest(ISshKey aKey)
     {
       switch (mOptions.Notification) {
         case NotificationOptions.AlwaysAsk:
         case NotificationOptions.AskOnce:
           if (mOptions.Notification == NotificationOptions.AskOnce &&
-            mApprovedKeys.Contains(aKey.Fingerprint.ToHexString())) {
+            mApprovedKeys.Contains(aKey.MD5Fingerprint.ToHexString())) {
             return true;
           }
           mPluginHost.MainWindow.Invoke((MethodInvoker)delegate()
@@ -437,7 +373,7 @@ namespace KeeAgent
 
           if (mOptions.Notification == NotificationOptions.AskOnce &&
             result == DialogResult.Yes) {
-            mApprovedKeys.Add(aKey.Fingerprint.ToHexString());
+              mApprovedKeys.Add(aKey.MD5Fingerprint.ToHexString());
           }
           return result == DialogResult.Yes;
         case NotificationOptions.Balloon:
