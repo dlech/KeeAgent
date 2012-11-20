@@ -98,13 +98,13 @@ namespace KeeAgent.UI
     private void KeyListDialog_Load(object sender, EventArgs e)
     {
       mExt.mPageant.Locked += UpdateLockedStatus;
-      mExt.mPageant.KeyList.CollectionChanged += KeyList_CollectionChanged;
+      mExt.mPageant.KeyListChanged += Agent_KeyListChanged;
     }
 
     private void KeyListDialog_FormClosing(object sender, FormClosingEventArgs e)
     {
       mExt.mPageant.Locked -= UpdateLockedStatus;
-      mExt.mPageant.KeyList.CollectionChanged -= KeyList_CollectionChanged;
+      mExt.mPageant.KeyListChanged -= Agent_KeyListChanged;
     }
 
     private void lockedStatusButton_Click(object sender, EventArgs e)
@@ -142,8 +142,8 @@ namespace KeeAgent.UI
       }); ;
     }
 
-    private void KeyList_CollectionChanged(object aSender,
-      NotifyCollectionChangedEventArgs aEventArgs)
+    private void Agent_KeyListChanged(object aSender,
+      Agent.KeyListChangeEventArgs aEventArgs)
     {
       UpdateLoadedKeys();
     }
@@ -151,9 +151,9 @@ namespace KeeAgent.UI
     private void inMemoryKeysDataGridView_CellFormatting(object sender,
       DataGridViewCellFormattingEventArgs e)
     {
-      if (e.Value is ObservableCollection<Agent.KeyConstraint>) {
-        ObservableCollection<Agent.KeyConstraint> constraints =
-          (ObservableCollection<Agent.KeyConstraint>)e.Value;
+      if (e.Value is ICollection<Agent.KeyConstraint>) {
+        ICollection<Agent.KeyConstraint> constraints =
+          (ICollection<Agent.KeyConstraint>)e.Value;
         e.Value = string.Empty;
         if (e.ColumnIndex == ConfirmConstraintColumn.Index) {          
           foreach (Agent.KeyConstraint constraint in constraints) {

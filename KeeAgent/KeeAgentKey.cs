@@ -73,7 +73,7 @@ namespace KeeAgent
       }
     }
 
-    public ObservableCollection<Agent.KeyConstraint> Constraints
+    public ReadOnlyCollection<Agent.KeyConstraint> Constraints
     {
       get { return mSshKey.Constraints; }
     }
@@ -101,6 +101,11 @@ namespace KeeAgent
     public SshVersion Version
     {
       get { return mSshKey.Version; }
+    }
+
+    public void AddConstraint(Agent.KeyConstraint aConstraint)
+    {
+      mSshKey.AddConstraint(aConstraint);
     }
 
     public void Dispose()
