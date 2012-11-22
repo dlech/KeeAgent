@@ -12,7 +12,7 @@ namespace KeeAgent
   public class KeeAgentKey : ISshKey
   {
 
-    private SshKey mSshKey;
+    private ISshKey mSshKey;
 
     /// <summary>
     /// The the full path name of the db associated with this key
@@ -35,7 +35,7 @@ namespace KeeAgent
     /// create new instance of KeeAgentKey
     /// </summary>
     /// <param name="aSshKey"></param>
-    public KeeAgentKey(SshKey aSshKey, string aDbPath, PwUuid aUuid, string aKeyFileName)
+    public KeeAgentKey(ISshKey aSshKey, string aDbPath, PwUuid aUuid, string aKeyFileName)
     {
       if (aSshKey == null) {
         throw new ArgumentNullException("key");

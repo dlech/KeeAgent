@@ -23,10 +23,8 @@ namespace KeeAgent
     internal IPluginHost mPluginHost;
     internal Options mOptions;
     internal bool mDebug;
-    internal WinPageant mPageant;
+    internal PageantAgent mPageant;
 
-    private ApplicationContext mPageantContext;
-    private Thread mPageantThread;
     private ToolStripMenuItem mKeeAgentMenuItem;
     private List<string> mApprovedKeys;
     private UIHelper mUIHelper;
@@ -44,35 +42,23 @@ namespace KeeAgent
       mUIHelper = new UIHelper(mPluginHost);
       mDebug = (mPluginHost
           .CommandLineArgs[AppDefs.CommandLineOptions.Debug] != null);
-     
+
       LoadOptions();
       mApprovedKeys = new List<string>();
 
       if (mDebug) Log("Loading KeeAgent...");
 
+      result = false;
       try {
         // TODO check OS - currently only works on Windows
-
-        mPageantThread = new Thread(delegate()
-        {
-          try {           
-            mPageant = new WinPageant();
-            mPageant.ConfirmUserPermissionCallback = ConfirmKeyRequest;
-            mPageantContext = new ApplicationContext();
-            Application.Run(mPageantContext);
-          } catch (Exception ex) {
-            ShowPageantRunningErrorMessage();
-            if (mDebug) Log(ex.ToString());
-          }
-        });
-        mPageantThread.Name = "PageantSharp";
-        mPageantThread.SetApartmentState(ApartmentState.STA);
-        mPageantThread.Start();
+        mPageant = new PageantAgent();
+        mPageant.ConfirmUserPermissionCallback = ConfirmKeyRequest;
+        result = true;
         if (mDebug) Log("Succeeded");
-        result = mPageantThread.IsAlive;
+      } catch (PageantRunningException) {
+        ShowPageantRunningErrorMessage();
       } catch (Exception) {
         if (mDebug) Log("Failed");
-        result = false;
       }
       if (result) {
         AddMenuItems();
@@ -87,9 +73,6 @@ namespace KeeAgent
       if (mPageant != null) {
         // need reference to pageant here so GC doesn't eat it!
         mPageant.Dispose();
-      }
-      if (mPageantThread.IsAlive) {
-        mPageantContext.ExitThread();
       }
       RemoveMenuItems();
     }
@@ -115,28 +98,24 @@ namespace KeeAgent
       mKeeAgentMenuItem = new ToolStripMenuItem();
       mKeeAgentMenuItem.Text = Translatable.KeeAgent;
 
-      if (mPageantThread.IsAlive) {
-        /* create children menu items */
-        ToolStripMenuItem keeAgentListPuttyKeysMenuItem =
-            new ToolStripMenuItem();
-        keeAgentListPuttyKeysMenuItem.Text =
-            Translatable.ManageKeeAgentMenuItem;
-        keeAgentListPuttyKeysMenuItem.Click +=
-            new EventHandler(manageKeeAgentMenuItem_Click);
+      /* create children menu items */
+      ToolStripMenuItem keeAgentListPuttyKeysMenuItem =
+          new ToolStripMenuItem();
+      keeAgentListPuttyKeysMenuItem.Text =
+          Translatable.ManageKeeAgentMenuItem;
+      keeAgentListPuttyKeysMenuItem.Click +=
+          new EventHandler(manageKeeAgentMenuItem_Click);
 
-        ToolStripMenuItem keeAgentOptionsMenuItem =
-            new ToolStripMenuItem();
-        keeAgentOptionsMenuItem.Text = Translatable.OptionsMenuItem;
-        keeAgentOptionsMenuItem.Click +=
-            new EventHandler(keeAgentOptionsMenuItem_Click);
+      ToolStripMenuItem keeAgentOptionsMenuItem =
+          new ToolStripMenuItem();
+      keeAgentOptionsMenuItem.Text = Translatable.OptionsMenuItem;
+      keeAgentOptionsMenuItem.Click +=
+          new EventHandler(keeAgentOptionsMenuItem_Click);
 
-        /* add children to parent */
-        mKeeAgentMenuItem.DropDownItems
-            .Add(keeAgentListPuttyKeysMenuItem);
-        mKeeAgentMenuItem.DropDownItems.Add(keeAgentOptionsMenuItem);
-      } else {
-        mKeeAgentMenuItem.Enabled = false;
-      }
+      /* add children to parent */
+      mKeeAgentMenuItem.DropDownItems
+          .Add(keeAgentListPuttyKeysMenuItem);
+      mKeeAgentMenuItem.DropDownItems.Add(keeAgentOptionsMenuItem);
 
       /* add new items to tools menu */
       toolsMenu.DropDownItems.Add(mKeeAgentMenuItem);
@@ -251,18 +230,20 @@ namespace KeeAgent
 
                 string dbPath = database.IOConnectionInfo.Path;
 
-                PpkFile.GetPassphraseCallback getPassphrase = delegate()
+                PpkFormatter.GetPassphraseCallback getPassphrase = delegate()
                 {
                   return ssPassphrase;
                 };
 
-                PpkFile.WarnOldFileFormatCallback warnUser = delegate()
+                PpkFormatter.WarnOldFileFormatCallback warnUser = delegate()
                 {
                   // we will warn user a different way... won't we???
                 };
 
-                SshKey sshKey = PpkFile.ParseData(bin.Value.ReadData(),
-                  getPassphrase, warnUser);
+                PpkFormatter formatter = new PpkFormatter();
+                formatter.GetPassphraseCallbackMethod = getPassphrase;
+                formatter.WarnOldFileFormatCallbackMethod = warnUser;
+                ISshKey sshKey = formatter.Deserialize(bin.Value.ReadData());
                 KeeAgentKey key = new KeeAgentKey(sshKey, dbPath, entry.Uuid,
                   bin.Key);
                 keyList.Add(key);
@@ -318,7 +299,7 @@ namespace KeeAgent
       SshKey result = null;
       foreach (SshKey key in keyList) {
         if (result == null) {
-          if (key.Version == SshVersion.SSH2 && 
+          if (key.Version == SshVersion.SSH2 &&
             requestedFingerprint == key.MD5Fingerprint.ToHexString()) {
             result = key;
           }
@@ -373,7 +354,7 @@ namespace KeeAgent
 
           if (mOptions.Notification == NotificationOptions.AskOnce &&
             result == DialogResult.Yes) {
-              mApprovedKeys.Add(aKey.MD5Fingerprint.ToHexString());
+            mApprovedKeys.Add(aKey.MD5Fingerprint.ToHexString());
           }
           return result == DialogResult.Yes;
         case NotificationOptions.Balloon:

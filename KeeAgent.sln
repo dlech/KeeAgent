@@ -4,6 +4,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeeAgent", "KeeAgent\KeeAgent.csproj", "{742863F2-52ED-41E0-92A1-8EEA60EB75EF}"
 	ProjectSection(ProjectDependencies) = postProject
 		{AE8E4C04-E965-406C-AF9B-D14986964A4B} = {AE8E4C04-E965-406C-AF9B-D14986964A4B}
+		{9163B6B6-0603-4C6E-BC67-7111ED8CDDE1} = {9163B6B6-0603-4C6E-BC67-7111ED8CDDE1}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeePass", "..\keepass2\KeePass\KeePass.csproj", "{10938016-DEE2-4A25-9A5A-8FD3444379CA}"
@@ -26,8 +27,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PreBuild", "PreBuild\PreBuild.csproj", "{AE8E4C04-E965-406C-AF9B-D14986964A4B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Packager", "Packager\Packager.csproj", "{D226AF31-426D-4599-A72A-513EC82386A8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICSharpCode.SharpZLib", "SharpZipLib\src\ICSharpCode.SharpZLib.csproj", "{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IOProtocolExt", "IOProtocolExt\IOProtocolExt\IOProtocolExt.csproj", "{9EA4E10E-AAA0-48D4-B102-6629833F4300}"
 EndProject
@@ -147,19 +146,6 @@ Global
 		{D226AF31-426D-4599-A72A-513EC82386A8}.Release|x64.Build.0 = Release|x64
 		{D226AF31-426D-4599-A72A-513EC82386A8}.Release|x86.ActiveCfg = Release|x86
 		{D226AF31-426D-4599-A72A-513EC82386A8}.Release|x86.Build.0 = Release|x86
-		{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}.Debug|x64.ActiveCfg = Debug|x64
-		{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}.Debug|x64.Build.0 = Debug|x64
-		{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}.Release|x64.ActiveCfg = Release|x64
-		{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}.Release|x86.ActiveCfg = Release|Any CPU
 		{9EA4E10E-AAA0-48D4-B102-6629833F4300}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9EA4E10E-AAA0-48D4-B102-6629833F4300}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9EA4E10E-AAA0-48D4-B102-6629833F4300}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
