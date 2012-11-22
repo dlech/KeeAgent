@@ -96,21 +96,17 @@ namespace KeeAgentTestProject
             /* run test */ 
 
             IOConnectionInfo ioConnectionInfo = new IOConnectionInfo();
-            ioConnectionInfo.Path = "sftp://keeagent-test/test.kdbx";
-            ioConnectionInfo.UserName = "keeagent";
-            ioConnectionInfo.Password = "keeagent";            
-            IOConnection.FileExists(ioConnectionInfo);
+            ioConnectionInfo.Path = "sftp://pstest/test.kdbx";
+            ioConnectionInfo.UserName = "tc";            
+            bool fileExists = IOConnection.FileExists(ioConnectionInfo);
+            Assert.IsTrue(fileExists, "Is pstest VM running?");
 
             /* the problem we are checking for is that IOConnection.FileExists
-             * does not lock up. Originally, in KeeAgent, WinPagent ran on 
-             * main thread and caused lock-up here. So, no Assert here, rather
-             * just looking to see if test times out or not. */            
+             * does not lock up. Originally, in KeeAgent, WinPagent ran on main
+             * thread and caused lock-up here. So, we are looking to see if the
+             * test times out or not. */            
           });          
         });
-        //while (testDomain1.KeePassIsRunning)
-        //{
-        //  Thread.Sleep(500);
-        //}
       }
     }
 

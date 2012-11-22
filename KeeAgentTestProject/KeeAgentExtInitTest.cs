@@ -58,7 +58,7 @@ namespace KeeAgentTestProject
               AppDomain.CurrentDomain.SetData(initalizeResultName,
                 td1InitalizeResult);
             });
-          } catch (Exception ex) {
+          } catch (Exception) {
             // TODO do we want to pass this exception back to test?
           }
         });
@@ -142,10 +142,15 @@ namespace KeeAgentTestProject
 
       /* check to make sure prebuild worked correctly */
       string versionLine = File.ReadAllLines(tempFile)[0];
-      Assert.IsTrue(versionLine.Contains(PwDefs.VersionString),
+      string expectedVersion = PwDefs.VersionString;
+      int secondDot = expectedVersion.IndexOf(".", 3);
+      if (secondDot > 0) {
+        expectedVersion = expectedVersion.Substring(0, secondDot);
+      }
+      Assert.IsTrue(versionLine.Contains(expectedVersion),
         "PreBuild did not detect correct KeePass version.\n" + 
         "Saw: " + versionLine + "\n" +
-        "Expected: " + PwDefs.VersionString);
+        "Expected: " + expectedVersion);
       File.Delete(tempFile);
     }
   }
