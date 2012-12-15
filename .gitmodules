@@ -1,12 +1,9 @@
-[submodule "PageantSharp"]
-	path = PageantSharp
-	url = git://github.com/dlech/PageantSharp.git
 [submodule "KeePassPluginTestUtil"]
 	path = KeePassPluginTestUtil
 	url = git://github.com/dlech/KeePassPluginTestUtil.git
-[submodule "SharpZipLib"]
-	path = SharpZipLib
-	url = git://github.com/dlech/SharpZipLib.git
 [submodule "IOProtocolExt"]
 	path = IOProtocolExt
-	url = git://github.com/dlech/IOProtocolExt
+	url = git://github.com/dlech/IOProtocolExt.git
+[submodule "SshAgentLib"]
+	path = SshAgentLib
+	url = git://github.com/dlech/SshAgentLib.git
