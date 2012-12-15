@@ -120,32 +120,56 @@
   <data name="dataGridViewTextBoxColumn1.HeaderText" xml:space="preserve">
     <value>Value</value>
   </data>
+  <metadata name="addButtonMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="addButtonFromKeePassMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>131, 22</value>
+  </data>
+  <data name="addButtonFromKeePassMenuItem.Text" xml:space="preserve">
+    <value>From KeePass...</value>
+  </data>
+  <data name="addButtonFromFileMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>131, 22</value>
+  </data>
+  <data name="addButtonFromFileMenuItem.Text" xml:space="preserve">
+    <value>From File...</value>
+  </data>
+  <data name="addButtonMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>132, 70</value>
+  </data>
+  <data name="&gt;&gt;addButtonMenuStrip.Name" xml:space="preserve">
+    <value>addButtonMenuStrip</value>
+  </data>
+  <data name="&gt;&gt;addButtonMenuStrip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="keyInfoView1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="keyInfoView.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="keyInfoView1.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="keyInfoView.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
-  <data name="keyInfoView1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>667, 279</value>
+  <data name="keyInfoView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>660, 280</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="keyInfoView1.TabIndex" type="System.Int32, mscorlib">
+  <data name="keyInfoView.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="&gt;&gt;keyInfoView1.Name" xml:space="preserve">
-    <value>keyInfoView1</value>
+  <data name="&gt;&gt;keyInfoView.Name" xml:space="preserve">
+    <value>keyInfoView</value>
   </data>
-  <data name="&gt;&gt;keyInfoView1.Type" xml:space="preserve">
+  <data name="&gt;&gt;keyInfoView.Type" xml:space="preserve">
     <value>dlech.SshAgentLib.WinForms.KeyInfoView, SshAgentLib.WinForm, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
-  <data name="&gt;&gt;keyInfoView1.Parent" xml:space="preserve">
+  <data name="&gt;&gt;keyInfoView.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;keyInfoView1.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="&gt;&gt;keyInfoView.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -154,7 +178,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>667, 279</value>
+    <value>660, 280</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -328,6 +352,18 @@
   </data>
   <data name="&gt;&gt;dataGridViewTextBoxColumn1.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;addButtonFromKeePassMenuItem.Name" xml:space="preserve">
+    <value>addButtonFromKeePassMenuItem</value>
+  </data>
+  <data name="&gt;&gt;addButtonFromKeePassMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;addButtonFromFileMenuItem.Name" xml:space="preserve">
+    <value>addButtonFromFileMenuItem</value>
+  </data>
+  <data name="&gt;&gt;addButtonFromFileMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>ManageDialog</value>

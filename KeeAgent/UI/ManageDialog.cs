@@ -21,7 +21,7 @@ namespace KeeAgent.UI
     {
       InitializeComponent();
       mAgent = aAgent;
-      keyInfoView1.SetAgent(mAgent);
+      keyInfoView.SetAgent(mAgent);
     }
 
     private void ManageDialog_Load(object sender, EventArgs e)
@@ -29,6 +29,12 @@ namespace KeeAgent.UI
       
     }
 
+    private void addButtonFromFileMenuItem_Click(object sender, EventArgs e)
+    {
+      keyInfoView.ShowFileOpenDialog();
+    }
+
+    
 
 
   }
