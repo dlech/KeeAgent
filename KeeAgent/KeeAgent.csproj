@@ -120,6 +120,12 @@
     <Compile Include="UpdateUrl.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.WindowsAPICodePack">
+      <HintPath>..\SshAgentLib\lib\WindowsAPICodePack\Microsoft.WindowsAPICodePack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.Shell">
+      <HintPath>..\SshAgentLib\lib\WindowsAPICodePack\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
+    </Reference>
     <Reference Include="SshAgentLib">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\SshAgentLib.dll</HintPath>
@@ -182,6 +188,10 @@
       <Project>{10938016-DEE2-4A25-9A5A-8FD3444379CA}</Project>
       <Name>KeePass</Name>
       <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\SshAgentLib\SshAgentLib.WinForms\SshAgentLib.WinForms.csproj">
+      <Project>{3BEB6FAE-B14D-4281-8168-DB2A4A0C5FC4}</Project>
+      <Name>SshAgentLib.WinForms</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

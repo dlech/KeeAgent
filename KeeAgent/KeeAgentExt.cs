@@ -136,7 +136,7 @@ namespace KeeAgent
 
     private void manageKeeAgentMenuItem_Click(object aSource, EventArgs aEvent)
     {
-      ManageDialog dialog = new ManageDialog(this);
+      ManageDialog dialog = new ManageDialog(mPageant);
       DialogResult result = dialog.ShowDialog(mPluginHost.MainWindow);
       dialog.Dispose();
     }
