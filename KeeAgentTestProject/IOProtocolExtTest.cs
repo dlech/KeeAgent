@@ -86,21 +86,22 @@ namespace KeeAgentTestProject
             IPluginHost td1PluginHost = KeePass.Program.MainForm.PluginHost;
             td1KeeAgentExt.Initialize(td1PluginHost);
             td1IOProtocolExt.Initialize(td1PluginHost);
-            KeePass.Program.MainForm.FormClosed += delegate(
-              Object source, FormClosedEventArgs args)
+            KeePass.Program.MainForm.FormClosing += delegate(
+              Object source, FormClosingEventArgs args)
             {
               td1KeeAgentExt.Terminate();
               td1IOProtocolExt.Terminate();
             };
 
-            /* run test */ 
-
+            /* run test */
             IOConnectionInfo ioConnectionInfo = new IOConnectionInfo();
-            ioConnectionInfo.Path = "sftp://pstest/test.kdbx";
+            ioConnectionInfo.Path = "sftp://satest/test.kdbx";
             ioConnectionInfo.UserName = "tc";            
             bool fileExists = IOConnection.FileExists(ioConnectionInfo);
-            Assert.IsTrue(fileExists, "Is pstest VM running?");
+            Assert.IsTrue(fileExists, "Is satest VM running?");
 
+
+            
             /* the problem we are checking for is that IOConnection.FileExists
              * does not lock up. Originally, in KeeAgent, WinPagent ran on main
              * thread and caused lock-up here. So, we are looking to see if the
