@@ -120,11 +120,18 @@
     <Compile Include="UpdateUrl.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="PageantSharp">
+    <Reference Include="SshAgentLib">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\PageantSharp.dll</HintPath>
+      <HintPath>.\SshAgentLib.dll</HintPath>
       <!-- This is for building .plgx -->
-      <HintPath>..\PageantSharp\PageantSharp\bin\$(Configuration)\PageantSharp.dll</HintPath>
+      <HintPath>..\SshAgentLib\SshAgentLib\bin\$(Configuration)\SshAgentLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="BouncyCastle.Crypto">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\BouncyCastle.Crypto.dll</HintPath>
+      <!-- This is for building .plgx -->
+      <HintPath>..\SshAgentLib\SshAgentLib\bin\$(Configuration)\BouncyCastle.Crypto.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -191,23 +198,25 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if $(ConfigurationName) == Release (
+    <PostBuildEvent>
+      if $(ConfigurationName) == Release (
 
-del "$(SolutionDir)KeeAgent.plgx"
+      del "$(SolutionDir)KeeAgent.plgx"
 
-xcopy /s "$(ProjectDir)." "%25TEMP%25\$(ProjectName)\"
+      xcopy /s "$(ProjectDir)." "%25TEMP%25\$(ProjectName)\"
 
-copy "$(TargetDir)PageantSharp.dll" "%25TEMP%25\$(ProjectName)\"
-copy "$(SolutionDir)Prebuild\$(OutDir)PreBuild.exe" "%25TEMP%25\$(ProjectName)\"
-rmdir /s /q "%25TEMP%25\$(ProjectName)\bin"
-rmdir /s /q "%25TEMP%25\$(ProjectName)\obj"
-"c:\Program Files (x86)\KeePass Password Safe 2\keepass.exe" --plgx-create "%25TEMP%25\$(ProjectName)" --plgx-prereq-net:4.0 --plgx-prereq-os:Windows --plgx-build-pre:"cmd /c """{PLGX_TEMP_DIR}PreBuild.exe""" {PLGX_TEMP_DIR}"
-ping localhost &gt; NUL
-rmdir /s /q "%25TEMP%25\$(ProjectName)"
+      copy "$(TargetDir)SshAgentLib.dll" "%25TEMP%25\$(ProjectName)\"
+      copy "$(TargetDir)BouncyCastle.Crypto.dll" "%25TEMP%25\$(ProjectName)\"
+      copy "$(SolutionDir)Prebuild\$(OutDir)PreBuild.exe" "%25TEMP%25\$(ProjectName)\"
+      rmdir /s /q "%25TEMP%25\$(ProjectName)\bin"
+      rmdir /s /q "%25TEMP%25\$(ProjectName)\obj"
+      "c:\Program Files (x86)\KeePass Password Safe 2\keepass.exe" --plgx-create "%25TEMP%25\$(ProjectName)" --plgx-prereq-net:4.0 --plgx-prereq-os:Windows --plgx-build-pre:"cmd /c """{PLGX_TEMP_DIR}PreBuild.exe""" {PLGX_TEMP_DIR}"
+      ping localhost &gt; NUL
+        rmdir /s /q "%25TEMP%25\$(ProjectName)"
 
-move "%25TEMP%25\$(ProjectName).plgx" $(SolutionDir)
-
-)</PostBuildEvent>
+        move "%25TEMP%25\$(ProjectName).plgx" $(SolutionDir)
+      )
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

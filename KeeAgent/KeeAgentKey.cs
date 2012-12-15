@@ -1,5 +1,5 @@
 ﻿using System;
-using dlech.PageantSharp;
+using dlech.SshAgentLib;
 using KeePassLib;
 using System.Collections.ObjectModel;
 using Org.BouncyCastle.Crypto;
@@ -29,7 +29,7 @@ namespace KeeAgent
     /// </summary>
     public string KeyFileName { get; private set; }
 
-    
+    public bool IsPublicOnly { get { return false; } }
 
     /// <summary>
     /// create new instance of KeeAgentKey

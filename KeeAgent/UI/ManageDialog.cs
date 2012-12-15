@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
-using dlech.PageantSharp;
+using dlech.SshAgentLib;
 using KeePassLib;
 using System.ComponentModel;
 using System.Drawing;
@@ -133,8 +133,8 @@ namespace KeeAgent.UI
       {
         // TODO fix cross-thread issues - don't really want to copy keys here
         inMemoryKeysDataGridView.DataSource = null;
-        ISshKey[] keyList = new ISshKey[mExt.mPageant.KeyList.Count];
-        mExt.mPageant.KeyList.CopyTo(keyList, 0);
+        ISshKey[] keyList = new ISshKey[mExt.mPageant.KeyCount];
+        mExt.mPageant.GetAllKeys().CopyTo(keyList, 0);
         inMemoryKeysDataGridView.DataSource = keyList;
         bool noKeys = (inMemoryKeysDataGridView.RowCount == 0);
         noLoadedKeysLabel.Visible = noKeys;

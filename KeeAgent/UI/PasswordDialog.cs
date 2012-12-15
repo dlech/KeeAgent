@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using KeePass.UI;
-using dlech.PageantSharp;
+using dlech.SshAgentLib;
 
 namespace KeeAgent.UI
 {

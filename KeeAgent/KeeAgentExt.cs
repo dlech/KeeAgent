@@ -6,7 +6,7 @@ using System.IO;
 using System.Security;
 using System.Threading;
 using System.Windows.Forms;
-using dlech.PageantSharp;
+using dlech.SshAgentLib;
 using KeeAgent.Properties;
 using KeeAgent.UI;
 using KeePass.App;
@@ -156,7 +156,7 @@ namespace KeeAgent
     private IEnumerable<ISshKey> GetSsh2KeyList(SshVersion aVersion)
     {
       List<ISshKey> keyList = new List<ISshKey>();
-      foreach (SshKey inMemoryKey in mPageant.KeyList) {
+      foreach (SshKey inMemoryKey in mPageant.GetAllKeys()) {
         if (inMemoryKey.Version == aVersion) {
           keyList.Add(inMemoryKey);
         }
@@ -257,10 +257,10 @@ namespace KeeAgent
                       Path.DirectorySeparatorChar.ToString(), false),
                       database.IOConnectionInfo.GetDisplayName());
                   string details = Translatable.ErrUnknown;
-                  if (ex is PpkFileException) {
-                    PpkFileException ppkFileEx = (PpkFileException)ex;
+                  if (ex is PpkFormatterException) {
+                    PpkFormatterException ppkFileEx = (PpkFormatterException)ex;
                     details = string.Format(Translatable.ErrPpkFileException,
-                        ppkFileEx.Error.ToString(),
+                        ppkFileEx.PpkError.ToString(),
                         bin.Key);
                   }
                   string debugInfo = null;
