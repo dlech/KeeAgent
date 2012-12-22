@@ -77,13 +77,10 @@
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\KeeAgent-icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
-    <Compile Include="KeeAgentKey.cs" />
-    <Compile Include="KeyDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>KeyDataSet.xsd</DependentUpon>
-    </Compile>
     <Compile Include="NotificationOptions.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -110,11 +107,11 @@
     </Compile>
     <Compile Include="KeeAgentExt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UI\OptionsDialog.cs">
-      <SubType>Form</SubType>
+    <Compile Include="UI\OptionsPanel.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UI\OptionsDialog.Designer.cs">
-      <DependentUpon>OptionsDialog.cs</DependentUpon>
+    <Compile Include="UI\OptionsPanel.Designer.cs">
+      <DependentUpon>OptionsPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\UIHelper.cs" />
     <Compile Include="UpdateUrl.cs" />
@@ -151,6 +148,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Translatable.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -160,25 +158,12 @@
       <DependentUpon>ManageDialog.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\OptionsDialog.resx">
-      <DependentUpon>OptionsDialog.cs</DependentUpon>
+    <EmbeddedResource Include="UI\OptionsPanel.resx">
+      <DependentUpon>OptionsPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\PasswordDialog.resx">
       <DependentUpon>PasswordDialog.cs</DependentUpon>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="KeyDataSet.xsc">
-      <DependentUpon>KeyDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="KeyDataSet.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>KeyDataSet.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="KeyDataSet.xss">
-      <DependentUpon>KeyDataSet.xsd</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\DataSources\" />
@@ -195,16 +180,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\KeeAgent.png" />
+    <None Include="Resources\KeeAgent-icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\KeeAgent.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\locked.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\unlocked.png" />
+    <None Include="Resources\KeeAgent-icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
