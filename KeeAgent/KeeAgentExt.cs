@@ -19,7 +19,7 @@ namespace KeeAgent
   {
     internal IPluginHost mPluginHost;
     internal bool mDebug;
-    internal PageantAgent mPageant;
+    internal IAgent mAgent;
 
     private ToolStripMenuItem mKeeAgentMenuItem;
     private List<string> mApprovedKeys;
@@ -51,10 +51,15 @@ namespace KeeAgent
       result = false;
       try {
         // TODO check OS - currently only works on Windows
-        mPageant = new PageantAgent();
-        mPageant.Locked += Pageant_Locked;
-        mPageant.KeyUsed += Pageant_KeyUsed;
-        mPageant.KeyListChanged += Pageant_KeyListChanged;
+        try {
+          var pagent = new PageantAgent();
+          pagent.Locked += Pageant_Locked;
+          pagent.KeyUsed += Pageant_KeyUsed;
+          pagent.KeyListChanged += Pageant_KeyListChanged;
+          mAgent = pagent;
+        } catch (PageantRunningException) {
+          mAgent = new PageantClient();
+        }
         // TODO make this happen on database load
         foreach (var entry in mPluginHost.Database.RootGroup.GetEntries(true)) {
           var settings = entry.GetKeeAgentEntrySettings();
@@ -64,7 +69,7 @@ namespace KeeAgent
                 var data = binary.Value.ReadData();
                 using (var reader = new StreamReader(new MemoryStream(data))) {
                   var formatter = KeyFormatter.GetFormatter(reader.ReadLine());
-                  mPageant.AddKey(formatter.Deserialize(data));
+                  mAgent.AddKey(formatter.Deserialize(data));
                 }
               } catch (Exception ex) {
                 Debug.Fail(ex.ToString());
@@ -92,9 +97,10 @@ namespace KeeAgent
     {
       GlobalWindowManager.WindowAdded -= WindowAddedHandler;
       if (mDebug) Log("Terminating KeeAgent");
-      if (mPageant != null) {
-        // need reference to pageant here so GC doesn't eat it!
-        mPageant.Dispose();
+      var pagent = mAgent as PageantAgent;
+      if (pagent != null) {
+        // need to shutdown agent or app won't exit
+        pagent.Dispose();
       }
       RemoveMenuItems();
     }
@@ -150,7 +156,7 @@ namespace KeeAgent
 
     private void manageKeeAgentMenuItem_Click(object aSource, EventArgs aEvent)
     {
-      ManageDialog dialog = new ManageDialog(mPageant);
+      ManageDialog dialog = new ManageDialog(mAgent);
       DialogResult result = dialog.ShowDialog(mPluginHost.MainWindow);
       dialog.Dispose();
     }

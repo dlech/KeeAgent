@@ -101,6 +101,9 @@
     <Compile Include="UI\EntryPanel.Designer.cs">
       <DependentUpon>EntryPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\GroupBoxEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UI\PasswordDialog.cs">
       <SubType>Form</SubType>
     </Compile>
