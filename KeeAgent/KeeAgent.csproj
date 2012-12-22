@@ -81,6 +81,8 @@
     <ApplicationIcon>Resources\KeeAgent-icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="EntrySettings.cs" />
+    <Compile Include="ExtensionMethods.cs" />
     <Compile Include="NotificationOptions.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -92,6 +94,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Translatable.resx</DependentUpon>
+    </Compile>
+    <Compile Include="UI\EntryPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\EntryPanel.Designer.cs">
+      <DependentUpon>EntryPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\PasswordDialog.cs">
       <SubType>Form</SubType>
@@ -154,6 +162,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Translatable.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\EntryPanel.resx">
+      <DependentUpon>EntryPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\ManageDialog.resx">
       <DependentUpon>ManageDialog.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -165,9 +176,7 @@
       <DependentUpon>PasswordDialog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\DataSources\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\keepass2\KeePass\KeePass.csproj">
       <Project>{10938016-DEE2-4A25-9A5A-8FD3444379CA}</Project>
@@ -180,6 +189,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\DataSources\EntrySettings.datasource" />
     <None Include="Resources\KeeAgent-icon.ico" />
   </ItemGroup>
   <ItemGroup>

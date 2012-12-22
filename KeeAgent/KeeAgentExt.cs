@@ -3,20 +3,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Security;
-using System.Threading;
 using System.Windows.Forms;
 using dlech.SshAgentLib;
 using KeeAgent.Properties;
 using KeeAgent.UI;
 using KeePass.App;
-using KeePass.Plugins;
-using KeePassLib;
-using KeePassLib.Security;
-using KeePassLib.Utility;
-using System.ComponentModel;
-using KeePass.UI;
 using KeePass.Forms;
+using KeePass.Plugins;
+using KeePass.UI;
+using KeePassLib.Utility;
 
 namespace KeeAgent
 {
@@ -60,6 +55,23 @@ namespace KeeAgent
         mPageant.Locked += Pageant_Locked;
         mPageant.KeyUsed += Pageant_KeyUsed;
         mPageant.KeyListChanged += Pageant_KeyListChanged;
+        // TODO make this happen on database load
+        foreach (var entry in mPluginHost.Database.RootGroup.GetEntries(true)) {
+          var settings = entry.GetKeeAgentEntrySettings();
+          if (settings.LoadAtStartup) {
+            foreach (var binary in entry.Binaries) {
+              try {
+                var data = binary.Value.ReadData();
+                using (var reader = new StreamReader(new MemoryStream(data))) {
+                  var formatter = KeyFormatter.GetFormatter(reader.ReadLine());
+                  mPageant.AddKey(formatter.Deserialize(data));
+                }
+              } catch (Exception ex) {
+                Debug.Fail(ex.ToString());
+              }
+            }
+          }
+        }
         result = true;
         if (mDebug) Log("Succeeded");
       } catch (PageantRunningException) {
@@ -142,7 +154,7 @@ namespace KeeAgent
       DialogResult result = dialog.ShowDialog(mPluginHost.MainWindow);
       dialog.Dispose();
     }
-    
+
     internal void SaveOptions()
     {
       mPluginHost.CustomConfig.SetString(cAlwaysConfirmOptionName,
@@ -231,8 +243,7 @@ namespace KeeAgent
         pwEntryForm.Shown +=
           delegate(object sender, EventArgs args)
           {
-            // TODO replace with new panel
-            var optionsPanel = new OptionsPanel(this);
+            var optionsPanel = new EntryPanel(pwEntryForm.EntryRef);
             AddTab(pwEntryForm, optionsPanel);
           };
       }
