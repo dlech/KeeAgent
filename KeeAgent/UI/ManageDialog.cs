@@ -15,27 +15,36 @@ namespace KeeAgent.UI
 {
   public partial class ManageDialog : Form
   {
-    private IAgent mAgent;
+    private KeeAgentExt mExt;
 
-    public ManageDialog(IAgent aAgent)
+    public ManageDialog(KeeAgentExt aExt)
     {
       InitializeComponent();
-      mAgent = aAgent;
-      keyInfoView.SetAgent(mAgent);
-    }
 
-    private void ManageDialog_Load(object sender, EventArgs e)
-    {
-      
+      // update title depending on Agent Mode
+      mExt = aExt;
+      if (mExt.mAgent is Agent) {
+        Text += Translatable.TitleSuffixAgentMode;
+      } else {
+        Text += Translatable.TitleSuffixClientMode;
+      }
+      keyInfoView.SetAgent(mExt.mAgent);
     }
-
+        
     private void addButtonFromFileMenuItem_Click(object sender, EventArgs e)
     {
       keyInfoView.ShowFileOpenDialog();
     }
 
-    
-
-
+    private void addButtonFromKeePassMenuItem_Click(object sender, EventArgs e)
+    {
+      var entryPicker = new EntryPickerDialog(mExt.mPluginHost);
+      var result = entryPicker.ShowDialog();
+      if (result == DialogResult.OK) {
+        if (!mExt.AddEntry(entryPicker.SelectedEntry)) {
+          MessageBox.Show("Loading key failed");
+        }
+      }
+    }
   }
 }

@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel;
+using dlech.SshAgentLib;
 
 namespace KeeAgent
 {
   [Serializable]
-  public class Options : ICloneable
+  public class Options
   {
     public Options()
     {
@@ -31,17 +32,7 @@ namespace KeeAgent
 
     public string LogFileName { get; set; }
 
-    public object Clone()
-    {
-      Options clone = new Options();
-      clone.ShowBalloon = this.ShowBalloon;
-      clone.AlwasyConfirm = this.AlwasyConfirm;
-#pragma warning disable 0612
-      clone.Notification = this.Notification;
-#pragma warning restore 0612
-      clone.LoggingEnabled = this.LoggingEnabled;
-      clone.LogFileName = (string)LogFileName.Clone();
-      return clone;
-    }
+    public AgentMode AgentMode { get; set; }
+        
   }
 }

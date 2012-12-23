@@ -158,6 +158,15 @@
   <data name="NotifyUnlocked" xml:space="preserve">
     <value>KeeAgent is now unlocked</value>
   </data>
+  <data name="OptionAgentModeAgent" xml:space="preserve">
+    <value>Agent</value>
+  </data>
+  <data name="OptionAgentModeAuto" xml:space="preserve">
+    <value>Auto</value>
+  </data>
+  <data name="OptionAgentModeClient" xml:space="preserve">
+    <value>Client</value>
+  </data>
   <data name="OptionAlwaysConfirm" xml:space="preserve">
     <value>Always require confirmation when client requests to use key</value>
   </data>
@@ -175,6 +184,12 @@
   </data>
   <data name="StatusUnlocked" xml:space="preserve">
     <value>KeeAgent is Unlocked</value>
+  </data>
+  <data name="TitleSuffixAgentMode" xml:space="preserve">
+    <value> - Agent Mode</value>
+  </data>
+  <data name="TitleSuffixClientMode" xml:space="preserve">
+    <value> - Client Mode</value>
   </data>
   <data name="UnknownAlgorithm" xml:space="preserve">
     <value>Unknown Algorithm</value>

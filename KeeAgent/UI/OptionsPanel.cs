@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
 using KeePass.UI;
+using dlech.SshAgentLib;
 
 namespace KeeAgent.UI
 {
@@ -25,19 +26,35 @@ namespace KeeAgent.UI
       // make transparent so tab styling shows
       SetStyle(ControlStyles.SupportsTransparentBackColor, true);
       BackColor = Color.Transparent;
-            
+
+      modeComboBox.Items.Add(Translatable.OptionAgentModeAuto);
+      modeComboBox.Items.Add(Translatable.OptionAgentModeAgent);
+      modeComboBox.Items.Add(Translatable.OptionAgentModeClient);
+      switch (mExt.Options.AgentMode) {
+        case AgentMode.Client:
+          modeComboBox.SelectedItem = Translatable.OptionAgentModeClient;
+          break;
+        case AgentMode.Server:
+          modeComboBox.SelectedItem = Translatable.OptionAgentModeAgent;
+          break;
+        default:
+          modeComboBox.SelectedItem = Translatable.OptionAgentModeAuto;
+          break;
+      }
+
       // additional configuration of list view
-      customListViewEx1.UseCompatibleStateImageBehavior = false;
-      UIUtil.SetExplorerTheme(customListViewEx1, false);
-      mOptionsList = new CheckedLVItemDXList(customListViewEx1, true);
-      var optionsGroup = customListViewEx1.Groups["options"];
+      customListViewEx.UseCompatibleStateImageBehavior = false;
+      UIUtil.SetExplorerTheme(customListViewEx, false);
+
+      mOptionsList = new CheckedLVItemDXList(customListViewEx, true);
+      var optionsGroup = customListViewEx.Groups["options"];
       mOptionsList.CreateItem(aExt.Options, "AlwasyConfirm", optionsGroup,
         Translatable.OptionAlwaysConfirm);
       mOptionsList.CreateItem(aExt.Options, "ShowBalloon", optionsGroup,
         Translatable.OptionShowBalloon);
       //mOptionsList.CreateItem(aExt.Options, "LoggingEnabled", optionsGroup,
       //  Translatable.optionLoggingEnabled);
-      columnHeader1.Width = customListViewEx1.ClientRectangle.Width -
+      columnHeader.Width = customListViewEx.ClientRectangle.Width -
         UIUtil.GetVScrollBarWidth() - 1;
       mOptionsList.UpdateData(false);
     }
@@ -48,13 +65,25 @@ namespace KeeAgent.UI
       if (ParentForm != null) {
         ParentForm.FormClosing +=
           delegate(object aSender, FormClosingEventArgs aEventArgs)
-          {            
+          {
             if (ParentForm.DialogResult == DialogResult.OK) {
-              mOptionsList.UpdateData(true);
+              SaveChanges();
             }
             mOptionsList.Release();
           };
       }
-    }   
+    }
+
+    private void SaveChanges()
+    {
+      mOptionsList.UpdateData(true);
+      if (modeComboBox.Text == Translatable.OptionAgentModeAgent) {
+        mExt.Options.AgentMode = AgentMode.Server;
+      } else if (modeComboBox.Text == Translatable.OptionAgentModeClient) {
+        mExt.Options.AgentMode = AgentMode.Client;
+      } else {
+        mExt.Options.AgentMode = AgentMode.Auto;
+      }
+    }
   }
 }

@@ -169,6 +169,33 @@ namespace KeeAgent {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Agent.
+        /// </summary>
+        internal static string OptionAgentModeAgent {
+            get {
+                return ResourceManager.GetString("OptionAgentModeAgent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto.
+        /// </summary>
+        internal static string OptionAgentModeAuto {
+            get {
+                return ResourceManager.GetString("OptionAgentModeAuto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Client.
+        /// </summary>
+        internal static string OptionAgentModeClient {
+            get {
+                return ResourceManager.GetString("OptionAgentModeClient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Always require confirmation when client requests to use key.
         /// </summary>
         internal static string OptionAlwaysConfirm {
@@ -219,6 +246,24 @@ namespace KeeAgent {
         internal static string StatusUnlocked {
             get {
                 return ResourceManager.GetString("StatusUnlocked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  - Agent Mode.
+        /// </summary>
+        internal static string TitleSuffixAgentMode {
+            get {
+                return ResourceManager.GetString("TitleSuffixAgentMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  - Client Mode.
+        /// </summary>
+        internal static string TitleSuffixClientMode {
+            get {
+                return ResourceManager.GetString("TitleSuffixClientMode", resourceCulture);
             }
         }
         

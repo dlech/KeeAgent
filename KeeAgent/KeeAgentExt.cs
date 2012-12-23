@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using dlech.SshAgentLib;
+using dlech.SshAgentLib.WinForms;
 using KeeAgent.Properties;
 using KeeAgent.UI;
 using KeePass.App;
@@ -12,6 +13,9 @@ using KeePass.Forms;
 using KeePass.Plugins;
 using KeePass.UI;
 using KeePassLib.Utility;
+using System.Security;
+using KeePassLib;
+using System.Text;
 
 namespace KeeAgent
 {
@@ -31,12 +35,13 @@ namespace KeeAgent
     private const string cNotificationOptionName = cPluginName + ".Notification";
     private const string cLogginEnabledOptionName = cPluginName + ".LoggingEnabled";
     private const string cLogFileNameOptionName = cPluginName + ".LogFileName";
+    private const string cAgentModeOptionName = cPluginName + ".AgentMode";
 
     public Options Options { get; private set; }
 
     public override bool Initialize(IPluginHost aHost)
     {
-      bool result;
+      bool success;
 
       mPluginHost = aHost;
       mUIHelper = new UIHelper(mPluginHost);
@@ -48,49 +53,56 @@ namespace KeeAgent
 
       if (mDebug) Log("Loading KeeAgent...");
 
-      result = false;
+      success = false;
       try {
         // TODO check OS - currently only works on Windows
-        try {
-          var pagent = new PageantAgent();
-          pagent.Locked += Pageant_Locked;
-          pagent.KeyUsed += Pageant_KeyUsed;
-          pagent.KeyListChanged += Pageant_KeyListChanged;
-          mAgent = pagent;
-        } catch (PageantRunningException) {
+        if (Options.AgentMode != AgentMode.Client) {
+          try {
+            var pagent = new PageantAgent();
+            pagent.Locked += Pageant_Locked;
+            pagent.KeyUsed += Pageant_KeyUsed;
+            pagent.KeyListChanged += Pageant_KeyListChanged;
+            mAgent = pagent;
+          } catch (PageantRunningException) {
+            if (Options.AgentMode != AgentMode.Auto) {
+              throw;
+            }
+          }
+        }
+        if (mAgent == null) {
           mAgent = new PageantClient();
         }
         // TODO make this happen on database load
+        var exitFor = false;
         foreach (var entry in mPluginHost.Database.RootGroup.GetEntries(true)) {
+          if (exitFor) {
+            break;
+          }
           var settings = entry.GetKeeAgentEntrySettings();
           if (settings.LoadAtStartup) {
-            foreach (var binary in entry.Binaries) {
-              try {
-                var data = binary.Value.ReadData();
-                using (var reader = new StreamReader(new MemoryStream(data))) {
-                  var formatter = KeyFormatter.GetFormatter(reader.ReadLine());
-                  mAgent.AddKey(formatter.Deserialize(data));
-                }
-              } catch (Exception ex) {
-                Debug.Fail(ex.ToString());
+            if (!AddEntry(entry)) {
+              // TODO better error handling
+              var result = MessageBox.Show(
+                        "Agent failure. Key could not be added. Do you want to attempt to load additional keys?",
+                        "KeeAgent", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+              if (result == DialogResult.No) {
+                exitFor = true;
               }
             }
           }
         }
-        result = true;
+        success = true;
         if (mDebug) Log("Succeeded");
       } catch (PageantRunningException) {
         ShowPageantRunningErrorMessage();
       } catch (Exception) {
         if (mDebug) Log("Failed");
       }
-      if (result) {
+      if (success) {
         AddMenuItems();
       }
-
       GlobalWindowManager.WindowAdded += WindowAddedHandler;
-
-      return result;
+      return success;
     }
 
     public override void Terminate()
@@ -156,49 +168,52 @@ namespace KeeAgent
 
     private void manageKeeAgentMenuItem_Click(object aSource, EventArgs aEvent)
     {
-      ManageDialog dialog = new ManageDialog(mAgent);
+      ManageDialog dialog = new ManageDialog(this);
       DialogResult result = dialog.ShowDialog(mPluginHost.MainWindow);
       dialog.Dispose();
     }
 
     internal void SaveOptions()
     {
-      mPluginHost.CustomConfig.SetString(cAlwaysConfirmOptionName,
-          Options.AlwasyConfirm.ToString());
-      mPluginHost.CustomConfig.SetString(cShowBalloonOptionName,
-          Options.ShowBalloon.ToString());
-      mPluginHost.CustomConfig.SetBool(cLogginEnabledOptionName,
-          Options.LoggingEnabled);
-      mPluginHost.CustomConfig.SetString(cLogFileNameOptionName,
-          Options.LogFileName);
+      var config = mPluginHost.CustomConfig;
+      config.SetString(cAlwaysConfirmOptionName, Options.AlwasyConfirm.ToString());
+      config.SetString(cShowBalloonOptionName, Options.ShowBalloon.ToString());
+      config.SetBool(cLogginEnabledOptionName, Options.LoggingEnabled);
+      config.SetString(cLogFileNameOptionName, Options.LogFileName);
+      config.SetString(cAgentModeOptionName, Options.AgentMode.ToString());
     }
 
     private void LoadOptions()
     {
       Options = new Options();
+      var config = mPluginHost.CustomConfig;
 
-      /* Always Confirm options */
+      Options.AlwasyConfirm = config.GetBool(cAlwaysConfirmOptionName, false);
+      Options.ShowBalloon = config.GetBool(cShowBalloonOptionName, true);
+      Options.LoggingEnabled = config.GetBool(cLogginEnabledOptionName, false);
 
-      bool defaultAlwaysConfirmValue = false;
-      bool configFileAlwaysConfirmValue =
-          mPluginHost.CustomConfig.GetBool(cAlwaysConfirmOptionName,
-          defaultAlwaysConfirmValue);
-      Options.AlwasyConfirm = configFileAlwaysConfirmValue;
+      string defaultLogFileNameValue = Path.Combine(
+          Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+          "KeeAgent.log");
+      string configFileLogFileNameValue =
+          config.GetString(cLogFileNameOptionName);
+      if (string.IsNullOrEmpty(configFileLogFileNameValue)) {
+        Options.LogFileName = defaultLogFileNameValue;
+      } else {
+        Options.LogFileName = configFileLogFileNameValue;
+      }
 
-      /* Show Balloon options */
-
-      bool defaultShowBalloonValue = true;
-      bool configFileShowBalloonValue =
-          mPluginHost.CustomConfig.GetBool(cShowBalloonOptionName,
-          defaultShowBalloonValue);
-      Options.ShowBalloon = configFileShowBalloonValue;
-
-
-      /* Notification Option */
+      AgentMode configAgentMode;
+      if (Enum.TryParse<AgentMode>(config.GetString(cAgentModeOptionName),
+        out configAgentMode)) {
+        Options.AgentMode = configAgentMode;
+      } else {
+        Options.AgentMode = AgentMode.Auto;
+      }
 
       /* the Notification option is obsolete, so we read it and then clear it. */
       NotificationOptions configFileNotificationValue;
-      if (Enum.TryParse<NotificationOptions>(mPluginHost.CustomConfig
+      if (Enum.TryParse<NotificationOptions>(config
         .GetString(cNotificationOptionName), out configFileNotificationValue)) {
 
         switch (configFileNotificationValue) {
@@ -210,28 +225,11 @@ namespace KeeAgent
             Options.ShowBalloon = false;
             break;
         }
-        mPluginHost.CustomConfig
+        config
              .SetString(cNotificationOptionName, string.Empty);
       }
 
-      /* Log File Options */
 
-      bool defaultLoggingEnabledValue = false;
-      bool configFileLoggingEnabledValue =
-          mPluginHost.CustomConfig.GetBool(cLogginEnabledOptionName,
-          defaultLoggingEnabledValue);
-      Options.LoggingEnabled = configFileLoggingEnabledValue;
-
-      string defaultLogFileNameValue = Path.Combine(
-          Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-          "KeeAgent.log");
-      string configFileLogFileNameValue =
-          mPluginHost.CustomConfig.GetString(cLogFileNameOptionName);
-      if (string.IsNullOrEmpty(configFileLogFileNameValue)) {
-        Options.LogFileName = defaultLogFileNameValue;
-      } else {
-        Options.LogFileName = configFileLogFileNameValue;
-      }
     }
 
     /// <summary>
@@ -263,7 +261,7 @@ namespace KeeAgent
             var optionsPanel = new OptionsPanel(this);
             AddTab(optionsForm, optionsPanel);
           };
-        optionsForm.FormClosing += OptionsFormClosingHandler;
+        optionsForm.FormClosed += OptionsFormClosedHandler;
       }
     }
 
@@ -294,8 +292,8 @@ namespace KeeAgent
       }
     }
 
-    private void OptionsFormClosingHandler(object aSender,
-      FormClosingEventArgs aEventArgs)
+    private void OptionsFormClosedHandler(object aSender,
+      FormClosedEventArgs aEventArgs)
     {
       var optionsForm = aSender as OptionsForm;
       if (optionsForm != null && optionsForm.DialogResult == DialogResult.OK) {
@@ -350,5 +348,60 @@ namespace KeeAgent
       }
     }
 
+    public bool AddEntry(PwEntry aEntry)
+    {
+      KeyFormatter.GetPassphraseCallback getPassphraseCallback = delegate()
+            {
+              var securePassphrase = new SecureString();
+              var passphrase = Encoding.UTF8.GetChars(aEntry.Strings
+                .Get(PwDefs.PasswordField).ReadUtf8());
+              foreach (var c in passphrase) {
+                securePassphrase.AppendChar(c);
+              }
+              Array.Clear(passphrase, 0, passphrase.Length);
+              return securePassphrase;
+            };
+      var settings = aEntry.GetKeeAgentEntrySettings();
+      switch (settings.Location.SelectedType) {
+        case EntrySettings.LocationType.Attachment:
+          try {
+            var data = aEntry.Binaries.Get(settings.Location.AttachmentName).ReadData();
+            using (var reader = new StreamReader(new MemoryStream(data))) {
+              var formatter = KeyFormatter.GetFormatter(reader.ReadLine());
+              formatter.GetPassphraseCallbackMethod = getPassphraseCallback;
+              var key = formatter.Deserialize(data);
+              if (Options.AlwasyConfirm) {
+                key.addConfirmConstraint();
+              }
+              return mAgent.AddKey(key);
+            }
+          } catch (Exception ex) {
+            Debug.Fail(ex.ToString());
+          }
+          break;
+        case EntrySettings.LocationType.File:
+          var fileName = settings.Location.FileName;
+          fileName = Environment.ExpandEnvironmentVariables(fileName);
+          fileName = Path.GetFullPath(fileName);
+          try {
+            var constraints = new List<Agent.KeyConstraint>();
+            if (Options.AlwasyConfirm) {
+              constraints.addConfirmConstraint();
+            }
+            return mAgent.AddKeyFromFile(fileName, getPassphraseCallback,
+              constraints);
+          } catch (Exception ex) {
+            if (ex is FileNotFoundException || ex is DirectoryNotFoundException) {
+              MessageBox.Show("Could not find file " + fileName);
+            } else if (ex is KeyFormatterException || ex is PpkFormatterException) {
+              MessageBox.Show("Bad passphrase " + fileName);
+            } else {
+              Debug.Fail(ex.ToString());
+            }
+          }
+          break;
+      }
+      return false;
+    }
   } // class
 } // namespace

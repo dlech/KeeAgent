@@ -47,7 +47,8 @@ namespace KeeAgent
     {
       using (var writer = new StringWriter()) {
         Serializer.Serialize(writer, aSettings);
-        aPwEntry.Strings.Set(cStringId, new ProtectedString(false, writer.ToString()));
+        // string is protected just to make UI look cleaner
+        aPwEntry.Strings.Set(cStringId, new ProtectedString(true, writer.ToString()));
       }
     }
   }

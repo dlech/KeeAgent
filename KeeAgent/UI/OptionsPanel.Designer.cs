@@ -28,42 +28,61 @@
         private void InitializeComponent()
         {
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OptionsPanel));
-      this.customListViewEx1 = new KeePass.UI.CustomListViewEx();
-      this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.customListViewEx = new KeePass.UI.CustomListViewEx();
+      this.columnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.modeComboBox = new System.Windows.Forms.ComboBox();
+      this.modeLabel = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
-      // customListViewEx1
+      // customListViewEx
       // 
-      resources.ApplyResources(this.customListViewEx1, "customListViewEx1");
-      this.customListViewEx1.CheckBoxes = true;
-      this.customListViewEx1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1});
-      this.customListViewEx1.FullRowSelect = true;
-      this.customListViewEx1.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            ((System.Windows.Forms.ListViewGroup)(resources.GetObject("customListViewEx1.Groups")))});
-      this.customListViewEx1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-      this.customListViewEx1.Name = "customListViewEx1";
-      this.customListViewEx1.ShowItemToolTips = true;
-      this.customListViewEx1.UseCompatibleStateImageBehavior = false;
-      this.customListViewEx1.View = System.Windows.Forms.View.Details;
+      resources.ApplyResources(this.customListViewEx, "customListViewEx");
+      this.customListViewEx.CheckBoxes = true;
+      this.customListViewEx.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader});
+      this.customListViewEx.FullRowSelect = true;
+      this.customListViewEx.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
+            ((System.Windows.Forms.ListViewGroup)(resources.GetObject("customListViewEx.Groups")))});
+      this.customListViewEx.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+      this.customListViewEx.Name = "customListViewEx";
+      this.customListViewEx.ShowItemToolTips = true;
+      this.customListViewEx.UseCompatibleStateImageBehavior = false;
+      this.customListViewEx.View = System.Windows.Forms.View.Details;
       // 
-      // columnHeader1
+      // columnHeader
       // 
-      resources.ApplyResources(this.columnHeader1, "columnHeader1");
+      resources.ApplyResources(this.columnHeader, "columnHeader");
+      // 
+      // modeComboBox
+      // 
+      this.modeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+      this.modeComboBox.FormattingEnabled = true;
+      resources.ApplyResources(this.modeComboBox, "modeComboBox");
+      this.modeComboBox.Name = "modeComboBox";
+      // 
+      // modeLabel
+      // 
+      resources.ApplyResources(this.modeLabel, "modeLabel");
+      this.modeLabel.Name = "modeLabel";
       // 
       // OptionsPanel
       // 
       resources.ApplyResources(this, "$this");
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.Controls.Add(this.customListViewEx1);
+      this.Controls.Add(this.modeLabel);
+      this.Controls.Add(this.modeComboBox);
+      this.Controls.Add(this.customListViewEx);
       this.Name = "OptionsPanel";
       this.ResumeLayout(false);
+      this.PerformLayout();
 
         }
 
         #endregion
 
-        private KeePass.UI.CustomListViewEx customListViewEx1;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private KeePass.UI.CustomListViewEx customListViewEx;
+        private System.Windows.Forms.ColumnHeader columnHeader;
+        private System.Windows.Forms.ComboBox modeComboBox;
+        private System.Windows.Forms.Label modeLabel;
     }
 }

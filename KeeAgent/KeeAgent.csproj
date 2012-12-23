@@ -101,6 +101,12 @@
     <Compile Include="UI\EntryPanel.Designer.cs">
       <DependentUpon>EntryPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\EntryPickerDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\EntryPickerDialog.Designer.cs">
+      <DependentUpon>EntryPickerDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\GroupBoxEx.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -123,6 +129,9 @@
     </Compile>
     <Compile Include="UI\OptionsPanel.Designer.cs">
       <DependentUpon>OptionsPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\TreeViewEx.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\UIHelper.cs" />
     <Compile Include="UpdateUrl.cs" />
@@ -167,6 +176,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\EntryPanel.resx">
       <DependentUpon>EntryPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\EntryPickerDialog.resx">
+      <DependentUpon>EntryPickerDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\ManageDialog.resx">
       <DependentUpon>ManageDialog.cs</DependentUpon>

@@ -57,6 +57,7 @@
       // 
       this.addButtonFromKeePassMenuItem.Name = "addButtonFromKeePassMenuItem";
       resources.ApplyResources(this.addButtonFromKeePassMenuItem, "addButtonFromKeePassMenuItem");
+      this.addButtonFromKeePassMenuItem.Click += new System.EventHandler(this.addButtonFromKeePassMenuItem_Click);
       // 
       // addButtonFromFileMenuItem
       // 
@@ -79,7 +80,6 @@
       this.MinimizeBox = false;
       this.Name = "ManageDialog";
       this.ShowInTaskbar = false;
-      this.Load += new System.EventHandler(this.ManageDialog_Load);
       this.addButtonMenuStrip.ResumeLayout(false);
       this.ResumeLayout(false);
 
