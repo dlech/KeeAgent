@@ -30,7 +30,7 @@ namespace KeeAgent.UI
       }
       keyInfoView.SetAgent(mExt.mAgent);
     }
-        
+
     private void addButtonFromFileMenuItem_Click(object sender, EventArgs e)
     {
       keyInfoView.ShowFileOpenDialog();
@@ -41,7 +41,9 @@ namespace KeeAgent.UI
       var entryPicker = new EntryPickerDialog(mExt.mPluginHost);
       var result = entryPicker.ShowDialog();
       if (result == DialogResult.OK) {
-        if (!mExt.AddEntry(entryPicker.SelectedEntry)) {
+        try {
+          mExt.AddEntry(entryPicker.SelectedEntry);
+        } catch (Exception) {
           MessageBox.Show("Loading key failed");
         }
       }

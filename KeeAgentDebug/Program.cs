@@ -37,7 +37,7 @@ namespace KeeAgentDebug
           settings1.Location.SelectedType = EntrySettings.LocationType.Attachment;
           var settings2 = new EntrySettings();
           settings2.HasSshKey = true;
-          settings2.LoadAtStartup = true;
+          settings2.AddAtDatabaseOpen = true;
 
           var withPassEntry = new PwEntry(true, true);
           withPassEntry.Strings.Set(PwDefs.TitleField, new ProtectedString(true, "with-passphrase"));
@@ -104,6 +104,7 @@ namespace KeeAgentDebug
           puttyGroup.AddGroup(dsaGroup, true);
 
           pluginHost.Database.RootGroup.AddGroup(puttyGroup, true);
+          pluginHost.Database.Save(null);
 
           pluginHost.MainWindow.Invoke(new MethodInvoker(delegate()
           {

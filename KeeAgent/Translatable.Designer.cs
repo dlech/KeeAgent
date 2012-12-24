@@ -61,6 +61,15 @@ namespace KeeAgent {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add SS&amp;H Key to KeeAgent.
+        /// </summary>
+        internal static string AddToKeeAgentContextMenuItem {
+            get {
+                return ResourceManager.GetString("AddToKeeAgentContextMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lock.
         /// </summary>
         internal static string ButtonLock {
@@ -133,11 +142,11 @@ namespace KeeAgent {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage....
+        ///   Looks up a localized string similar to Manage SSH Keys.
         /// </summary>
-        internal static string ManageKeeAgentMenuItem {
+        internal static string KeeAgentMenuItemToolTip {
             get {
-                return ResourceManager.GetString("ManageKeeAgentMenuItem", resourceCulture);
+                return ResourceManager.GetString("KeeAgentMenuItemToolTip", resourceCulture);
             }
         }
         

@@ -30,17 +30,18 @@
       this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EntryPanel));
       this.hasSshKeyCheckBox = new System.Windows.Forms.CheckBox();
-      this.loadAtStartupCheckBox = new System.Windows.Forms.CheckBox();
+      this.addKeyAtOpenCheckBox = new System.Windows.Forms.CheckBox();
+      this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+      this.removeKeyAtCloseCheckBox = new System.Windows.Forms.CheckBox();
+      this.entrySettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.locationGroupBox = new KeeAgent.UI.GroupBoxEx();
       this.fileNameTextBox = new System.Windows.Forms.TextBox();
-      this.entrySettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.browseButton = new System.Windows.Forms.Button();
       this.attachmentComboBox = new System.Windows.Forms.ComboBox();
       this.fileRadioButton = new System.Windows.Forms.RadioButton();
       this.attachmentRadioButton = new System.Windows.Forms.RadioButton();
-      this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-      this.locationGroupBox.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.entrySettingsBindingSource)).BeginInit();
+      this.locationGroupBox.SuspendLayout();
       this.SuspendLayout();
       // 
       // hasSshKeyCheckBox
@@ -51,12 +52,23 @@
       this.hasSshKeyCheckBox.UseVisualStyleBackColor = true;
       this.hasSshKeyCheckBox.CheckedChanged += new System.EventHandler(this.hasSshKeyCheckBox_CheckedChanged);
       // 
-      // loadAtStartupCheckBox
+      // addKeyAtOpenCheckBox
       // 
-      resources.ApplyResources(this.loadAtStartupCheckBox, "loadAtStartupCheckBox");
-      this.loadAtStartupCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.entrySettingsBindingSource, "LoadAtStartup", true));
-      this.loadAtStartupCheckBox.Name = "loadAtStartupCheckBox";
-      this.loadAtStartupCheckBox.UseVisualStyleBackColor = true;
+      resources.ApplyResources(this.addKeyAtOpenCheckBox, "addKeyAtOpenCheckBox");
+      this.addKeyAtOpenCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.entrySettingsBindingSource, "AddAtDatabaseOpen", true));
+      this.addKeyAtOpenCheckBox.Name = "addKeyAtOpenCheckBox";
+      this.addKeyAtOpenCheckBox.UseVisualStyleBackColor = true;
+      // 
+      // removeKeyAtCloseCheckBox
+      // 
+      resources.ApplyResources(this.removeKeyAtCloseCheckBox, "removeKeyAtCloseCheckBox");
+      this.removeKeyAtCloseCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.entrySettingsBindingSource, "RemoveAtDatabaseClose", true));
+      this.removeKeyAtCloseCheckBox.Name = "removeKeyAtCloseCheckBox";
+      this.removeKeyAtCloseCheckBox.UseVisualStyleBackColor = true;
+      // 
+      // entrySettingsBindingSource
+      // 
+      this.entrySettingsBindingSource.DataSource = typeof(KeeAgent.EntrySettings);
       // 
       // locationGroupBox
       // 
@@ -76,10 +88,6 @@
       resources.ApplyResources(this.fileNameTextBox, "fileNameTextBox");
       this.fileNameTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.entrySettingsBindingSource, "Location.FileName", true));
       this.fileNameTextBox.Name = "fileNameTextBox";
-      // 
-      // entrySettingsBindingSource
-      // 
-      this.entrySettingsBindingSource.DataSource = typeof(KeeAgent.EntrySettings);
       // 
       // browseButton
       // 
@@ -116,13 +124,14 @@
       // 
       resources.ApplyResources(this, "$this");
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this.removeKeyAtCloseCheckBox);
       this.Controls.Add(this.locationGroupBox);
-      this.Controls.Add(this.loadAtStartupCheckBox);
+      this.Controls.Add(this.addKeyAtOpenCheckBox);
       this.Controls.Add(this.hasSshKeyCheckBox);
       this.Name = "EntryPanel";
+      ((System.ComponentModel.ISupportInitialize)(this.entrySettingsBindingSource)).EndInit();
       this.locationGroupBox.ResumeLayout(false);
       this.locationGroupBox.PerformLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.entrySettingsBindingSource)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -131,7 +140,7 @@
         #endregion
 
         private System.Windows.Forms.CheckBox hasSshKeyCheckBox;
-        private System.Windows.Forms.CheckBox loadAtStartupCheckBox;
+        private System.Windows.Forms.CheckBox addKeyAtOpenCheckBox;
         private System.Windows.Forms.BindingSource entrySettingsBindingSource;
         private System.Windows.Forms.RadioButton attachmentRadioButton;
         private KeeAgent.UI.GroupBoxEx locationGroupBox;
@@ -140,6 +149,7 @@
         private System.Windows.Forms.RadioButton fileRadioButton;
         private System.Windows.Forms.TextBox fileNameTextBox;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.CheckBox removeKeyAtCloseCheckBox;
 
     }
 }

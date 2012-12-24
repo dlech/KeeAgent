@@ -16,6 +16,7 @@ using KeePassLib.Utility;
 using System.Security;
 using KeePassLib;
 using System.Text;
+using System.ComponentModel;
 
 namespace KeeAgent
 {
@@ -26,7 +27,10 @@ namespace KeeAgent
     internal IAgent mAgent;
 
     private ToolStripMenuItem mKeeAgentMenuItem;
+    private ToolStripMenuItem mKeeAgentPwEntryContextMenuItem;
+    private ToolStripMenuItem mNotifyIconContextMenuItem;
     private List<string> mApprovedKeys;
+    private List<ISshKey> mRemoveKeyList;
     private UIHelper mUIHelper;
 
     private const string cPluginName = "KeeAgent";
@@ -72,24 +76,11 @@ namespace KeeAgent
         if (mAgent == null) {
           mAgent = new PageantClient();
         }
-        // TODO make this happen on database load
-        var exitFor = false;
-        foreach (var entry in mPluginHost.Database.RootGroup.GetEntries(true)) {
-          if (exitFor) {
-            break;
-          }
-          var settings = entry.GetKeeAgentEntrySettings();
-          if (settings.LoadAtStartup) {
-            if (!AddEntry(entry)) {
-              // TODO better error handling
-              var result = MessageBox.Show(
-                        "Agent failure. Key could not be added. Do you want to attempt to load additional keys?",
-                        "KeeAgent", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-              if (result == DialogResult.No) {
-                exitFor = true;
-              }
-            }
-          }
+        mPluginHost.MainWindow.FileOpened += MainForm_FileOpened;
+        mPluginHost.MainWindow.FileClosed += MainForm_FileClosed;
+        // load all database that are already opened
+        foreach (var database in mPluginHost.MainWindow.DocumentManager.Documents) {
+          MainForm_FileOpened(this, new FileOpenedEventArgs(database.Database));
         }
         success = true;
         if (mDebug) Log("Succeeded");
@@ -131,27 +122,70 @@ namespace KeeAgent
 
     private void AddMenuItems()
     {
-      /* get Tools menu */
-      ToolStripMenuItem toolsMenu = mPluginHost.MainWindow.ToolsMenu;
-
-      /* create parent menu item */
+      /* add item to Tools menu */
       mKeeAgentMenuItem = new ToolStripMenuItem();
       mKeeAgentMenuItem.Text = Translatable.KeeAgent;
+      mKeeAgentMenuItem.ToolTipText = Translatable.KeeAgentMenuItemToolTip;
+      mKeeAgentMenuItem.Image = Resources.KeeAgentIcon;
+      mKeeAgentMenuItem.Click += manageKeeAgentMenuItem_Click;
+      mPluginHost.MainWindow.ToolsMenu.DropDownItems.Add(mKeeAgentMenuItem);
 
-      /* create children menu items */
-      ToolStripMenuItem keeAgentListPuttyKeysMenuItem =
-          new ToolStripMenuItem();
-      keeAgentListPuttyKeysMenuItem.Text =
-          Translatable.ManageKeeAgentMenuItem;
-      keeAgentListPuttyKeysMenuItem.Click +=
-          new EventHandler(manageKeeAgentMenuItem_Click);
+      /* add item to Password Entry context menu */
+      var result = mPluginHost.MainWindow.Controls.Find("m_lvEntries", true);
+      if (result.Length > 0) {
+        var entryListView = result[0] as CustomListViewEx;
+        if (entryListView != null) {
+          var pwEntryContextMenu = entryListView.ContextMenuStrip;
+          if (pwEntryContextMenu != null) {
+            mKeeAgentPwEntryContextMenuItem = new ToolStripMenuItem();
+            mKeeAgentPwEntryContextMenuItem.Text =
+              Translatable.AddToKeeAgentContextMenuItem;
+            mKeeAgentPwEntryContextMenuItem.Click +=
+              mKeeAgentPwEntryContextMenuItem_Clicked;
+            mKeeAgentPwEntryContextMenuItem.Image = Resources.KeeAgentIcon;
+            var firstSeparatorIndex =
+              pwEntryContextMenu.Items.IndexOfKey("m_ctxEntrySep0");
+            pwEntryContextMenu.Items.Insert(firstSeparatorIndex,
+              mKeeAgentPwEntryContextMenuItem);
+            pwEntryContextMenu.Opening += PwEntry_ContextMenu_Opening;
+          }
+        }
+      }
 
-      /* add children to parent */
-      mKeeAgentMenuItem.DropDownItems.Add(keeAgentListPuttyKeysMenuItem);
+      /* add item to notification icon context menu */
+      mNotifyIconContextMenuItem = new ToolStripMenuItem();
+      mNotifyIconContextMenuItem.Text = Translatable.KeeAgent;
+      mNotifyIconContextMenuItem.ToolTipText = Translatable.KeeAgentMenuItemToolTip;
+      mNotifyIconContextMenuItem.Image = Resources.KeeAgentIcon;
+      mNotifyIconContextMenuItem.Click += manageKeeAgentMenuItem_Click;
+      var notifyIconContextMenu =
+        mPluginHost.MainWindow.MainNotifyIcon.ContextMenuStrip;
+      var secondSeparatorIndex =
+              notifyIconContextMenu.Items.IndexOfKey("m_ctxTraySep1");
+      notifyIconContextMenu.Items.Insert(secondSeparatorIndex,
+        mNotifyIconContextMenuItem);
+    }
 
-      /* add new items to tools menu */
-      toolsMenu.DropDownItems.Add(mKeeAgentMenuItem);
+    private void PwEntry_ContextMenu_Opening(object aSender, CancelEventArgs aArgs)
+    {
+      foreach (var entry in mPluginHost.MainWindow.GetSelectedEntries()) {
+        // if any selected entry contains an SSH key then we show the KeeAgent menu item
+        if (entry.GetKeeAgentEntrySettings().HasSshKey) {
+          mKeeAgentPwEntryContextMenuItem.Visible = true;
+          return;
+        }
+      }
+      mKeeAgentPwEntryContextMenuItem.Visible = false;
+    }
 
+    private void mKeeAgentPwEntryContextMenuItem_Clicked(object aSender, EventArgs aArgs)
+    {
+      foreach (var entry in mPluginHost.MainWindow.GetSelectedEntries()) {
+        // if any selected entry contains an SSH key then we show the KeeAgent menu item
+        if (entry.GetKeeAgentEntrySettings().HasSshKey) {
+          AddEntry(entry);
+        }
+      }
     }
 
     private void RemoveMenuItems()
@@ -168,9 +202,14 @@ namespace KeeAgent
 
     private void manageKeeAgentMenuItem_Click(object aSource, EventArgs aEvent)
     {
-      ManageDialog dialog = new ManageDialog(this);
-      DialogResult result = dialog.ShowDialog(mPluginHost.MainWindow);
-      dialog.Dispose();
+      ShowManageDialog();
+    }
+
+    private void ShowManageDialog()
+    {
+      using (ManageDialog dialog = new ManageDialog(this)) {
+        dialog.ShowDialog(mPluginHost.MainWindow);
+      }
     }
 
     internal void SaveOptions()
@@ -324,7 +363,6 @@ namespace KeeAgent
       }
     }
 
-
     private void Pageant_KeyListChanged(object aSender,
       Agent.KeyListChangeEventArgs aEventArgs)
     {
@@ -348,37 +386,69 @@ namespace KeeAgent
       }
     }
 
-    public bool AddEntry(PwEntry aEntry)
+    private void MainForm_FileOpened(object aSender,
+      FileOpenedEventArgs aEventArgs)
     {
-      KeyFormatter.GetPassphraseCallback getPassphraseCallback = delegate()
-            {
-              var securePassphrase = new SecureString();
-              var passphrase = Encoding.UTF8.GetChars(aEntry.Strings
-                .Get(PwDefs.PasswordField).ReadUtf8());
-              foreach (var c in passphrase) {
-                securePassphrase.AppendChar(c);
-              }
-              Array.Clear(passphrase, 0, passphrase.Length);
-              return securePassphrase;
-            };
+      var exitFor = false;
+      foreach (var entry in aEventArgs.Database.RootGroup.GetEntries(true)) {
+        if (exitFor) {
+          break;
+        }
+        var settings = entry.GetKeeAgentEntrySettings();
+        if (settings.AddAtDatabaseOpen) {
+          try {
+            AddEntry(entry);
+          } catch (Exception) {
+            // TODO better error handling
+            var result = MessageBox.Show(
+              "Agent failure. Key could not be added. Do you want to attempt to load additional keys?",
+              "KeeAgent", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+            if (result == DialogResult.No) {
+              exitFor = true;
+            }
+          }
+        }
+      }
+    }
+    
+    private void MainForm_FileClosed(object aSender,
+      FileClosedEventArgs aEventArgs)
+    {
+      foreach (var entry in mRemoveKeyList) {
+        //mAgent.RemoveKey();
+      }
+    }
+
+    public ISshKey AddEntry(PwEntry aEntry)
+    {
+      KeyFormatter.GetPassphraseCallback getPassphraseCallback = 
+        delegate()
+        {
+          var securePassphrase = new SecureString();
+          var passphrase = Encoding.UTF8.GetChars(aEntry.Strings
+            .Get(PwDefs.PasswordField).ReadUtf8());
+          foreach (var c in passphrase) {
+            securePassphrase.AppendChar(c);
+          }
+          Array.Clear(passphrase, 0, passphrase.Length);
+          return securePassphrase;
+        };
       var settings = aEntry.GetKeeAgentEntrySettings();
       switch (settings.Location.SelectedType) {
         case EntrySettings.LocationType.Attachment:
-          try {
-            var data = aEntry.Binaries.Get(settings.Location.AttachmentName).ReadData();
-            using (var reader = new StreamReader(new MemoryStream(data))) {
-              var formatter = KeyFormatter.GetFormatter(reader.ReadLine());
-              formatter.GetPassphraseCallbackMethod = getPassphraseCallback;
-              var key = formatter.Deserialize(data);
-              if (Options.AlwasyConfirm) {
-                key.addConfirmConstraint();
-              }
-              return mAgent.AddKey(key);
+          var data = aEntry.Binaries.Get(settings.Location.AttachmentName).ReadData();
+          using (var reader = new StreamReader(new MemoryStream(data))) {
+            var formatter = KeyFormatter.GetFormatter(reader.ReadLine());
+            formatter.GetPassphraseCallbackMethod = getPassphraseCallback;
+            var key = formatter.Deserialize(data);
+            if (Options.AlwasyConfirm) {
+              key.addConfirmConstraint();
             }
-          } catch (Exception ex) {
-            Debug.Fail(ex.ToString());
+            if (!mAgent.AddKey(key)) {
+              throw new AgentFailureException();
+            }
+            return key;
           }
-          break;
         case EntrySettings.LocationType.File:
           var fileName = settings.Location.FileName;
           fileName = Environment.ExpandEnvironmentVariables(fileName);
@@ -395,13 +465,12 @@ namespace KeeAgent
               MessageBox.Show("Could not find file " + fileName);
             } else if (ex is KeyFormatterException || ex is PpkFormatterException) {
               MessageBox.Show("Bad passphrase " + fileName);
-            } else {
-              Debug.Fail(ex.ToString());
             }
+            throw;
           }
-          break;
+        default:
+          throw new Exception("Bad entry");
       }
-      return false;
     }
   } // class
 } // namespace

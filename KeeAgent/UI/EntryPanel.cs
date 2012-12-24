@@ -87,7 +87,7 @@ namespace KeeAgent.UI
 
     private void UpdateControlStates()
     {
-      loadAtStartupCheckBox.Enabled = hasSshKeyCheckBox.Checked;
+      addKeyAtOpenCheckBox.Enabled = hasSshKeyCheckBox.Checked;
       locationGroupBox.Enabled = hasSshKeyCheckBox.Checked;
 
       attachmentComboBox.Enabled = attachmentRadioButton.Checked;
@@ -98,7 +98,7 @@ namespace KeeAgent.UI
     private void hasSshKeyCheckBox_CheckedChanged(object sender, EventArgs e)
     {
       if (!hasSshKeyCheckBox.Checked) {
-        loadAtStartupCheckBox.Checked = false;
+        addKeyAtOpenCheckBox.Checked = false;
       }
       UpdateControlStates();
     }

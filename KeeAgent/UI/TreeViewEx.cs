@@ -36,7 +36,8 @@ namespace KeeAgent.UI
         var node = GetNodeAt(pos);
         if (node != null) {
           var bounds = node.Bounds;
-          bounds.Inflate(16, 0);
+          bounds.X -= 19;
+          bounds.Width += 20;
           if (bounds.Contains(pos) && node.ForeColor == SystemColors.GrayText) {
             return;
           }

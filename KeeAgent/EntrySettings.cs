@@ -31,13 +31,14 @@ namespace KeeAgent
     }
 
     public bool HasSshKey { get; set; }
-    public bool LoadAtStartup { get; set; }
+    public bool AddAtDatabaseOpen { get; set; }
+    public bool RemoveAtDatabaseClose { get; set; }
     public LocationData Location { get; set; }
 
     public EntrySettings()
     {
       HasSshKey = false;
-      LoadAtStartup = false;
+      AddAtDatabaseOpen = false;
       Location = new LocationData();
     }
   }

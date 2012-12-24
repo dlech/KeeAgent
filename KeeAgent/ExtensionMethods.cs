@@ -8,6 +8,8 @@ using System.Xml;
 using System.IO;
 using System.Reflection;
 using KeePassLib.Security;
+using dlech.SshAgentLib;
+using System.Security;
 
 namespace KeeAgent
 {

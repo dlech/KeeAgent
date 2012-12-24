@@ -151,124 +151,73 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;hasSshKeyCheckBox.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
-  <data name="loadAtStartupCheckBox.AutoSize" type="System.Boolean, mscorlib">
+  <data name="addKeyAtOpenCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="loadAtStartupCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="addKeyAtOpenCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="loadAtStartupCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="addKeyAtOpenCheckBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>9, 36</value>
   </data>
-  <data name="loadAtStartupCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>117, 17</value>
+  <data name="addKeyAtOpenCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>281, 17</value>
   </data>
-  <data name="loadAtStartupCheckBox.TabIndex" type="System.Int32, mscorlib">
+  <data name="addKeyAtOpenCheckBox.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="loadAtStartupCheckBox.Text" xml:space="preserve">
-    <value>Load key at startup</value>
+  <data name="addKeyAtOpenCheckBox.Text" xml:space="preserve">
+    <value>Add key to agent when database is opened/unlocked</value>
   </data>
-  <data name="&gt;&gt;loadAtStartupCheckBox.Name" xml:space="preserve">
-    <value>loadAtStartupCheckBox</value>
+  <data name="&gt;&gt;addKeyAtOpenCheckBox.Name" xml:space="preserve">
+    <value>addKeyAtOpenCheckBox</value>
   </data>
-  <data name="&gt;&gt;loadAtStartupCheckBox.Type" xml:space="preserve">
+  <data name="&gt;&gt;addKeyAtOpenCheckBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;loadAtStartupCheckBox.Parent" xml:space="preserve">
+  <data name="&gt;&gt;addKeyAtOpenCheckBox.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;loadAtStartupCheckBox.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="&gt;&gt;addKeyAtOpenCheckBox.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <metadata name="openFileDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>219, 17</value>
+  </metadata>
+  <data name="removeKeyAtCloseCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="removeKeyAtCloseCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="removeKeyAtCloseCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 59</value>
+  </data>
+  <data name="removeKeyAtCloseCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>296, 17</value>
+  </data>
+  <data name="removeKeyAtCloseCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="removeKeyAtCloseCheckBox.Text" xml:space="preserve">
+    <value>Remove key from agent when database is closed/locked</value>
+  </data>
+  <data name="&gt;&gt;removeKeyAtCloseCheckBox.Name" xml:space="preserve">
+    <value>removeKeyAtCloseCheckBox</value>
+  </data>
+  <data name="&gt;&gt;removeKeyAtCloseCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;removeKeyAtCloseCheckBox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;removeKeyAtCloseCheckBox.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="locationGroupBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
-  </data>
-  <data name="&gt;&gt;fileNameTextBox.Name" xml:space="preserve">
-    <value>fileNameTextBox</value>
-  </data>
-  <data name="&gt;&gt;fileNameTextBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;fileNameTextBox.Parent" xml:space="preserve">
-    <value>locationGroupBox</value>
-  </data>
-  <data name="&gt;&gt;fileNameTextBox.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;browseButton.Name" xml:space="preserve">
-    <value>browseButton</value>
-  </data>
-  <data name="&gt;&gt;browseButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;browseButton.Parent" xml:space="preserve">
-    <value>locationGroupBox</value>
-  </data>
-  <data name="&gt;&gt;browseButton.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;attachmentComboBox.Name" xml:space="preserve">
-    <value>attachmentComboBox</value>
-  </data>
-  <data name="&gt;&gt;attachmentComboBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;attachmentComboBox.Parent" xml:space="preserve">
-    <value>locationGroupBox</value>
-  </data>
-  <data name="&gt;&gt;attachmentComboBox.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;fileRadioButton.Name" xml:space="preserve">
-    <value>fileRadioButton</value>
-  </data>
-  <data name="&gt;&gt;fileRadioButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;fileRadioButton.Parent" xml:space="preserve">
-    <value>locationGroupBox</value>
-  </data>
-  <data name="&gt;&gt;fileRadioButton.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;attachmentRadioButton.Name" xml:space="preserve">
-    <value>attachmentRadioButton</value>
-  </data>
-  <data name="&gt;&gt;attachmentRadioButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;attachmentRadioButton.Parent" xml:space="preserve">
-    <value>locationGroupBox</value>
-  </data>
-  <data name="&gt;&gt;attachmentRadioButton.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="locationGroupBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 59</value>
-  </data>
-  <data name="locationGroupBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>452, 78</value>
-  </data>
-  <data name="locationGroupBox.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="locationGroupBox.Text" xml:space="preserve">
-    <value>Location</value>
-  </data>
-  <data name="&gt;&gt;locationGroupBox.Name" xml:space="preserve">
-    <value>locationGroupBox</value>
-  </data>
-  <data name="&gt;&gt;locationGroupBox.Type" xml:space="preserve">
-    <value>KeeAgent.UI.GroupBoxEx, KeeAgent, Version=0.2.0.2, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;locationGroupBox.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;locationGroupBox.ZOrder" xml:space="preserve">
-    <value>0</value>
   </data>
   <data name="fileNameTextBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -408,9 +357,30 @@
   <data name="&gt;&gt;attachmentRadioButton.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
-  <metadata name="openFileDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>219, 17</value>
-  </metadata>
+  <data name="locationGroupBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 82</value>
+  </data>
+  <data name="locationGroupBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>452, 78</value>
+  </data>
+  <data name="locationGroupBox.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="locationGroupBox.Text" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="&gt;&gt;locationGroupBox.Name" xml:space="preserve">
+    <value>locationGroupBox</value>
+  </data>
+  <data name="&gt;&gt;locationGroupBox.Type" xml:space="preserve">
+    <value>KeeAgent.UI.GroupBoxEx, KeeAgent, Version=0.2.0.2, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;locationGroupBox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;locationGroupBox.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -423,17 +393,17 @@
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
     <value>467, 342</value>
   </data>
-  <data name="&gt;&gt;entrySettingsBindingSource.Name" xml:space="preserve">
-    <value>entrySettingsBindingSource</value>
-  </data>
-  <data name="&gt;&gt;entrySettingsBindingSource.Type" xml:space="preserve">
-    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;openFileDialog.Name" xml:space="preserve">
     <value>openFileDialog</value>
   </data>
   <data name="&gt;&gt;openFileDialog.Type" xml:space="preserve">
     <value>System.Windows.Forms.OpenFileDialog, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;entrySettingsBindingSource.Name" xml:space="preserve">
+    <value>entrySettingsBindingSource</value>
+  </data>
+  <data name="&gt;&gt;entrySettingsBindingSource.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>EntryPanel</value>

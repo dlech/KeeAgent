@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddToKeeAgentContextMenuItem" xml:space="preserve">
+    <value>Add SS&amp;H Key to KeeAgent</value>
+  </data>
   <data name="ButtonLock" xml:space="preserve">
     <value>Lock</value>
   </data>
@@ -145,8 +148,8 @@
     <value>KeeAgent</value>
     <comment>Name of plugin</comment>
   </data>
-  <data name="ManageKeeAgentMenuItem" xml:space="preserve">
-    <value>Manage...</value>
+  <data name="KeeAgentMenuItemToolTip" xml:space="preserve">
+    <value>Manage SSH Keys</value>
   </data>
   <data name="NotifyKeyFetched" xml:space="preserve">
     <value>SSH key '{0}' was fetched by another application.</value>
