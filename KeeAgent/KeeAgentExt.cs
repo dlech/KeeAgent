@@ -49,6 +49,7 @@ namespace KeeAgent
 
       mPluginHost = aHost;
       mUIHelper = new UIHelper(mPluginHost);
+      mRemoveKeyList = new List<ISshKey>();
       mDebug = (mPluginHost
           .CommandLineArgs[AppDefs.CommandLineOptions.Debug] != null);
 
@@ -77,6 +78,7 @@ namespace KeeAgent
           mAgent = new PageantClient();
         }
         mPluginHost.MainWindow.FileOpened += MainForm_FileOpened;
+        mPluginHost.MainWindow.FileClosingPost += MainForm_FileClosing;
         mPluginHost.MainWindow.FileClosed += MainForm_FileClosed;
         // load all database that are already opened
         foreach (var database in mPluginHost.MainWindow.DocumentManager.Documents) {
@@ -389,87 +391,97 @@ namespace KeeAgent
     private void MainForm_FileOpened(object aSender,
       FileOpenedEventArgs aEventArgs)
     {
-      var exitFor = false;
-      foreach (var entry in aEventArgs.Database.RootGroup.GetEntries(true)) {
-        if (exitFor) {
-          break;
-        }
-        var settings = entry.GetKeeAgentEntrySettings();
-        if (settings.AddAtDatabaseOpen) {
-          try {
-            AddEntry(entry);
-          } catch (Exception) {
-            // TODO better error handling
-            var result = MessageBox.Show(
-              "Agent failure. Key could not be added. Do you want to attempt to load additional keys?",
-              "KeeAgent", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-            if (result == DialogResult.No) {
-              exitFor = true;
+      try {
+        var exitFor = false;
+        foreach (var entry in aEventArgs.Database.RootGroup.GetEntries(true)) {
+          if (exitFor) {
+            break;
+          }
+          var settings = entry.GetKeeAgentEntrySettings();
+          if (settings.AddAtDatabaseOpen) {
+            try {
+              AddEntry(entry);
+            } catch (Exception) {
+              // TODO better error handling
+              var result = MessageBox.Show(
+                "Agent failure. Key could not be added. Do you want to attempt to load additional keys?",
+                "KeeAgent", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+              if (result == DialogResult.No) {
+                exitFor = true;
+              }
             }
           }
         }
+      } catch (Exception ex) {
+        // can't be crashing KeePass
+        Debug.Fail(ex.ToString());
       }
     }
-    
+
+    private void MainForm_FileClosing(object aSender,
+      FileClosingEventArgs aEventArgs)
+    {
+      try {
+        mRemoveKeyList.Clear();
+        var allKeys = mAgent.GetAllKeys();
+        foreach (var entry in aEventArgs.Database.RootGroup.GetEntries(true)) {
+          try {
+            var settings = entry.GetKeeAgentEntrySettings();
+            if (settings.RemoveAtDatabaseClose) {
+              var matchKey = entry.GetSshKey();
+              if (matchKey == null) {
+                continue;
+              }
+              var removeKey = allKeys.Get(matchKey.Version, matchKey.GetPublicKeyBlob());
+              if (removeKey == null) {
+                continue;
+              }
+              mRemoveKeyList.Add(removeKey);
+            }
+          } catch (Exception ex) {
+            // keep trying the rest of the keys
+            Debug.Fail(ex.ToString());
+          }
+        }
+      } catch (Exception ex) {
+        // can't be crashing KeePass
+        Debug.Fail(ex.ToString());
+      }
+    }
+
     private void MainForm_FileClosed(object aSender,
       FileClosedEventArgs aEventArgs)
     {
-      foreach (var entry in mRemoveKeyList) {
-        //mAgent.RemoveKey();
+      try {
+        foreach (var key in mRemoveKeyList) {
+          mAgent.RemoveKey(key);
+        }
+        mRemoveKeyList.Clear();
+      } catch (Exception ex) {
+        // can't be crashing KeePass
+        Debug.Fail(ex.ToString());
       }
     }
 
     public ISshKey AddEntry(PwEntry aEntry)
     {
-      KeyFormatter.GetPassphraseCallback getPassphraseCallback = 
-        delegate()
-        {
-          var securePassphrase = new SecureString();
-          var passphrase = Encoding.UTF8.GetChars(aEntry.Strings
-            .Get(PwDefs.PasswordField).ReadUtf8());
-          foreach (var c in passphrase) {
-            securePassphrase.AppendChar(c);
-          }
-          Array.Clear(passphrase, 0, passphrase.Length);
-          return securePassphrase;
-        };
       var settings = aEntry.GetKeeAgentEntrySettings();
-      switch (settings.Location.SelectedType) {
-        case EntrySettings.LocationType.Attachment:
-          var data = aEntry.Binaries.Get(settings.Location.AttachmentName).ReadData();
-          using (var reader = new StreamReader(new MemoryStream(data))) {
-            var formatter = KeyFormatter.GetFormatter(reader.ReadLine());
-            formatter.GetPassphraseCallbackMethod = getPassphraseCallback;
-            var key = formatter.Deserialize(data);
-            if (Options.AlwasyConfirm) {
-              key.addConfirmConstraint();
-            }
-            if (!mAgent.AddKey(key)) {
-              throw new AgentFailureException();
-            }
-            return key;
-          }
-        case EntrySettings.LocationType.File:
-          var fileName = settings.Location.FileName;
-          fileName = Environment.ExpandEnvironmentVariables(fileName);
-          fileName = Path.GetFullPath(fileName);
-          try {
-            var constraints = new List<Agent.KeyConstraint>();
-            if (Options.AlwasyConfirm) {
-              constraints.addConfirmConstraint();
-            }
-            return mAgent.AddKeyFromFile(fileName, getPassphraseCallback,
-              constraints);
-          } catch (Exception ex) {
-            if (ex is FileNotFoundException || ex is DirectoryNotFoundException) {
-              MessageBox.Show("Could not find file " + fileName);
-            } else if (ex is KeyFormatterException || ex is PpkFormatterException) {
-              MessageBox.Show("Bad passphrase " + fileName);
-            }
-            throw;
-          }
-        default:
-          throw new Exception("Bad entry");
+      try {
+        var key = aEntry.GetSshKey();
+        if (Options.AlwasyConfirm) {
+          key.addConfirmConstraint();
+        }
+        mAgent.AddKey(key);
+        return key;
+      } catch (Exception ex) {
+        if (ex is FileNotFoundException || ex is DirectoryNotFoundException) {
+          MessageBox.Show("Could not find file " + settings.Location.FileName);
+        } else if (ex is KeyFormatterException || ex is PpkFormatterException) {
+          MessageBox.Show("Bad passphrase " + settings.Location.FileName);
+        } else {
+          Debug.Fail(ex.ToString());
+        }
+        throw;
       }
     }
   } // class

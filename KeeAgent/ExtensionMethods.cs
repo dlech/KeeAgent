@@ -53,5 +53,36 @@ namespace KeeAgent
         aPwEntry.Strings.Set(cStringId, new ProtectedString(true, writer.ToString()));
       }
     }
+
+    public static ISshKey GetSshKey(this PwEntry aPwEntry)
+    {
+      var settings = aPwEntry.GetKeeAgentEntrySettings();
+      if (!settings.HasSshKey) {
+        return null;
+      }
+      KeyFormatter.GetPassphraseCallback getPassphraseCallback =
+        delegate()
+        {
+          var securePassphrase = new SecureString();
+          var passphrase = Encoding.UTF8.GetChars(aPwEntry.Strings
+            .Get(PwDefs.PasswordField).ReadUtf8());
+          foreach (var c in passphrase) {
+            securePassphrase.AppendChar(c);
+          }
+          Array.Clear(passphrase, 0, passphrase.Length);
+          return securePassphrase;
+        };
+      switch (settings.Location.SelectedType) {
+        case EntrySettings.LocationType.Attachment:
+          var keyData = aPwEntry.Binaries.Get(settings.Location.AttachmentName);
+          return keyData.ReadData().ReadSshKey(getPassphraseCallback);
+        case EntrySettings.LocationType.File:
+          using (var keyFile = File.OpenRead(settings.Location.FileName)) {
+            return keyFile.ReadSshKey(getPassphraseCallback);
+          }
+        default:
+          return null;
+      }
+    }
   }
 }
