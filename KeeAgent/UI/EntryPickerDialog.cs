@@ -115,7 +115,7 @@ namespace KeeAgent.UI
         RecursiveAddGroup(newNode, childGroup);
 
         foreach (var entry in childGroup.Entries) {
-          var settings = entry.GetKeeAgentEntrySettings();
+          var settings = entry.GetKeeAgentSettings();
           if (settings.HasSshKey) {
             var entryNode = new TreeNode(entry.Strings.Get(PwDefs.TitleField).ReadString(),
               (int)entry.IconId, (int)entry.IconId);

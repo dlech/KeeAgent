@@ -44,20 +44,20 @@ namespace KeeAgentDebug
           withPassEntry.Binaries.Set("withPass.ppk", new ProtectedBinary(true, Resources.withPassphrase_ppk));
           withPassEntry.Strings.Set(PwDefs.PasswordField, new ProtectedString(true, "KeeAgent"));
           settings1.Location.AttachmentName = "withPass.ppk";
-          withPassEntry.SetKeeAgentEntrySettings(settings1);
+          withPassEntry.SetKeeAgentSettings(settings1);
 
           var withBadPassEntry = new PwEntry(true, true);
           withBadPassEntry.Strings.Set(PwDefs.TitleField, new ProtectedString(true, "with-bad-passphrase"));
           withBadPassEntry.Binaries.Set("withBadPass.ppk", new ProtectedBinary(true, Resources.withPassphrase_ppk));
           withBadPassEntry.Strings.Set(PwDefs.PasswordField, new ProtectedString(true, "BadPass"));
           settings1.Location.AttachmentName = "withBadPass.ppk";
-          withBadPassEntry.SetKeeAgentEntrySettings(settings1);
+          withBadPassEntry.SetKeeAgentSettings(settings1);
 
           var withoutPassEntry = new PwEntry(true, true);
           withoutPassEntry.Strings.Set(PwDefs.TitleField, new ProtectedString(true, "without-passphrase"));
           withoutPassEntry.Binaries.Set("withoutPass.ppk", new ProtectedBinary(true, Resources.withoutPassphrase_ppk));
           settings1.Location.AttachmentName = "withoutPass.ppk";
-          withoutPassEntry.SetKeeAgentEntrySettings(settings1);
+          withoutPassEntry.SetKeeAgentSettings(settings1);
 
           var dsaPassEntry = new PwEntry(true, true);
           dsaPassEntry.Strings.Set(PwDefs.TitleField, new ProtectedString(true, "dsa-with-passphrase"));
@@ -65,28 +65,28 @@ namespace KeeAgentDebug
           dsaPassEntry.Strings.Set(PwDefs.PasswordField, new ProtectedString(true, "KeeAgent"));
           settings2.Location.SelectedType = EntrySettings.LocationType.Attachment;
           settings2.Location.AttachmentName = "dsaWithPass.ppk";
-          dsaPassEntry.SetKeeAgentEntrySettings(settings2);
+          dsaPassEntry.SetKeeAgentSettings(settings2);
 
           var nonStandardLengthPassEntry = new PwEntry(true, true);
           nonStandardLengthPassEntry.Strings.Set(PwDefs.TitleField, new ProtectedString(true, "4095-bits"));
           nonStandardLengthPassEntry.Binaries.Set("4095-bits.ppk", new ProtectedBinary(true, Resources._4095_bits_ppk));
           nonStandardLengthPassEntry.Strings.Set(PwDefs.PasswordField, new ProtectedString(true, "KeeAgent"));
           settings1.Location.AttachmentName = "4095-bits.ppk";
-          nonStandardLengthPassEntry.SetKeeAgentEntrySettings(settings1);
+          nonStandardLengthPassEntry.SetKeeAgentSettings(settings1);
 
           var nonAsciiPassEntry = new PwEntry(true, true);
           nonAsciiPassEntry.Strings.Set(PwDefs.TitleField, new ProtectedString(true, "non-ascii passphrase"));
           nonAsciiPassEntry.Binaries.Set("non-ascii-passphrase.ppk", new ProtectedBinary(true, Resources.non_ascii_passphrase_ppk));
           nonAsciiPassEntry.Strings.Set(PwDefs.PasswordField, new ProtectedString(true, "Ŧéşť"));
           settings1.Location.AttachmentName = "non-ascii-passphrase.ppk";
-          nonAsciiPassEntry.SetKeeAgentEntrySettings(settings1);
+          nonAsciiPassEntry.SetKeeAgentSettings(settings1);
 
           var externalFilePassEntry = new PwEntry(true, true);
           externalFilePassEntry.Strings.Set(PwDefs.TitleField, new ProtectedString(true, "external key file"));
           externalFilePassEntry.Strings.Set(PwDefs.PasswordField, new ProtectedString(true, "passphrase"));
           settings2.Location.SelectedType = EntrySettings.LocationType.File;
           settings2.Location.FileName = "../../../SshAgentLib/SshAgentLibTests/Resources/dsa_with_passphrase";
-          externalFilePassEntry.SetKeeAgentEntrySettings(settings2);
+          externalFilePassEntry.SetKeeAgentSettings(settings2);
 
           var rsaGroup = new PwGroup(true, true, "RSA", PwIcon.Key);
           rsaGroup.AddEntry(withPassEntry, true);
@@ -112,10 +112,13 @@ namespace KeeAgentDebug
             keeAgent.Initialize(pluginHost);
             pluginHost.MainWindow.FormClosing += delegate(Object source, FormClosingEventArgs args)
             {
-              keeAgent.Terminate();
-            };            
+              if (!args.Cancel) {
+                keeAgent.Terminate();
+              }
+            };
           }));
-          while (KeePass.Program.MainForm != null && KeePass.Program.MainForm.Visible == true) {
+          var mainfForm = KeePass.Program.MainForm;
+          while (mainfForm != null && (mainfForm.Visible == true || mainfForm.MainNotifyIcon.Visible == true)) {
             Thread.Sleep(500);
           }
         });

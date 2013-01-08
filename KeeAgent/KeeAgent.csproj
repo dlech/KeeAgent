@@ -81,6 +81,7 @@
     <ApplicationIcon>Resources\KeeAgent-icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DatabaseSettings.cs" />
     <Compile Include="EntrySettings.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="NotificationOptions.cs" />
@@ -94,6 +95,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Translatable.resx</DependentUpon>
+    </Compile>
+    <Compile Include="UI\DatabaseSettingsPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\DatabaseSettingsPanel.Designer.cs">
+      <DependentUpon>DatabaseSettingsPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\EntryPanel.cs">
       <SubType>UserControl</SubType>
@@ -204,6 +211,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\DataSources\DatabaseSettings.datasource" />
     <None Include="Properties\DataSources\EntrySettings.datasource" />
     <None Include="Resources\KeeAgent-icon.ico" />
   </ItemGroup>

@@ -67,6 +67,7 @@ namespace KeeAgent
             pagent.Locked += Pageant_Locked;
             pagent.KeyUsed += Pageant_KeyUsed;
             pagent.KeyListChanged += Pageant_KeyListChanged;
+            pagent.MessageReceived += Pageant_MessageReceived;
             mAgent = pagent;
           } catch (PageantRunningException) {
             if (Options.AgentMode != AgentMode.Auto) {
@@ -172,7 +173,7 @@ namespace KeeAgent
     {
       foreach (var entry in mPluginHost.MainWindow.GetSelectedEntries()) {
         // if any selected entry contains an SSH key then we show the KeeAgent menu item
-        if (entry.GetKeeAgentEntrySettings().HasSshKey) {
+        if (entry.GetKeeAgentSettings().HasSshKey) {
           mKeeAgentPwEntryContextMenuItem.Visible = true;
           return;
         }
@@ -184,7 +185,7 @@ namespace KeeAgent
     {
       foreach (var entry in mPluginHost.MainWindow.GetSelectedEntries()) {
         // if any selected entry contains an SSH key then we show the KeeAgent menu item
-        if (entry.GetKeeAgentEntrySettings().HasSshKey) {
+        if (entry.GetKeeAgentSettings().HasSshKey) {
           AddEntry(entry);
         }
       }
@@ -289,7 +290,18 @@ namespace KeeAgent
           delegate(object sender, EventArgs args)
           {
             var optionsPanel = new EntryPanel(pwEntryForm.EntryRef);
-            AddTab(pwEntryForm, optionsPanel);
+            pwEntryForm.AddTab(optionsPanel);
+          };
+      }
+
+      /* Add KeeAgent tab to Database Settings dialog */
+      var databaseSettingForm = aEventArgs.Form as DatabaseSettingsForm;
+      if (databaseSettingForm != null) {
+        databaseSettingForm.Shown +=
+          delegate(object sender, EventArgs args)
+          {
+            var dbSettingsPanel = new DatabaseSettingsPanel(mPluginHost.MainWindow.ActiveDatabase);
+            databaseSettingForm.AddTab(dbSettingsPanel);
           };
       }
 
@@ -300,36 +312,9 @@ namespace KeeAgent
           delegate(object sender, EventArgs args)
           {
             var optionsPanel = new OptionsPanel(this);
-            AddTab(optionsForm, optionsPanel);
+            optionsForm.AddTab(optionsPanel);
           };
         optionsForm.FormClosed += OptionsFormClosedHandler;
-      }
-    }
-
-    private void AddTab(Form aForm, UserControl aPanel)
-    {
-      try {
-        var foundControls = aForm.Controls.Find("m_tabMain", true);
-        if (foundControls.Length != 1) {
-          return;
-        }
-        var tabControl = foundControls[0] as TabControl;
-        if (tabControl == null) {
-          return;
-        }
-        if (tabControl.ImageList == null) {
-          tabControl.ImageList = new ImageList();
-        }
-        var imageIndex = tabControl.ImageList.Images.Add(Resources.KeeAgentIcon, Color.Transparent);
-        var newTab = new TabPage(Translatable.KeeAgent);
-        newTab.ImageIndex = imageIndex;
-        //newTab.ImageKey = cTabImageKey;
-        newTab.UseVisualStyleBackColor = true;
-        newTab.Controls.Add(aPanel);
-        tabControl.Controls.Add(newTab);
-      } catch (Exception ex) {
-        // Can't have exception here or KeePass freezes.
-        Debug.Fail(ex.ToString());
       }
     }
 
@@ -379,6 +364,23 @@ namespace KeeAgent
       }
     }
 
+    private void Pageant_MessageReceived(object aSender,
+      Agent.MessageReceivedEventArgs aEventArgs)
+    {
+      var mainWindow = mPluginHost.MainWindow;
+      mainWindow.Invoke((MethodInvoker)delegate()
+      {
+        foreach (var document in mainWindow.DocumentManager.Documents) {
+          if (mainWindow.IsFileLocked(document)) {
+            if (document.Database.GetKeeAgentSettings().UnlockOnActivity) {
+              mainWindow.OpenDatabase(document.LockedIoc, null, false);
+            }
+            break;
+          }
+        }
+      });
+    }
+
     private void Pageant_KeyUsed(object aSender, Agent.KeyUsedEventArgs aEventArgs)
     {
       if (Options.ShowBalloon) {
@@ -397,7 +399,7 @@ namespace KeeAgent
           if (exitFor) {
             break;
           }
-          var settings = entry.GetKeeAgentEntrySettings();
+          var settings = entry.GetKeeAgentSettings();
           if (settings.AddAtDatabaseOpen) {
             try {
               AddEntry(entry);
@@ -426,7 +428,7 @@ namespace KeeAgent
         var allKeys = mAgent.GetAllKeys();
         foreach (var entry in aEventArgs.Database.RootGroup.GetEntries(true)) {
           try {
-            var settings = entry.GetKeeAgentEntrySettings();
+            var settings = entry.GetKeeAgentSettings();
             if (settings.RemoveAtDatabaseClose) {
               var matchKey = entry.GetSshKey();
               if (matchKey == null) {
@@ -465,7 +467,7 @@ namespace KeeAgent
 
     public ISshKey AddEntry(PwEntry aEntry)
     {
-      var settings = aEntry.GetKeeAgentEntrySettings();
+      var settings = aEntry.GetKeeAgentSettings();
       try {
         var key = aEntry.GetSshKey();
         if (Options.AlwasyConfirm) {

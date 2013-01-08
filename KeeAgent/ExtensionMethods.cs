@@ -10,6 +10,10 @@ using System.Reflection;
 using KeePassLib.Security;
 using dlech.SshAgentLib;
 using System.Security;
+using System.Windows.Forms;
+using KeeAgent.Properties;
+using System.Drawing;
+using System.Diagnostics;
 
 namespace KeeAgent
 {
@@ -17,46 +21,79 @@ namespace KeeAgent
   {
     private const string cStringId = "KeeAgent.Settings";
 
-    private static XmlSerializer mSerializer;
+    private static XmlSerializer mEntrySettingsSerializer;
+    private static XmlSerializer mDatabaseSettingsSerializer;
 
-    private static XmlSerializer Serializer
+    private static XmlSerializer EntrySettingsSerializer
     {
       get
       {
-        if (mSerializer == null) {
-          mSerializer = new XmlSerializer(typeof(EntrySettings));
+        if (mEntrySettingsSerializer == null) {
+          mEntrySettingsSerializer = new XmlSerializer(typeof(EntrySettings));
         }
-        return mSerializer;
+        return mEntrySettingsSerializer;
       }
     }
 
-    public static EntrySettings GetKeeAgentEntrySettings(this PwEntry aPwEntry)
+    private static XmlSerializer DatabaseSettingsSerializer
     {
-      var settingsString = aPwEntry.Strings.ReadSafe(cStringId);
-      if (settingsString == string.Empty) {
-        return new EntrySettings();
+      get
+      {
+        if (mDatabaseSettingsSerializer == null) {
+          mDatabaseSettingsSerializer = new XmlSerializer(typeof(DatabaseSettings));
+        }
+        return mDatabaseSettingsSerializer;
       }
-      using (var reader = XmlReader.Create(new StringReader(settingsString))) {
-        if (Serializer.CanDeserialize(reader)) {
-          return Serializer.Deserialize(reader) as EntrySettings;
+    }
+
+    public static DatabaseSettings GetKeeAgentSettings(this PwDatabase aDatabase)
+    {
+      var settingsString = aDatabase.CustomData.Get(cStringId);
+      if (!string.IsNullOrWhiteSpace(settingsString)) {
+        using (var reader = XmlReader.Create(new StringReader(settingsString))) {
+          if (DatabaseSettingsSerializer.CanDeserialize(reader)) {
+            return DatabaseSettingsSerializer.Deserialize(reader) as DatabaseSettings;
+          }
+        }
+      }
+      return new DatabaseSettings();
+    }
+
+    public static void SetKeeAgentSettings(this PwDatabase aDatabase,
+      DatabaseSettings aSettings)
+    {
+      using (var writer = new StringWriter()) {
+        DatabaseSettingsSerializer.Serialize(writer, aSettings);
+        aDatabase.CustomData.Set(cStringId, writer.ToString());
+      }
+    }
+
+    public static EntrySettings GetKeeAgentSettings(this PwEntry aEntry)
+    {
+      var settingsString = aEntry.Strings.ReadSafe(cStringId);
+      if (!string.IsNullOrWhiteSpace(settingsString)) {
+        using (var reader = XmlReader.Create(new StringReader(settingsString))) {
+          if (EntrySettingsSerializer.CanDeserialize(reader)) {
+            return EntrySettingsSerializer.Deserialize(reader) as EntrySettings;
+          }
         }
       }
       return new EntrySettings();
     }
 
-    public static void SetKeeAgentEntrySettings(this PwEntry aPwEntry,
+    public static void SetKeeAgentSettings(this PwEntry aEntry,
       EntrySettings aSettings)
     {
       using (var writer = new StringWriter()) {
-        Serializer.Serialize(writer, aSettings);
+        EntrySettingsSerializer.Serialize(writer, aSettings);
         // string is protected just to make UI look cleaner
-        aPwEntry.Strings.Set(cStringId, new ProtectedString(true, writer.ToString()));
+        aEntry.Strings.Set(cStringId, new ProtectedString(true, writer.ToString()));
       }
     }
 
     public static ISshKey GetSshKey(this PwEntry aPwEntry)
     {
-      var settings = aPwEntry.GetKeeAgentEntrySettings();
+      var settings = aPwEntry.GetKeeAgentSettings();
       if (!settings.HasSshKey) {
         return null;
       }
@@ -82,6 +119,35 @@ namespace KeeAgent
           }
         default:
           return null;
+      }
+    }
+
+    public static void AddTab(this Form aForm, UserControl aPanel)
+    {
+      try {
+        var foundControls = aForm.Controls.Find("m_tabMain", true);
+        if (foundControls.Length != 1) {
+          return;
+        }
+        var tabControl = foundControls[0] as TabControl;
+        if (tabControl == null) {
+          return;
+        }
+        if (tabControl.ImageList == null) {
+          tabControl.ImageList = new ImageList();
+        }
+        var imageIndex = tabControl.ImageList.Images.Add(Resources.KeeAgentIcon, Color.Transparent);
+        var newTab = new TabPage(Translatable.KeeAgent);
+        newTab.ImageIndex = imageIndex;
+        //newTab.ImageKey = cTabImageKey;
+        newTab.UseVisualStyleBackColor = true;
+        newTab.Controls.Add(aPanel);
+        aPanel.Dock = DockStyle.Fill;
+        tabControl.Controls.Add(newTab);
+
+      } catch (Exception ex) {
+        // Can't have exception here or KeePass freezes.
+        Debug.Fail(ex.ToString());
       }
     }
   }

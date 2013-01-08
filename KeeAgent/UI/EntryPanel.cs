@@ -65,7 +65,7 @@ namespace KeeAgent.UI
           }
         };
 
-      entrySettingsBindingSource.DataSource = mPwEntry.GetKeeAgentEntrySettings();
+      entrySettingsBindingSource.DataSource = mPwEntry.GetKeeAgentSettings();
 
       UpdateControlStates();
     }
@@ -79,7 +79,7 @@ namespace KeeAgent.UI
           {
             if (ParentForm.DialogResult == DialogResult.OK) {
               var settings = entrySettingsBindingSource.DataSource as EntrySettings;
-              mPwEntry.SetKeeAgentEntrySettings(settings);
+              mPwEntry.SetKeeAgentSettings(settings);
             }
           };
       }
