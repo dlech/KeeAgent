@@ -145,9 +145,11 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.WindowsAPICodePack">
+      <HintPath>.\Microsoft.WindowsAPICodePack.dll</HintPath>
       <HintPath>..\SshAgentLib\lib\WindowsAPICodePack\Microsoft.WindowsAPICodePack.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAPICodePack.Shell">
+      <HintPath>.\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
       <HintPath>..\SshAgentLib\lib\WindowsAPICodePack\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
     </Reference>
     <Reference Include="SshAgentLib">
@@ -157,11 +159,17 @@
       <HintPath>..\SshAgentLib\SshAgentLib\bin\$(Configuration)\SshAgentLib.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SshAgentLib.WinForm">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\SshAgentLib.WinForm.dll</HintPath>
+      <!-- This is for building .plgx -->
+      <HintPath>..\SshAgentLib\SshAgentLib\bin\$(Configuration)\SshAgentLib.WinForm.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="BouncyCastle.Crypto">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\BouncyCastle.Crypto.dll</HintPath>
-      <!-- This is for building .plgx -->
-      <HintPath>..\SshAgentLib\SshAgentLib\bin\$(Configuration)\BouncyCastle.Crypto.dll</HintPath>
+      <HintPath>..\SshAgentLib\lib\BouncyCastle\BouncyCastle.Crypto.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -180,6 +188,9 @@
     <EmbeddedResource Include="Translatable.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Translatable.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\DatabaseSettingsPanel.resx">
+      <DependentUpon>DatabaseSettingsPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\EntryPanel.resx">
       <DependentUpon>EntryPanel.cs</DependentUpon>
@@ -227,8 +238,8 @@
 
       xcopy /s "$(ProjectDir)." "%25TEMP%25\$(ProjectName)\"
 
-      copy "$(TargetDir)SshAgentLib.dll" "%25TEMP%25\$(ProjectName)\"
-      copy "$(TargetDir)BouncyCastle.Crypto.dll" "%25TEMP%25\$(ProjectName)\"
+      copy "$(TargetDir)*.dll" "%25TEMP%25\$(ProjectName)\"
+      del "%25TEMP%25\$(ProjectName)\KeeAgent.dll"
       copy "$(SolutionDir)Prebuild\$(OutDir)PreBuild.exe" "%25TEMP%25\$(ProjectName)\"
       rmdir /s /q "%25TEMP%25\$(ProjectName)\bin"
       rmdir /s /q "%25TEMP%25\$(ProjectName)\obj"
