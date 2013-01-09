@@ -94,7 +94,7 @@ namespace KeeAgent
     public static ISshKey GetSshKey(this PwEntry aPwEntry)
     {
       var settings = aPwEntry.GetKeeAgentSettings();
-      if (!settings.HasSshKey) {
+      if (!settings.AllowUseOfSshKey) {
         return null;
       }
       KeyFormatter.GetPassphraseCallback getPassphraseCallback =
@@ -111,6 +111,9 @@ namespace KeeAgent
         };
       switch (settings.Location.SelectedType) {
         case EntrySettings.LocationType.Attachment:
+          if (string.IsNullOrWhiteSpace(settings.Location.AttachmentName)) {
+            throw new NoAttachmentException();
+          }
           var keyData = aPwEntry.Binaries.Get(settings.Location.AttachmentName);
           return keyData.ReadData().ReadSshKey(getPassphraseCallback);
         case EntrySettings.LocationType.File:

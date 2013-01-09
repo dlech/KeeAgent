@@ -17,6 +17,7 @@ using System.Security;
 using KeePassLib;
 using System.Text;
 using System.ComponentModel;
+using KeePass.Util;
 
 namespace KeeAgent
 {
@@ -175,7 +176,7 @@ namespace KeeAgent
       if (selectedEntries != null) {
         foreach (var entry in selectedEntries) {
           // if any selected entry contains an SSH key then we show the KeeAgent menu item
-          if (entry.GetKeeAgentSettings().HasSshKey) {
+          if (entry.GetKeeAgentSettings().AllowUseOfSshKey) {
             mKeeAgentPwEntryContextMenuItem.Visible = true;
             return;
           }
@@ -188,7 +189,7 @@ namespace KeeAgent
     {
       foreach (var entry in mPluginHost.MainWindow.GetSelectedEntries()) {
         // if any selected entry contains an SSH key then we show the KeeAgent menu item
-        if (entry.GetKeeAgentSettings().HasSshKey) {
+        if (entry.GetKeeAgentSettings().AllowUseOfSshKey) {
           try {
             AddEntry(entry);
           } catch (Exception) {
@@ -296,9 +297,10 @@ namespace KeeAgent
         pwEntryForm.Shown +=
           delegate(object sender, EventArgs args)
           {
-            var optionsPanel = new EntryPanel(pwEntryForm.EntryRef);
+            var optionsPanel = new EntryPanel();
             pwEntryForm.AddTab(optionsPanel);
           };
+        pwEntryForm.EntrySaving += PwEntryForm_EntrySaving;
       }
 
       /* Add KeeAgent tab to Database Settings dialog */
@@ -307,7 +309,8 @@ namespace KeeAgent
         databaseSettingForm.Shown +=
           delegate(object sender, EventArgs args)
           {
-            var dbSettingsPanel = new DatabaseSettingsPanel(mPluginHost.MainWindow.ActiveDatabase);
+            var dbSettingsPanel =
+              new DatabaseSettingsPanel(mPluginHost.MainWindow.ActiveDatabase);
             databaseSettingForm.AddTab(dbSettingsPanel);
           };
       }
@@ -321,11 +324,76 @@ namespace KeeAgent
             var optionsPanel = new OptionsPanel(this);
             optionsForm.AddTab(optionsPanel);
           };
-        optionsForm.FormClosed += OptionsFormClosedHandler;
+        optionsForm.FormClosed += OptionsForm_FormClosed;
       }
     }
 
-    private void OptionsFormClosedHandler(object aSender,
+    private void PwEntryForm_EntrySaving(object aSender,
+      CancellableOperationEventArgs aEventArgs)
+    {
+      /* Get reference to new settings */
+
+      var entryForm = aSender as PwEntryForm;
+      if (entryForm != null && entryForm.DialogResult == DialogResult.OK) {
+        var foundControls = entryForm.Controls.Find("EntryPanel", true);
+        if (foundControls.Length != 1) {
+          return;
+        }
+        var entryPanel = foundControls[0] as EntryPanel;
+        if (entryPanel == null) {
+          return;
+        }
+        var settings =
+          entryPanel.entrySettingsBindingSource.DataSource as EntrySettings;
+        if (settings == null) {
+          return;
+        }
+
+        /* validate KeeAgent Entry Settings */
+
+        if (settings.AllowUseOfSshKey) {
+          string errorMessage = null;
+          switch (settings.Location.SelectedType) {
+            case EntrySettings.LocationType.Attachment:
+              if (string.IsNullOrWhiteSpace(settings.Location.AttachmentName)) {
+                errorMessage = "Must specify attachment";
+              } else if (entryForm.EntryBinaries
+                         .Get(settings.Location.AttachmentName) == null) {
+                errorMessage = "Attachment does not exist";
+              }
+              break;
+            case EntrySettings.LocationType.File:
+              if (string.IsNullOrWhiteSpace(settings.Location.FileName)) {
+                errorMessage = "Must specify file name";
+              } else if (!File.Exists(settings.Location.FileName)) {
+                errorMessage = "File does not exist";
+              }
+              break;
+          }
+
+          /* if there was a problem with a KeeAgent settings, activate the 
+           * KeeAgent tab, show error message and cancel the save */
+
+          if (errorMessage != null) {
+            // Activate KeeAgent tab
+            var keeAgentTab = entryPanel.Parent as TabPage;
+            if (keeAgentTab != null) {
+              foundControls = entryForm.Controls.Find("m_tabMain", true);
+              if (foundControls.Length == 1) {
+                var tabControl = foundControls[0] as TabControl;
+                if (tabControl != null) {
+                  tabControl.SelectTab(keeAgentTab);
+                }
+              }
+            }
+            MessageService.ShowInfo(errorMessage);
+            aEventArgs.Cancel = true;
+          }
+        }
+      }
+    }
+
+    private void OptionsForm_FormClosed(object aSender,
       FormClosedEventArgs aEventArgs)
     {
       var optionsForm = aSender as OptionsForm;
@@ -407,7 +475,7 @@ namespace KeeAgent
             break;
           }
           var settings = entry.GetKeeAgentSettings();
-          if (settings.AddAtDatabaseOpen) {
+          if (settings.AllowUseOfSshKey && settings.AddAtDatabaseOpen) {
             try {
               AddEntry(entry);
             } catch (Exception) {
@@ -436,7 +504,7 @@ namespace KeeAgent
         foreach (var entry in aEventArgs.Database.RootGroup.GetEntries(true)) {
           try {
             var settings = entry.GetKeeAgentSettings();
-            if (settings.RemoveAtDatabaseClose) {
+            if (settings.AllowUseOfSshKey && settings.RemoveAtDatabaseClose) {
               var matchKey = entry.GetSshKey();
               if (matchKey == null) {
                 continue;
@@ -483,7 +551,9 @@ namespace KeeAgent
         mAgent.AddKey(key);
         return key;
       } catch (Exception ex) {
-        if (ex is FileNotFoundException || ex is DirectoryNotFoundException) {
+        if (ex is NoAttachmentException) {
+          MessageBox.Show("No attachment specified");
+        } else if (ex is FileNotFoundException || ex is DirectoryNotFoundException) {
           MessageBox.Show("Could not find file " + settings.Location.FileName);
         } else if (ex is KeyFormatterException || ex is PpkFormatterException) {
           MessageBox.Show("Bad passphrase " + settings.Location.FileName);

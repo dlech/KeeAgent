@@ -31,13 +31,14 @@ namespace KeeAgentDebug
 
           var keeAgent = new KeeAgentExt();
           var pluginHost = KeePass.Program.MainForm.PluginHost;
-          
+
           var settings1 = new EntrySettings();
-          settings1.HasSshKey = true;
+          settings1.AllowUseOfSshKey = true;
+          settings1.AddAtDatabaseOpen = false;
+          settings1.RemoveAtDatabaseClose = false;
           settings1.Location.SelectedType = EntrySettings.LocationType.Attachment;
           var settings2 = new EntrySettings();
-          settings2.HasSshKey = true;
-          settings2.AddAtDatabaseOpen = true;
+          settings2.AllowUseOfSshKey = true;
 
           var withPassEntry = new PwEntry(true, true);
           withPassEntry.Strings.Set(PwDefs.TitleField, new ProtectedString(true, "with-passphrase"));

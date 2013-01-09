@@ -133,13 +133,13 @@
     <value>9, 13</value>
   </data>
   <data name="hasSshKeyCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>115, 17</value>
+    <value>178, 17</value>
   </data>
   <data name="hasSshKeyCheckBox.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
   <data name="hasSshKeyCheckBox.Text" xml:space="preserve">
-    <value>Entry has SSH key</value>
+    <value>Allow KeeAgent to use this entry</value>
   </data>
   <data name="&gt;&gt;hasSshKeyCheckBox.Name" xml:space="preserve">
     <value>hasSshKeyCheckBox</value>
@@ -199,7 +199,7 @@
     <value>296, 17</value>
   </data>
   <data name="removeKeyAtCloseCheckBox.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>2</value>
   </data>
   <data name="removeKeyAtCloseCheckBox.Text" xml:space="preserve">
     <value>Remove key from agent when database is closed/locked</value>
@@ -364,16 +364,16 @@
     <value>452, 78</value>
   </data>
   <data name="locationGroupBox.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="locationGroupBox.Text" xml:space="preserve">
-    <value>Location</value>
+    <value>Private Key File Location</value>
   </data>
   <data name="&gt;&gt;locationGroupBox.Name" xml:space="preserve">
     <value>locationGroupBox</value>
   </data>
   <data name="&gt;&gt;locationGroupBox.Type" xml:space="preserve">
-    <value>KeeAgent.UI.GroupBoxEx, KeeAgent, Version=0.2.0.2, Culture=neutral, PublicKeyToken=null</value>
+    <value>KeeAgent.UI.GroupBoxEx, KeeAgent, Version=0.3.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;locationGroupBox.Parent" xml:space="preserve">
     <value>$this</value>
@@ -393,17 +393,17 @@
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
     <value>467, 342</value>
   </data>
-  <data name="&gt;&gt;openFileDialog.Name" xml:space="preserve">
-    <value>openFileDialog</value>
-  </data>
-  <data name="&gt;&gt;openFileDialog.Type" xml:space="preserve">
-    <value>System.Windows.Forms.OpenFileDialog, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;entrySettingsBindingSource.Name" xml:space="preserve">
     <value>entrySettingsBindingSource</value>
   </data>
   <data name="&gt;&gt;entrySettingsBindingSource.Type" xml:space="preserve">
     <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;openFileDialog.Name" xml:space="preserve">
+    <value>openFileDialog</value>
+  </data>
+  <data name="&gt;&gt;openFileDialog.Type" xml:space="preserve">
+    <value>System.Windows.Forms.OpenFileDialog, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>EntryPanel</value>

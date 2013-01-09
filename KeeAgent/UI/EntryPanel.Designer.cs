@@ -30,10 +30,10 @@
       this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EntryPanel));
       this.hasSshKeyCheckBox = new System.Windows.Forms.CheckBox();
+      this.entrySettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.addKeyAtOpenCheckBox = new System.Windows.Forms.CheckBox();
       this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
       this.removeKeyAtCloseCheckBox = new System.Windows.Forms.CheckBox();
-      this.entrySettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.locationGroupBox = new KeeAgent.UI.GroupBoxEx();
       this.fileNameTextBox = new System.Windows.Forms.TextBox();
       this.browseButton = new System.Windows.Forms.Button();
@@ -47,10 +47,14 @@
       // hasSshKeyCheckBox
       // 
       resources.ApplyResources(this.hasSshKeyCheckBox, "hasSshKeyCheckBox");
-      this.hasSshKeyCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.entrySettingsBindingSource, "HasSshKey", true));
+      this.hasSshKeyCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.entrySettingsBindingSource, "AllowUseOfSshKey", true));
       this.hasSshKeyCheckBox.Name = "hasSshKeyCheckBox";
       this.hasSshKeyCheckBox.UseVisualStyleBackColor = true;
       this.hasSshKeyCheckBox.CheckedChanged += new System.EventHandler(this.hasSshKeyCheckBox_CheckedChanged);
+      // 
+      // entrySettingsBindingSource
+      // 
+      this.entrySettingsBindingSource.DataSource = typeof(KeeAgent.EntrySettings);
       // 
       // addKeyAtOpenCheckBox
       // 
@@ -65,10 +69,6 @@
       this.removeKeyAtCloseCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.entrySettingsBindingSource, "RemoveAtDatabaseClose", true));
       this.removeKeyAtCloseCheckBox.Name = "removeKeyAtCloseCheckBox";
       this.removeKeyAtCloseCheckBox.UseVisualStyleBackColor = true;
-      // 
-      // entrySettingsBindingSource
-      // 
-      this.entrySettingsBindingSource.DataSource = typeof(KeeAgent.EntrySettings);
       // 
       // locationGroupBox
       // 
@@ -141,7 +141,6 @@
 
         private System.Windows.Forms.CheckBox hasSshKeyCheckBox;
         private System.Windows.Forms.CheckBox addKeyAtOpenCheckBox;
-        private System.Windows.Forms.BindingSource entrySettingsBindingSource;
         private System.Windows.Forms.RadioButton attachmentRadioButton;
         private KeeAgent.UI.GroupBoxEx locationGroupBox;
         private System.Windows.Forms.Button browseButton;
@@ -150,6 +149,7 @@
         private System.Windows.Forms.TextBox fileNameTextBox;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.CheckBox removeKeyAtCloseCheckBox;
+        internal System.Windows.Forms.BindingSource entrySettingsBindingSource;
 
     }
 }

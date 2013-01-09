@@ -10,6 +10,8 @@ namespace KeeAgent.UI
   {
     private string pSelectedRadioButton = string.Empty;
 
+    public event EventHandler SelectedRadioButtonChanged;
+
     /// <summary>
     /// 
     /// </summary>
@@ -27,7 +29,7 @@ namespace KeeAgent.UI
         if (value == pSelectedRadioButton) {
           return;
         }
-        if (value == string.Empty) {          
+        if (value == string.Empty) {
           foreach (var control in Controls) {
             var radioButton = Controls[value] as RadioButton;
             if (radioButton != null) {
@@ -41,8 +43,24 @@ namespace KeeAgent.UI
           }
           selectedRadioButton.Checked = true;
           pSelectedRadioButton = value;
+          OnSelectedRadioButtonChanged();
         }
       }
+    }
+
+    private void OnSelectedRadioButtonChanged()
+    {
+      if (SelectedRadioButtonChanged != null) {
+        SelectedRadioButtonChanged(this, new EventArgs());
+      }
+      // Workaround for strange behavior of data binding:
+      // If we change the SelecteRadioButton property and then change another 
+      // data bound property in this group box, the SelectedRadioButton changes
+      // will be reverted by the data binding code. To get around this, after we
+      // have notified the the listeners, we select a control outside of the
+      // group box and then select the usual next control.
+      Parent.SelectNextControl(this, true, false, false, true);
+      SelectNextControl(this, true, true, true, true);
     }
 
     protected override void OnControlAdded(ControlEventArgs e)

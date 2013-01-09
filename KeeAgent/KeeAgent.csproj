@@ -84,6 +84,7 @@
     <Compile Include="DatabaseSettings.cs" />
     <Compile Include="EntrySettings.cs" />
     <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="NoAttachmentException.cs" />
     <Compile Include="NotificationOptions.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

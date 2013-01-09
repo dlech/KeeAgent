@@ -116,7 +116,7 @@ namespace KeeAgent.UI
 
         foreach (var entry in childGroup.Entries) {
           var settings = entry.GetKeeAgentSettings();
-          if (settings.HasSshKey) {
+          if (settings.AllowUseOfSshKey) {
             var entryNode = new TreeNode(entry.Strings.Get(PwDefs.TitleField).ReadString(),
               (int)entry.IconId, (int)entry.IconId);
             entryNode.Tag = entry;
