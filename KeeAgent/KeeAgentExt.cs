@@ -189,7 +189,11 @@ namespace KeeAgent
       foreach (var entry in mPluginHost.MainWindow.GetSelectedEntries()) {
         // if any selected entry contains an SSH key then we show the KeeAgent menu item
         if (entry.GetKeeAgentSettings().HasSshKey) {
-          AddEntry(entry);
+          try {
+            AddEntry(entry);
+          } catch (Exception) {
+            // AddEntry should have already shown error message
+          }
         }
       }
     }
@@ -484,6 +488,7 @@ namespace KeeAgent
         } else if (ex is KeyFormatterException || ex is PpkFormatterException) {
           MessageBox.Show("Bad passphrase " + settings.Location.FileName);
         } else {
+          MessageBox.Show("Unexpected error\n\n" + ex.ToString());
           Debug.Fail(ex.ToString());
         }
         throw;
