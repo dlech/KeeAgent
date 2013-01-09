@@ -171,11 +171,14 @@ namespace KeeAgent
 
     private void PwEntry_ContextMenu_Opening(object aSender, CancelEventArgs aArgs)
     {
-      foreach (var entry in mPluginHost.MainWindow.GetSelectedEntries()) {
-        // if any selected entry contains an SSH key then we show the KeeAgent menu item
-        if (entry.GetKeeAgentSettings().HasSshKey) {
-          mKeeAgentPwEntryContextMenuItem.Visible = true;
-          return;
+      var selectedEntries = mPluginHost.MainWindow.GetSelectedEntries();
+      if (selectedEntries != null) {
+        foreach (var entry in selectedEntries) {
+          // if any selected entry contains an SSH key then we show the KeeAgent menu item
+          if (entry.GetKeeAgentSettings().HasSshKey) {
+            mKeeAgentPwEntryContextMenuItem.Visible = true;
+            return;
+          }
         }
       }
       mKeeAgentPwEntryContextMenuItem.Visible = false;
