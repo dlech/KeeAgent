@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.ComponentModel;
 
 namespace KeeAgent.UI
 {
@@ -15,6 +16,7 @@ namespace KeeAgent.UI
     /// <summary>
     /// 
     /// </summary>
+    [Category("Appearance")]
     public string SelectedRadioButton
     {
       get

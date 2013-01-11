@@ -97,6 +97,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Translatable.resx</DependentUpon>
     </Compile>
+    <Compile Include="UI\KeyLocationPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\KeyLocationPanel.Designer.cs">
+      <DependentUpon>KeyLocationPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\DatabaseSettingsPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -183,6 +189,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Translatable.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\KeyLocationPanel.resx">
+      <DependentUpon>KeyLocationPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\DatabaseSettingsPanel.resx">
       <DependentUpon>DatabaseSettingsPanel.cs</DependentUpon>
     </EmbeddedResource>
@@ -218,6 +227,7 @@
   <ItemGroup>
     <None Include="Properties\DataSources\DatabaseSettings.datasource" />
     <None Include="Properties\DataSources\EntrySettings.datasource" />
+    <None Include="Properties\DataSources\EntrySettings.LocationData.datasource" />
     <None Include="Resources\KeeAgent-icon.ico" />
   </ItemGroup>
   <ItemGroup>

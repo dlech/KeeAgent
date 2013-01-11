@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Threading;
 using System.Windows.Forms;
 using dlech.SshAgentLib;
 using dlech.SshAgentLib.WinForms;
@@ -11,14 +13,11 @@ using KeeAgent.UI;
 using KeePass.App;
 using KeePass.Forms;
 using KeePass.Plugins;
+using KeePass.Resources;
 using KeePass.UI;
-using KeePassLib.Utility;
-using System.Security;
-using KeePassLib;
-using System.Text;
-using System.ComponentModel;
 using KeePass.Util;
-using System.Threading;
+using KeePassLib;
+using KeePassLib.Utility;
 
 namespace KeeAgent
 {
@@ -34,6 +33,7 @@ namespace KeeAgent
     private List<string> mApprovedKeys;
     private List<ISshKey> mRemoveKeyList;
     private UIHelper mUIHelper;
+    private bool mSaveBeforeCloseQuestionMessageShown = false;
 
     private const string cPluginName = "KeeAgent";
     private const string cAlwaysConfirmOptionName = cPluginName + ".AlwaysConfirm";
@@ -101,12 +101,14 @@ namespace KeeAgent
         AddMenuItems();
       }
       GlobalWindowManager.WindowAdded += WindowAddedHandler;
+      MessageService.MessageShowing += MessageService_MessageShowing;
       return success;
     }
 
     public override void Terminate()
     {
       GlobalWindowManager.WindowAdded -= WindowAddedHandler;
+      MessageService.MessageShowing -= MessageService_MessageShowing;
       if (mDebug) Log("Terminating KeeAgent");
       var pagent = mAgent as PageantAgent;
       if (pagent != null) {
@@ -282,8 +284,6 @@ namespace KeeAgent
         config
              .SetString(cNotificationOptionName, string.Empty);
       }
-
-
     }
 
     /// <summary>
@@ -305,6 +305,7 @@ namespace KeeAgent
             pwEntryForm.AddTab(optionsPanel);
           };
         pwEntryForm.EntrySaving += PwEntryForm_EntrySaving;
+        pwEntryForm.FormClosing += PwEntryForm_FormClosing;
       }
 
       /* Add KeeAgent tab to Database Settings dialog */
@@ -338,7 +339,8 @@ namespace KeeAgent
       /* Get reference to new settings */
 
       var entryForm = aSender as PwEntryForm;
-      if (entryForm != null && entryForm.DialogResult == DialogResult.OK) {
+      if (entryForm != null && (entryForm.DialogResult == DialogResult.OK ||
+        mSaveBeforeCloseQuestionMessageShown)) {
         var foundControls = entryForm.Controls.Find("EntryPanel", true);
         if (foundControls.Length != 1) {
           return;
@@ -390,11 +392,18 @@ namespace KeeAgent
                 }
               }
             }
-            MessageService.ShowInfo(errorMessage);
+            MessageService.ShowWarning(errorMessage);
             aEventArgs.Cancel = true;
           }
         }
       }
+      mSaveBeforeCloseQuestionMessageShown = false;
+    }
+
+    private void PwEntryForm_FormClosing(object aSender,
+      FormClosingEventArgs aEventArgs)
+    {
+      mSaveBeforeCloseQuestionMessageShown = false;
     }
 
     private void OptionsForm_FormClosed(object aSender,
@@ -558,6 +567,15 @@ namespace KeeAgent
       } catch (Exception ex) {
         // can't be crashing KeePass
         Debug.Fail(ex.ToString());
+      }
+    }
+
+    private void MessageService_MessageShowing(object aSender,
+  MessageServiceEventArgs aEventArgs)
+    {
+      if (aEventArgs.Title == PwDefs.ShortProductName &&
+        aEventArgs.Text == KPRes.SaveBeforeCloseQuestion) {
+        mSaveBeforeCloseQuestionMessageShown = true;
       }
     }
 

@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 using System.Diagnostics;
-using System.IO;
-using KeePass.UI;
-using KeePassLib;
+using System.Drawing;
+using System.Windows.Forms;
 using KeePass.Forms;
 
 namespace KeeAgent.UI
@@ -25,44 +18,6 @@ namespace KeeAgent.UI
       // make transparent so tab styling shows
       SetStyle(ControlStyles.SupportsTransparentBackColor, true);
       BackColor = Color.Transparent;
-
-      locationGroupBox.DataBindings["SelectedRadioButton"].Format +=
-        delegate(object aSender, ConvertEventArgs aEventArgs)
-        {
-          if (aEventArgs.DesiredType == typeof(string)) {
-            var type = aEventArgs.Value as EntrySettings.LocationType?;
-            switch (type) {
-              case EntrySettings.LocationType.Attachment:
-                aEventArgs.Value = attachmentRadioButton.Name;
-                break;
-              case EntrySettings.LocationType.File:
-                aEventArgs.Value = fileRadioButton.Name;
-                break;
-              default:
-                aEventArgs.Value = string.Empty;
-                break;
-            }
-          } else {
-            Debug.Fail("unexpected");
-          }
-        };
-      locationGroupBox.DataBindings["SelectedRadioButton"].Parse +=
-        delegate(object aSender, ConvertEventArgs aEventArgs)
-        {
-          if (aEventArgs.DesiredType == typeof(EntrySettings.LocationType?) &&
-            aEventArgs.Value is string) {
-            var valueString = aEventArgs.Value as string;
-            if (valueString == attachmentRadioButton.Name) {
-              aEventArgs.Value = EntrySettings.LocationType.Attachment;
-            } else if (valueString == fileRadioButton.Name) {
-              aEventArgs.Value = EntrySettings.LocationType.File;
-            } else {
-              aEventArgs.Value = null;
-            }
-          } else {
-            Debug.Fail("unexpected");
-          }
-        };
     }
 
     protected override void OnLoad(EventArgs e)
@@ -72,24 +27,27 @@ namespace KeeAgent.UI
       if (mPwEntryForm != null) {
         entrySettingsBindingSource.DataSource =
           mPwEntryForm.EntryRef.GetKeeAgentSettings();
-        entrySettingsBindingSource.CurrentItemChanged +=
-          entrySettingsBindingSource_DataSourceChanged;
+        entrySettingsBindingSource.BindingComplete +=
+          entrySettingsBindingSource_BindingComplete;
       } else {
         Debug.Fail("Don't have settings to bind to");
       }
       UpdateControlStates();
     }
 
-    private void entrySettingsBindingSource_DataSourceChanged(object aSender,
-      EventArgs aEventArgs)
+    private void entrySettingsBindingSource_BindingComplete(object aSender,
+      BindingCompleteEventArgs aEventArgs)
     {
-      var settings = entrySettingsBindingSource.DataSource as EntrySettings;
-      if (settings != null) {
-        if (mPwEntryForm != null) {
-          mPwEntryForm.EntryStrings.SetKeeAgentSettings(settings);
+      if (aEventArgs.BindingCompleteContext == BindingCompleteContext.DataSourceUpdate) {
+        aEventArgs.Binding.BindingManagerBase.EndCurrentEdit();
+        var settings = entrySettingsBindingSource.DataSource as EntrySettings;
+        if (settings != null) {
+          if (mPwEntryForm != null) {
+            mPwEntryForm.EntryStrings.SetKeeAgentSettings(settings);
+          }
+        } else {
+          Debug.Fail("Don't have settings");
         }
-      } else {
-        Debug.Fail("Don't have settings");
       }
     }
 
@@ -97,48 +55,12 @@ namespace KeeAgent.UI
     {
       addKeyAtOpenCheckBox.Enabled = hasSshKeyCheckBox.Checked;
       removeKeyAtCloseCheckBox.Enabled = hasSshKeyCheckBox.Checked;
-      locationGroupBox.Enabled = hasSshKeyCheckBox.Checked;
-
-      attachmentComboBox.Enabled = attachmentRadioButton.Checked;
-      fileNameTextBox.Enabled = fileRadioButton.Checked;
-      browseButton.Enabled = fileRadioButton.Checked;
+      keyLocationPanel.Enabled = hasSshKeyCheckBox.Checked;
     }
 
     private void hasSshKeyCheckBox_CheckedChanged(object sender, EventArgs e)
     {
       UpdateControlStates();
-    }
-
-    private void radioButton_CheckedChanged(object sender, EventArgs e)
-    {
-      UpdateControlStates();
-    }
-
-    private void attachmentComboBox_VisibleChanged(object sender, EventArgs e)
-    {
-      if (attachmentComboBox.Visible) {
-        attachmentComboBox.Items.Clear();
-        if (mPwEntryForm != null) {
-          foreach (var binary in mPwEntryForm.EntryBinaries) {
-            attachmentComboBox.Items.Add(binary.Key);
-          }
-        } else {
-          Debug.Fail("Don't have binaries");
-        }
-      }
-    }
-
-    private void browseButton_Click(object sender, EventArgs e)
-    {
-      try {
-        openFileDialog.InitialDirectory =
-          Path.GetDirectoryName(fileNameTextBox.Text);
-      } catch (Exception) { }
-      var result = openFileDialog.ShowDialog();
-      if (result == DialogResult.OK) {
-        fileNameTextBox.Text = openFileDialog.FileName;
-        fileNameTextBox.Focus();
-      }
     }
   }
 }
