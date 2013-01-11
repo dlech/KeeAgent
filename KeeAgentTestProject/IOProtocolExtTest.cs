@@ -12,6 +12,8 @@ using System.IO;
 using System.Reflection;
 using KeePassLib.Serialization;
 using NUnit.Framework;
+using dlech.SshAgentLib;
+using System.Security;
 
 namespace KeeAgentTestProject
 {
@@ -88,6 +90,23 @@ namespace KeeAgentTestProject
               td1KeeAgentExt.Terminate();
               td1IOProtocolExt.Terminate();
             };
+
+            /* load ssh key */
+            var keyFileDir = "../../../SshAgentLib/SshAgentLibTests/Resources";
+            var keyFilePath = Path.GetFullPath(Path.Combine(keyFileDir, "rsa_with_passphrase"));
+            Assert.That(File.Exists(keyFilePath), "Cannot locate key file: " + keyFilePath);
+
+            KeyFormatter.GetPassphraseCallback getPassphraseCallback =
+              delegate()
+              {
+                var passphrase = "passphrase";
+                var securePassphrase = new SecureString();
+                foreach (char c in passphrase) {
+                  securePassphrase.AppendChar(c);
+                }
+                return securePassphrase;
+              };
+            td1KeeAgentExt.mAgent.AddKeyFromFile(keyFilePath, getPassphraseCallback);
 
             /* run test */
             IOConnectionInfo ioConnectionInfo = new IOConnectionInfo();
