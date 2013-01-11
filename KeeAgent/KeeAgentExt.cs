@@ -224,7 +224,7 @@ namespace KeeAgent
       }
     }
 
-    internal void SaveOptions()
+    internal void SaveGlobalOptions()
     {
       var config = mPluginHost.CustomConfig;
       config.SetString(cAlwaysConfirmOptionName, Options.AlwasyConfirm.ToString());
@@ -399,7 +399,7 @@ namespace KeeAgent
     {
       var optionsForm = aSender as OptionsForm;
       if (optionsForm != null && optionsForm.DialogResult == DialogResult.OK) {
-        SaveOptions();
+        SaveGlobalOptions();
       }
     }
 

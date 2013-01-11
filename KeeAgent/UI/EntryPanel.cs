@@ -72,23 +72,24 @@ namespace KeeAgent.UI
       if (mPwEntryForm != null) {
         entrySettingsBindingSource.DataSource =
           mPwEntryForm.EntryRef.GetKeeAgentSettings();
-        mPwEntryForm.FormClosing += mPwEntryForm_FormClosing;
+        entrySettingsBindingSource.CurrentItemChanged +=
+          entrySettingsBindingSource_DataSourceChanged;
       } else {
         Debug.Fail("Don't have settings to bind to");
       }
       UpdateControlStates();
     }
 
-    private void mPwEntryForm_FormClosing(object aSender,
-      FormClosingEventArgs aEventArgs)
+    private void entrySettingsBindingSource_DataSourceChanged(object aSender,
+      EventArgs aEventArgs)
     {
-      if (mPwEntryForm.DialogResult == DialogResult.OK) {
-        var settings = entrySettingsBindingSource.DataSource as EntrySettings;
-        if (settings != null) {
-          mPwEntryForm.EntryRef.SetKeeAgentSettings(settings);
-        } else {
-          Debug.Fail("Don't have settings");
+      var settings = entrySettingsBindingSource.DataSource as EntrySettings;
+      if (settings != null) {
+        if (mPwEntryForm != null) {
+          mPwEntryForm.EntryStrings.SetKeeAgentSettings(settings);
         }
+      } else {
+        Debug.Fail("Don't have settings");
       }
     }
 
@@ -130,7 +131,7 @@ namespace KeeAgent.UI
     private void browseButton_Click(object sender, EventArgs e)
     {
       try {
-        openFileDialog.InitialDirectory = 
+        openFileDialog.InitialDirectory =
           Path.GetDirectoryName(fileNameTextBox.Text);
       } catch (Exception) { }
       var result = openFileDialog.ShowDialog();
