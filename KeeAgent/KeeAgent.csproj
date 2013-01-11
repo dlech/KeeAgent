@@ -160,13 +160,6 @@
       <HintPath>..\SshAgentLib\SshAgentLib\bin\$(Configuration)\SshAgentLib.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SshAgentLib.WinForm">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\SshAgentLib.WinForm.dll</HintPath>
-      <!-- This is for building .plgx -->
-      <HintPath>..\SshAgentLib\SshAgentLib\bin\$(Configuration)\SshAgentLib.WinForm.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="BouncyCastle.Crypto">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\BouncyCastle.Crypto.dll</HintPath>

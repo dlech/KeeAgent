@@ -91,6 +91,16 @@ namespace KeeAgentTestProject
               td1IOProtocolExt.Terminate();
             };
 
+            // test not valid in client mode
+            Assert.That(td1KeeAgentExt.mAgent, Is.AssignableTo<Agent>());
+
+            // override confirm callback so we don't have to click OK
+            (td1KeeAgentExt.mAgent as Agent).ConfirmUserPermissionCallback =
+              delegate(ISshKey aKey)
+              {
+                return true;
+              };
+
             /* load ssh key */
             var keyFileDir = "../../../SshAgentLib/SshAgentLibTests/Resources";
             var keyFilePath = Path.GetFullPath(Path.Combine(keyFileDir, "rsa_with_passphrase"));
@@ -106,7 +116,9 @@ namespace KeeAgentTestProject
                 }
                 return securePassphrase;
               };
-            td1KeeAgentExt.mAgent.AddKeyFromFile(keyFilePath, getPassphraseCallback);
+            var constraints = new List<Agent.KeyConstraint>();
+            constraints.addConfirmConstraint();            
+            td1KeeAgentExt.mAgent.AddKeyFromFile(keyFilePath, getPassphraseCallback, constraints);
 
             /* run test */
             IOConnectionInfo ioConnectionInfo = new IOConnectionInfo();

@@ -70,6 +70,9 @@ namespace KeeAgent
             pagent.KeyUsed += Pageant_KeyUsed;
             pagent.KeyListChanged += Pageant_KeyListChanged;
             pagent.MessageReceived += Pageant_MessageReceived;
+            // IMPORTANT: if you change this callback, you need to make sure
+            // that it does not block the main event loop.
+            pagent.ConfirmUserPermissionCallback = Default.ConfirmCallback;
             mAgent = pagent;
           } catch (PageantRunningException) {
             if (Options.AgentMode != AgentMode.Auto) {
