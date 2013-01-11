@@ -166,6 +166,11 @@
       <HintPath>..\SshAgentLib\SshAgentLib\bin\$(Configuration)\SshAgentLib.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SshAgentLib.Winforms">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\SshAgentLib.Winforms.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="BouncyCastle.Crypto">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\BouncyCastle.Crypto.dll</HintPath>
