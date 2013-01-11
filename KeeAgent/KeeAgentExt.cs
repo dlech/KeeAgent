@@ -18,6 +18,7 @@ using KeePassLib;
 using System.Text;
 using System.ComponentModel;
 using KeePass.Util;
+using System.Threading;
 
 namespace KeeAgent
 {
@@ -443,17 +444,34 @@ namespace KeeAgent
       Agent.MessageReceivedEventArgs aEventArgs)
     {
       var mainWindow = mPluginHost.MainWindow;
-      mainWindow.Invoke((MethodInvoker)delegate()
-      {
-        foreach (var document in mainWindow.DocumentManager.Documents) {
-          if (mainWindow.IsFileLocked(document)) {
-            if (document.Database.GetKeeAgentSettings().UnlockOnActivity) {
-              mainWindow.OpenDatabase(document.LockedIoc, null, false);
+
+      var thread = new Thread(
+        delegate()
+        {
+          mainWindow.Invoke(
+            (MethodInvoker)delegate()
+          {
+            // don't do anything - we are just seeing if the thread is blocked
+          });
+        });
+      thread.Name = "Check";
+      thread.Start();
+      // only try to unlock databases if main thread is not blocked
+      if (thread.Join(1000)) {
+        mainWindow.Invoke((MethodInvoker)delegate()
+        {
+          foreach (var document in mainWindow.DocumentManager.Documents) {
+            if (mainWindow.IsFileLocked(document)) {
+              if (document.Database.GetKeeAgentSettings().UnlockOnActivity) {
+                mainWindow.OpenDatabase(document.LockedIoc, null, false);
+              }
+              break;
             }
-            break;
           }
-        }
-      });
+        });
+      } else {
+        thread.Abort();
+      }
     }
 
     private void Pageant_KeyUsed(object aSender, Agent.KeyUsedEventArgs aEventArgs)

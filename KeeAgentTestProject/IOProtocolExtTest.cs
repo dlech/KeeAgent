@@ -2,7 +2,6 @@
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using KeePass.Plugins;
 using KeeAgent;
 using System.Windows.Forms;
@@ -12,18 +11,19 @@ using IOProtocolExt;
 using System.IO;
 using System.Reflection;
 using KeePassLib.Serialization;
+using NUnit.Framework;
 
 namespace KeeAgentTestProject
 {
-  [TestClass]
+  [TestFixture]
   public class IOProtocolExtTest
   {
 
-    [ClassInitialize()]
-    public static void MyClassInitalize(TestContext context)
+    [TestFixtureSetUp()]
+    public static void Setup()
     {
       // copy WinSCP to working directory
-      
+
       string solutionDir = Path.GetFullPath(
         Path.Combine(Environment.CurrentDirectory, "../../.."));
       string winSCPSourceDir = Path.Combine(solutionDir, "IOProtocolExt",
@@ -36,12 +36,10 @@ namespace KeeAgentTestProject
       string keepassDir = Path.GetDirectoryName(assembly.Location);
 
       string winSCPDestDir = Path.Combine(keepassDir, "IOProtocolExt_WinSCP");
-      if (Directory.Exists(winSCPDestDir))
-      {
+      if (Directory.Exists(winSCPDestDir)) {
         Directory.Delete(winSCPDestDir, true);
         int count = 0;
-        while (Directory.Exists(winSCPDestDir))
-        {
+        while (Directory.Exists(winSCPDestDir)) {
           // wait for directory to delete
           count++;
           Assert.IsTrue(count < 20,
@@ -50,8 +48,7 @@ namespace KeeAgentTestProject
         }
       }
       Directory.CreateDirectory(winSCPDestDir);
-      foreach (string filePath in Directory.GetFiles(winSCPSourceDir))
-      {
+      foreach (string filePath in Directory.GetFiles(winSCPSourceDir)) {
         string fileName = Path.GetFileName(filePath);
         string sourceFile = Path.Combine(winSCPSourceDir, fileName);
         string destFile = Path.Combine(winSCPDestDir, fileName);
@@ -59,8 +56,8 @@ namespace KeeAgentTestProject
       }
     }
 
-    [ClassCleanup()]
-    public static void MyClassCleanup()
+    [TestFixtureTearDown()]
+    public static void TearDown()
     {
       KeePassControl.ExitAll();
     }
@@ -68,11 +65,10 @@ namespace KeeAgentTestProject
     /// <summary>
     /// Tests interaction of KeeAgent with IOProtocolExt
     /// </summary>
-    [TestMethod]
+    [Test]
     public void TestIOProtocolExt()
     {
-      using (KeePassAppDomain testDomain1 = new KeePassAppDomain())
-      {
+      using (KeePassAppDomain testDomain1 = new KeePassAppDomain()) {
         testDomain1.StartKeePass(true, false, 1, true);
         testDomain1.DoCallBack(delegate()
         {
@@ -96,17 +92,17 @@ namespace KeeAgentTestProject
             /* run test */
             IOConnectionInfo ioConnectionInfo = new IOConnectionInfo();
             ioConnectionInfo.Path = "sftp://satest/test.kdbx";
-            ioConnectionInfo.UserName = "tc";            
+            ioConnectionInfo.UserName = "tc";
             bool fileExists = IOConnection.FileExists(ioConnectionInfo);
             Assert.IsTrue(fileExists, "Is satest VM running?");
 
 
-            
+
             /* the problem we are checking for is that IOConnection.FileExists
              * does not lock up. Originally, in KeeAgent, WinPagent ran on main
              * thread and caused lock-up here. So, we are looking to see if the
-             * test times out or not. */            
-          });          
+             * test times out or not. */
+          });
         });
       }
     }
