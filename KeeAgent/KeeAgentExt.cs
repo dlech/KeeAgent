@@ -60,13 +60,17 @@ namespace KeeAgent
 
       if (mDebug) Log("Loading KeeAgent...");
 
+      var isWindows = Environment.OSVersion.Platform == PlatformID.Win32NT;
+      var domainSocketPath = 
+        Environment.GetEnvironmentVariable (UnixClient.SSH_AUTHSOCKET_ENV_NAME);
       success = false;
       try {
         // TODO check OS - currently only works on Windows
         if (Options.AgentMode != AgentMode.Client) {
           try {
+            if (isWindows) {
             var pagent = new PageantAgent();
-            pagent.Locked += Pageant_Locked;
+              pagent.Locked += Pageant_Locked;
             pagent.KeyUsed += Pageant_KeyUsed;
             pagent.KeyListChanged += Pageant_KeyListChanged;
             pagent.MessageReceived += Pageant_MessageReceived;
@@ -74,6 +78,12 @@ namespace KeeAgent
             // that it does not block the main event loop.
             pagent.ConfirmUserPermissionCallback = Default.ConfirmCallback;
             mAgent = pagent;
+            } else {
+              if (string.IsNullOrEmpty (domainSocketPath)) {
+              var agent = new UnixAgent();
+              mAgent = agent;
+              }
+            }
           } catch (PageantRunningException) {
             if (Options.AgentMode != AgentMode.Auto) {
               throw;
@@ -81,7 +91,11 @@ namespace KeeAgent
           }
         }
         if (mAgent == null) {
+          if (isWindows) {
           mAgent = new PageantClient();
+          } else {
+            mAgent = new UnixClient();
+          }
         }
         mPluginHost.MainWindow.FileOpened += MainForm_FileOpened;
         mPluginHost.MainWindow.FileClosingPost += MainForm_FileClosing;

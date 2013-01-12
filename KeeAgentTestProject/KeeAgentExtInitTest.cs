@@ -19,6 +19,7 @@ using KeePass.Util;
 using System.Diagnostics;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace KeeAgentTestProject
 {
@@ -79,7 +80,7 @@ namespace KeeAgentTestProject
       FileInfo assmFile = new FileInfo(
        Assembly.GetExecutingAssembly().Location);
       DirectoryInfo projectDir = new DirectoryInfo(
-        Path.Combine(assmFile.Directory.FullName, @"..\..\..\KeeAgent"));
+        Path.Combine(assmFile.Directory.FullName, "../../../KeeAgent"));
       string tempFile = Path.GetTempFileName();
 
       var deleteFileList = new List<string>();
@@ -100,7 +101,7 @@ namespace KeeAgentTestProject
       }
       string preBuildExeSource =
         Path.Combine(projectDir.FullName,
-        @"..\PreBuild\bin\Debug\PreBuild.exe");
+        "../PreBuild/bin/Debug/PreBuild.exe");
       string preBuildExeDest =
         Path.Combine(projectDir.FullName, "PreBuild.exe");
       File.Delete(preBuildExeDest);
@@ -120,7 +121,6 @@ namespace KeeAgentTestProject
         PlgxBuildOptions buildOptions = new PlgxBuildOptions();
         buildOptions.projectPath = projectDir.FullName;
         buildOptions.dotnetVersion = "4.0";
-        buildOptions.os = "Windows";
         buildOptions.preBuild =
           "\"cmd /c \"\"\"{PLGX_TEMP_DIR}PreBuild.exe\"\"\" {PLGX_TEMP_DIR}" +
           " > " + tempFile + "\"";
@@ -128,7 +128,6 @@ namespace KeeAgentTestProject
 
         Assert.IsTrue(File.Exists(plgxFilePath), ".plgx file was not created");
         deleteFileList.Add(plgxFilePath);
-
         using (KeePassAppDomain testDomain1 = new KeePassAppDomain()) {
           testDomain1.StartKeePass(true, true, 1, true);
           testDomain1.LoadPlgx(plgxFilePath);

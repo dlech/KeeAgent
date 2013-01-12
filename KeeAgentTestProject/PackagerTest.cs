@@ -1,8 +1,8 @@
 ﻿using KeeAgent.Packager;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
+using NUnit.Framework;
 
 namespace KeeAgentTestProject
 {   
@@ -10,17 +10,16 @@ namespace KeeAgentTestProject
     ///This is a test class for ProgramTest and is intended
     ///to contain all ProgramTest Unit Tests
     ///</summary>
-  [TestClass()]
+  [TestFixture()]
   public class PackagerTest
   {    
     /// <summary>
     ///A test for Packager
     ///</summary>
-    [TestMethod()]
+    [Test()]
     public void MainTest()
     {
-      string solutionDirectory = ((EnvDTE.DTE)Marshal
-        .GetActiveObject("VisualStudio.DTE.10.0")).Solution.FullName;
+      string solutionDirectory = Path.GetFullPath ("../..");
       solutionDirectory = Path.GetDirectoryName(solutionDirectory);
       solutionDirectory = "\"" + solutionDirectory + "\"";
       string[] args = { solutionDirectory };
