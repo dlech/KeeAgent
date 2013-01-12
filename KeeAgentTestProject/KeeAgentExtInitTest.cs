@@ -1,5 +1,4 @@
 ﻿using KeeAgent;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using KeePass.Plugins;
 using KeePassPluginTestUtil;
@@ -18,6 +17,8 @@ using KeePass.App;
 using KeePass.Ecas;
 using KeePass.Util;
 using System.Diagnostics;
+using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace KeeAgentTestProject
 {
@@ -25,12 +26,12 @@ namespace KeeAgentTestProject
   ///This is a test class for KeeAgentExtTest and is intended
   ///to contain all KeeAgentExtTest Unit Tests
   ///</summary>
-  [TestClass()]
+  [TestFixture()]
   public class KeeAgentExtInitTest
   {
 
     //Use ClassCleanup to run code after all tests in a class have run
-    [ClassCleanup()]
+    [TestFixtureTearDown()]
     public static void Cleanup()
     {
       KeePassControl.ExitAll();
@@ -39,7 +40,7 @@ namespace KeeAgentTestProject
     /// <summary>
     ///A test for Initialize and Terminate
     ///</summary>
-    [TestMethod()]
+    [Test()]
     public void InitializeTest()
     {
       const string initalizeResultName = "KEEAGENT_INIT_RESULT";
@@ -72,7 +73,7 @@ namespace KeeAgentTestProject
     /// <summary>
     ///A test for creating and loading plgx
     ///</summary>
-    [TestMethod()]
+    [Test()]
     public void PlgxTest()
     {
       FileInfo assmFile = new FileInfo(
@@ -81,15 +82,22 @@ namespace KeeAgentTestProject
         Path.Combine(assmFile.Directory.FullName, @"..\..\..\KeeAgent"));
       string tempFile = Path.GetTempFileName();
 
-      /* copy required files */
+      var deleteFileList = new List<string>();
 
-      string pageantSharpDllSource =
-        Path.Combine(assmFile.Directory.FullName, "PageantSharp.dll");
-      string pageantSharpDllDest =
-        Path.Combine(projectDir.FullName, "PageantSharp.dll");
-      File.Delete(pageantSharpDllDest);
-      File.Copy(pageantSharpDllSource, pageantSharpDllDest);
+      /* copy dll files */
 
+      foreach (var file in Directory.GetFiles(assmFile.Directory.FullName)) {
+        var info = new FileInfo(file);
+        if (!Path.GetFileNameWithoutExtension(info.Name)
+          .Equals("KeePass", StringComparison.OrdinalIgnoreCase) &&
+          info.Extension.Equals(".dll", StringComparison.OrdinalIgnoreCase)) {
+                    
+          string destFile = Path.Combine(projectDir.FullName, info.Name);
+          File.Delete(destFile);
+          File.Copy(file, destFile);
+          deleteFileList.Add(destFile);
+        }
+      }
       string preBuildExeSource =
         Path.Combine(projectDir.FullName,
         @"..\PreBuild\bin\Debug\PreBuild.exe");
@@ -97,6 +105,7 @@ namespace KeeAgentTestProject
         Path.Combine(projectDir.FullName, "PreBuild.exe");
       File.Delete(preBuildExeDest);
       File.Copy(preBuildExeSource, preBuildExeDest);
+      deleteFileList.Add(preBuildExeDest);
 
       string plgxFilePath =
           Path.Combine(projectDir.Parent.FullName, "KeeAgent.plgx");
@@ -116,16 +125,16 @@ namespace KeeAgentTestProject
           "\"cmd /c \"\"\"{PLGX_TEMP_DIR}PreBuild.exe\"\"\" {PLGX_TEMP_DIR}" +
           " > " + tempFile + "\"";
         KeePassControl.CreatePlgx(buildOptions);
-                
-        Assert.IsTrue(File.Exists(plgxFilePath),
-          ".plgx file was not created");
-        
+
+        Assert.IsTrue(File.Exists(plgxFilePath), ".plgx file was not created");
+        deleteFileList.Add(plgxFilePath);
+
         using (KeePassAppDomain testDomain1 = new KeePassAppDomain()) {
           testDomain1.StartKeePass(true, true, 1, true);
           testDomain1.LoadPlgx(plgxFilePath);
 
           testDomain1.DoCallBack(delegate()
-          {            
+          {
             // TODO Is there anything we can do here to test that LoadPlgx was
             // successful? Right now, KeePass shows an error dialog if it was
             // not, so the user should know that it failed even though the test
@@ -135,9 +144,9 @@ namespace KeeAgentTestProject
       } catch (Exception ex) {
         Assert.Fail(ex.ToString());
       } finally {
-        File.Delete(pageantSharpDllDest);
-        File.Delete(preBuildExeDest);
-        File.Delete(plgxFilePath);
+        foreach (var file in deleteFileList) {
+          File.Delete(file);
+        }
       }
 
       /* check to make sure prebuild worked correctly */
@@ -148,7 +157,7 @@ namespace KeeAgentTestProject
         expectedVersion = expectedVersion.Substring(0, secondDot);
       }
       Assert.IsTrue(versionLine.Contains(expectedVersion),
-        "PreBuild did not detect correct KeePass version.\n" + 
+        "PreBuild did not detect correct KeePass version.\n" +
         "Saw: " + versionLine + "\n" +
         "Expected: " + expectedVersion);
       File.Delete(tempFile);

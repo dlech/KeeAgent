@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 
 namespace PreBuild
 {
@@ -20,9 +21,9 @@ namespace PreBuild
   {
     public static void Main(string[] args)
     {
+      int version = GetKeePassVersion();
+      Console.WriteLine("Detected version 2." + version);
       if (args.Length >= 1) {
-        int version = GetKeePassVersion();        
-        Console.WriteLine("Detected version 2." + version);
         // there seems to be a problem using triple-quotes on the argument
         // so we leave them out and if the temp dir contains spaces, we receive
         // it as multiple args then glue it back together with spaces
@@ -56,7 +57,7 @@ namespace PreBuild
     public static int GetKeePassVersion()
     {
       int version = 0;
-      // search for running keepass 2.x process
+      // search for running KeePass 2.x process
       Process[] keepassProcs = Process.GetProcessesByName("KeePass");
       foreach (Process proc in keepassProcs) {
         foreach (ProcessModule module in proc.Modules) {
@@ -65,14 +66,30 @@ namespace PreBuild
             if (versionInfo.FileMajorPart == 2) {
               // get minor version (x in 2.x)
               version = versionInfo.FileMinorPart;
-              // keepass version < 2.19 has version as 2.1.8.0, etc,
+              // KeePass version < 2.19 has version as 2.1.8.0, etc,
               // instead of 2.19.0.0
               if (version == 0 || version == 1) {
                 version = version * 10 + versionInfo.FileBuildPart;
               }
             }
+            break;
           }
         }
+      }
+      // If there was not a process running, maybe the assembly in in the 
+      // current working directory. This is the case when debugging / running
+      // tests.
+      if (version == 0) {
+        try {
+          var keepassAssm = Assembly.UnsafeLoadFrom("keepass.exe");
+          var assmVersion = keepassAssm.GetName().Version;
+          if (assmVersion.Major == 2) {
+            version = assmVersion.Minor;
+            if (version == 0 || version == 1) {
+              version = version * 10 + assmVersion.Build;
+            }
+          }
+        } catch (Exception) { }
       }
       return version;
     }
