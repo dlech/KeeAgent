@@ -509,11 +509,7 @@ namespace KeeAgent
             try {
               AddEntry(entry);
             } catch (Exception) {
-              // TODO better error handling
-              var result = MessageBox.Show(
-                "Agent failure. Key could not be added. Do you want to attempt to load additional keys?",
-                "KeeAgent", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-              if (result == DialogResult.No) {
+              if (MessageService.AskYesNo ("Do you want to attempt to load additional keys?")) {
                 exitFor = true;
               }
             }
@@ -591,13 +587,34 @@ namespace KeeAgent
         return key;
       } catch (Exception ex) {
         if (ex is NoAttachmentException) {
-          MessageBox.Show("No attachment specified");
+          MessageService.ShowWarning(new string[] {
+             "KeeAgent Error - No attachment specified in KeePass entry"
+           });
         } else if (ex is FileNotFoundException || ex is DirectoryNotFoundException) {
-          MessageBox.Show("Could not find file " + settings.Location.FileName);
+          MessageService.ShowWarning(new string[] {
+            "KeeAgent Error - Could not find file",
+            settings.Location.FileName
+           });
         } else if (ex is KeyFormatterException || ex is PpkFormatterException) {
-          MessageBox.Show("Bad passphrase " + settings.Location.FileName);
+          MessageService.ShowWarning(new string[] {
+            "KeeAgent Error - Could not load file",
+            settings.Location.FileName,
+            "Possible causes:",
+            "- Passphrase was entered incorrectly",
+            "- File is corrupt or has been tampered"
+           });
+        } else if (ex is AgentFailureException) {
+          MessageService.ShowWarning(new string[] {
+            "KeeAgent Error - Agent Failure",
+            "Possible causes:",
+            "- Key is already loaded in agent",
+            "- Agent is locked"
+          });
         } else {
-          MessageBox.Show("Unexpected error\n\n" + ex.ToString());
+          MessageService.ShowWarning(new string[] {
+            "KeeAgent Error - Unexpected error",
+            ex.ToString()
+          });
           Debug.Fail(ex.ToString());
         }
         throw;

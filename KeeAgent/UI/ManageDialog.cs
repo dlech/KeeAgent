@@ -44,8 +44,11 @@ namespace KeeAgent.UI
         try {
           mExt.AddEntry(entryPicker.SelectedEntry);
         } catch (Exception) {
-          MessageBox.Show("Loading key failed");
-        }
+          // error message already shown
+        }        
+      }
+      if (mExt.mAgent is AgentClient) {
+        keyInfoView.ReloadKeyListView();
       }
     }
   }
