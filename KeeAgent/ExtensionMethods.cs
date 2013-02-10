@@ -91,10 +91,16 @@ namespace KeeAgent
     public static void SetKeeAgentSettings(this ProtectedStringDictionary aStringDictionary,
       EntrySettings aSettings)
     {
-      using (var writer = new StringWriter()) {
-        EntrySettingsSerializer.Serialize(writer, aSettings);
-        // string is protected just to make UI look cleaner
-        aStringDictionary.Set(cStringId, new ProtectedString(true, writer.ToString()));
+      // only save if there is an existing entry or AllowUseOfSshKey is checked
+      // this way we don't pollute entries that don't have SSH keys
+      if (aStringDictionary.GetKeys().Contains(cStringId) ||
+        aSettings.AllowUseOfSshKey)
+      {
+        using (var writer = new StringWriter()) {
+          EntrySettingsSerializer.Serialize(writer, aSettings);
+          // string is protected just to make UI look cleaner
+          aStringDictionary.Set(cStringId, new ProtectedString(true, writer.ToString()));
+        }
       }
     }
 
