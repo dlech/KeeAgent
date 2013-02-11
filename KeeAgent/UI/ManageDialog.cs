@@ -42,7 +42,7 @@ namespace KeeAgent.UI
       var result = entryPicker.ShowDialog();
       if (result == DialogResult.OK) {
         try {
-          mExt.AddEntry(entryPicker.SelectedEntry);
+          mExt.AddEntry(entryPicker.SelectedEntry, entryPicker.Constraints);
         } catch (Exception) {
           // error message already shown
         }        

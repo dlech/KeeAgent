@@ -18,6 +18,7 @@ using KeePass.UI;
 using KeePass.Util;
 using KeePassLib;
 using KeePassLib.Utility;
+using System.Collections.ObjectModel;
 
 namespace KeeAgent
 {
@@ -496,7 +497,7 @@ namespace KeeAgent
     }
 
     private void MainForm_FileOpened(object aSender,
-      FileOpenedEventArgs aEventArgs)
+                                     FileOpenedEventArgs aEventArgs)
     {
       try {
         var exitFor = false;
@@ -567,7 +568,7 @@ namespace KeeAgent
     }
 
     private void MessageService_MessageShowing(object aSender,
-  MessageServiceEventArgs aEventArgs)
+                                               MessageServiceEventArgs aEventArgs)
     {
       if (aEventArgs.Title == PwDefs.ShortProductName &&
         aEventArgs.Text == KPRes.SaveBeforeCloseQuestion) {
@@ -575,12 +576,20 @@ namespace KeeAgent
       }
     }
 
-    public ISshKey AddEntry(PwEntry aEntry)
+    public ISshKey AddEntry(PwEntry aEntry,
+                            ICollection<Agent.KeyConstraint> aConstraints = null)
     {
       var settings = aEntry.GetKeeAgentSettings();
       try {
         var key = aEntry.GetSshKey();
-        if (Options.AlwasyConfirm) {
+        if (aConstraints != null) {
+          foreach (var constraint in aConstraints) {
+            key.AddConstraint(constraint);
+          }
+        }
+        if (Options.AlwasyConfirm &&
+            !key.HasConstraint(Agent.KeyConstraintType.SSH_AGENT_CONSTRAIN_CONFIRM))
+        {
           key.addConfirmConstraint();
         }
         mAgent.AddKey(key);
