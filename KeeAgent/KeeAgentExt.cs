@@ -198,7 +198,7 @@ namespace KeeAgent
         // if any selected entry contains an SSH key then we show the KeeAgent menu item
         if (entry.GetKeeAgentSettings().AllowUseOfSshKey) {
           try {
-            AddEntry(entry);
+            AddEntry(entry, null);
           } catch (Exception) {
             // AddEntry should have already shown error message
           }
@@ -508,7 +508,7 @@ namespace KeeAgent
           var settings = entry.GetKeeAgentSettings();
           if (settings.AllowUseOfSshKey && settings.AddAtDatabaseOpen) {
             try {
-              AddEntry(entry);
+              AddEntry(entry, null);
             } catch (Exception) {
               if (MessageService.AskYesNo ("Do you want to attempt to load additional keys?")) {
                 exitFor = true;
@@ -577,7 +577,7 @@ namespace KeeAgent
     }
 
     public ISshKey AddEntry(PwEntry aEntry,
-                            ICollection<Agent.KeyConstraint> aConstraints = null)
+                            ICollection<Agent.KeyConstraint> aConstraints)
     {
       var settings = aEntry.GetKeeAgentSettings();
       try {
