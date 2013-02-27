@@ -185,6 +185,15 @@ namespace KeeAgent
           // if any selected entry contains an SSH key then we show the KeeAgent menu item
           if (entry.GetKeeAgentSettings().AllowUseOfSshKey) {
             mKeeAgentPwEntryContextMenuItem.Visible = true;
+            var agent = mAgent as Agent;
+            if (agent != null && agent.IsLocked)
+            {
+              mKeeAgentPwEntryContextMenuItem.Enabled = false;
+              mKeeAgentPwEntryContextMenuItem.Text = "KeeAgent Locked";
+            } else {
+              mKeeAgentPwEntryContextMenuItem.Enabled = true;
+              mKeeAgentPwEntryContextMenuItem.Text = "Load Entry in KeeAgent";
+            }
             return;
           }
         }
