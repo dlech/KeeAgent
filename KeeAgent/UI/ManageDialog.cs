@@ -1,15 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Windows.Forms;
 using dlech.SshAgentLib;
-using KeePassLib;
-using System.ComponentModel;
-using System.Drawing;
-using KeeAgent.Properties;
-using System.Text;
-using System.Collections.Specialized;
-using System.Collections.ObjectModel;
 
 namespace KeeAgent.UI
 {

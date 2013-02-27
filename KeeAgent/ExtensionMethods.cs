@@ -1,20 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using KeePassLib;
-using System.Xml.Serialization;
-using System.Xml;
-using System.IO;
-using System.Reflection;
-using KeePassLib.Security;
-using dlech.SshAgentLib;
-using System.Security;
-using System.Windows.Forms;
-using KeeAgent.Properties;
-using System.Drawing;
 using System.Diagnostics;
+using System.Drawing;
+using System.IO;
+using System.Security;
+using System.Text;
+using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Serialization;
+using dlech.SshAgentLib;
+using KeeAgent.Properties;
+using KeePassLib;
 using KeePassLib.Collections;
+using KeePassLib.Security;
 
 namespace KeeAgent
 {

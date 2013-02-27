@@ -1,19 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using KeePassLib;
-using KeePass.UI;
-using KeePass.Plugins;
 using System.Diagnostics;
-using KeePass.Util;
-using KeePass.App;
+using System.Drawing;
+using System.Windows.Forms;
 using dlech.SshAgentLib;
-using System.Collections.ObjectModel;
+using KeePass.App;
+using KeePass.Plugins;
+using KeePass.UI;
+using KeePassLib;
 
 namespace KeeAgent.UI
 {
