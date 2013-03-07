@@ -41,8 +41,6 @@
       this.customListViewEx.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader});
       this.customListViewEx.FullRowSelect = true;
-      this.customListViewEx.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            ((System.Windows.Forms.ListViewGroup)(resources.GetObject("customListViewEx.Groups")))});
       this.customListViewEx.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
       this.customListViewEx.Name = "customListViewEx";
       this.customListViewEx.ShowItemToolTips = true;
