@@ -1,15 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Windows.Forms;
 using dlech.SshAgentLib;
-using KeePassLib;
-using System.ComponentModel;
-using System.Drawing;
-using KeeAgent.Properties;
-using System.Text;
-using System.Collections.Specialized;
-using System.Collections.ObjectModel;
 
 namespace KeeAgent.UI
 {
@@ -42,10 +33,13 @@ namespace KeeAgent.UI
       var result = entryPicker.ShowDialog();
       if (result == DialogResult.OK) {
         try {
-          mExt.AddEntry(entryPicker.SelectedEntry);
+          mExt.AddEntry(entryPicker.SelectedEntry, entryPicker.Constraints);
         } catch (Exception) {
-          MessageBox.Show("Loading key failed");
-        }
+          // error message already shown
+        }        
+      }
+      if (mExt.mAgent is AgentClient) {
+        keyInfoView.ReloadKeyListView();
       }
     }
   }

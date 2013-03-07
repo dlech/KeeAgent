@@ -86,15 +86,15 @@
     <Compile Include="NoAttachmentException.cs" />
     <Compile Include="NotificationOptions.cs" />
     <Compile Include="Options.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Translatable.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Translatable.resx</DependentUpon>
-    </Compile>
-    <Compile Include="KeeAgentExt.cs" />
-    <Compile Include="UpdateUrl.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="UI\KeyLocationPanel.cs">
       <SubType>UserControl</SubType>
@@ -135,6 +135,7 @@
     <Compile Include="UI\ManageDialog.Designer.cs">
       <DependentUpon>ManageDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="KeeAgentExt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\OptionsPanel.cs">
       <SubType>UserControl</SubType>
@@ -146,25 +147,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\UIHelper.cs" />
+    <Compile Include="UpdateUrl.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.WindowsAPICodePack">
-      <HintPath>./Microsoft.WindowsAPICodePack.dll</HintPath>
-      <HintPath>../SshAgentLib/lib/WindowsAPICodePack/Microsoft.WindowsAPICodePack.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.WindowsAPICodePack.Shell">
-      <HintPath>./Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
-      <HintPath>../SshAgentLib/lib/WindowsAPICodePack/Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
-    </Reference>
     <Reference Include="BouncyCastle.Crypto">
-      <HintPath>./BouncyCastle.Crypto.dll</HintPath>
-      <HintPath>../SshAgentLib/lib/BouncyCastle/BouncyCastle.Crypto.dll</HintPath>
-    </Reference>
-    <Reference Include="SshAgentLib">
-      <HintPath>./SshAgentLib.dll</HintPath>
-    </Reference>
-    <Reference Include="SshAgentLib.WinForms">
-      <HintPath>./SshAgentLib.WinForms.dll</HintPath>
+      <HintPath>.\BouncyCastle.Crypto.dll</HintPath>
+      <HintPath>..\SshAgentLib\lib\BouncyCastle\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -174,14 +162,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Translatable.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Translatable.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <SubType>Designer</SubType>
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resodurces.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\KeyLocationPanel.resx">
       <DependentUpon>KeyLocationPanel.cs</DependentUpon>
@@ -213,9 +201,9 @@
       <Name>KeePass</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\SshAgentLib\SshAgentLib.WinForms\SshAgentLib.WinForms.csproj">
+    <ProjectReference Include="..\SshAgentLib\Ui\WinForms\SshAgentLib.Ui.WinForms.csproj">
       <Project>{3BEB6FAE-B14D-4281-8168-DB2A4A0C5FC4}</Project>
-      <Name>SshAgentLib.WinForms</Name>
+      <Name>SshAgentLib.Ui.WinForms</Name>
     </ProjectReference>
     <ProjectReference Include="..\SshAgentLib\SshAgentLib\SshAgentLib.csproj">
       <Project>{9163B6B6-0603-4C6E-BC67-7111ED8CDDE1}</Project>
@@ -227,27 +215,29 @@
     <None Include="Properties\DataSources\EntrySettings.datasource" />
     <None Include="Properties\DataSources\EntrySettings.LocationData.datasource" />
     <None Include="Resources\KeeAgent-icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Resources\KeeAgent-icon.png" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)/Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
       if $(ConfigurationName) == Release (
 
       del "$(SolutionDir)KeeAgent.plgx"
 
-      xcopy /s "$(ProjectDir)." "%25TEMP%25/$(ProjectName)/"
+      xcopy /s "$(ProjectDir)." "%25TEMP%25\$(ProjectName)\"
 
-      copy "$(TargetDir)*.dll" "%25TEMP%25/$(ProjectName)/"
-      del "%25TEMP%25/$(ProjectName)/KeeAgent.dll"
-      copy "$(SolutionDir)Prebuild/$(OutDir)PreBuild.exe" "%25TEMP%25/$(ProjectName)/"
-      rmdir /s /q "%25TEMP%25/$(ProjectName)/bin"
-      rmdir /s /q "%25TEMP%25/$(ProjectName)/obj"
-      "c:/Program Files (x86)/KeePass Password Safe 2/keepass.exe" --plgx-create "%25TEMP%25/$(ProjectName)" --plgx-prereq-net:4.0 --plgx-prereq-os:Windows --plgx-build-pre:"cmd /c """{PLGX_TEMP_DIR}PreBuild.exe""" {PLGX_TEMP_DIR}"
+      copy "$(TargetDir)*.dll" "%25TEMP%25\$(ProjectName)\"
+      del "%25TEMP%25\$(ProjectName)\KeeAgent.dll"
+      copy "$(SolutionDir)Prebuild\$(OutDir)PreBuild.exe" "%25TEMP%25\$(ProjectName)\"
+      rmdir /s /q "%25TEMP%25\$(ProjectName)\bin"
+      rmdir /s /q "%25TEMP%25\$(ProjectName)\obj"
+      "c:\Program Files (x86)\KeePass Password Safe 2\keepass.exe" --plgx-create "%25TEMP%25\$(ProjectName)" --plgx-prereq-net:4.0 --plgx-prereq-os:Windows --plgx-build-pre:"cmd /c """{PLGX_TEMP_DIR}PreBuild.exe""" {PLGX_TEMP_DIR}"
       ping localhost &gt; NUL
-        rmdir /s /q "%25TEMP%25/$(ProjectName)"
+        rmdir /s /q "%25TEMP%25\$(ProjectName)"
 
-        move "%25TEMP%25/$(ProjectName).plgx" $(SolutionDir)
+        move "%25TEMP%25\$(ProjectName).plgx" $(SolutionDir)
       )
 </PostBuildEvent>
   </PropertyGroup>

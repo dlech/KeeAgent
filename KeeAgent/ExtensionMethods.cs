@@ -1,19 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using KeePassLib;
-using System.Xml.Serialization;
-using System.Xml;
-using System.IO;
-using System.Reflection;
-using KeePassLib.Security;
-using dlech.SshAgentLib;
-using System.Security;
-using System.Windows.Forms;
-using KeeAgent.Properties;
-using System.Drawing;
 using System.Diagnostics;
+using System.Drawing;
+using System.IO;
+using System.Security;
+using System.Text;
+using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Serialization;
+using dlech.SshAgentLib;
+using KeeAgent.Properties;
+using KeePassLib;
 using KeePassLib.Collections;
+using KeePassLib.Security;
 
 namespace KeeAgent
 {
@@ -90,10 +88,16 @@ namespace KeeAgent
     public static void SetKeeAgentSettings(this ProtectedStringDictionary aStringDictionary,
       EntrySettings aSettings)
     {
-      using (var writer = new StringWriter()) {
-        EntrySettingsSerializer.Serialize(writer, aSettings);
-        // string is protected just to make UI look cleaner
-        aStringDictionary.Set(cStringId, new ProtectedString(true, writer.ToString()));
+      // only save if there is an existing entry or AllowUseOfSshKey is checked
+      // this way we don't pollute entries that don't have SSH keys
+      if (aStringDictionary.GetKeys().Contains(cStringId) ||
+        aSettings.AllowUseOfSshKey)
+      {
+        using (var writer = new StringWriter()) {
+          EntrySettingsSerializer.Serialize(writer, aSettings);
+          // string is protected just to make UI look cleaner
+          aStringDictionary.Set(cStringId, new ProtectedString(true, writer.ToString()));
+        }
       }
     }
 

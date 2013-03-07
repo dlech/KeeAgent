@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using KeePassLib;
-using KeePass.UI;
-using KeePass.Plugins;
 using System.Diagnostics;
-using KeePass.Util;
+using System.Drawing;
+using System.Windows.Forms;
+using dlech.SshAgentLib;
 using KeePass.App;
+using KeePass.Plugins;
+using KeePass.UI;
+using KeePassLib;
 
 namespace KeeAgent.UI
 {
@@ -24,20 +20,35 @@ namespace KeeAgent.UI
 
     public PwEntry SelectedEntry { get; private set; }
 
+    public ICollection<Agent.KeyConstraint> Constraints
+    {
+      get
+      {
+        var constraints = new List<Agent.KeyConstraint>();
+        if (mConfirmConstraintControl.Checked) {
+          constraints.addConfirmConstraint();
+        }
+        if (mLifetimeConstraintControl.Checked) {
+          constraints.addLifetimeConstraint(mLifetimeConstraintControl.Lifetime);
+        }
+        return constraints;
+      }
+    }
+
     public EntryPickerDialog(IPluginHost aPluginHost)
     {
       mPluginHost = aPluginHost;
       InitializeComponent();
-      mExpiredFont = FontUtil.CreateFont(customTreeViewEx.Font, FontStyle.Strikeout);
-      mBoldFont = FontUtil.CreateFont(customTreeViewEx.Font, FontStyle.Bold);
-      mItalicFont = FontUtil.CreateFont(customTreeViewEx.Font, FontStyle.Italic);
+      mExpiredFont = FontUtil.CreateFont(mCustomTreeViewEx.Font, FontStyle.Strikeout);
+      mBoldFont = FontUtil.CreateFont(mCustomTreeViewEx.Font, FontStyle.Bold);
+      mItalicFont = FontUtil.CreateFont(mCustomTreeViewEx.Font, FontStyle.Italic);
       InitalizeList();
     }
 
     private void InitalizeList()
     {
-      customTreeViewEx.BeginUpdate();
-      customTreeViewEx.Nodes.Clear();
+      mCustomTreeViewEx.BeginUpdate();
+      mCustomTreeViewEx.Nodes.Clear();
       mCachedNow = DateTime.Now;
 
       foreach (var db in mPluginHost.MainWindow.DocumentManager.GetOpenDatabases()) {
@@ -63,7 +74,7 @@ namespace KeeAgent.UI
           }
           rootNode.ToolTipText = db.IOConnectionInfo.GetDisplayName();
 
-          customTreeViewEx.Nodes.Add(rootNode);
+          mCustomTreeViewEx.Nodes.Add(rootNode);
         }
 
         RecursiveAddGroup(rootNode, rootGroup);
@@ -72,7 +83,7 @@ namespace KeeAgent.UI
           rootNode.Expand();
         }
       }
-      customTreeViewEx.EndUpdate();
+      mCustomTreeViewEx.EndUpdate();
     }
 
     private void RecursiveAddGroup(TreeNode aParentNode, PwGroup aParentGroup)
@@ -82,7 +93,7 @@ namespace KeeAgent.UI
       }
 
       TreeNodeCollection treeNodes;
-      if (aParentNode == null) treeNodes = customTreeViewEx.Nodes;
+      if (aParentNode == null) treeNodes = mCustomTreeViewEx.Nodes;
       else treeNodes = aParentNode.Nodes;
 
       foreach (PwGroup childGroup in aParentGroup.Groups) {
@@ -169,7 +180,7 @@ namespace KeeAgent.UI
         imgList.Images.AddRange(lCustom.ToArray());
 
       if (UIUtil.VistaStyleListsSupported) {
-        customTreeViewEx.ImageList = imgList;
+        mCustomTreeViewEx.ImageList = imgList;
       } else {
         List<Image> vAllImages = new List<Image>();
         foreach (Image imgClient in imgList.Images)
@@ -179,7 +190,7 @@ namespace KeeAgent.UI
 
         ImageList imgSafe = UIUtil.ConvertImageList24(vAllImages, 16, 16,
           AppDefs.ColorControlNormal);
-        customTreeViewEx.ImageList = imgSafe;
+        mCustomTreeViewEx.ImageList = imgSafe;
       }
     }
 

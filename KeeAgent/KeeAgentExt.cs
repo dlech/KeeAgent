@@ -18,6 +18,7 @@ using KeePass.UI;
 using KeePass.Util;
 using KeePassLib;
 using KeePassLib.Utility;
+using System.Collections.ObjectModel;
 
 namespace KeeAgent
 {
@@ -198,6 +199,15 @@ namespace KeeAgent
           // if any selected entry contains an SSH key then we show the KeeAgent menu item
           if (entry.GetKeeAgentSettings().AllowUseOfSshKey) {
             mKeeAgentPwEntryContextMenuItem.Visible = true;
+            var agent = mAgent as Agent;
+            if (agent != null && agent.IsLocked)
+            {
+              mKeeAgentPwEntryContextMenuItem.Enabled = false;
+              mKeeAgentPwEntryContextMenuItem.Text = "KeeAgent Locked";
+            } else {
+              mKeeAgentPwEntryContextMenuItem.Enabled = true;
+              mKeeAgentPwEntryContextMenuItem.Text = "Load Entry in KeeAgent";
+            }
             return;
           }
         }
@@ -211,7 +221,7 @@ namespace KeeAgent
         // if any selected entry contains an SSH key then we show the KeeAgent menu item
         if (entry.GetKeeAgentSettings().AllowUseOfSshKey) {
           try {
-            AddEntry(entry);
+            AddEntry(entry, null);
           } catch (Exception) {
             // AddEntry should have already shown error message
           }
@@ -510,7 +520,7 @@ namespace KeeAgent
     }
 
     private void MainForm_FileOpened(object aSender,
-      FileOpenedEventArgs aEventArgs)
+                                     FileOpenedEventArgs aEventArgs)
     {
       try {
         var exitFor = false;
@@ -521,13 +531,9 @@ namespace KeeAgent
           var settings = entry.GetKeeAgentSettings();
           if (settings.AllowUseOfSshKey && settings.AddAtDatabaseOpen) {
             try {
-              AddEntry(entry);
+              AddEntry(entry, null);
             } catch (Exception) {
-              // TODO better error handling
-              var result = MessageBox.Show(
-                "Agent failure. Key could not be added. Do you want to attempt to load additional keys?",
-                "KeeAgent", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-              if (result == DialogResult.No) {
+              if (MessageService.AskYesNo ("Do you want to attempt to load additional keys?")) {
                 exitFor = true;
               }
             }
@@ -585,7 +591,7 @@ namespace KeeAgent
     }
 
     private void MessageService_MessageShowing(object aSender,
-  MessageServiceEventArgs aEventArgs)
+                                               MessageServiceEventArgs aEventArgs)
     {
       if (aEventArgs.Title == PwDefs.ShortProductName &&
         aEventArgs.Text == KPRes.SaveBeforeCloseQuestion) {
@@ -593,25 +599,54 @@ namespace KeeAgent
       }
     }
 
-    public ISshKey AddEntry(PwEntry aEntry)
+    public ISshKey AddEntry(PwEntry aEntry,
+                            ICollection<Agent.KeyConstraint> aConstraints)
     {
       var settings = aEntry.GetKeeAgentSettings();
       try {
         var key = aEntry.GetSshKey();
-        if (Options.AlwasyConfirm) {
+        if (aConstraints != null) {
+          foreach (var constraint in aConstraints) {
+            key.AddConstraint(constraint);
+          }
+        }
+        if (Options.AlwasyConfirm &&
+            !key.HasConstraint(Agent.KeyConstraintType.SSH_AGENT_CONSTRAIN_CONFIRM))
+        {
           key.addConfirmConstraint();
         }
         mAgent.AddKey(key);
         return key;
       } catch (Exception ex) {
         if (ex is NoAttachmentException) {
-          MessageBox.Show("No attachment specified");
+          MessageService.ShowWarning(new string[] {
+             "KeeAgent Error - No attachment specified in KeePass entry"
+           });
         } else if (ex is FileNotFoundException || ex is DirectoryNotFoundException) {
-          MessageBox.Show("Could not find file " + settings.Location.FileName);
+          MessageService.ShowWarning(new string[] {
+            "KeeAgent Error - Could not find file",
+            settings.Location.FileName
+           });
         } else if (ex is KeyFormatterException || ex is PpkFormatterException) {
-          MessageBox.Show("Bad passphrase " + settings.Location.FileName);
+          MessageService.ShowWarning(new string[] {
+            "KeeAgent Error - Could not load file",
+            settings.Location.FileName,
+            "Possible causes:",
+            "- Passphrase was entered incorrectly",
+            "- File is corrupt or has been tampered"
+           });
+        } else if (ex is AgentFailureException) {
+          MessageService.ShowWarning(new string[] {
+            "KeeAgent Error - Agent Failure",
+            "Possible causes:",
+            "- Key is already loaded in agent",
+            "- Agent is locked"
+          });
         } else {
-          MessageBox.Show("Unexpected error\n\n" + ex.ToString());
+          MessageService.ShowWarning(new string[] {
+            "KeeAgent Error - Unexpected error",
+            ex.ToString()
+          });
           Debug.Fail(ex.ToString());
         }
         throw;
