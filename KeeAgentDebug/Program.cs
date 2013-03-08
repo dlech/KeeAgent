@@ -109,9 +109,11 @@ namespace KeeAgentDebug
 
           pluginHost.MainWindow.Invoke(new MethodInvoker(delegate()
           {
-            pluginHost.MainWindow.UpdateUI(false, null, true, puttyGroup, true, puttyGroup, false);
+            pluginHost.MainWindow.UpdateUI(false, null, true, puttyGroup,
+                                           true, puttyGroup, false);
             keeAgent.Initialize(pluginHost);
-            pluginHost.MainWindow.FormClosing += delegate(Object source, FormClosingEventArgs args)
+            pluginHost.MainWindow.FormClosing += delegate(Object source,
+                                                          FormClosingEventArgs args)
             {
               if (!args.Cancel) {
                 keeAgent.Terminate();
@@ -119,7 +121,10 @@ namespace KeeAgentDebug
             };
           }));
           var mainfForm = KeePass.Program.MainForm;
-          while (mainfForm != null && (mainfForm.Visible == true || mainfForm.MainNotifyIcon.Visible == true)) {
+          while (mainfForm != null &&
+                 (mainfForm.Visible == true ||
+                  mainfForm.MainNotifyIcon.Visible == true))
+          {
             Thread.Sleep(500);
           }
         });

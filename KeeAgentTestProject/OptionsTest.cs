@@ -2,20 +2,20 @@
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using KeePass.Plugins;
 using KeePassPluginTestUtil;
 using KeeAgent;
 using System.Windows.Forms;
 using System.Reflection;
 using System.Threading;
+using NUnit.Framework;
 
 namespace KeeAgentTestProject
 {
-  [TestClass]
+  [TestFixture]
   public class OptionsTest
   {
-    [ClassCleanup()]
+    [TestFixtureTearDown()]
     public static void MyClassCleanup()
     {
       KeePassControl.ExitAll();
@@ -24,7 +24,7 @@ namespace KeeAgentTestProject
     /// <summary>
     /// Tests if options are saved when keypass is closed and reopened
     /// </summary>
-    [TestMethod]
+    [Test]
     public void TestOptionsPersistance()
     {
       // used for passing Options objects to/from AppDomain

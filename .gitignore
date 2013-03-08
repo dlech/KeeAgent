@@ -30,3 +30,7 @@ _ReSharper*/
 [Tt]est[Rr]esult*
 _UpgradeReport*
 *.zip
+
+*.resources
+*.userprefs
+test-results*/

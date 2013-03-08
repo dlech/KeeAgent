@@ -28,29 +28,29 @@ namespace KeeAgent.Packager
         outputFileName = Path.Combine(solutionDirectory, outputFileName);
 
         File.Delete(outputFileName);
-        using (ZipFile zipFile = ZipFile.Create(outputFileName)) {
-
-          zipFile.BeginUpdate();
-
-          /* add plgx file */
-          string plgxFile = keeAgentAssm.GetName().Name + ".plgx";
-          string plgxPath = Path.Combine(solutionDirectory, plgxFile);
-          if (!File.Exists(plgxPath)) {
-            Console.WriteLine("Could not find file " + plgxPath + "\n" +
-              "Probably need to run build under Release configuration");
-            return 1;
-          }
-          zipFile.Add(plgxPath, plgxFile);
-
-          /* add readme and changelog */
-          string readmeFile = "README.txt";
-          zipFile.Add(Path.Combine(solutionDirectory, readmeFile), readmeFile);
-          string changelogFile = "CHANGELOG.txt";
-          zipFile.Add(Path.Combine(solutionDirectory, changelogFile),
-            changelogFile);
-
-          zipFile.CommitUpdate();
-        }
+//        using (ZipFile zipFile = ZipFile.Create(outputFileName)) {
+//
+//          zipFile.BeginUpdate();
+//
+//          /* add plgx file */
+//          string plgxFile = keeAgentAssm.GetName().Name + ".plgx";
+//          string plgxPath = Path.Combine(solutionDirectory, plgxFile);
+//          if (!File.Exists(plgxPath)) {
+//            Console.WriteLine("Could not find file " + plgxPath + "\n" +
+//              "Probably need to run build under Release configuration");
+//            return 1;
+//          }
+//          zipFile.Add(plgxPath, plgxFile);
+//
+//          /* add readme and changelog */
+//          string readmeFile = "README.txt";
+//          zipFile.Add(Path.Combine(solutionDirectory, readmeFile), readmeFile);
+//          string changelogFile = "CHANGELOG.txt";
+//          zipFile.Add(Path.Combine(solutionDirectory, changelogFile),
+//            changelogFile);
+//
+//          zipFile.CommitUpdate();
+//        }
 
         if (File.Exists(outputFileName)) {
           return 0;

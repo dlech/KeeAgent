@@ -12,6 +12,11 @@ namespace KeeAgent.UI
     {
       InitializeComponent();
 
+#if !__MonoCS__
+      // TODO figure out why this crashes mono
+      Icon = Properties.Resources.KeeAgent_ico;
+#endif
+
       // update title depending on Agent Mode
       mExt = aExt;
       if (mExt.mAgent is Agent) {

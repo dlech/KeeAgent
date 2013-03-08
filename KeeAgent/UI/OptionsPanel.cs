@@ -41,10 +41,13 @@ namespace KeeAgent.UI
       UIUtil.SetExplorerTheme(customListViewEx, false);
 
       mOptionsList = new CheckedLVItemDXList(customListViewEx, true);
-      var optionsGroup = customListViewEx.Groups["options"];
-      mOptionsList.CreateItem(aExt.Options, "AlwasyConfirm", optionsGroup,
+      var agentModeOptionsGroup =
+        new ListViewGroup("agentMode",
+                          "Agent Mode Options (no effect in Client Mode)");
+      customListViewEx.Groups.Add (agentModeOptionsGroup);
+      mOptionsList.CreateItem(aExt.Options, "AlwasyConfirm", agentModeOptionsGroup,
         Translatable.OptionAlwaysConfirm);
-      mOptionsList.CreateItem(aExt.Options, "ShowBalloon", optionsGroup,
+      mOptionsList.CreateItem(aExt.Options, "ShowBalloon", agentModeOptionsGroup,
         Translatable.OptionShowBalloon);
       //mOptionsList.CreateItem(aExt.Options, "LoggingEnabled", optionsGroup,
       //  Translatable.optionLoggingEnabled);
