@@ -39,6 +39,11 @@ namespace KeeAgent.UI
     {
       mPluginHost = aPluginHost;
       InitializeComponent();
+#if !__MonoCS__
+      // TODO figure out why this crashes mono
+      Icon = Properties.Resources.KeeAgent_ico;
+#endif
+
       mExpiredFont = FontUtil.CreateFont(mCustomTreeViewEx.Font, FontStyle.Strikeout);
       mBoldFont = FontUtil.CreateFont(mCustomTreeViewEx.Font, FontStyle.Bold);
       mItalicFont = FontUtil.CreateFont(mCustomTreeViewEx.Font, FontStyle.Italic);
