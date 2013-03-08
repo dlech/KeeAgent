@@ -41,7 +41,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeeAgentDebug", "KeeAgentDe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SshAgentLib", "SshAgentLib\SshAgentLib\SshAgentLib.csproj", "{9163B6B6-0603-4C6E-BC67-7111ED8CDDE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SshAgentLib.WinForms", "SshAgentLib\SshAgentLib.WinForms\SshAgentLib.WinForms.csproj", "{3BEB6FAE-B14D-4281-8168-DB2A4A0C5FC4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SshAgentLib.Ui.WinForms", "SshAgentLib\Ui\WinForms\SshAgentLib.Ui.WinForms.csproj", "{3BEB6FAE-B14D-4281-8168-DB2A4A0C5FC4}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
