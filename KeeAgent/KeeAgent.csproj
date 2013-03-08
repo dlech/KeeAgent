@@ -154,6 +154,12 @@
       <HintPath>.\BouncyCastle.Crypto.dll</HintPath>
       <HintPath>..\SshAgentLib\lib\BouncyCastle\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
+    <Reference Include="SshAgentLib">
+      <HintPath>./SshAgentLib.dll</HintPath>
+    </Reference>
+    <Reference Include="SshAgentLib.WinForms">
+      <HintPath>./SshAgentLib.WinForms.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />

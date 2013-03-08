@@ -86,7 +86,7 @@ namespace KeeAgentDebug
           externalFilePassEntry.Strings.Set(PwDefs.TitleField, new ProtectedString(true, "external key file"));
           externalFilePassEntry.Strings.Set(PwDefs.PasswordField, new ProtectedString(true, "passphrase"));
           settings2.Location.SelectedType = EntrySettings.LocationType.File;
-          settings2.Location.FileName = "../../../SshAgentLib/SshAgentLibTests/Resources/dsa_with_passphrase";
+          settings2.Location.FileName = @"..\..\..\SshAgentLib\SshAgentLibTests\Resources\dsa_with_passphrase";
           externalFilePassEntry.SetKeeAgentSettings(settings2);
 
           var rsaGroup = new PwGroup(true, true, "RSA", PwIcon.Key);
