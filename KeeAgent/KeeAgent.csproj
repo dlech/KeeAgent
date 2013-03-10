@@ -150,6 +150,14 @@
     <Compile Include="UpdateUrl.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.WindowsAPICodePack">
+      <HintPath>.\Microsoft.WindowsAPICodePack.dll</HintPath>
+      <HintPath>..\SshAgentLib\lib\WindowsAPICodePack\Microsoft.WindowsAPICodePack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.Shell">
+      <HintPath>.\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
+      <HintPath>..\SshAgentLib\lib\WindowsAPICodePack\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
+    </Reference>
     <Reference Include="BouncyCastle.Crypto">
       <HintPath>.\BouncyCastle.Crypto.dll</HintPath>
       <HintPath>..\SshAgentLib\lib\BouncyCastle\BouncyCastle.Crypto.dll</HintPath>
@@ -239,7 +247,7 @@
       copy "$(SolutionDir)Prebuild\$(OutDir)PreBuild.exe" "%25TEMP%25\$(ProjectName)\"
       rmdir /s /q "%25TEMP%25\$(ProjectName)\bin"
       rmdir /s /q "%25TEMP%25\$(ProjectName)\obj"
-      "c:\Program Files (x86)\KeePass Password Safe 2\keepass.exe" --plgx-create "%25TEMP%25\$(ProjectName)" --plgx-prereq-net:4.0 --plgx-prereq-os:Windows --plgx-build-pre:"cmd /c """{PLGX_TEMP_DIR}PreBuild.exe""" {PLGX_TEMP_DIR}"
+      "c:\Program Files (x86)\KeePass Password Safe 2\keepass.exe" --plgx-create "%25TEMP%25\$(ProjectName)" --plgx-prereq-net:4.0 --plgx-build-pre:"cmd /c """{PLGX_TEMP_DIR}PreBuild.exe""" {PLGX_TEMP_DIR}"
       ping localhost &gt; NUL
         rmdir /s /q "%25TEMP%25\$(ProjectName)"
 

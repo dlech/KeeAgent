@@ -29,40 +29,52 @@
         {
       this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DatabaseSettingsPanel));
-      this.unlockOnAgentActivityCheckBox = new System.Windows.Forms.CheckBox();
-      this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-      this.databaseSettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-      ((System.ComponentModel.ISupportInitialize)(this.databaseSettingsBindingSource)).BeginInit();
+      this.mUnlockOnAgentActivityCheckBox = new System.Windows.Forms.CheckBox();
+      this.mDatabaseSettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+      this.mOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
+      this.mAgentModeGroupBox = new KeeAgent.UI.GroupBoxEx();
+      ((System.ComponentModel.ISupportInitialize)(this.mDatabaseSettingsBindingSource)).BeginInit();
+      this.mAgentModeGroupBox.SuspendLayout();
       this.SuspendLayout();
       // 
-      // unlockOnAgentActivityCheckBox
+      // mUnlockOnAgentActivityCheckBox
       // 
-      resources.ApplyResources(this.unlockOnAgentActivityCheckBox, "unlockOnAgentActivityCheckBox");
-      this.unlockOnAgentActivityCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.databaseSettingsBindingSource, "UnlockOnActivity", true));
-      this.unlockOnAgentActivityCheckBox.Name = "unlockOnAgentActivityCheckBox";
-      this.unlockOnAgentActivityCheckBox.UseVisualStyleBackColor = true;
+      resources.ApplyResources(this.mUnlockOnAgentActivityCheckBox, "mUnlockOnAgentActivityCheckBox");
+      this.mUnlockOnAgentActivityCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.mDatabaseSettingsBindingSource, "UnlockOnActivity", true));
+      this.mUnlockOnAgentActivityCheckBox.Name = "mUnlockOnAgentActivityCheckBox";
+      this.mUnlockOnAgentActivityCheckBox.UseVisualStyleBackColor = true;
       // 
-      // databaseSettingsBindingSource
+      // mDatabaseSettingsBindingSource
       // 
-      this.databaseSettingsBindingSource.DataSource = typeof(KeeAgent.DatabaseSettings);
+      this.mDatabaseSettingsBindingSource.DataSource = typeof(KeeAgent.DatabaseSettings);
+      // 
+      // mAgentModeGroupBox
+      // 
+      resources.ApplyResources(this.mAgentModeGroupBox, "mAgentModeGroupBox");
+      this.mAgentModeGroupBox.Controls.Add(this.mUnlockOnAgentActivityCheckBox);
+      this.mAgentModeGroupBox.Name = "mAgentModeGroupBox";
+      this.mAgentModeGroupBox.SelectedRadioButton = "";
+      this.mAgentModeGroupBox.TabStop = false;
       // 
       // DatabaseSettingsPanel
       // 
       resources.ApplyResources(this, "$this");
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.Controls.Add(this.unlockOnAgentActivityCheckBox);
+      this.Controls.Add(this.mAgentModeGroupBox);
       this.Name = "DatabaseSettingsPanel";
-      ((System.ComponentModel.ISupportInitialize)(this.databaseSettingsBindingSource)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.mDatabaseSettingsBindingSource)).EndInit();
+      this.mAgentModeGroupBox.ResumeLayout(false);
+      this.mAgentModeGroupBox.PerformLayout();
       this.ResumeLayout(false);
-      this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.CheckBox unlockOnAgentActivityCheckBox;
-        private System.Windows.Forms.BindingSource databaseSettingsBindingSource;
-        private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.CheckBox mUnlockOnAgentActivityCheckBox;
+        private System.Windows.Forms.BindingSource mDatabaseSettingsBindingSource;
+        private System.Windows.Forms.OpenFileDialog mOpenFileDialog;
+        private GroupBoxEx mAgentModeGroupBox;
 
     }
 }
