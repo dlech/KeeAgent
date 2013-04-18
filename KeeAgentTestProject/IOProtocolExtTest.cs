@@ -5,7 +5,6 @@ using System.Linq;
 using KeePass.Plugins;
 using KeeAgent;
 using System.Windows.Forms;
-using KeePassPluginTestUtil;
 using System.Threading;
 using IOProtocolExt;
 using System.IO;
@@ -14,6 +13,7 @@ using KeePassLib.Serialization;
 using NUnit.Framework;
 using dlech.SshAgentLib;
 using System.Security;
+using KeePassPluginDevTools.Control;
 
 namespace KeeAgentTestProject
 {

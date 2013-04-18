@@ -19,7 +19,7 @@ namespace PreBuild
   /// open after program if finished running).</remarks>
   public class Program
   {
-    public static void Main(string[] args)
+    public static int Main(string[] args)
     {
       int version = GetKeePassVersion();
       Console.WriteLine("Detected version 2." + version);
@@ -44,10 +44,12 @@ namespace PreBuild
             }
           }
           File.WriteAllLines(updateUrlFile, fileContents);
+          return 0;
         }
       } else {
         Console.WriteLine("requires argument");
-      }
+      }      
+      return 1;
     }
 
     /// <summary>

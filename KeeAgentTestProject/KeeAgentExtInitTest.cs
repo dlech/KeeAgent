@@ -1,7 +1,6 @@
 ﻿using KeeAgent;
 using System;
 using KeePass.Plugins;
-using KeePassPluginTestUtil;
 using System.Reflection;
 using System.IO;
 using System.Windows.Forms;
@@ -20,6 +19,7 @@ using System.Diagnostics;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using KeePassPluginDevTools.Control;
 
 namespace KeeAgentTestProject
 {

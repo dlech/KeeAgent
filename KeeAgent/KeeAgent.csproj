@@ -1,8 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
+    <!-- For building .plgx -->
+    <PlgxConfiguration>
+      <Prerequisites>
+        <KeePassVersion>2.19</KeePassVersion>
+        <DotNetVersion>4.0</DotNetVersion>
+      </Prerequisites>
+      <BuildCommands>
+        <PreBuild>"{PLGX_TEMP_DIR}bin\PreBuild.exe" "{PLGX_TEMP_DIR}"</PreBuild>
+      </BuildCommands>
+    </PlgxConfiguration>
+    <PlgxExtras>
+      <Item Source="..\PreBuild\bin\Release\PreBuild.exe" Destination="bin\PreBuild.exe" />
+    </PlgxExtras>
+  </PropertyGroup>
+  <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{742863F2-52ED-41E0-92A1-8EEA60EB75EF}</ProjectGuid>
@@ -12,27 +27,8 @@
     <AssemblyName>KeeAgent</AssemblyName>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>True</DebugSymbols>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <DebugType>full</DebugType>
@@ -40,41 +36,23 @@
     <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
     <WarningLevel>4</WarningLevel>
-    <Optimize>false</Optimize>
+    <Optimize>False</Optimize>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
+    <Optimize>True</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
     <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
-    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
-    <WarningLevel>4</WarningLevel>
-    <Optimize>false</Optimize>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
-    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
-    <WarningLevel>4</WarningLevel>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" />
+      </CustomCommands>
+    </CustomCommands>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Resources\KeeAgent-icon.ico</ApplicationIcon>
@@ -150,16 +128,6 @@
     <Compile Include="UpdateUrl.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="BouncyCastle.Crypto">
-      <HintPath>.\BouncyCastle.Crypto.dll</HintPath>
-      <HintPath>..\SshAgentLib\lib\BouncyCastle\BouncyCastle.Crypto.dll</HintPath>
-    </Reference>
-    <Reference Include="SshAgentLib">
-      <HintPath>./SshAgentLib.dll</HintPath>
-    </Reference>
-    <Reference Include="SshAgentLib.WinForms">
-      <HintPath>./SshAgentLib.WinForms.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -202,18 +170,22 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\..\keepass2\KeePass\KeePass.csproj">
-      <Project>{10938016-DEE2-4A25-9A5A-8FD3444379CA}</Project>
-      <Name>KeePass</Name>
-      <Private>False</Private>
-    </ProjectReference>
     <ProjectReference Include="..\SshAgentLib\Ui\WinForms\SshAgentLib.Ui.WinForms.csproj">
       <Project>{3BEB6FAE-B14D-4281-8168-DB2A4A0C5FC4}</Project>
       <Name>SshAgentLib.Ui.WinForms</Name>
+      <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\Microsoft.WindowsAPICodePack.dll</PlgxReference>
+      <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\Microsoft.WindowsAPICodePack.Shell.dll</PlgxReference>
+      <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\SshAgentLib.WinForms.dll</PlgxReference>
     </ProjectReference>
     <ProjectReference Include="..\SshAgentLib\SshAgentLib\SshAgentLib.csproj">
       <Project>{9163B6B6-0603-4C6E-BC67-7111ED8CDDE1}</Project>
       <Name>SshAgentLib</Name>
+      <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\SshAgentLib.dll</PlgxReference>
+      <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\BouncyCastle.Crypto.dll</PlgxReference>
+    </ProjectReference>
+    <ProjectReference Include="..\KeePassPluginDevTools\keepass2\KeePass\KeePass.csproj">
+      <Project>{10938016-DEE2-4A25-9A5A-8FD3444379CA}</Project>
+      <Name>KeePass</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -225,33 +197,23 @@
   <ItemGroup>
     <None Include="Resources\KeeAgent-icon.png" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-      if $(ConfigurationName) == Release (
-
-      del "$(SolutionDir)KeeAgent.plgx"
-
-      xcopy /s "$(ProjectDir)." "%25TEMP%25\$(ProjectName)\"
-
-      copy "$(TargetDir)*.dll" "%25TEMP%25\$(ProjectName)\"
-      del "%25TEMP%25\$(ProjectName)\KeeAgent.dll"
-      copy "$(SolutionDir)Prebuild\$(OutDir)PreBuild.exe" "%25TEMP%25\$(ProjectName)\"
-      rmdir /s /q "%25TEMP%25\$(ProjectName)\bin"
-      rmdir /s /q "%25TEMP%25\$(ProjectName)\obj"
-      "c:\Program Files (x86)\KeePass Password Safe 2\keepass.exe" --plgx-create "%25TEMP%25\$(ProjectName)" --plgx-prereq-net:4.0 --plgx-prereq-os:Windows --plgx-build-pre:"cmd /c """{PLGX_TEMP_DIR}PreBuild.exe""" {PLGX_TEMP_DIR}"
-      ping localhost &gt; NUL
-        rmdir /s /q "%25TEMP%25\$(ProjectName)"
-
-        move "%25TEMP%25\$(ProjectName).plgx" $(SolutionDir)
-      )
-</PostBuildEvent>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleasePlgx|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\ReleasePlgx</OutputPath>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\KeePassPluginDevTools\PlgxTools\Plgx.targets" />
+  <Target Name="AfterBuild" Condition="'$(Configuration)' == 'ReleasePlgx'">
+    <Exec Command="echo '&lt;PlgxConfiguration&gt;$(PlgxConfiguration)&lt;/PlgxConfiguration&gt;' > &quot;$(IntermediateOutputPath)PlgxConfig.xml&quot;" />
+    <Exec Command="mono ..\KeePassPluginDevTools\PlgxTools\bin\Release\PlgxTool.exe --build --verbose --input=&quot;$(MSBuildProjectDirectory)&quot; --output=&quot;$(OutputPath)&quot; --config=&quot;$(IntermediateOutputPath)PlgxConfig.xml&quot;" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
+  </Target>  
   -->
 </Project>

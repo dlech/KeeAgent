@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="KeePass2PluginPackagerConfig"
+    targetNamespace="http://lechnology.com/KeePass2PluginPackagerConfig"
+    xmlns="http://lechnology.com/KeePass2PluginPackagerConfig"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="KeePass2PluginPackagerConfig">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Plugin">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ProjectPath" type="xs:string" minOccurs="0" />
+              <xs:element name="Prerequisites" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="KeePassVersion" type="xs:string" minOccurs="0" />
+                    <xs:element name="DotNetVersion" type="xs:string" minOccurs="0" />
+                    <xs:element name="OS" type="xs:string" minOccurs="0" />
+                    <xs:element name="PointerSize" type="xs:string" minOccurs="0" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

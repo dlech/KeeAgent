@@ -1,6 +1,6 @@
-[submodule "KeePassPluginTestUtil"]
-	path = KeePassPluginTestUtil
-	url = git://github.com/dlech/KeePassPluginTestUtil.git
+[submodule "KeePassPluginDevTools"]
+	path = KeePassPluginDevTools
+	url = git://github.com/dlech/KeePassPluginDevTools.git
 [submodule "IOProtocolExt"]
 	path = IOProtocolExt
 	url = git://github.com/dlech/IOProtocolExt.git
