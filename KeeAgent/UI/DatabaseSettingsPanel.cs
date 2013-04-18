@@ -20,7 +20,7 @@ namespace KeeAgent.UI
       SetStyle(ControlStyles.SupportsTransparentBackColor, true);
       BackColor = Color.Transparent;      
 
-      databaseSettingsBindingSource.DataSource = mDatabase.GetKeeAgentSettings();
+      mDatabaseSettingsBindingSource.DataSource = mDatabase.GetKeeAgentSettings();
     }
 
     protected override void OnLoad(EventArgs e)
@@ -31,7 +31,7 @@ namespace KeeAgent.UI
           delegate(object aSender, FormClosingEventArgs aEventArgs)
           {
             if (ParentForm.DialogResult == DialogResult.OK) {
-              var settings = databaseSettingsBindingSource.DataSource as DatabaseSettings;
+              var settings = mDatabaseSettingsBindingSource.DataSource as DatabaseSettings;
               mDatabase.SetKeeAgentSettings(settings);
             }
           };
