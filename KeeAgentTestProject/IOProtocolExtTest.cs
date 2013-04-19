@@ -91,11 +91,16 @@ namespace KeeAgentTestProject
               td1IOProtocolExt.Terminate();
             };
 
+            var extType = td1KeeAgentExt.GetType ();
+            var mAgentField = extType.GetField ("mAgent",
+                                                BindingFlags.Instance | BindingFlags.NonPublic);
+            var agent = mAgentField.GetValue (td1KeeAgentExt) as IAgent;
+
             // test not valid in client mode
-            Assert.That(td1KeeAgentExt.mAgent, Is.AssignableTo<Agent>());
+            Assert.That(agent, Is.AssignableTo<Agent>());
 
             // override confirm callback so we don't have to click OK
-            (td1KeeAgentExt.mAgent as Agent).ConfirmUserPermissionCallback =
+            (agent as Agent).ConfirmUserPermissionCallback =
               delegate(ISshKey aKey)
               {
                 return true;
@@ -118,7 +123,7 @@ namespace KeeAgentTestProject
               };
             var constraints = new List<Agent.KeyConstraint>();
             constraints.addConfirmConstraint();            
-            td1KeeAgentExt.mAgent.AddKeyFromFile(keyFilePath, getPassphraseCallback, constraints);
+            agent.AddKeyFromFile(keyFilePath, getPassphraseCallback, constraints);
 
             /* run test */
             IOConnectionInfo ioConnectionInfo = new IOConnectionInfo();

@@ -80,7 +80,11 @@ namespace KeeAgentTestProject
                 td1RequestedOptions.LoggingEnabled;
             td1KeeAgentExt.Options.LogFileName =
                 td1RequestedOptions.LogFileName;
-            td1KeeAgentExt.SaveGlobalOptions();
+            var extType = td1KeeAgentExt.GetType ();
+            var saveGlobalOptionsMethod =
+              extType.GetMethod ("SaveGlobalOptions",
+                                 BindingFlags.Instance | BindingFlags.NonPublic);
+            saveGlobalOptionsMethod.Invoke (td1KeeAgentExt, null);
             td1PluginHost.MainWindow.SaveConfig();
             AppDomain.CurrentDomain.SetData(optionsPropertyName,
                 td1KeeAgentExt.Options);

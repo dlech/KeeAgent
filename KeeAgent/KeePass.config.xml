@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Meta>
+    <!-- Don't mess up user config! -->
+    <PreferUserConfiguration>false</PreferUserConfiguration>
+    <OmitItemsWithDefaultValues>true</OmitItemsWithDefaultValues>
+  </Meta>
+  <!-- Use all defaults with a few exceptions -->
+  <!-- Other options can be configured per test using KeePass.Program.Config object -->
+  <Application>
+    <Start>
+      <!-- Don't try to do anything on startup -->
+      <OpenLastFile>false</OpenLastFile>
+      <CheckForUpdate>false</CheckForUpdate>
+      <CheckForUpdateConfigured>true</CheckForUpdateConfigured>
+    </Start>
+  </Application>
+</Configuration>

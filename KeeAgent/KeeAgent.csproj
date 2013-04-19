@@ -7,13 +7,7 @@
         <KeePassVersion>2.19</KeePassVersion>
         <DotNetVersion>4.0</DotNetVersion>
       </Prerequisites>
-      <BuildCommands>
-        <PreBuild>"{PLGX_TEMP_DIR}bin\PreBuild.exe" "{PLGX_TEMP_DIR}"</PreBuild>
-      </BuildCommands>
     </PlgxConfiguration>
-    <PlgxExtras>
-      <Item Source="..\PreBuild\bin\Release\PreBuild.exe" Destination="bin\PreBuild.exe" />
-    </PlgxExtras>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -37,6 +31,11 @@
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
     <WarningLevel>4</WarningLevel>
     <Optimize>False</Optimize>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="Execute" command="bin/Debug/KeePass.exe --debug" />
+      </CustomCommands>
+    </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <OutputPath>bin\Release\</OutputPath>
@@ -50,7 +49,7 @@
     <WarningLevel>4</WarningLevel>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" />
+        <Command type="Execute" command="bin/Release/KeePass.exe" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
@@ -125,7 +124,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\UIHelper.cs" />
-    <Compile Include="UpdateUrl.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -193,6 +191,14 @@
     <None Include="Properties\DataSources\EntrySettings.datasource" />
     <None Include="Properties\DataSources\EntrySettings.LocationData.datasource" />
     <None Include="Resources\KeeAgent-icon.ico" />
+    <None Include="KeePass.config.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <ExcludeFromPlgx />
+    </None>
+    <None Include="KeePass.exe.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <ExcludeFromPlgx />
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\KeeAgent-icon.png" />
@@ -204,12 +210,17 @@
     <Optimize>True</Optimize>
     <OutputPath>bin\ReleasePlgx</OutputPath>
     <WarningLevel>4</WarningLevel>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="Execute" command="bin/ReleasePlgx/KeePass.exe --debug --saveplgxcr" />
+      </CustomCommands>
+    </CustomCommands>
   </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\KeePassPluginDevTools\PlgxTools\Plgx.targets" />
-  <Target Name="AfterBuild" Condition="'$(Configuration)' == 'ReleasePlgx'">
-    <Exec Command="echo '&lt;PlgxConfiguration&gt;$(PlgxConfiguration)&lt;/PlgxConfiguration&gt;' > &quot;$(IntermediateOutputPath)PlgxConfig.xml&quot;" />
+  <Target Name="AfterBuild" Condition="'$(OS)' != 'Windows_NT' And '$(Configuration)' == 'ReleasePlgx'">
+    <Exec Command="echo '&lt;PlgxConfiguration&gt;$(PlgxConfiguration)&lt;/PlgxConfiguration&gt;' &gt; &quot;$(IntermediateOutputPath)PlgxConfig.xml&quot;" />
     <Exec Command="mono ..\KeePassPluginDevTools\PlgxTools\bin\Release\PlgxTool.exe --build --verbose --input=&quot;$(MSBuildProjectDirectory)&quot; --output=&quot;$(OutputPath)&quot; --config=&quot;$(IntermediateOutputPath)PlgxConfig.xml&quot;" />
+    <Exec Command="rm $(OutputPath)*.dll" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
