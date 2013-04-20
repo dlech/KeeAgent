@@ -27,8 +27,8 @@ namespace KeeAgentTestProject
       // copy WinSCP to working directory
 
       string solutionDir = Path.GetFullPath(
-        Path.Combine(Environment.CurrentDirectory, "../../.."));
-      string winSCPSourceDir = Path.Combine(solutionDir, "IOProtocolExt",
+        Path.Combine(Environment.CurrentDirectory, "..", "..", ".."));
+      string winSCPSourceDir = Path.Combine(solutionDir, "lib", "IOProtocolExt",
         "WinSCP");
 
       Assert.IsTrue(File.Exists(Path.Combine(winSCPSourceDir, "WinSCP.exe")));
@@ -107,8 +107,9 @@ namespace KeeAgentTestProject
               };
 
             /* load ssh key */
-            var keyFileDir = "../../../SshAgentLib/SshAgentLibTests/Resources";
-            var keyFilePath = Path.GetFullPath(Path.Combine(keyFileDir, "rsa_with_passphrase"));
+            var keyFileDir = Path.GetFullPath (Path.Combine (
+              "..", "..", "..", "SshAgentLib", "SshAgentLibTests", "Resources"));
+            var keyFilePath = Path.Combine(keyFileDir, "rsa_with_passphrase");
             Assert.That(File.Exists(keyFilePath), "Cannot locate key file: " + keyFilePath);
 
             KeyFormatter.GetPassphraseCallback getPassphraseCallback =
@@ -131,8 +132,6 @@ namespace KeeAgentTestProject
             ioConnectionInfo.UserName = "tc";
             bool fileExists = IOConnection.FileExists(ioConnectionInfo);
             Assert.IsTrue(fileExists, "Is satest VM running?");
-
-
 
             /* the problem we are checking for is that IOConnection.FileExists
              * does not lock up. Originally, in KeeAgent, WinPagent ran on main

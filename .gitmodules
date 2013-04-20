@@ -1,9 +1,3 @@
-[submodule "KeePassPluginDevTools"]
-	path = KeePassPluginDevTools
-	url = git://github.com/dlech/KeePassPluginDevTools.git
-[submodule "IOProtocolExt"]
-	path = IOProtocolExt
-	url = git://github.com/dlech/IOProtocolExt.git
 [submodule "SshAgentLib"]
 	path = SshAgentLib
 	url = git://github.com/dlech/SshAgentLib.git

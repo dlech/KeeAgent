@@ -133,6 +133,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="KeePass.exe">
+      <HintPath>$(KeePassPath)KeePass.exe</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -182,10 +185,6 @@
       <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\SshAgentLib.dll</PlgxReference>
       <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\BouncyCastle.Crypto.dll</PlgxReference>
     </ProjectReference>
-    <ProjectReference Include="..\KeePassPluginDevTools\keepass2\KeePass\KeePass.csproj">
-      <Project>{10938016-DEE2-4A25-9A5A-8FD3444379CA}</Project>
-      <Name>KeePass</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\DataSources\DatabaseSettings.datasource" />
@@ -218,16 +217,11 @@
     </CustomCommands>
   </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\KeePassPluginDevTools\PlgxTools\Plgx.targets" />
+  <Import Project="$(KeePassPluginDevToolsPath)Plgx.targets" />
   <Target Name="AfterBuild" Condition="'$(Configuration)' == 'ReleasePlgx'">
     <CallTarget Targets="BuildPlgx" />
     <Delete Files="$(OutDir)Microsoft.WindowsAPICodePack.dll;$(OutDir)Microsoft.WindowsAPICodePack.Shell.dll" />
     <Delete Files="$(OutDir)SshAgentLib.WinForms.dll;$(OutDir)SshAgentLib.dll;$(OutDir)BouncyCastle.Crypto.dll" />
     <Delete Files="$(OutDir)$(AssemblyName)$(TargetExt)" />
   </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  -->
 </Project>

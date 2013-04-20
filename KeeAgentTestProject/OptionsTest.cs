@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Threading;
 using NUnit.Framework;
 using KeePassPluginDevTools.Control;
+using System.IO;
 
 namespace KeeAgentTestProject
 {
@@ -31,9 +32,7 @@ namespace KeeAgentTestProject
       const string optionsPropertyName = "KEEAGENT_OPTIONS";
 
       /* test case options */
-
-      NotificationOptions requestedNotification =
-          NotificationOptions.AlwaysAsk;
+           
       bool requestedLoggingEnabled = true;
       string requestedLogFileName =
           Environment.GetEnvironmentVariable("TEMP");
@@ -41,19 +40,19 @@ namespace KeeAgentTestProject
         requestedLogFileName =
             Environment.GetEnvironmentVariable("TMP");
       }
-      Assert.IsNotNull(requestedLogFileName);
+      if (string.IsNullOrEmpty(requestedLogFileName)) {
+        requestedLogFileName = "/tmp";
+      }
+      Assert.That (Directory.Exists (requestedLogFileName));
 
       // verify that requested options are not default to ensure a
       // valid test
       Options requestedOptions = new Options();
-      Assert.AreNotEqual(requestedOptions.Notification,
-          requestedNotification);
       Assert.AreNotEqual(requestedOptions.LoggingEnabled,
           requestedLoggingEnabled);
       Assert.AreNotEqual(requestedOptions.LogFileName,
           requestedLogFileName);
 
-      requestedOptions.Notification = requestedNotification;
       requestedOptions.LoggingEnabled = requestedLoggingEnabled;
       requestedOptions.LogFileName = requestedLogFileName;
 
@@ -110,7 +109,6 @@ namespace KeeAgentTestProject
           });
         });
         Options actual = (Options)testDomain2.GetData(optionsPropertyName);
-        Assert.AreEqual(requestedNotification, actual.Notification);
         Assert.AreEqual(requestedLoggingEnabled, actual.LoggingEnabled);
         Assert.AreEqual(requestedLogFileName, actual.LogFileName);
       }
