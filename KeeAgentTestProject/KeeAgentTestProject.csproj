@@ -68,10 +68,6 @@
       <Project>{742863F2-52ED-41E0-92A1-8EEA60EB75EF}</Project>
       <Name>KeeAgent</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Packager\Packager.csproj">
-      <Project>{D226AF31-426D-4599-A72A-513EC82386A8}</Project>
-      <Name>Packager</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SshAgentLib\SshAgentLib\SshAgentLib.csproj">
       <Project>{9163B6B6-0603-4C6E-BC67-7111ED8CDDE1}</Project>
       <Name>SshAgentLib</Name>

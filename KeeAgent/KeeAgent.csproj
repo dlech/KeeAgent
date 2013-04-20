@@ -8,6 +8,7 @@
         <DotNetVersion>4.0</DotNetVersion>
       </Prerequisites>
     </PlgxConfiguration>
+    <PlgxToolDir>$(MSBuildProjectDirectory)\..\KeePassPluginDevTools\PlgxTools\bin\Release\</PlgxToolDir>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -217,10 +218,12 @@
     </CustomCommands>
   </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="AfterBuild" Condition="'$(OS)' != 'Windows_NT' And '$(Configuration)' == 'ReleasePlgx'">
-    <Exec Command="echo '&lt;PlgxConfiguration&gt;$(PlgxConfiguration)&lt;/PlgxConfiguration&gt;' &gt; &quot;$(IntermediateOutputPath)PlgxConfig.xml&quot;" />
-    <Exec Command="mono ..\KeePassPluginDevTools\PlgxTools\bin\Release\PlgxTool.exe --build --verbose --input=&quot;$(MSBuildProjectDirectory)&quot; --output=&quot;$(OutputPath)&quot; --config=&quot;$(IntermediateOutputPath)PlgxConfig.xml&quot;" />
-    <Exec Command="rm $(OutputPath)*.dll" />
+  <Import Project="..\KeePassPluginDevTools\PlgxTools\Plgx.targets" />
+  <Target Name="AfterBuild" Condition="'$(Configuration)' == 'ReleasePlgx'">
+    <CallTarget Targets="BuildPlgx" />
+    <Delete Files="$(OutDir)Microsoft.WindowsAPICodePack.dll;$(OutDir)Microsoft.WindowsAPICodePack.Shell.dll" />
+    <Delete Files="$(OutDir)SshAgentLib.WinForms.dll;$(OutDir)SshAgentLib.dll;$(OutDir)BouncyCastle.Crypto.dll" />
+    <Delete Files="$(OutDir)$(AssemblyName)$(TargetExt)" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
