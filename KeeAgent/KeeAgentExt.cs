@@ -533,6 +533,9 @@ namespace KeeAgent
                                      FileOpenedEventArgs aEventArgs)
     {
       try {
+        if (aEventArgs.Database.RootGroup == null) {
+          return;
+        }
         var exitFor = false;
         foreach (var entry in aEventArgs.Database.RootGroup.GetEntries(true)) {
           if (exitFor) {
