@@ -93,6 +93,40 @@ namespace KeeAgent.UI
       UpdateControlStates();
     }
 
+    protected override void OnEnabledChanged(EventArgs e)
+    {
+      base.OnEnabledChanged(e);
+      if (Enabled && !attachmentRadioButton.Checked && !fileRadioButton.Checked)
+      {
+        // Have to delay execution of this to avoid undesirable binding
+        // interaction.
+        var delayedInvokeTimer = new Timer();
+        delayedInvokeTimer.Tick += (sender, e2) =>
+        {
+          delayedInvokeTimer.Stop();
+          attachmentRadioButton.Checked = true;
+          if (attachmentComboBox.Items.Count > 0 &&
+            attachmentComboBox.SelectedIndex == -1)
+          {
+            // select the first .ppk file in the list
+            for (var i = 0; i < attachmentComboBox.Items.Count; i++ )
+            {
+              var itemName = attachmentComboBox.Items[i] as string;
+              if (itemName != null &&
+                itemName.EndsWith(".ppk", StringComparison.OrdinalIgnoreCase))
+              {
+                attachmentComboBox.SelectedIndex = i;
+                return;
+              }
+            }
+            // or the first file if a .ppk does not exist
+            attachmentComboBox.SelectedIndex = 0;
+          }
+        };
+        delayedInvokeTimer.Interval = 100;
+        delayedInvokeTimer.Start();
+      }
+    }
 
     private void UpdateControlStates()
     {
@@ -116,7 +150,7 @@ namespace KeeAgent.UI
             attachmentComboBox.Items.Add(binary.Key);
           }
         } else {
-          Debug.Fail("Don't have binaries");
+          Debug.Fail("Don't have mPwEntryForm");
         }
       }
     }
