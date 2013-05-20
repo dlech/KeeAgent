@@ -19,8 +19,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SshAgentLib.Ui.WinForms", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeePassControl", "KeePassPluginDevTools\KeePassControl\KeePassControl.csproj", "{7B11CC40-373F-4C20-99A5-DD70F3317D5C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeePass", "KeePassPluginDevTools\keepass2\KeePass\KeePass.csproj", "{10938016-DEE2-4A25-9A5A-8FD3444379CA}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlgxTools", "KeePassPluginDevTools\PlgxTools\PlgxTools.csproj", "{B120F5D7-59B5-4376-AC0A-FF60A361D5B2}"
 EndProject
 Global

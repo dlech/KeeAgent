@@ -126,6 +126,16 @@
     </Compile>
     <Compile Include="UI\UIHelper.cs" />
   </ItemGroup>
+  <Choose>
+    <When Condition="'$(KeePassPath)' == ''">
+      <PropertyGroup Condition="'$(ProgramFiles(x86))' != ''">
+        <KeePassPath>$(ProgramFiles(x86))\KeePass Password Safe 2\</KeePassPath>
+      </PropertyGroup>
+      <PropertyGroup Condition="'$(ProgramFiles)' != ''">
+        <KeePassPath>$(ProgramFiles)\KeePass Password Safe 2\</KeePassPath>
+      </PropertyGroup>
+    </When>
+  </Choose>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -133,6 +143,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="KeePass.exe">
+      <HintPath>$(KeePassPath)KeePass.exe</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -181,10 +194,6 @@
       <Name>SshAgentLib</Name>
       <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\SshAgentLib.dll</PlgxReference>
       <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\BouncyCastle.Crypto.dll</PlgxReference>
-    </ProjectReference>
-    <ProjectReference Include="..\KeePassPluginDevTools\keepass2\KeePass\KeePass.csproj">
-      <Project>{10938016-DEE2-4A25-9A5A-8FD3444379CA}</Project>
-      <Name>KeePass</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

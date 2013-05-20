@@ -30,6 +30,16 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <Choose>
+    <When Condition="'$(KeePassPath)' == ''">
+      <PropertyGroup Condition="'$(ProgramFiles(x86))' != ''">
+        <KeePassPath>$(ProgramFiles(x86))\KeePass Password Safe 2\</KeePassPath>
+      </PropertyGroup>
+      <PropertyGroup Condition="'$(ProgramFiles)' != ''">
+        <KeePassPath>$(ProgramFiles)\KeePass Password Safe 2\</KeePassPath>
+      </PropertyGroup>
+    </When>
+  </Choose>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
@@ -43,6 +53,9 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="WindowsBase" />
+    <Reference Include="KeePass.exe">
+      <HintPath>$(KeePassPath)KeePass.exe</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=2.6.2.12296, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
       <HintPath>..\lib\NUnit\nunit.framework.dll</HintPath>
     </Reference>
@@ -75,10 +88,6 @@
     <ProjectReference Include="..\KeePassPluginDevTools\KeePassControl\KeePassControl.csproj">
       <Project>{7B11CC40-373F-4C20-99A5-DD70F3317D5C}</Project>
       <Name>KeePassControl</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\KeePassPluginDevTools\keepass2\KeePass\KeePass.csproj">
-      <Project>{10938016-DEE2-4A25-9A5A-8FD3444379CA}</Project>
-      <Name>KeePass</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
