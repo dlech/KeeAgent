@@ -216,9 +216,19 @@ namespace KeeAgent.UI
     private void EntryPickerDialog_FormClosing(object sender,
       FormClosingEventArgs e)
     {
-      if (DialogResult == DialogResult.OK && SelectedEntry == null) {
-        // TODO show error message
-        e.Cancel = true;
+      if (DialogResult == DialogResult.OK) {
+        if (SelectedEntry == null) {
+          MessageBox.Show("Must select an entry", Util.AssemblyTitle,
+             MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+          e.Cancel = true;
+        }
+        if (mLifetimeConstraintControl.Checked &&
+          mLifetimeConstraintControl.Lifetime == 0)
+        {
+          MessageBox.Show("Invalid lifetime", Util.AssemblyTitle,
+             MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+          e.Cancel = true;
+        }
       }
     }
 
