@@ -231,7 +231,20 @@ namespace KeeAgent
         // if any selected entry contains an SSH key then we show the KeeAgent menu item
         if (entry.GetKeeAgentSettings().AllowUseOfSshKey) {
           try {
-            AddEntry(entry, null);
+            var constraints = new List<Agent.KeyConstraint>();
+            if ((Control.ModifierKeys & Keys.Control) == Keys.Control) {
+              var dialog = new ConstraintsInputDialog();
+              var result = dialog.ShowDialog();
+              if (dialog.DialogResult == DialogResult.OK) {
+                if (dialog.ConfirmConstraintChecked) {
+                  constraints.addConfirmConstraint();
+                }
+                if (dialog.LifetimeConstraintChecked) {
+                  constraints.addLifetimeConstraint(dialog.LifetimeDuration);
+                }
+              }
+            }
+            AddEntry(entry, constraints);
           } catch (Exception) {
             // AddEntry should have already shown error message
           }
