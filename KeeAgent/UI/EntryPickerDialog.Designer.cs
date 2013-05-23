@@ -32,8 +32,8 @@
       this.mOkButton = new System.Windows.Forms.Button();
       this.mCustomTreeViewEx = new KeeAgent.UI.TreeViewEx();
       this.mTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-      this.mConfirmConstraintControl = new KeeAgent.UI.ConfirmConstraintControl();
-      this.mLifetimeConstraintControl = new KeeAgent.UI.LifetimeConstraintControl();
+      this.mConfirmConstraintControl = new dlech.SshAgentLib.WinForms.ConfirmConstraintControl();
+      this.mLifetimeConstraintControl = new dlech.SshAgentLib.WinForms.LifetimeConstraintControl();
       this.mTableLayoutPanel.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -149,7 +149,7 @@
     private System.Windows.Forms.Button mOkButton;
     private KeeAgent.UI.TreeViewEx mCustomTreeViewEx;
     private System.Windows.Forms.TableLayoutPanel mTableLayoutPanel;
-    private ConfirmConstraintControl mConfirmConstraintControl;
-    private LifetimeConstraintControl mLifetimeConstraintControl;
+    private dlech.SshAgentLib.WinForms.ConfirmConstraintControl mConfirmConstraintControl;
+    private dlech.SshAgentLib.WinForms.LifetimeConstraintControl mLifetimeConstraintControl;
   }
 }
