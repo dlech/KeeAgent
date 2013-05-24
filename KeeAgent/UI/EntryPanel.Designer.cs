@@ -31,7 +31,6 @@
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EntryPanel));
       this.hasSshKeyCheckBox = new System.Windows.Forms.CheckBox();
       this.addKeyAtOpenCheckBox = new System.Windows.Forms.CheckBox();
-      this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
       this.removeKeyAtCloseCheckBox = new System.Windows.Forms.CheckBox();
       this.keyLocationPanel = new KeeAgent.UI.KeyLocationPanel();
       this.entrySettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -90,7 +89,6 @@
 
         private System.Windows.Forms.CheckBox hasSshKeyCheckBox;
         private System.Windows.Forms.CheckBox addKeyAtOpenCheckBox;
-        private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.CheckBox removeKeyAtCloseCheckBox;
         internal System.Windows.Forms.BindingSource entrySettingsBindingSource;
         private KeyLocationPanel keyLocationPanel;

@@ -31,7 +31,6 @@ namespace KeeAgent
     private ToolStripMenuItem mKeeAgentMenuItem;
     private ToolStripMenuItem mKeeAgentPwEntryContextMenuItem;
     private ToolStripMenuItem mNotifyIconContextMenuItem;
-    private List<string> mApprovedKeys;
     private List<ISshKey> mRemoveKeyList;
     private UIHelper mUIHelper;
     private bool mSaveBeforeCloseQuestionMessageShown = false;
@@ -57,7 +56,6 @@ namespace KeeAgent
           .CommandLineArgs[AppDefs.CommandLineOptions.Debug] != null);
 
       LoadOptions();
-      mApprovedKeys = new List<string>();
 
       if (mDebug) Log("Loading KeeAgent...");
 
@@ -234,7 +232,7 @@ namespace KeeAgent
             var constraints = new List<Agent.KeyConstraint>();
             if ((Control.ModifierKeys & Keys.Control) == Keys.Control) {
               var dialog = new ConstraintsInputDialog();
-              var result = dialog.ShowDialog();
+              dialog.ShowDialog();
               if (dialog.DialogResult == DialogResult.OK) {
                 if (dialog.ConfirmConstraintChecked) {
                   constraints.addConfirmConstraint();

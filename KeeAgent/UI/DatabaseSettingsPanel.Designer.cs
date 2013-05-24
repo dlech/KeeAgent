@@ -31,7 +31,6 @@
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DatabaseSettingsPanel));
       this.mUnlockOnAgentActivityCheckBox = new System.Windows.Forms.CheckBox();
       this.mDatabaseSettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-      this.mOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
       this.mAgentModeGroupBox = new KeeAgent.UI.GroupBoxEx();
       ((System.ComponentModel.ISupportInitialize)(this.mDatabaseSettingsBindingSource)).BeginInit();
       this.mAgentModeGroupBox.SuspendLayout();
@@ -73,7 +72,6 @@
 
         private System.Windows.Forms.CheckBox mUnlockOnAgentActivityCheckBox;
         private System.Windows.Forms.BindingSource mDatabaseSettingsBindingSource;
-        private System.Windows.Forms.OpenFileDialog mOpenFileDialog;
         private GroupBoxEx mAgentModeGroupBox;
 
     }

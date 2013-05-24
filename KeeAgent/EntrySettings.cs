@@ -50,6 +50,20 @@ namespace KeeAgent
 
       #endregion
 
+      public override bool Equals (object obj)
+      {
+        if (obj is LocationData) {
+          return this == (LocationData)obj;
+        }
+        return base.Equals (obj);
+      }
+
+      public override int GetHashCode ()
+      {
+        return AttachmentName.GetHashCode () ^ FileName.GetHashCode () ^
+          (SelectedType == null ? -1 : (int)SelectedType);
+      }
+
       public static bool operator ==(LocationData data1, LocationData data2) {
         if (ReferenceEquals (data1, data2)) {
           return true;
@@ -102,6 +116,20 @@ namespace KeeAgent
         Location == other.Location;
     }
     #endregion
+
+    public override bool Equals (object obj)
+    {
+      if (obj is EntrySettings) {
+        return this == (EntrySettings)obj;
+      }
+      return base.Equals (obj);
+    }
+
+    public override int GetHashCode ()
+    {
+      return Location.GetHashCode () ^ (AllowUseOfSshKey ? 0x0 : 0x1) ^
+        (AddAtDatabaseOpen ? 0x0 : 0x2) ^ (RemoveAtDatabaseClose ? 0x0 : 0x4);
+    }
 
     public static bool operator ==(EntrySettings settings1, EntrySettings settings2) {
       if (ReferenceEquals (settings1, settings2)) {
