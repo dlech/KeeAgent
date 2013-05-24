@@ -8,8 +8,17 @@ namespace KeeAgent.UI
 {
   public partial class EntryPanel : UserControl
   {
-
     private PwEntryForm mPwEntryForm;
+
+    public EntrySettings IntialSettings {
+      get;
+      private set;
+    }
+
+    public EntrySettings CurrentSettings {
+      get;
+      private set;
+    }
 
     public EntryPanel()
     {
@@ -25,30 +34,14 @@ namespace KeeAgent.UI
       base.OnLoad(e);
       mPwEntryForm = ParentForm as PwEntryForm;
       if (mPwEntryForm != null) {
-        entrySettingsBindingSource.DataSource =
+        IntialSettings =
           mPwEntryForm.EntryRef.GetKeeAgentSettings();
-        entrySettingsBindingSource.BindingComplete +=
-          entrySettingsBindingSource_BindingComplete;
+        CurrentSettings = (EntrySettings)IntialSettings.Clone ();
+        entrySettingsBindingSource.DataSource = CurrentSettings;
       } else {
         Debug.Fail("Don't have settings to bind to");
       }
       UpdateControlStates();
-    }
-
-    private void entrySettingsBindingSource_BindingComplete(object aSender,
-      BindingCompleteEventArgs aEventArgs)
-    {
-      if (aEventArgs.BindingCompleteContext == BindingCompleteContext.DataSourceUpdate) {
-        aEventArgs.Binding.BindingManagerBase.EndCurrentEdit();
-        var settings = entrySettingsBindingSource.DataSource as EntrySettings;
-        if (settings != null) {
-          if (mPwEntryForm != null) {
-            mPwEntryForm.EntryStrings.SetKeeAgentSettings(settings);
-          }
-        } else {
-          Debug.Fail("Don't have settings");
-        }
-      }
     }
 
     private void UpdateControlStates()

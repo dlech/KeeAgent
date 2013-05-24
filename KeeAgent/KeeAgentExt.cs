@@ -340,17 +340,27 @@ namespace KeeAgent
     /// Kudos to the luckyrat for figuring out how to to this in KeePassRPC
     /// (KeeFox) and open-sourcing the code so I could copy/learn from it.
     ///</remarks>
-    private void WindowAddedHandler(object aSender, GwmWindowEventArgs aEventArgs)
+    private void WindowAddedHandler(object aSender,
+                                    GwmWindowEventArgs aEventArgs)
     {
       /* Add KeeAgent tab to PwEntryForm dialog */
       var pwEntryForm = aEventArgs.Form as PwEntryForm;
       if (pwEntryForm != null) {
+        var optionsPanel = new EntryPanel();
         pwEntryForm.Shown +=
           delegate(object sender, EventArgs args)
           {
-            var optionsPanel = new EntryPanel();
             pwEntryForm.AddTab(optionsPanel);
           };
+        var foundControls = pwEntryForm.Controls.Find("m_btnOK", true);
+        var okButton = foundControls[0] as Button;
+        okButton.GotFocus += (sender, args) =>
+        {
+          if (optionsPanel.CurrentSettings != optionsPanel.IntialSettings) {
+            pwEntryForm.EntryStrings.SetKeeAgentSettings
+              (optionsPanel.CurrentSettings);
+          }
+        };
         pwEntryForm.EntrySaving += PwEntryForm_EntrySaving;
         pwEntryForm.FormClosing += PwEntryForm_FormClosing;
       }
@@ -396,8 +406,7 @@ namespace KeeAgent
         if (entryPanel == null) {
           return;
         }
-        var settings =
-          entryPanel.entrySettingsBindingSource.DataSource as EntrySettings;
+        var settings = entryPanel.CurrentSettings;
         if (settings == null) {
           return;
         }
