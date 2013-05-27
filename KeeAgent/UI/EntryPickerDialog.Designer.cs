@@ -27,7 +27,6 @@
     /// </summary>
     private void InitializeComponent()
     {
-      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EntryPickerDialog));
       this.mCancelButton = new System.Windows.Forms.Button();
       this.mOkButton = new System.Windows.Forms.Button();
       this.mCustomTreeViewEx = new KeeAgent.UI.TreeViewEx();
@@ -83,12 +82,12 @@
       this.mTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
       this.mTableLayoutPanel.Controls.Add(this.mConfirmConstraintControl, 0, 0);
       this.mTableLayoutPanel.Controls.Add(this.mLifetimeConstraintControl, 1, 0);
-      this.mTableLayoutPanel.Location = new System.Drawing.Point(12, 356);
+      this.mTableLayoutPanel.Location = new System.Drawing.Point(12, 362);
       this.mTableLayoutPanel.Margin = new System.Windows.Forms.Padding(0);
       this.mTableLayoutPanel.Name = "mTableLayoutPanel";
       this.mTableLayoutPanel.RowCount = 1;
       this.mTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.mTableLayoutPanel.Size = new System.Drawing.Size(352, 26);
+      this.mTableLayoutPanel.Size = new System.Drawing.Size(352, 20);
       this.mTableLayoutPanel.TabIndex = 3;
       // 
       // mConfirmConstraintControl
@@ -101,7 +100,7 @@
       this.mConfirmConstraintControl.Location = new System.Drawing.Point(10, 0);
       this.mConfirmConstraintControl.Margin = new System.Windows.Forms.Padding(10, 0, 0, 0);
       this.mConfirmConstraintControl.Name = "mConfirmConstraintControl";
-      this.mConfirmConstraintControl.Size = new System.Drawing.Size(166, 26);
+      this.mConfirmConstraintControl.Size = new System.Drawing.Size(166, 20);
       this.mConfirmConstraintControl.TabIndex = 0;
       // 
       // mLifetimeConstraintControl
@@ -114,7 +113,7 @@
       this.mLifetimeConstraintControl.Location = new System.Drawing.Point(176, 0);
       this.mLifetimeConstraintControl.Margin = new System.Windows.Forms.Padding(0);
       this.mLifetimeConstraintControl.Name = "mLifetimeConstraintControl";
-      this.mLifetimeConstraintControl.Size = new System.Drawing.Size(176, 26);
+      this.mLifetimeConstraintControl.Size = new System.Drawing.Size(176, 20);
       this.mLifetimeConstraintControl.TabIndex = 1;
       // 
       // EntryPickerDialog
@@ -128,7 +127,6 @@
       this.Controls.Add(this.mOkButton);
       this.Controls.Add(this.mCancelButton);
       this.Controls.Add(this.mCustomTreeViewEx);
-      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.MaximizeBox = false;
       this.MinimizeBox = false;
       this.Name = "EntryPickerDialog";

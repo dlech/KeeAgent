@@ -35,10 +35,15 @@ namespace KeeAgent.UI
       }
     }
 
-    public EntryPickerDialog(IPluginHost aPluginHost)
+    public EntryPickerDialog(IPluginHost aPluginHost, bool aShowConstraintControls)
     {
       mPluginHost = aPluginHost;
       InitializeComponent();
+      if (!aShowConstraintControls) {
+        Controls.Remove(mTableLayoutPanel);
+        mCustomTreeViewEx.Height += mTableLayoutPanel.Height + 6;
+      }
+
 #if !__MonoCS__
       // TODO figure out why this crashes mono
       Icon = Properties.Resources.KeeAgent_ico;

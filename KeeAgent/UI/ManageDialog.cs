@@ -34,7 +34,9 @@ namespace KeeAgent.UI
 
     private void addButtonFromKeePassMenuItem_Click(object sender, EventArgs e)
     {
-      var entryPicker = new EntryPickerDialog(mExt.mPluginHost);
+      var showConstraintControls = !(mExt.mAgent is PageantClient);
+      var entryPicker =
+        new EntryPickerDialog(mExt.mPluginHost, showConstraintControls);
       var result = entryPicker.ShowDialog();
       if (result == DialogResult.OK) {
         try {

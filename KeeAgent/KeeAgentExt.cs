@@ -230,7 +230,9 @@ namespace KeeAgent
         if (entry.GetKeeAgentSettings().AllowUseOfSshKey) {
           try {
             var constraints = new List<Agent.KeyConstraint>();
-            if ((Control.ModifierKeys & Keys.Control) == Keys.Control) {
+            if (!(mAgent is PageantClient) &&
+                (Control.ModifierKeys & Keys.Control) == Keys.Control)
+            {
               var dialog = new ConstraintsInputDialog();
               dialog.ShowDialog();
               if (dialog.DialogResult == DialogResult.OK) {
@@ -562,7 +564,7 @@ namespace KeeAgent
             break;
           }
           var settings = entry.GetKeeAgentSettings();
-          if (settings.AllowUseOfSshKey && settings.AddAtDatabaseOpen) {
+          if (settings.AllowUseOfSshKey && settings.AddAtDatabaseOpen) {            
             try {
               AddEntry(entry, null);
             } catch (Exception) {
@@ -638,15 +640,27 @@ namespace KeeAgent
       var settings = aEntry.GetKeeAgentSettings();
       try {
         var key = aEntry.GetSshKey();
-        if (aConstraints != null) {
-          foreach (var constraint in aConstraints) {
-            key.AddConstraint(constraint);
+
+        if (mAgent is PageantClient) {
+          // Pageant errors if you try to add a key that is already loaded
+          // so try to remove the key first so that it behaves like other agents
+          try {
+            mAgent.RemoveKey(key);
+          } catch (Exception) {
+            // ignore failure
           }
-        }
-        if (Options.AlwasyConfirm &&
-            !key.HasConstraint(Agent.KeyConstraintType.SSH_AGENT_CONSTRAIN_CONFIRM))
-        {
-          key.addConfirmConstraint();
+        } else {
+          // also, Pageant does not support constraints
+          if (aConstraints != null) {
+            foreach (var constraint in aConstraints) {
+              key.AddConstraint(constraint);
+            }
+          }
+          if (Options.AlwasyConfirm &&
+              !key.HasConstraint(Agent.KeyConstraintType.SSH_AGENT_CONSTRAIN_CONFIRM))
+          {
+            key.addConfirmConstraint();
+          }
         }
         mAgent.AddKey(key);
         return key;
