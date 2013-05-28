@@ -174,8 +174,6 @@
     <ProjectReference Include="..\SshAgentLib\Ui\WinForms\SshAgentLib.Ui.WinForms.csproj">
       <Project>{3BEB6FAE-B14D-4281-8168-DB2A4A0C5FC4}</Project>
       <Name>SshAgentLib.Ui.WinForms</Name>
-      <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\Microsoft.WindowsAPICodePack.dll</PlgxReference>
-      <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\Microsoft.WindowsAPICodePack.Shell.dll</PlgxReference>
       <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\SshAgentLib.WinForms.dll</PlgxReference>
     </ProjectReference>
     <ProjectReference Include="..\SshAgentLib\SshAgentLib\SshAgentLib.csproj">
