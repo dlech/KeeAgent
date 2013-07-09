@@ -205,7 +205,7 @@ namespace KeeAgent {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Always require confirmation when client requests to use key.
+        ///   Looks up a localized string similar to Always require manual confirmation when a client program requests to use a key.
         /// </summary>
         internal static string OptionAlwaysConfirm {
             get {
@@ -214,7 +214,7 @@ namespace KeeAgent {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enable Debug Logging.
+        ///   Looks up a localized string similar to Enable debug logging.
         /// </summary>
         internal static string OptionLoggingEnabled {
             get {
@@ -223,7 +223,7 @@ namespace KeeAgent {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show notification balloon when key is used by client.
+        ///   Looks up a localized string similar to Show a notification balloon whenever a key is used by a client program.
         /// </summary>
         internal static string OptionShowBalloon {
             get {
@@ -241,7 +241,7 @@ namespace KeeAgent {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to KeeAgent Is Locked.
+        ///   Looks up a localized string similar to KeeAgent is Locked.
         /// </summary>
         internal static string StatusLocked {
             get {

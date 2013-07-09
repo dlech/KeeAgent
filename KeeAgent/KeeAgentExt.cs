@@ -328,8 +328,7 @@ namespace KeeAgent
             Options.ShowBalloon = false;
             break;
         }
-        config
-             .SetString(cNotificationOptionName, string.Empty);
+        config.SetString(cNotificationOptionName, string.Empty);
       }
     }
 

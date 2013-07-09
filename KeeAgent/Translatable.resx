@@ -171,19 +171,19 @@
     <value>Client</value>
   </data>
   <data name="OptionAlwaysConfirm" xml:space="preserve">
-    <value>Always require confirmation when client requests to use key</value>
+    <value>Always require manual confirmation when a client program requests to use a key</value>
   </data>
   <data name="OptionLoggingEnabled" xml:space="preserve">
-    <value>Enable Debug Logging</value>
+    <value>Enable debug logging</value>
   </data>
   <data name="OptionShowBalloon" xml:space="preserve">
-    <value>Show notification balloon when key is used by client</value>
+    <value>Show a notification balloon whenever a key is used by a client program</value>
   </data>
   <data name="OptionsMenuItem" xml:space="preserve">
     <value>Options...</value>
   </data>
   <data name="StatusLocked" xml:space="preserve">
-    <value>KeeAgent Is Locked</value>
+    <value>KeeAgent is Locked</value>
   </data>
   <data name="StatusUnlocked" xml:space="preserve">
     <value>KeeAgent is Unlocked</value>
