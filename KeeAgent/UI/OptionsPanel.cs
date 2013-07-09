@@ -45,7 +45,7 @@ namespace KeeAgent.UI
         new ListViewGroup("agentMode",
                           "Agent Mode Options (no effect in Client Mode)");
       customListViewEx.Groups.Add (agentModeOptionsGroup);
-      mOptionsList.CreateItem(aExt.Options, "AlwasyConfirm", agentModeOptionsGroup,
+      mOptionsList.CreateItem(aExt.Options, "AlwaysConfirm", agentModeOptionsGroup,
         Translatable.OptionAlwaysConfirm);
       mOptionsList.CreateItem(aExt.Options, "ShowBalloon", agentModeOptionsGroup,
         Translatable.OptionShowBalloon);

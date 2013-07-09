@@ -279,7 +279,7 @@ namespace KeeAgent
     internal void SaveGlobalOptions()
     {
       var config = mPluginHost.CustomConfig;
-      config.SetString(cAlwaysConfirmOptionName, Options.AlwasyConfirm.ToString());
+      config.SetBool(cAlwaysConfirmOptionName, Options.AlwaysConfirm);
       config.SetString(cShowBalloonOptionName, Options.ShowBalloon.ToString());
       config.SetBool(cLogginEnabledOptionName, Options.LoggingEnabled);
       config.SetString(cLogFileNameOptionName, Options.LogFileName);
@@ -291,7 +291,7 @@ namespace KeeAgent
       Options = new Options();
       var config = mPluginHost.CustomConfig;
 
-      Options.AlwasyConfirm = config.GetBool(cAlwaysConfirmOptionName, false);
+      Options.AlwaysConfirm = config.GetBool(cAlwaysConfirmOptionName, false);
       Options.ShowBalloon = config.GetBool(cShowBalloonOptionName, true);
       Options.LoggingEnabled = config.GetBool(cLogginEnabledOptionName, false);
 
@@ -322,7 +322,7 @@ namespace KeeAgent
         switch (configFileNotificationValue) {
           case NotificationOptions.AlwaysAsk:
           case NotificationOptions.AskOnce:
-            Options.AlwasyConfirm = true;
+            Options.AlwaysConfirm = true;
             break;
           case NotificationOptions.Never:
             Options.ShowBalloon = false;
@@ -497,7 +497,7 @@ namespace KeeAgent
     private void Pageant_KeyListChanged(object aSender,
       Agent.KeyListChangeEventArgs aEventArgs)
     {
-      if (Options.AlwasyConfirm &&
+      if (Options.AlwaysConfirm &&
           aEventArgs.Action == Agent.KeyListChangeEventAction.Add &&
           !aEventArgs.Key.HasConstraint(
             Agent.KeyConstraintType.SSH_AGENT_CONSTRAIN_CONFIRM)) {
@@ -656,7 +656,7 @@ namespace KeeAgent
               key.AddConstraint(constraint);
             }
           }
-          if (Options.AlwasyConfirm &&
+          if (Options.AlwaysConfirm &&
               !key.HasConstraint(Agent.KeyConstraintType.SSH_AGENT_CONSTRAIN_CONFIRM))
           {
             key.addConfirmConstraint();

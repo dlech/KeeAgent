@@ -23,7 +23,7 @@ namespace KeeAgent
     /// <summary>
     /// Cause all keys to have confirm constraint set even if it is not requested
     /// </summary>
-    public bool AlwasyConfirm { get; set; }
+    public bool AlwaysConfirm { get; set; }
 
     [Obsolete()]
     public NotificationOptions Notification { get; set; }
