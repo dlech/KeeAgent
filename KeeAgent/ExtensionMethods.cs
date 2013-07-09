@@ -108,7 +108,7 @@ namespace KeeAgent
         return null;
       }
       KeyFormatter.GetPassphraseCallback getPassphraseCallback =
-        delegate()
+        delegate(string comment)
         {
           var securePassphrase = new SecureString();
           var passphrase = Encoding.UTF8.GetChars(aPwEntry.Strings
