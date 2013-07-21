@@ -169,7 +169,9 @@
       <DependentUpon>PasswordDialog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\KeeAgent-icon-mono.ico" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SshAgentLib\Ui\WinForms\SshAgentLib.Ui.WinForms.csproj">
       <Project>{3BEB6FAE-B14D-4281-8168-DB2A4A0C5FC4}</Project>

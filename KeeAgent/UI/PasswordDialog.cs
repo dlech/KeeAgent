@@ -12,8 +12,9 @@ namespace KeeAgent.UI
     public PasswordDialog()
     {
       InitializeComponent();
-#if !__MonoCS__
-      // TODO figure out why this crashes mono
+#if __MonoCS__
+      Icon = Properties.Resources.KeeAgent_icon_mono;
+#else
       Icon = Properties.Resources.KeeAgent_ico;
 #endif
       mSecureEdit = new SecureEdit();

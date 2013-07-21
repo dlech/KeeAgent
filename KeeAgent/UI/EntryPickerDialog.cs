@@ -44,8 +44,9 @@ namespace KeeAgent.UI
         mCustomTreeViewEx.Height += mTableLayoutPanel.Height + 6;
       }
 
-#if !__MonoCS__
-      // TODO figure out why this crashes mono
+#if __MonoCS__
+      Icon = Properties.Resources.KeeAgent_icon_mono;
+#else
       Icon = Properties.Resources.KeeAgent_ico;
 #endif
 
