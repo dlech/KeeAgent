@@ -28,6 +28,12 @@ namespace KeeAgent.UI
       keyInfoView.SetAgent(mExt.mAgent);
     }
 
+    protected override void OnShown (EventArgs e)
+    {
+      base.OnShown (e);
+      keyInfoView.dataGridView.ClearSelection();
+    }
+
     private void addButtonFromFileMenuItem_Click(object sender, EventArgs e)
     {
       keyInfoView.ShowFileOpenDialog();
