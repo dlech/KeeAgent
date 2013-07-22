@@ -98,17 +98,22 @@ namespace KeeAgent.UI
       }
       mCustomTreeViewEx.EndUpdate();
 
-      if (!autodetect && !entriesFound) {
-        // Use timer so that this dialog finishes displaying before attempting
-        // the auto-detect routine.
-        var autodetectDialogDelayTimer = new Timer();
-        autodetectDialogDelayTimer.Interval = 100;
-        autodetectDialogDelayTimer.Tick += (sender, e) =>
-        {;
-          autodetectDialogDelayTimer.Stop();
-          AskShouldAutodetect();
-        };
-        autodetectDialogDelayTimer.Start();
+      if (!entriesFound) {
+        if (autodetect) {
+          MessageService.ShowWarning("No entries with SSH keys were found.");
+          Close();
+        } else {
+          // Use timer so that this dialog finishes displaying before attempting
+          // the auto-detect routine.
+          var autodetectDialogDelayTimer = new Timer();
+          autodetectDialogDelayTimer.Interval = 100;
+          autodetectDialogDelayTimer.Tick += (sender, e) =>
+          {
+            autodetectDialogDelayTimer.Stop();
+            AskShouldAutodetect();
+          };
+          autodetectDialogDelayTimer.Start();
+        }
       }
     }
 
