@@ -179,8 +179,11 @@ namespace KeeAgent.UI
               try {
                 settings.Location.AttachmentName = attachment.Key;
                 entryClone.SetKeeAgentSettings(settings);
-                entryClone.GetSshKey();
+                entryClone.GetSshKey(); // throws
                 entry.SetKeeAgentSettings(settings);
+                entry.Touch(true);
+                mActiveDb.Modified = true;
+                mPluginHost.MainWindow.UpdateUI(false, null, false, null, false, null, false);
                 sshKeyFound = true;
                 break;
               } catch (Exception) {
