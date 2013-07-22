@@ -8,6 +8,7 @@ using KeePass.App;
 using KeePass.Plugins;
 using KeePass.UI;
 using KeePassLib;
+using KeePassLib.Utility;
 
 namespace KeeAgent.UI
 {
@@ -53,14 +54,15 @@ namespace KeeAgent.UI
       mExpiredFont = FontUtil.CreateFont(mCustomTreeViewEx.Font, FontStyle.Strikeout);
       mBoldFont = FontUtil.CreateFont(mCustomTreeViewEx.Font, FontStyle.Bold);
       mItalicFont = FontUtil.CreateFont(mCustomTreeViewEx.Font, FontStyle.Italic);
-      InitalizeList();
+      InitalizeList(false);
     }
 
-    private void InitalizeList()
+    void InitalizeList(bool autodetect)
     {
       mCustomTreeViewEx.BeginUpdate();
       mCustomTreeViewEx.Nodes.Clear();
       mCachedNow = DateTime.Now;
+      bool entriesFound = false;
 
       foreach (var db in mPluginHost.MainWindow.DocumentManager.GetOpenDatabases()) {
         mActiveDb = db;
@@ -88,26 +90,56 @@ namespace KeeAgent.UI
           mCustomTreeViewEx.Nodes.Add(rootNode);
         }
 
-        RecursiveAddGroup(rootNode, rootGroup);
+        entriesFound |= RecursiveAddGroup(rootNode, rootGroup, autodetect);
 
         if (rootNode != null) {
           rootNode.Expand();
         }
       }
       mCustomTreeViewEx.EndUpdate();
+
+      if (!autodetect && !entriesFound) {
+        // Use timer so that this dialog finishes displaying before attempting
+        // the auto-detect routine.
+        var autodetectDialogDelayTimer = new Timer();
+        autodetectDialogDelayTimer.Interval = 100;
+        autodetectDialogDelayTimer.Tick += (sender, e) =>
+        {;
+          autodetectDialogDelayTimer.Stop();
+          AskShouldAutodetect();
+        };
+        autodetectDialogDelayTimer.Start();
+      }
     }
 
-    private void RecursiveAddGroup(TreeNode aParentNode, PwGroup aParentGroup)
+    void AskShouldAutodetect()
     {
-      if (aParentGroup == null) {
-        return;
+      var result = MessageService.AskYesNo(
+        "No KeePass database entries are enabled for use with KeeAgent." +
+        " Would you like to attempt to auto-detect and enable entries with SSH keys?",
+        "KeeAgent", true);
+      if (result) {
+        InitalizeList(true);
+      } else {
+        Close();
+      }
+    }
+
+    bool RecursiveAddGroup(TreeNode parentNode, PwGroup parentGroup, bool autodetect)
+    {
+      if (parentGroup == null) {
+        return false;
       }
 
       TreeNodeCollection treeNodes;
-      if (aParentNode == null) treeNodes = mCustomTreeViewEx.Nodes;
-      else treeNodes = aParentNode.Nodes;
+      if (parentNode == null)
+        treeNodes = mCustomTreeViewEx.Nodes;
+      else
+        treeNodes = parentNode.Nodes;
 
-      foreach (PwGroup childGroup in aParentGroup.Groups) {
+      bool entriesFound = false;
+
+      foreach (PwGroup childGroup in parentGroup.Groups) {
         bool bExpired = (childGroup.Expires && (childGroup.ExpiryTime <= mCachedNow));
         string strName = childGroup.Name;
 
@@ -134,10 +166,30 @@ namespace KeeAgent.UI
 
         treeNodes.Add(newNode);
 
-        RecursiveAddGroup(newNode, childGroup);
+        entriesFound |= RecursiveAddGroup(newNode, childGroup, autodetect);
 
         foreach (var entry in childGroup.Entries) {
           var settings = entry.GetKeeAgentSettings();
+          if (autodetect) {
+            var entryClone = entry.CloneDeep();
+            settings.AllowUseOfSshKey = true;
+            settings.Location.SelectedType = EntrySettings.LocationType.Attachment;
+            var sshKeyFound = false;
+            foreach (var attachment in entry.Binaries) {
+              try {
+                settings.Location.AttachmentName = attachment.Key;
+                entryClone.SetKeeAgentSettings(settings);
+                entryClone.GetSshKey();
+                entry.SetKeeAgentSettings(settings);
+                sshKeyFound = true;
+                break;
+              } catch (Exception) {
+                // ignore all errors
+              }
+            }
+            if (!sshKeyFound)
+              continue;
+          }
           if (settings.AllowUseOfSshKey) {
             var entryNode = new TreeNode(entry.Strings.Get(PwDefs.TitleField).ReadString(),
               (int)entry.IconId, (int)entry.IconId);
@@ -156,9 +208,9 @@ namespace KeeAgent.UI
             entryNode.ForeColor = entry.ForegroundColor;
             entryNode.BackColor = entryNode.BackColor;
             newNode.Nodes.Add(entryNode);
+            entriesFound = true;
           }
         }
-
 
         if (newNode.Nodes.Count > 0) {
           if ((newNode.IsExpanded) && (!childGroup.IsExpanded)) {
@@ -167,8 +219,8 @@ namespace KeeAgent.UI
             newNode.Expand();
           }
         }
-
       }
+      return entriesFound;
     }
 
     private void UpdateImageLists()
@@ -237,6 +289,5 @@ namespace KeeAgent.UI
         }
       }
     }
-
   }
 }
