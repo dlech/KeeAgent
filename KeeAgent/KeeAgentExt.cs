@@ -47,8 +47,6 @@ namespace KeeAgent
 
     public override bool Initialize(IPluginHost aHost)
     {
-      bool success;
-
       mPluginHost = aHost;
       mUIHelper = new UIHelper(mPluginHost);
       mRemoveKeyList = new List<ISshKey>();
@@ -62,7 +60,6 @@ namespace KeeAgent
       var isWindows = Environment.OSVersion.Platform == PlatformID.Win32NT;
       var domainSocketPath = 
         Environment.GetEnvironmentVariable (UnixClient.SSH_AUTHSOCKET_ENV_NAME);
-      success = false;
       try {
         // TODO check OS - currently only works on Windows
         if (Options.AgentMode != AgentMode.Client) {
@@ -103,19 +100,20 @@ namespace KeeAgent
         foreach (var database in mPluginHost.MainWindow.DocumentManager.Documents) {
           MainForm_FileOpened(this, new FileOpenedEventArgs(database.Database));
         }
-        success = true;
+        AddMenuItems();
+        GlobalWindowManager.WindowAdded += WindowAddedHandler;
+        MessageService.MessageShowing += MessageService_MessageShowing;
         if (mDebug) Log("Succeeded");
+        return true;
       } catch (PageantRunningException) {
         ShowPageantRunningErrorMessage();
-      } catch (Exception) {
+      } catch (Exception ex) {
         if (mDebug) Log("Failed");
+        MessageService.ShowWarning("KeeAgent failed to load:", ex.Message);
+        // TODO: show stack trace here
+        Terminate();
       }
-      if (success) {
-        AddMenuItems();
-      }
-      GlobalWindowManager.WindowAdded += WindowAddedHandler;
-      MessageService.MessageShowing += MessageService_MessageShowing;
-      return success;
+      return false;
     }
 
     public override void Terminate()
@@ -163,10 +161,25 @@ namespace KeeAgent
       mKeeAgentMenuItem.Click += manageKeeAgentMenuItem_Click;
       mPluginHost.MainWindow.ToolsMenu.DropDownItems.Add(mKeeAgentMenuItem);
 
+      /* add item to help menu */
+      var foundToolstripItem = mPluginHost.MainWindow.MainMenuStrip.Items.Find("m_menuHelp", true);
+      if (foundToolstripItem.Length > 0) {
+        var helpMenu = foundToolstripItem[0] as ToolStripMenuItem;
+        var keeAgentHelpMenuItem = new ToolStripMenuItem();
+        keeAgentHelpMenuItem.Text = "KeeAgent Help";
+        keeAgentHelpMenuItem.Image = Resources.KeeAgentIcon_png;
+        keeAgentHelpMenuItem.Click += (sender, e) =>
+        {
+          Process.Start("http://lechnology.com/KeeAgent");
+        };
+        var firstSeparatorIndex = helpMenu.DropDownItems.IndexOfKey("m_menuHelpSep0");
+        helpMenu.DropDownItems.Insert(firstSeparatorIndex, keeAgentHelpMenuItem);
+      }
+
       /* add item to Password Entry context menu */
-      var result = mPluginHost.MainWindow.Controls.Find("m_lvEntries", true);
-      if (result.Length > 0) {
-        var entryListView = result[0] as CustomListViewEx;
+      var foundControl = mPluginHost.MainWindow.Controls.Find("m_lvEntries", true);
+      if (foundControl.Length > 0) {
+        var entryListView = foundControl[0] as CustomListViewEx;
         if (entryListView != null) {
           var pwEntryContextMenu = entryListView.ContextMenuStrip;
           if (pwEntryContextMenu != null) {
