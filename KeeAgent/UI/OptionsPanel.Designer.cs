@@ -32,6 +32,7 @@
       this.columnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.modeComboBox = new System.Windows.Forms.ComboBox();
       this.modeLabel = new System.Windows.Forms.Label();
+      this.helpButton = new System.Windows.Forms.Button();
       this.SuspendLayout();
       // 
       // customListViewEx
@@ -63,10 +64,19 @@
       resources.ApplyResources(this.modeLabel, "modeLabel");
       this.modeLabel.Name = "modeLabel";
       // 
+      // helpButton
+      // 
+      resources.ApplyResources(this.helpButton, "helpButton");
+      this.helpButton.Image = global::KeeAgent.Properties.Resources.Help_png;
+      this.helpButton.Name = "helpButton";
+      this.helpButton.UseVisualStyleBackColor = true;
+      this.helpButton.Click += new System.EventHandler(this.helpButton_Click);
+      // 
       // OptionsPanel
       // 
       resources.ApplyResources(this, "$this");
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this.helpButton);
       this.Controls.Add(this.modeLabel);
       this.Controls.Add(this.modeComboBox);
       this.Controls.Add(this.customListViewEx);
@@ -82,5 +92,6 @@
         private System.Windows.Forms.ColumnHeader columnHeader;
         private System.Windows.Forms.ComboBox modeComboBox;
         private System.Windows.Forms.Label modeLabel;
+        private System.Windows.Forms.Button helpButton;
     }
 }

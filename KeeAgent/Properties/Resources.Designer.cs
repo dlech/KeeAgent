@@ -62,6 +62,13 @@ namespace KeeAgent.Properties {
         
         internal static System.Drawing.Bitmap Help_png {
             get {
+                object obj = ResourceManager.GetObject("Help_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon KeeAgent_icon {
+            get {
                 object obj = ResourceManager.GetObject("KeeAgent_icon", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
@@ -78,6 +85,51 @@ namespace KeeAgent.Properties {
             get {
                 object obj = ResourceManager.GetObject("KeeAgentIcon_png", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to http://lechnology.com/KeeAgent+Beta+Options+and+Settings&amp;structure=KeeAgent+Beta#Database_Settings.
+        /// </summary>
+        internal static string WebHelpDatabaseSettings {
+            get {
+                return ResourceManager.GetString("WebHelpDatabaseSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to http://lechnology.com/KeeAgent+Beta+Options+and+Settings&amp;structure=KeeAgent+Beta#Entry_Settings.
+        /// </summary>
+        internal static string WebHelpEntryOptions {
+            get {
+                return ResourceManager.GetString("WebHelpEntryOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to http://lechnology.com/KeeAgent+Beta+Manager&amp;structure=KeeAgent+Beta#EntryPicker.
+        /// </summary>
+        internal static string WebHelpEntryPicker {
+            get {
+                return ResourceManager.GetString("WebHelpEntryPicker", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to http://lechnology.com/KeeAgent+Beta+Options+and+Settings&amp;structure=KeeAgent+Beta#Global_Options.
+        /// </summary>
+        internal static string WebHelpGlobalOptions {
+            get {
+                return ResourceManager.GetString("WebHelpGlobalOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to http://lechnology.com/KeeAgent+Beta.
+        /// </summary>
+        internal static string WebHelpHome {
+            get {
+                return ResourceManager.GetString("WebHelpHome", resourceCulture);
             }
         }
     }

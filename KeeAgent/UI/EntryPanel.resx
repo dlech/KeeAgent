@@ -151,7 +151,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;hasSshKeyCheckBox.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="addKeyAtOpenCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -181,11 +181,8 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;addKeyAtOpenCheckBox.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
-  <metadata name="openFileDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>219, 17</value>
-  </metadata>
   <data name="removeKeyAtCloseCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -214,7 +211,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;removeKeyAtCloseCheckBox.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="keyLocationPanel.Location" type="System.Drawing.Point, System.Drawing">
     <value>9, 78</value>
@@ -229,12 +226,36 @@
     <value>keyLocationPanel</value>
   </data>
   <data name="&gt;&gt;keyLocationPanel.Type" xml:space="preserve">
-    <value>KeeAgent.UI.KeyLocationPanel, KeeAgent, Version=0.3.2.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>KeeAgent.UI.KeyLocationPanel, KeeAgent, Version=0.3.10.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;keyLocationPanel.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;keyLocationPanel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="helpButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="helpButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>433, 308</value>
+  </data>
+  <data name="helpButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>25, 25</value>
+  </data>
+  <data name="helpButton.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;helpButton.Name" xml:space="preserve">
+    <value>helpButton</value>
+  </data>
+  <data name="&gt;&gt;helpButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;helpButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;helpButton.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -248,12 +269,6 @@
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
     <value>467, 342</value>
-  </data>
-  <data name="&gt;&gt;openFileDialog.Name" xml:space="preserve">
-    <value>openFileDialog</value>
-  </data>
-  <data name="&gt;&gt;openFileDialog.Type" xml:space="preserve">
-    <value>System.Windows.Forms.OpenFileDialog, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;entrySettingsBindingSource.Name" xml:space="preserve">
     <value>entrySettingsBindingSource</value>

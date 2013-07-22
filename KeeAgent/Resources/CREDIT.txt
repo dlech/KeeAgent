@@ -1,0 +1,9 @@
+KeeAgent*.*
+    Copyright (C) 2013 David Lechner <david@lechnology.com>
+    Derived from http://openclipart.org/detail/10458/hat-outline-by-rygle-10458
+    and Ext/Icons/Finals/key-bw.png from the KeePass 2.x <http://keepass.info>
+    source code.
+
+help-3.png
+    Copyright (C) ???? David Vignoni
+    

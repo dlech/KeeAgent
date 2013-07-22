@@ -118,6 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Help_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\help-3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="KeeAgentIcon_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\KeeAgent-icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -126,5 +129,20 @@
   </data>
   <data name="KeeAgent_icon_mono" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\keeagent-icon-mono.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="WebHelpDatabaseSettings" xml:space="preserve">
+    <value>http://lechnology.com/KeeAgent+Beta+Options+and+Settings&amp;structure=KeeAgent+Beta#Database_Settings</value>
+  </data>
+  <data name="WebHelpEntryOptions" xml:space="preserve">
+    <value>http://lechnology.com/KeeAgent+Beta+Options+and+Settings&amp;structure=KeeAgent+Beta#Entry_Settings</value>
+  </data>
+  <data name="WebHelpEntryPicker" xml:space="preserve">
+    <value>http://lechnology.com/KeeAgent+Beta+Manager&amp;structure=KeeAgent+Beta#EntryPicker</value>
+  </data>
+  <data name="WebHelpGlobalOptions" xml:space="preserve">
+    <value>http://lechnology.com/KeeAgent+Beta+Options+and+Settings&amp;structure=KeeAgent+Beta#Global_Options</value>
+  </data>
+  <data name="WebHelpHome" xml:space="preserve">
+    <value>http://lechnology.com/KeeAgent+Beta</value>
   </data>
 </root>

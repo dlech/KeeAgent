@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using KeePassLib;
@@ -38,6 +39,9 @@ namespace KeeAgent.UI
       }
     }
 
-
+    private void mHelpButton_Click(object sender, EventArgs e)
+    {
+      Process.Start(Properties.Resources.WebHelpDatabaseSettings);
+    }
   }
 }

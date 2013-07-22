@@ -153,9 +153,6 @@
   <data name="&gt;&gt;mUnlockOnAgentActivityCheckBox.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <metadata name="mOpenFileDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>219, 17</value>
-  </metadata>
   <data name="mAgentModeGroupBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
@@ -178,12 +175,36 @@
     <value>mAgentModeGroupBox</value>
   </data>
   <data name="&gt;&gt;mAgentModeGroupBox.Type" xml:space="preserve">
-    <value>KeeAgent.UI.GroupBoxEx, KeeAgent, Version=0.3.6.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>KeeAgent.UI.GroupBoxEx, KeeAgent, Version=0.3.10.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;mAgentModeGroupBox.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;mAgentModeGroupBox.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="mHelpButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="mHelpButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>435, 310</value>
+  </data>
+  <data name="mHelpButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>26, 26</value>
+  </data>
+  <data name="mHelpButton.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;mHelpButton.Name" xml:space="preserve">
+    <value>mHelpButton</value>
+  </data>
+  <data name="&gt;&gt;mHelpButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;mHelpButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;mHelpButton.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -203,12 +224,6 @@
   </data>
   <data name="&gt;&gt;mDatabaseSettingsBindingSource.Type" xml:space="preserve">
     <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;mOpenFileDialog.Name" xml:space="preserve">
-    <value>mOpenFileDialog</value>
-  </data>
-  <data name="&gt;&gt;mOpenFileDialog.Type" xml:space="preserve">
-    <value>System.Windows.Forms.OpenFileDialog, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>DatabaseSettingsPanel</value>

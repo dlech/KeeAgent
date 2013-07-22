@@ -32,6 +32,7 @@
       this.mUnlockOnAgentActivityCheckBox = new System.Windows.Forms.CheckBox();
       this.mDatabaseSettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.mAgentModeGroupBox = new KeeAgent.UI.GroupBoxEx();
+      this.mHelpButton = new System.Windows.Forms.Button();
       ((System.ComponentModel.ISupportInitialize)(this.mDatabaseSettingsBindingSource)).BeginInit();
       this.mAgentModeGroupBox.SuspendLayout();
       this.SuspendLayout();
@@ -55,10 +56,19 @@
       this.mAgentModeGroupBox.SelectedRadioButton = "";
       this.mAgentModeGroupBox.TabStop = false;
       // 
+      // mHelpButton
+      // 
+      resources.ApplyResources(this.mHelpButton, "mHelpButton");
+      this.mHelpButton.Image = global::KeeAgent.Properties.Resources.Help_png;
+      this.mHelpButton.Name = "mHelpButton";
+      this.mHelpButton.UseVisualStyleBackColor = true;
+      this.mHelpButton.Click += new System.EventHandler(this.mHelpButton_Click);
+      // 
       // DatabaseSettingsPanel
       // 
       resources.ApplyResources(this, "$this");
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this.mHelpButton);
       this.Controls.Add(this.mAgentModeGroupBox);
       this.Name = "DatabaseSettingsPanel";
       ((System.ComponentModel.ISupportInitialize)(this.mDatabaseSettingsBindingSource)).EndInit();
@@ -73,6 +83,7 @@
         private System.Windows.Forms.CheckBox mUnlockOnAgentActivityCheckBox;
         private System.Windows.Forms.BindingSource mDatabaseSettingsBindingSource;
         private GroupBoxEx mAgentModeGroupBox;
+        private System.Windows.Forms.Button mHelpButton;
 
     }
 }

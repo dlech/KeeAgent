@@ -55,5 +55,10 @@ namespace KeeAgent.UI
     {
       UpdateControlStates();
     }
+
+    private void helpButton_Click(object sender, EventArgs e)
+    {
+      Process.Start(Properties.Resources.WebHelpEntryOptions);
+    }
   }
 }

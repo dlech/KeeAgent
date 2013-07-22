@@ -294,5 +294,10 @@ namespace KeeAgent.UI
         }
       }
     }
+
+    private void mHelpButton_Click(object sender, EventArgs e)
+    {
+      Process.Start(Properties.Resources.WebHelpEntryPicker);
+    }
   }
 }

@@ -30,10 +30,11 @@
       this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EntryPanel));
       this.hasSshKeyCheckBox = new System.Windows.Forms.CheckBox();
+      this.entrySettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.addKeyAtOpenCheckBox = new System.Windows.Forms.CheckBox();
       this.removeKeyAtCloseCheckBox = new System.Windows.Forms.CheckBox();
       this.keyLocationPanel = new KeeAgent.UI.KeyLocationPanel();
-      this.entrySettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+      this.helpButton = new System.Windows.Forms.Button();
       ((System.ComponentModel.ISupportInitialize)(this.entrySettingsBindingSource)).BeginInit();
       this.SuspendLayout();
       // 
@@ -44,6 +45,10 @@
       this.hasSshKeyCheckBox.Name = "hasSshKeyCheckBox";
       this.hasSshKeyCheckBox.UseVisualStyleBackColor = true;
       this.hasSshKeyCheckBox.CheckedChanged += new System.EventHandler(this.hasSshKeyCheckBox_CheckedChanged);
+      // 
+      // entrySettingsBindingSource
+      // 
+      this.entrySettingsBindingSource.DataSource = typeof(KeeAgent.EntrySettings);
       // 
       // addKeyAtOpenCheckBox
       // 
@@ -63,17 +68,23 @@
       // 
       this.keyLocationPanel.BackColor = System.Drawing.Color.Transparent;
       this.keyLocationPanel.DataBindings.Add(new System.Windows.Forms.Binding("KeyLocation", this.entrySettingsBindingSource, "Location", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.keyLocationPanel.KeyLocation = null;
       resources.ApplyResources(this.keyLocationPanel, "keyLocationPanel");
       this.keyLocationPanel.Name = "keyLocationPanel";
       // 
-      // entrySettingsBindingSource
+      // helpButton
       // 
-      this.entrySettingsBindingSource.DataSource = typeof(KeeAgent.EntrySettings);
+      resources.ApplyResources(this.helpButton, "helpButton");
+      this.helpButton.Image = global::KeeAgent.Properties.Resources.Help_png;
+      this.helpButton.Name = "helpButton";
+      this.helpButton.UseVisualStyleBackColor = true;
+      this.helpButton.Click += new System.EventHandler(this.helpButton_Click);
       // 
       // EntryPanel
       // 
       resources.ApplyResources(this, "$this");
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this.helpButton);
       this.Controls.Add(this.keyLocationPanel);
       this.Controls.Add(this.removeKeyAtCloseCheckBox);
       this.Controls.Add(this.addKeyAtOpenCheckBox);
@@ -92,6 +103,7 @@
         private System.Windows.Forms.CheckBox removeKeyAtCloseCheckBox;
         internal System.Windows.Forms.BindingSource entrySettingsBindingSource;
         private KeyLocationPanel keyLocationPanel;
+        private System.Windows.Forms.Button helpButton;
 
     }
 }

@@ -123,13 +123,13 @@
   </data>
   <data name="columnHeader.Text" xml:space="preserve">
     <value />
-  </data>  
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="customListViewEx.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 46</value>
   </data>
   <data name="customListViewEx.Size" type="System.Drawing.Size, System.Drawing">
-    <value>542, 259</value>
+    <value>542, 228</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="customListViewEx.TabIndex" type="System.Int32, mscorlib">
@@ -139,13 +139,13 @@
     <value>customListViewEx</value>
   </data>
   <data name="&gt;&gt;customListViewEx.Type" xml:space="preserve">
-    <value>KeePass.UI.CustomListViewEx, KeePass, Version=2.20.1.1, Culture=neutral, PublicKeyToken=null</value>
+    <value>KeePass.UI.CustomListViewEx, KeePass, Version=2.22.0.33549, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;customListViewEx.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;customListViewEx.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="modeComboBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>158, 12</value>
@@ -166,7 +166,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;modeComboBox.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="modeLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -193,6 +193,30 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;modeLabel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="helpButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="helpButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>523, 280</value>
+  </data>
+  <data name="helpButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>25, 25</value>
+  </data>
+  <data name="helpButton.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="&gt;&gt;helpButton.Name" xml:space="preserve">
+    <value>helpButton</value>
+  </data>
+  <data name="&gt;&gt;helpButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;helpButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;helpButton.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

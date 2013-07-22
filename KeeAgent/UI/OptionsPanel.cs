@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using dlech.SshAgentLib;
@@ -81,6 +82,11 @@ namespace KeeAgent.UI
       } else {
         mExt.Options.AgentMode = AgentMode.Auto;
       }
+    }
+
+    private void helpButton_Click(object sender, EventArgs e)
+    {
+      Process.Start(Properties.Resources.WebHelpGlobalOptions);
     }
   }
 }
