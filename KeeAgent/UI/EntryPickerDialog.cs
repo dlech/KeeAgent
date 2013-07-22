@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
@@ -295,7 +296,18 @@ namespace KeeAgent.UI
       }
     }
 
-    private void mHelpButton_Click(object sender, EventArgs e)
+    private void EntryPickerDialog_HelpButtonClicked(object sender, CancelEventArgs e)
+    {
+      OnHelpRequested();
+      e.Cancel = true;
+    }
+
+    private void EntryPickerDialog_HelpRequested(object sender, HelpEventArgs hlpevent)
+    {
+      OnHelpRequested();
+    }
+
+    private void OnHelpRequested()
     {
       Process.Start(Properties.Resources.WebHelpEntryPicker);
     }

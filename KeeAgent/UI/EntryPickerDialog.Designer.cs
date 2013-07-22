@@ -33,7 +33,6 @@
       this.mTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
       this.mConfirmConstraintControl = new dlech.SshAgentLib.WinForms.ConfirmConstraintControl();
       this.mLifetimeConstraintControl = new dlech.SshAgentLib.WinForms.LifetimeConstraintControl();
-      this.mHelpButton = new System.Windows.Forms.Button();
       this.mTableLayoutPanel.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -41,7 +40,7 @@
       // 
       this.mCancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.mCancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      this.mCancelButton.Location = new System.Drawing.Point(261, 390);
+      this.mCancelButton.Location = new System.Drawing.Point(292, 388);
       this.mCancelButton.Name = "mCancelButton";
       this.mCancelButton.Size = new System.Drawing.Size(75, 23);
       this.mCancelButton.TabIndex = 1;
@@ -52,7 +51,7 @@
       // 
       this.mOkButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.mOkButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-      this.mOkButton.Location = new System.Drawing.Point(180, 390);
+      this.mOkButton.Location = new System.Drawing.Point(211, 388);
       this.mOkButton.Name = "mOkButton";
       this.mOkButton.Size = new System.Drawing.Size(75, 23);
       this.mOkButton.TabIndex = 2;
@@ -117,17 +116,6 @@
       this.mLifetimeConstraintControl.Size = new System.Drawing.Size(177, 20);
       this.mLifetimeConstraintControl.TabIndex = 1;
       // 
-      // mHelpButton
-      // 
-      this.mHelpButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.mHelpButton.Image = global::KeeAgent.Properties.Resources.Help_png;
-      this.mHelpButton.Location = new System.Drawing.Point(342, 388);
-      this.mHelpButton.Name = "mHelpButton";
-      this.mHelpButton.Size = new System.Drawing.Size(25, 25);
-      this.mHelpButton.TabIndex = 4;
-      this.mHelpButton.UseVisualStyleBackColor = true;
-      this.mHelpButton.Click += new System.EventHandler(this.mHelpButton_Click);
-      // 
       // EntryPickerDialog
       // 
       this.AcceptButton = this.mOkButton;
@@ -135,11 +123,11 @@
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.CancelButton = this.mCancelButton;
       this.ClientSize = new System.Drawing.Size(379, 423);
-      this.Controls.Add(this.mHelpButton);
       this.Controls.Add(this.mTableLayoutPanel);
       this.Controls.Add(this.mOkButton);
       this.Controls.Add(this.mCancelButton);
       this.Controls.Add(this.mCustomTreeViewEx);
+      this.HelpButton = true;
       this.MaximizeBox = false;
       this.MinimizeBox = false;
       this.Name = "EntryPickerDialog";
@@ -147,7 +135,9 @@
       this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
       this.Text = "Select Entry";
+      this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.EntryPickerDialog_HelpButtonClicked);
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EntryPickerDialog_FormClosing);
+      this.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.EntryPickerDialog_HelpRequested);
       this.mTableLayoutPanel.ResumeLayout(false);
       this.mTableLayoutPanel.PerformLayout();
       this.ResumeLayout(false);
@@ -163,6 +153,5 @@
     private System.Windows.Forms.TableLayoutPanel mTableLayoutPanel;
     private dlech.SshAgentLib.WinForms.ConfirmConstraintControl mConfirmConstraintControl;
     private dlech.SshAgentLib.WinForms.LifetimeConstraintControl mLifetimeConstraintControl;
-    private System.Windows.Forms.Button mHelpButton;
   }
 }
