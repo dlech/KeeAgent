@@ -149,7 +149,7 @@ namespace KeeAgent
         if (tabControl.ImageList == null) {
           tabControl.ImageList = new ImageList();
         }
-        var imageIndex = tabControl.ImageList.Images.Add(Resources.KeeAgentIcon,
+        var imageIndex = tabControl.ImageList.Images.Add(Resources.KeeAgentIcon_png,
                                                          Color.Transparent);
         var newTab = new TabPage(Translatable.KeeAgent);
         newTab.ImageIndex = imageIndex;

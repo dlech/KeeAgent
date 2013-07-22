@@ -35,13 +35,13 @@ namespace KeeAgent
     private UIHelper mUIHelper;
     private bool mSaveBeforeCloseQuestionMessageShown = false;
 
-    private const string cPluginName = "KeeAgent";
-    private const string cAlwaysConfirmOptionName = cPluginName + ".AlwaysConfirm";
-    private const string cShowBalloonOptionName = cPluginName + ".ShowBalloon";
-    private const string cNotificationOptionName = cPluginName + ".Notification";
-    private const string cLogginEnabledOptionName = cPluginName + ".LoggingEnabled";
-    private const string cLogFileNameOptionName = cPluginName + ".LogFileName";
-    private const string cAgentModeOptionName = cPluginName + ".AgentMode";
+    private const string cPluginNamespace = "KeeAgent";
+    private const string cAlwaysConfirmOptionName = cPluginNamespace + ".AlwaysConfirm";
+    private const string cShowBalloonOptionName = cPluginNamespace + ".ShowBalloon";
+    private const string cNotificationOptionName = cPluginNamespace + ".Notification";
+    private const string cLogginEnabledOptionName = cPluginNamespace + ".LoggingEnabled";
+    private const string cLogFileNameOptionName = cPluginNamespace + ".LogFileName";
+    private const string cAgentModeOptionName = cPluginNamespace + ".AgentMode";
 
     public Options Options { get; private set; }
 
@@ -133,7 +133,7 @@ namespace KeeAgent
 
     public override Image SmallIcon
     {
-      get { return Resources.KeeAgentIcon; }
+      get { return Resources.KeeAgentIcon_png; }
     }
 
     private void ShowPageantRunningErrorMessage()
@@ -159,7 +159,7 @@ namespace KeeAgent
       mKeeAgentMenuItem = new ToolStripMenuItem();
       mKeeAgentMenuItem.Text = Translatable.KeeAgent;
       mKeeAgentMenuItem.ToolTipText = Translatable.KeeAgentMenuItemToolTip;
-      mKeeAgentMenuItem.Image = Resources.KeeAgentIcon;
+      mKeeAgentMenuItem.Image = Resources.KeeAgentIcon_png;
       mKeeAgentMenuItem.Click += manageKeeAgentMenuItem_Click;
       mPluginHost.MainWindow.ToolsMenu.DropDownItems.Add(mKeeAgentMenuItem);
 
@@ -175,7 +175,7 @@ namespace KeeAgent
               Translatable.AddToKeeAgentContextMenuItem;
             mKeeAgentPwEntryContextMenuItem.Click +=
               mKeeAgentPwEntryContextMenuItem_Clicked;
-            mKeeAgentPwEntryContextMenuItem.Image = Resources.KeeAgentIcon;
+            mKeeAgentPwEntryContextMenuItem.Image = Resources.KeeAgentIcon_png;
             var firstSeparatorIndex =
               pwEntryContextMenu.Items.IndexOfKey("m_ctxEntrySep0");
             pwEntryContextMenu.Items.Insert(firstSeparatorIndex,
@@ -189,7 +189,7 @@ namespace KeeAgent
       mNotifyIconContextMenuItem = new ToolStripMenuItem();
       mNotifyIconContextMenuItem.Text = Translatable.KeeAgent;
       mNotifyIconContextMenuItem.ToolTipText = Translatable.KeeAgentMenuItemToolTip;
-      mNotifyIconContextMenuItem.Image = Resources.KeeAgentIcon;
+      mNotifyIconContextMenuItem.Image = Resources.KeeAgentIcon_png;
       mNotifyIconContextMenuItem.Click += manageKeeAgentMenuItem_Click;
       var notifyIconContextMenu =
         mPluginHost.MainWindow.MainNotifyIcon.ContextMenuStrip;

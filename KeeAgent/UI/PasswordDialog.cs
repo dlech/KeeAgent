@@ -15,7 +15,7 @@ namespace KeeAgent.UI
 #if __MonoCS__
       Icon = Properties.Resources.KeeAgent_icon_mono;
 #else
-      Icon = Properties.Resources.KeeAgent_ico;
+      Icon = Properties.Resources.KeeAgent_icon;
 #endif
       mSecureEdit = new SecureEdit();
       mSecureEdit.Attach(passwordTextBox, null, true);

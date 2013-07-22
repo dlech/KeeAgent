@@ -60,9 +60,9 @@ namespace KeeAgent.Properties {
             }
         }
         
-        internal static System.Drawing.Icon KeeAgent_ico {
+        internal static System.Drawing.Bitmap Help_png {
             get {
-                object obj = ResourceManager.GetObject("KeeAgent_ico", resourceCulture);
+                object obj = ResourceManager.GetObject("KeeAgent_icon", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
@@ -74,9 +74,9 @@ namespace KeeAgent.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap KeeAgentIcon {
+        internal static System.Drawing.Bitmap KeeAgentIcon_png {
             get {
-                object obj = ResourceManager.GetObject("KeeAgentIcon", resourceCulture);
+                object obj = ResourceManager.GetObject("KeeAgentIcon_png", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
