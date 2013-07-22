@@ -89,6 +89,15 @@ namespace KeeAgent.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to http://lechnology.com/KeeAgent+Beta+Manager&amp;structure=KeeAgent+Beta#AddFromFile.
+        /// </summary>
+        internal static string WebHelpAddFromFile {
+            get {
+                return ResourceManager.GetString("WebHelpAddFromFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to http://lechnology.com/KeeAgent+Beta+Options+and+Settings&amp;structure=KeeAgent+Beta#Database_Settings.
         /// </summary>
         internal static string WebHelpDatabaseSettings {

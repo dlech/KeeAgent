@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 using dlech.SshAgentLib;
 using KeePassLib.Utility;
@@ -64,6 +65,11 @@ namespace KeeAgent.UI
       if (mExt.mAgent is AgentClient) {
         keyInfoView.ReloadKeyListView();
       }
+    }
+
+    private void keyInfoView_AddFromFileHelpRequested(object sender, EventArgs e)
+    {
+      Process.Start(Properties.Resources.WebHelpAddFromFile);
     }
   }
 }

@@ -137,7 +137,7 @@
     <value>From File...</value>
   </data>
   <data name="addButtonMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>132, 70</value>
+    <value>132, 48</value>
   </data>
   <data name="&gt;&gt;addButtonMenuStrip.Name" xml:space="preserve">
     <value>addButtonMenuStrip</value>
@@ -179,6 +179,9 @@
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>660, 280</value>
+  </data>
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>

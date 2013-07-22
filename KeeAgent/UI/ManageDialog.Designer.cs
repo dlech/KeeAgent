@@ -70,6 +70,7 @@
       this.keyInfoView.AddButtonSplitMenu = this.addButtonMenuStrip;
       resources.ApplyResources(this.keyInfoView, "keyInfoView");
       this.keyInfoView.Name = "keyInfoView";
+      this.keyInfoView.AddFromFileHelpRequested += new System.EventHandler(this.keyInfoView_AddFromFileHelpRequested);
       // 
       // ManageDialog
       // 
