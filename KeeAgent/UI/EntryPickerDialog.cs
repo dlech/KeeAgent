@@ -140,6 +140,10 @@ namespace KeeAgent.UI
       bool entriesFound = false;
 
       foreach (PwGroup childGroup in parentGroup.Groups) {
+        if (mActiveDb.RecycleBinEnabled &&
+            childGroup.Uuid.EqualsValue(mActiveDb.RecycleBinUuid))
+          continue;
+
         bool bExpired = (childGroup.Expires && (childGroup.ExpiryTime <= mCachedNow));
         string strName = childGroup.Name;
 
@@ -155,14 +159,8 @@ namespace KeeAgent.UI
         newNode.ForeColor = SystemColors.GrayText;
         UIUtil.SetGroupNodeToolTip(newNode, childGroup);
 
-        if (mActiveDb.RecycleBinEnabled &&
-            childGroup.Uuid.EqualsValue(mActiveDb.RecycleBinUuid) &&
-            (mItalicFont != null)) {
-
-          newNode.NodeFont = mItalicFont;
-        } else if (bExpired && (mExpiredFont != null)) {
+        if (bExpired && (mExpiredFont != null))
           newNode.NodeFont = mExpiredFont;
-        }
 
         treeNodes.Add(newNode);
 
