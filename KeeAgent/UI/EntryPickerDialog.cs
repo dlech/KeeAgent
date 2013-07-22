@@ -132,9 +132,8 @@ namespace KeeAgent.UI
 
     bool RecursiveAddGroup(TreeNode parentNode, PwGroup parentGroup, bool autodetect)
     {
-      if (parentGroup == null) {
+      if (parentGroup == null)
         return false;
-      }
 
       TreeNodeCollection treeNodes;
       if (parentNode == null)

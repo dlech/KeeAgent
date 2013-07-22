@@ -231,7 +231,7 @@ namespace KeeAgent
           try {
             var constraints = new List<Agent.KeyConstraint>();
             if (!(mAgent is PageantClient) &&
-                (Control.ModifierKeys & Keys.Control) == Keys.Control)
+                Control.ModifierKeys.HasFlag(Keys.Control))
             {
               var dialog = new ConstraintsInputDialog();
               dialog.ShowDialog();
@@ -563,7 +563,7 @@ namespace KeeAgent
             break;
           }
           var settings = entry.GetKeeAgentSettings();
-          if (settings.AllowUseOfSshKey && settings.AddAtDatabaseOpen) {            
+          if (settings.AllowUseOfSshKey && settings.AddAtDatabaseOpen) {
             try {
               AddEntry(entry, null);
             } catch (Exception) {
