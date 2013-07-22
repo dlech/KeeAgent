@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using dlech.SshAgentLib;
+using KeePassLib.Utility;
 
 namespace KeeAgent.UI
 {
@@ -41,6 +42,14 @@ namespace KeeAgent.UI
 
     private void addButtonFromKeePassMenuItem_Click(object sender, EventArgs e)
     {
+      var openDatabaseCount =
+        mExt.mPluginHost.MainWindow.DocumentManager.GetOpenDatabases().Count;
+      if (openDatabaseCount == 0) {
+        MessageService.ShowWarning("No open databases found.",
+          "Please open or unlock a database and then try again.");
+        return;
+      }
+
       var showConstraintControls = !(mExt.mAgent is PageantClient);
       var entryPicker =
         new EntryPickerDialog(mExt.mPluginHost, showConstraintControls);
@@ -50,7 +59,7 @@ namespace KeeAgent.UI
           mExt.AddEntry(entryPicker.SelectedEntry, entryPicker.Constraints);
         } catch (Exception) {
           // error message already shown
-        }        
+        }
       }
       if (mExt.mAgent is AgentClient) {
         keyInfoView.ReloadKeyListView();
