@@ -163,7 +163,7 @@
     <value>keyInfoView</value>
   </data>
   <data name="&gt;&gt;keyInfoView.Type" xml:space="preserve">
-    <value>dlech.SshAgentLib.WinForms.KeyInfoView, SshAgentLib.WinForm, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>dlech.SshAgentLib.WinForms.KeyInfoView, SshAgentLib.WinForms, Version=0.4.1.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;keyInfoView.Parent" xml:space="preserve">
     <value>$this</value>
@@ -179,6 +179,9 @@
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>660, 280</value>
+  </data>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterParent</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Manage KeeAgent</value>

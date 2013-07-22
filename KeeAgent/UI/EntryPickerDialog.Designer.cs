@@ -132,6 +132,7 @@
       this.Name = "EntryPickerDialog";
       this.ShowInTaskbar = false;
       this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+      this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
       this.Text = "Select Entry";
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EntryPickerDialog_FormClosing);
       this.mTableLayoutPanel.ResumeLayout(false);
