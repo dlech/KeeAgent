@@ -141,5 +141,14 @@ namespace KeeAgent.Properties {
                 return ResourceManager.GetString("WebHelpHome", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to http://lechnology.com/KeeAgent+Beta+Manager&amp;structure=KeeAgent+Beta.
+        /// </summary>
+        internal static string WebHelpKeeAgentManager {
+            get {
+                return ResourceManager.GetString("WebHelpKeeAgentManager", resourceCulture);
+            }
+        }
     }
 }

@@ -148,4 +148,7 @@
   <data name="WebHelpHome" xml:space="preserve">
     <value>http://lechnology.com/KeeAgent+Beta</value>
   </data>
+  <data name="WebHelpKeeAgentManager" xml:space="preserve">
+    <value>http://lechnology.com/KeeAgent+Beta+Manager&amp;structure=KeeAgent+Beta</value>
+  </data>
 </root>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
 using dlech.SshAgentLib;
@@ -70,6 +71,22 @@ namespace KeeAgent.UI
     private void keyInfoView_AddFromFileHelpRequested(object sender, EventArgs e)
     {
       Process.Start(Properties.Resources.WebHelpAddFromFile);
+    }
+
+    private void ManageDialog_HelpRequested(object sender, HelpEventArgs hlpevent)
+    {
+      OnHelpRequested();
+    }
+
+    private void ManageDialog_HelpButtonClicked(object sender, CancelEventArgs e)
+    {
+      OnHelpRequested();
+      e.Cancel = true;
+    }
+
+    private void OnHelpRequested()
+    {
+      Process.Start(Properties.Resources.WebHelpKeeAgentManager);
     }
   }
 }
