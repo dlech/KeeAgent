@@ -49,6 +49,13 @@ namespace KeeAgent.UI
         Icon = Properties.Resources.KeeAgent_icon;
       } else {
         Icon = Properties.Resources.KeeAgent_icon_mono;
+
+        mTableLayoutPanel.AutoSize = false;
+        mTableLayoutPanel.Size = new Size(mCustomTreeViewEx.Width,
+                                          mLifetimeConstraintControl.Height);
+        mTableLayoutPanel.Location = new Point(mTableLayoutPanel.Location.X,
+                                               mTableLayoutPanel.Location.Y + 3);
+
         // on windows, help button is displayed in the title bar
         // on mono, we need to add one in the window
         var helpButton = new Button();
