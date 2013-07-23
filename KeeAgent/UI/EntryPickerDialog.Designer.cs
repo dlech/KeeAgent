@@ -29,10 +29,10 @@
     {
       this.mCancelButton = new System.Windows.Forms.Button();
       this.mOkButton = new System.Windows.Forms.Button();
-      this.mCustomTreeViewEx = new KeeAgent.UI.TreeViewEx();
       this.mTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
       this.mConfirmConstraintControl = new dlech.SshAgentLib.WinForms.ConfirmConstraintControl();
       this.mLifetimeConstraintControl = new dlech.SshAgentLib.WinForms.LifetimeConstraintControl();
+      this.mCustomTreeViewEx = new KeeAgent.UI.TreeViewEx();
       this.mTableLayoutPanel.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -58,19 +58,6 @@
       this.mOkButton.Text = "OK";
       this.mOkButton.UseVisualStyleBackColor = true;
       // 
-      // mCustomTreeViewEx
-      // 
-      this.mCustomTreeViewEx.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-      this.mCustomTreeViewEx.Location = new System.Drawing.Point(12, 12);
-      this.mCustomTreeViewEx.Name = "mCustomTreeViewEx";
-      this.mCustomTreeViewEx.ShowNodeToolTips = true;
-      this.mCustomTreeViewEx.Size = new System.Drawing.Size(355, 336);
-      this.mCustomTreeViewEx.TabIndex = 0;
-      this.mCustomTreeViewEx.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.customTreeViewEx_AfterSelect);
-      this.mCustomTreeViewEx.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.customTreeViewEx_NodeMouseDoubleClick);
-      // 
       // mTableLayoutPanel
       // 
       this.mTableLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
@@ -82,7 +69,7 @@
       this.mTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
       this.mTableLayoutPanel.Controls.Add(this.mConfirmConstraintControl, 0, 0);
       this.mTableLayoutPanel.Controls.Add(this.mLifetimeConstraintControl, 1, 0);
-      this.mTableLayoutPanel.Location = new System.Drawing.Point(12, 351);
+      this.mTableLayoutPanel.Location = new System.Drawing.Point(12, 356);
       this.mTableLayoutPanel.Margin = new System.Windows.Forms.Padding(0);
       this.mTableLayoutPanel.Name = "mTableLayoutPanel";
       this.mTableLayoutPanel.RowCount = 1;
@@ -115,6 +102,19 @@
       this.mLifetimeConstraintControl.Name = "mLifetimeConstraintControl";
       this.mLifetimeConstraintControl.Size = new System.Drawing.Size(177, 20);
       this.mLifetimeConstraintControl.TabIndex = 1;
+      // 
+      // mCustomTreeViewEx
+      // 
+      this.mCustomTreeViewEx.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.mCustomTreeViewEx.Location = new System.Drawing.Point(12, 12);
+      this.mCustomTreeViewEx.Name = "mCustomTreeViewEx";
+      this.mCustomTreeViewEx.ShowNodeToolTips = true;
+      this.mCustomTreeViewEx.Size = new System.Drawing.Size(355, 336);
+      this.mCustomTreeViewEx.TabIndex = 0;
+      this.mCustomTreeViewEx.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.customTreeViewEx_AfterSelect);
+      this.mCustomTreeViewEx.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.customTreeViewEx_NodeMouseDoubleClick);
       // 
       // EntryPickerDialog
       // 

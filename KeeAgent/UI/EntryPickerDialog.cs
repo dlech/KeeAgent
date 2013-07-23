@@ -53,8 +53,6 @@ namespace KeeAgent.UI
         mTableLayoutPanel.AutoSize = false;
         mTableLayoutPanel.Size = new Size(mCustomTreeViewEx.Width,
                                           mLifetimeConstraintControl.Height);
-        mTableLayoutPanel.Location = new Point(mTableLayoutPanel.Location.X,
-                                               mTableLayoutPanel.Location.Y + 3);
 
         // on windows, help button is displayed in the title bar
         // on mono, we need to add one in the window
