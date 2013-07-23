@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
 using System.Windows.Forms;
 using dlech.SshAgentLib;
 using KeePassLib.Utility;
@@ -15,10 +16,37 @@ namespace KeeAgent.UI
     {
       InitializeComponent();
 
-      if (Type.GetType("Mono.Runtime") == null)
+      if (Type.GetType("Mono.Runtime") == null) {
         Icon = Properties.Resources.KeeAgent_icon;
-      else
+      } else {
         Icon = Properties.Resources.KeeAgent_icon_mono;
+
+        // on windows, help button is displayed in the title bar
+        // on mono, we need to add one in the window
+        var helpButton = new Button();
+        helpButton.Size = new Size(25, 25);
+        helpButton.Image = Properties.Resources.Help_png;
+        helpButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+        helpButton.Location = new Point(10, Height -10);
+        helpButton.Click += (sender, e) => OnHelpRequested();
+        var foundControls =
+          keyInfoView.Controls.Find("buttonTableLayoutPanel", true);
+        if (foundControls.Length > 0) {
+          var buttonTableLayout = foundControls[0];
+          var buttonTableLayoutParent = buttonTableLayout.Parent;
+          buttonTableLayoutParent.Controls.Remove(buttonTableLayout);
+          var buttonTableLayoutWrapper = new TableLayoutPanel();          
+          buttonTableLayoutWrapper.RowCount = 1;
+          buttonTableLayoutWrapper.ColumnCount = 2;
+          buttonTableLayoutWrapper.Anchor =
+            AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
+          buttonTableLayoutWrapper.Width = keyInfoView.dataGridView.Width;
+          buttonTableLayoutWrapper.Height = helpButton.Height + 8;
+          buttonTableLayoutWrapper.Controls.Add(helpButton);
+          buttonTableLayoutWrapper.Controls.Add(buttonTableLayout);
+          buttonTableLayoutParent.Controls.Add(buttonTableLayoutWrapper);
+        }
+      }
 
       // update title depending on Agent Mode
       mExt = aExt;
