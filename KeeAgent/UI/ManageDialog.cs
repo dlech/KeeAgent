@@ -15,11 +15,10 @@ namespace KeeAgent.UI
     {
       InitializeComponent();
 
-#if __MonoCS__
-      Icon = Properties.Resources.KeeAgent_icon_mono;
-#else
-      Icon = Properties.Resources.KeeAgent_icon;
-#endif
+      if (Type.GetType("Mono.Runtime") == null)
+        Icon = Properties.Resources.KeeAgent_icon;
+      else
+        Icon = Properties.Resources.KeeAgent_icon_mono;
 
       // update title depending on Agent Mode
       mExt = aExt;

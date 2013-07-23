@@ -45,22 +45,21 @@ namespace KeeAgent.UI
         Controls.Remove(mTableLayoutPanel);
         mCustomTreeViewEx.Height += mTableLayoutPanel.Height + 6;
       }
-
-#if __MonoCS__
-      Icon = Properties.Resources.KeeAgent_icon_mono;
-      // on windows, help button is displayed in the title bar
-      // on mono, we need to add one in the window
+      if (Type.GetType("Mono.Runtime") == null) {
+        Icon = Properties.Resources.KeeAgent_icon;
+      } else {
+        Icon = Properties.Resources.KeeAgent_icon_mono;
+        // on windows, help button is displayed in the title bar
+        // on mono, we need to add one in the window
         var helpButton = new Button();
         helpButton.Size = new Size(25, 25);
-      helpButton.Image = Properties.Resources.Help_png;
-      helpButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+        helpButton.Image = Properties.Resources.Help_png;
+        helpButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
         helpButton.Location = new Point(mCustomTreeViewEx.Location.X,
                                         mOkButton.Location.Y);
         helpButton.Click += (sender, e) => OnHelpRequested();
         Controls.Add(helpButton);
-#else
-      Icon = Properties.Resources.KeeAgent_icon;
-#endif
+      }
 
       mExpiredFont = FontUtil.CreateFont(mCustomTreeViewEx.Font, FontStyle.Strikeout);
       mBoldFont = FontUtil.CreateFont(mCustomTreeViewEx.Font, FontStyle.Bold);

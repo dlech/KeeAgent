@@ -12,11 +12,12 @@ namespace KeeAgent.UI
     public PasswordDialog()
     {
       InitializeComponent();
-#if __MonoCS__
-      Icon = Properties.Resources.KeeAgent_icon_mono;
-#else
-      Icon = Properties.Resources.KeeAgent_icon;
-#endif
+
+      if (Type.GetType("Mono.Runtime") == null)
+        Icon = Properties.Resources.KeeAgent_icon;
+      else
+        Icon = Properties.Resources.KeeAgent_icon_mono;
+
       mSecureEdit = new SecureEdit();
       mSecureEdit.Attach(passwordTextBox, null, true);
     }
