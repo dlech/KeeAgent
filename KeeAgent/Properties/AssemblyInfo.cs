@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("KeeAgent")]
-[assembly: AssemblyDescription("ssh authentication agent plugin for KeePass 2.x")]
+[assembly: AssemblyDescription("SSH authentication agent plugin for KeePass 2.x")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("David Lechner")]
 [assembly: AssemblyProduct("KeePass Plugin")]
@@ -29,5 +29,5 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("0.3.10.0")]
-[assembly: AssemblyFileVersion("0.3.10.0")]
+[assembly: AssemblyVersion("0.3.11.0")]
+[assembly: AssemblyFileVersion("0.3.11.0")]
