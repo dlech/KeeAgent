@@ -105,9 +105,9 @@ namespace KeeAgent.UI
           rootNode.ToolTipText = db.IOConnectionInfo.GetDisplayName();
 
           mCustomTreeViewEx.Nodes.Add(rootNode);
-        }
 
-        entriesFound |= RecursiveAddGroup(rootNode, rootGroup, autodetect);
+          entriesFound |= RecursiveAddGroup(rootNode, rootGroup, autodetect);
+        }
 
         if (rootNode != null) {
           rootNode.Expand();
@@ -187,59 +187,59 @@ namespace KeeAgent.UI
 
         entriesFound |= RecursiveAddGroup(newNode, childGroup, autodetect);
 
-        foreach (var entry in childGroup.Entries) {
-          var settings = entry.GetKeeAgentSettings();
-          if (autodetect) {
-            var entryClone = entry.CloneDeep();
-            settings.AllowUseOfSshKey = true;
-            settings.Location.SelectedType = EntrySettings.LocationType.Attachment;
-            var sshKeyFound = false;
-            foreach (var attachment in entry.Binaries) {
-              try {
-                settings.Location.AttachmentName = attachment.Key;
-                entryClone.SetKeeAgentSettings(settings);
-                entryClone.GetSshKey(); // throws
-                entry.SetKeeAgentSettings(settings);
-                entry.Touch(true);
-                mActiveDb.Modified = true;
-                mPluginHost.MainWindow.UpdateUI(false, null, false, null, false, null, false);
-                sshKeyFound = true;
-                break;
-              } catch (Exception) {
-                // ignore all errors
-              }
-            }
-            if (!sshKeyFound)
-              continue;
-          }
-          if (settings.AllowUseOfSshKey) {
-            var entryNode = new TreeNode(entry.Strings.Get(PwDefs.TitleField).ReadString(),
-              (int)entry.IconId, (int)entry.IconId);
-            entryNode.Tag = entry;
-
-            if (entry.Expires && (entry.ExpiryTime <= mCachedNow)) {
-              entryNode.ImageIndex = (int)PwIcon.Expired;
-              if (mExpiredFont != null) entryNode.NodeFont = mExpiredFont;
-            } else { // Not expired			
-              if (entry.CustomIconUuid.EqualsValue(PwUuid.Zero))
-                entryNode.ImageIndex = (int)entry.IconId;
-              else
-                entryNode.ImageIndex = (int)PwIcon.Count +
-                  mActiveDb.GetCustomIconIndex(entry.CustomIconUuid);
-            }
-            entryNode.ForeColor = entry.ForegroundColor;
-            entryNode.BackColor = entryNode.BackColor;
-            newNode.Nodes.Add(entryNode);
-            entriesFound = true;
-          }
-        }
-
         if (newNode.Nodes.Count > 0) {
           if ((newNode.IsExpanded) && (!childGroup.IsExpanded)) {
             newNode.Collapse();
           } else if ((!newNode.IsExpanded) && (childGroup.IsExpanded)) {
             newNode.Expand();
           }
+        }
+      }
+
+      foreach (var entry in parentGroup.Entries) {
+        var settings = entry.GetKeeAgentSettings();
+        if (autodetect) {
+          var entryClone = entry.CloneDeep();
+          settings.AllowUseOfSshKey = true;
+          settings.Location.SelectedType = EntrySettings.LocationType.Attachment;
+          var sshKeyFound = false;
+          foreach (var attachment in entry.Binaries) {
+            try {
+              settings.Location.AttachmentName = attachment.Key;
+              entryClone.SetKeeAgentSettings(settings);
+              entryClone.GetSshKey(); // throws
+              entry.SetKeeAgentSettings(settings);
+              entry.Touch(true);
+              mActiveDb.Modified = true;
+              mPluginHost.MainWindow.UpdateUI(false, null, false, null, false, null, false);
+              sshKeyFound = true;
+              break;
+            } catch (Exception) {
+              // ignore all errors
+            }
+          }
+          if (!sshKeyFound)
+            continue;
+        }
+        if (settings.AllowUseOfSshKey) {
+          var entryNode = new TreeNode(entry.Strings.Get(PwDefs.TitleField).ReadString(),
+                                       (int)entry.IconId, (int)entry.IconId);
+          entryNode.Tag = entry;
+
+          if (entry.Expires && (entry.ExpiryTime <= mCachedNow)) {
+            entryNode.ImageIndex = (int)PwIcon.Expired;
+            if (mExpiredFont != null) entryNode.NodeFont = mExpiredFont;
+          } else { // Not expired
+            if (entry.CustomIconUuid.EqualsValue(PwUuid.Zero))
+              entryNode.ImageIndex = (int)entry.IconId;
+            else
+              entryNode.ImageIndex = (int)PwIcon.Count +
+                mActiveDb.GetCustomIconIndex(entry.CustomIconUuid);
+          }
+          entryNode.ForeColor = entry.ForegroundColor;
+          entryNode.BackColor = entryNode.BackColor;
+          parentNode.Nodes.Add(entryNode);
+          entriesFound = true;
         }
       }
       return entriesFound;
