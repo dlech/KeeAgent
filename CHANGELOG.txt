@@ -1,3 +1,7 @@
+v0.4.1 (2013-08-07)
+-------------------
+* Fix Help links
+
 v0.4.0 (2013-08-07)
 -------------------
 * Runs on Linux and Mac (client mode only)

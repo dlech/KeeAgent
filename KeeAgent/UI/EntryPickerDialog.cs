@@ -276,7 +276,7 @@ namespace KeeAgent.UI
       }
       imgList.Images.AddRange(lStdImages.ToArray());
 
-      Debug.Assert(imgList.Images.Count == (int)PwIcon.Count);
+      Debug.Assert(imgList.Images.Count >= (int)PwIcon.Count);
 
       List<Image> lCustom = UIUtil.BuildImageListEx(
        mActiveDb.CustomIcons, 16, 16);
