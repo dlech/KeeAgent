@@ -1,3 +1,22 @@
+v0.4.0 (2013-08-07)
+-------------------
+* Runs on Linux and Mac (client mode only)
+* Fix does not work with PuTTY <=0.60
+* Fix ppk file not able to load when it has extended characters in the comment
+* New Client mode - allows keys from KeePass to be loaded into an external SSH
+  agent such as Pageant
+* Added context help links to website
+* Supports SSH1 keys - Thank you to maxlaverse for this! 
+* Supports SSH2 ECDSA keys
+* Supports OpenSSH key file format
+* Supports loading keys from external files
+* Supports selectively loading keys
+* Supports automatically loading/unloading keys on database lock/unlock
+* Supports requesting to unlock database when key is requested from client
+* Supports locking/unlocking agent separately from databases
+* Supports most ssh-add commands
+* Supports confirm and lifetime constraints
+
 v0.2.0 (2012-10-13)
 -------------------
 * Added user notification options
