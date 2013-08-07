@@ -8,7 +8,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A3C09426-AEFA-4170-B530-3A0F3B13903D}"
 	ProjectSection(SolutionItems) = preProject
 		CHANGELOG.txt = CHANGELOG.txt
-		README.txt = README.txt
+		COPYING.txt = COPYING.txt
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SshAgentLib", "SshAgentLib\SshAgentLib\SshAgentLib.csproj", "{9163B6B6-0603-4C6E-BC67-7111ED8CDDE1}"
