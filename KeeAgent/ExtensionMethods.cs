@@ -59,12 +59,15 @@ namespace KeeAgent
       get
       {
         if (mDatabaseSettingsSerializer == null) {
+#pragma warning disable 618 // ignore use of obsolete type
           mDatabaseSettingsSerializer = new XmlSerializer(typeof(DatabaseSettings));
+#pragma warning restore 618
         }
         return mDatabaseSettingsSerializer;
       }
     }
 
+    [Obsolete ("There are currently no database settings.")]
     public static DatabaseSettings GetKeeAgentSettings(this PwDatabase aDatabase)
     {
       var settingsString = aDatabase.CustomData.Get(cStringId);
@@ -78,6 +81,7 @@ namespace KeeAgent
       return new DatabaseSettings();
     }
 
+    [Obsolete ("There are currently no database settings.")]
     public static void SetKeeAgentSettings(this PwDatabase aDatabase,
       DatabaseSettings aSettings)
     {

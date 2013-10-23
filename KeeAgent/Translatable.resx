@@ -182,6 +182,9 @@
   <data name="OptionsMenuItem" xml:space="preserve">
     <value>Options...</value>
   </data>
+  <data name="OptionUnlockOnActivity" xml:space="preserve">
+    <value>Unlock all databases when a client sends a request</value>
+  </data>
   <data name="StatusLocked" xml:space="preserve">
     <value>KeeAgent is Locked</value>
   </data>
