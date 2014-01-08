@@ -318,6 +318,7 @@ namespace KeeAgent
       config.SetBool(cLogginEnabledOptionName, Options.LoggingEnabled);
       config.SetString(cLogFileNameOptionName, Options.LogFileName);
       config.SetString(cAgentModeOptionName, Options.AgentMode.ToString());
+      config.SetBool (cUnlockOnActivityOptionName, Options.UnlockOnActivity);
     }
 
     private void LoadOptions()
