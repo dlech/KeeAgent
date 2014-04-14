@@ -62,5 +62,10 @@ namespace KeeAgent
     /// Specifies which mode to run the agent in.
     /// </summary>
     public AgentMode AgentMode { get; set; }
+
+    /// <summary>
+    /// When true, all databases will be unlocked when an SSH key is requested (Agent mode only).
+    /// </summary>
+    public bool UnlockOnActivity { get; set; }
   }
 }

@@ -131,24 +131,24 @@
     <value>..\Resources\KeeAgent-icon-mono.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="WebHelpAddFromFile" xml:space="preserve">
-    <value>http://lechnology.com/KeeAgent+Beta+Manager&amp;structure=KeeAgent+Beta#AddFromFile</value>
+    <value>http://lechnology.com/KeeAgent+Manager#AddFromFile</value>
   </data>
   <data name="WebHelpDatabaseSettings" xml:space="preserve">
-    <value>http://lechnology.com/KeeAgent+Beta+Options+and+Settings&amp;structure=KeeAgent+Beta#Database_Settings</value>
+    <value>http://lechnology.com/KeeAgent+Options+and+Settings#Database_Settings</value>
   </data>
   <data name="WebHelpEntryOptions" xml:space="preserve">
-    <value>http://lechnology.com/KeeAgent+Beta+Options+and+Settings&amp;structure=KeeAgent+Beta#Entry_Settings</value>
+    <value>http://lechnology.com/KeeAgent+Options+and+Settings#Entry_Settings</value>
   </data>
   <data name="WebHelpEntryPicker" xml:space="preserve">
-    <value>http://lechnology.com/KeeAgent+Beta+Manager&amp;structure=KeeAgent+Beta#EntryPicker</value>
+    <value>http://lechnology.com/KeeAgent+Manager#EntryPicker</value>
   </data>
   <data name="WebHelpGlobalOptions" xml:space="preserve">
-    <value>http://lechnology.com/KeeAgent+Beta+Options+and+Settings&amp;structure=KeeAgent+Beta#Global_Options</value>
+    <value>http://lechnology.com/KeeAgent+Options+and+Settings#Global_Options</value>
   </data>
   <data name="WebHelpHome" xml:space="preserve">
-    <value>http://lechnology.com/KeeAgent+Beta</value>
+    <value>http://lechnology.com/KeeAgent</value>
   </data>
   <data name="WebHelpKeeAgentManager" xml:space="preserve">
-    <value>http://lechnology.com/KeeAgent+Beta+Manager&amp;structure=KeeAgent+Beta</value>
+    <value>http://lechnology.com/KeeAgent+Manager</value>
   </data>
 </root>

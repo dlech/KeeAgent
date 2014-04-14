@@ -117,45 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="mUnlockOnAgentActivityCheckBox.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
   <metadata name="mDatabaseSettingsBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="mUnlockOnAgentActivityCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="mUnlockOnAgentActivityCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 22</value>
-  </data>
-  <data name="mUnlockOnAgentActivityCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>219, 17</value>
-  </data>
-  <data name="mUnlockOnAgentActivityCheckBox.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="mUnlockOnAgentActivityCheckBox.Text" xml:space="preserve">
-    <value>Unlock Database On SSH Agent Activity</value>
-  </data>
-  <data name="&gt;&gt;mUnlockOnAgentActivityCheckBox.Name" xml:space="preserve">
-    <value>mUnlockOnAgentActivityCheckBox</value>
-  </data>
-  <data name="&gt;&gt;mUnlockOnAgentActivityCheckBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;mUnlockOnAgentActivityCheckBox.Parent" xml:space="preserve">
-    <value>mAgentModeGroupBox</value>
-  </data>
-  <data name="&gt;&gt;mUnlockOnAgentActivityCheckBox.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <data name="mAgentModeGroupBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="mAgentModeGroupBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 6</value>
   </data>
@@ -165,6 +134,7 @@
   <data name="mAgentModeGroupBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>455, 53</value>
   </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="mAgentModeGroupBox.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
@@ -175,7 +145,7 @@
     <value>mAgentModeGroupBox</value>
   </data>
   <data name="&gt;&gt;mAgentModeGroupBox.Type" xml:space="preserve">
-    <value>KeeAgent.UI.GroupBoxEx, KeeAgent, Version=0.3.10.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>KeeAgent.UI.GroupBoxEx, KeeAgent, Version=0.4.1.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;mAgentModeGroupBox.Parent" xml:space="preserve">
     <value>$this</value>

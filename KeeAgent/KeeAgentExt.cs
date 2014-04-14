@@ -62,6 +62,7 @@ namespace KeeAgent
     private const string cLogginEnabledOptionName = cPluginNamespace + ".LoggingEnabled";
     private const string cLogFileNameOptionName = cPluginNamespace + ".LogFileName";
     private const string cAgentModeOptionName = cPluginNamespace + ".AgentMode";
+    private const string cUnlockOnActivityOptionName = cPluginNamespace + ".UnlockOnActivity";
 
     public Options Options { get; private set; }
 
@@ -317,6 +318,7 @@ namespace KeeAgent
       config.SetBool(cLogginEnabledOptionName, Options.LoggingEnabled);
       config.SetString(cLogFileNameOptionName, Options.LogFileName);
       config.SetString(cAgentModeOptionName, Options.AgentMode.ToString());
+      config.SetBool (cUnlockOnActivityOptionName, Options.UnlockOnActivity);
     }
 
     private void LoadOptions()
@@ -327,6 +329,7 @@ namespace KeeAgent
       Options.AlwaysConfirm = config.GetBool(cAlwaysConfirmOptionName, false);
       Options.ShowBalloon = config.GetBool(cShowBalloonOptionName, true);
       Options.LoggingEnabled = config.GetBool(cLogginEnabledOptionName, false);
+      Options.UnlockOnActivity = config.GetBool (cUnlockOnActivityOptionName, true);
 
       string defaultLogFileNameValue = Path.Combine(
           Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
@@ -395,18 +398,6 @@ namespace KeeAgent
         };
         pwEntryForm.EntrySaving += PwEntryForm_EntrySaving;
         pwEntryForm.FormClosing += PwEntryForm_FormClosing;
-      }
-
-      /* Add KeeAgent tab to Database Settings dialog */
-      var databaseSettingForm = aEventArgs.Form as DatabaseSettingsForm;
-      if (databaseSettingForm != null) {
-        databaseSettingForm.Shown +=
-          delegate(object sender, EventArgs args)
-          {
-            var dbSettingsPanel =
-              new DatabaseSettingsPanel(mPluginHost.MainWindow.ActiveDatabase);
-            databaseSettingForm.AddTab(dbSettingsPanel);
-          };
       }
 
       /* Add KeeAgent tab to Options dialog */
@@ -560,12 +551,11 @@ namespace KeeAgent
       if (thread.Join(1000)) {
         mainWindow.Invoke((MethodInvoker)delegate()
         {
-          foreach (var document in mainWindow.DocumentManager.Documents) {
+          if (Options.UnlockOnActivity) {
+            foreach (var document in mainWindow.DocumentManager.Documents) {
             if (mainWindow.IsFileLocked(document)) {
-              if (document.Database.GetKeeAgentSettings().UnlockOnActivity) {
                 mainWindow.OpenDatabase(document.LockedIoc, null, false);
               }
-              break;
             }
           }
         });
