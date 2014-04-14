@@ -89,7 +89,7 @@ namespace KeeAgent.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://lechnology.com/KeeAgent+Beta+Manager&amp;structure=KeeAgent+Beta#AddFromFile.
+        ///   Looks up a localized string similar to http://lechnology.com/KeeAgent+Manager#AddFromFile.
         /// </summary>
         internal static string WebHelpAddFromFile {
             get {
@@ -98,7 +98,7 @@ namespace KeeAgent.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://lechnology.com/KeeAgent+Beta+Options+and+Settings&amp;structure=KeeAgent+Beta#Database_Settings.
+        ///   Looks up a localized string similar to http://lechnology.com/KeeAgent+Options+and+Settings#Database_Settings.
         /// </summary>
         internal static string WebHelpDatabaseSettings {
             get {
@@ -107,7 +107,7 @@ namespace KeeAgent.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://lechnology.com/KeeAgent+Beta+Options+and+Settings&amp;structure=KeeAgent+Beta#Entry_Settings.
+        ///   Looks up a localized string similar to http://lechnology.com/KeeAgent+Options+and+Settings#Entry_Settings.
         /// </summary>
         internal static string WebHelpEntryOptions {
             get {
@@ -116,7 +116,7 @@ namespace KeeAgent.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://lechnology.com/KeeAgent+Beta+Manager&amp;structure=KeeAgent+Beta#EntryPicker.
+        ///   Looks up a localized string similar to http://lechnology.com/KeeAgent+Manager#EntryPicker.
         /// </summary>
         internal static string WebHelpEntryPicker {
             get {
@@ -125,7 +125,7 @@ namespace KeeAgent.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://lechnology.com/KeeAgent+Beta+Options+and+Settings&amp;structure=KeeAgent+Beta#Global_Options.
+        ///   Looks up a localized string similar to http://lechnology.com/KeeAgent+Options+and+Settings#Global_Options.
         /// </summary>
         internal static string WebHelpGlobalOptions {
             get {
@@ -134,7 +134,7 @@ namespace KeeAgent.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://lechnology.com/KeeAgent+Beta.
+        ///   Looks up a localized string similar to http://lechnology.com/KeeAgent.
         /// </summary>
         internal static string WebHelpHome {
             get {
@@ -143,7 +143,7 @@ namespace KeeAgent.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://lechnology.com/KeeAgent+Beta+Manager&amp;structure=KeeAgent+Beta.
+        ///   Looks up a localized string similar to http://lechnology.com/KeeAgent+Manager.
         /// </summary>
         internal static string WebHelpKeeAgentManager {
             get {

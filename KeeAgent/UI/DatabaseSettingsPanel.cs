@@ -27,6 +27,7 @@ using KeePassLib;
 
 namespace KeeAgent.UI
 {
+  [Obsolete ("There are currently no database settings.")]
   public partial class DatabaseSettingsPanel : UserControl
   {
 

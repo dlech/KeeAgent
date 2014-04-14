@@ -19,15 +19,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program; if not, see <http://www.gnu.org/licenses>
 
+using System;
+
 namespace KeeAgent
 {
+  [Obsolete ("There are currently no database settings.")]
   public class DatabaseSettings
   {
-    public bool UnlockOnActivity { get; set; }
-
     public DatabaseSettings()
     {
-      UnlockOnActivity = true;
     }
   }
 }

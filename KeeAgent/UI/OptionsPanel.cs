@@ -73,6 +73,8 @@ namespace KeeAgent.UI
         Translatable.OptionShowBalloon);
       //mOptionsList.CreateItem(aExt.Options, "LoggingEnabled", optionsGroup,
       //  Translatable.optionLoggingEnabled);
+      mOptionsList.CreateItem (aExt.Options, "UnlockOnActivity", agentModeOptionsGroup,
+       Translatable.OptionUnlockOnActivity);
       columnHeader.Width = customListViewEx.ClientRectangle.Width -
         UIUtil.GetVScrollBarWidth() - 1;
       mOptionsList.UpdateData(false);

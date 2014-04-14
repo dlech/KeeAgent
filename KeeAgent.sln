@@ -45,21 +45,6 @@ Global
 		{D181A56F-743F-429F-BA31-1827C39A176C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D181A56F-743F-429F-BA31-1827C39A176C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D181A56F-743F-429F-BA31-1827C39A176C}.ReleasePlgx|Any CPU.ActiveCfg = Release|Any CPU
-		{9EA4E10E-AAA0-48D4-B102-6629833F4300}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9EA4E10E-AAA0-48D4-B102-6629833F4300}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9EA4E10E-AAA0-48D4-B102-6629833F4300}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9EA4E10E-AAA0-48D4-B102-6629833F4300}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9EA4E10E-AAA0-48D4-B102-6629833F4300}.ReleasePlgx|Any CPU.ActiveCfg = Release|Any CPU
-		{7B11CC40-373F-4C20-99A5-DD70F3317D5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7B11CC40-373F-4C20-99A5-DD70F3317D5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7B11CC40-373F-4C20-99A5-DD70F3317D5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7B11CC40-373F-4C20-99A5-DD70F3317D5C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7B11CC40-373F-4C20-99A5-DD70F3317D5C}.ReleasePlgx|Any CPU.ActiveCfg = Release|Any CPU
-		{B120F5D7-59B5-4376-AC0A-FF60A361D5B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B120F5D7-59B5-4376-AC0A-FF60A361D5B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B120F5D7-59B5-4376-AC0A-FF60A361D5B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B120F5D7-59B5-4376-AC0A-FF60A361D5B2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B120F5D7-59B5-4376-AC0A-FF60A361D5B2}.ReleasePlgx|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection
@@ -85,10 +70,11 @@ Global
 		$3.TabWidth = 2
 		$3.IndentWidth = 2
 		$3.NoTabsAfterNonTabs = True
+		$3.EolMarker = Windows
 		$3.inheritsSet = VisualStudio
 		$3.inheritsScope = text/plain
 		$3.scope = text/plain
-		version = 0.3.10
+		version = 0.4.1.2
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
