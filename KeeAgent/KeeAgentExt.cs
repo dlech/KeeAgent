@@ -454,6 +454,9 @@ namespace KeeAgent
                 errorMessage = "File does not exist";
               }
               break;
+            default:
+              errorMessage = "Must select attachment or file";
+              break;
           }
 
           /* if there was a problem with a KeeAgent settings, activate the 
