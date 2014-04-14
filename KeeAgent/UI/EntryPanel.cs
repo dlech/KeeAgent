@@ -24,6 +24,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using KeePass.Forms;
+using System.IO;
 
 namespace KeeAgent.UI
 {
@@ -70,6 +71,38 @@ namespace KeeAgent.UI
       addKeyAtOpenCheckBox.Enabled = hasSshKeyCheckBox.Checked;
       removeKeyAtCloseCheckBox.Enabled = hasSshKeyCheckBox.Checked;
       keyLocationPanel.Enabled = hasSshKeyCheckBox.Checked;
+      if (hasSshKeyCheckBox.Checked) {
+        switch (keyLocationPanel.KeyLocation.SelectedType) {
+          case EntrySettings.LocationType.Attachment:
+            try {
+
+            } catch (Exception) {
+              commentTextBox.Text = "Error loading key from attachment";
+              fingerprintTextBox.Text = string.Empty;
+              publicKeyTextBox.Text = string.Empty;
+            }
+            break;
+          case EntrySettings.LocationType.File:
+            try {              
+
+            } catch (Exception) {
+              commentTextBox.Text = string.Format("Error loading key from {0}",
+                Path.GetFullPath(keyLocationPanel.KeyLocation.FileName));
+              fingerprintTextBox.Text = string.Empty;
+              publicKeyTextBox.Text = string.Empty;
+            }
+            break;
+          default:
+            commentTextBox.Text = "No key selected";
+            fingerprintTextBox.Text = string.Empty;
+            publicKeyTextBox.Text = string.Empty;
+            break;
+        }
+      } else {
+        commentTextBox.Text = string.Empty;
+        fingerprintTextBox.Text = string.Empty;
+        publicKeyTextBox.Text = string.Empty;
+      }
     }
 
     private void hasSshKeyCheckBox_CheckedChanged(object sender, EventArgs e)

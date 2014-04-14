@@ -35,7 +35,15 @@
       this.removeKeyAtCloseCheckBox = new System.Windows.Forms.CheckBox();
       this.keyLocationPanel = new KeeAgent.UI.KeyLocationPanel();
       this.helpButton = new System.Windows.Forms.Button();
+      this.keyInfoGroupBox = new System.Windows.Forms.GroupBox();
+      this.label2 = new System.Windows.Forms.Label();
+      this.label1 = new System.Windows.Forms.Label();
+      this.label3 = new System.Windows.Forms.Label();
+      this.fingerprintTextBox = new System.Windows.Forms.TextBox();
+      this.commentTextBox = new System.Windows.Forms.TextBox();
+      this.publicKeyTextBox = new System.Windows.Forms.TextBox();
       ((System.ComponentModel.ISupportInitialize)(this.entrySettingsBindingSource)).BeginInit();
+      this.keyInfoGroupBox.SuspendLayout();
       this.SuspendLayout();
       // 
       // hasSshKeyCheckBox
@@ -80,10 +88,56 @@
       this.helpButton.UseVisualStyleBackColor = true;
       this.helpButton.Click += new System.EventHandler(this.helpButton_Click);
       // 
+      // keyInfoGroupBox
+      // 
+      resources.ApplyResources(this.keyInfoGroupBox, "keyInfoGroupBox");
+      this.keyInfoGroupBox.Controls.Add(this.publicKeyTextBox);
+      this.keyInfoGroupBox.Controls.Add(this.commentTextBox);
+      this.keyInfoGroupBox.Controls.Add(this.fingerprintTextBox);
+      this.keyInfoGroupBox.Controls.Add(this.label3);
+      this.keyInfoGroupBox.Controls.Add(this.label2);
+      this.keyInfoGroupBox.Controls.Add(this.label1);
+      this.keyInfoGroupBox.Name = "keyInfoGroupBox";
+      this.keyInfoGroupBox.TabStop = false;
+      // 
+      // label2
+      // 
+      resources.ApplyResources(this.label2, "label2");
+      this.label2.Name = "label2";
+      // 
+      // label1
+      // 
+      resources.ApplyResources(this.label1, "label1");
+      this.label1.Name = "label1";
+      // 
+      // label3
+      // 
+      resources.ApplyResources(this.label3, "label3");
+      this.label3.Name = "label3";
+      // 
+      // fingerprintTextBox
+      // 
+      resources.ApplyResources(this.fingerprintTextBox, "fingerprintTextBox");
+      this.fingerprintTextBox.Name = "fingerprintTextBox";
+      this.fingerprintTextBox.ReadOnly = true;
+      // 
+      // commentTextBox
+      // 
+      resources.ApplyResources(this.commentTextBox, "commentTextBox");
+      this.commentTextBox.Name = "commentTextBox";
+      this.commentTextBox.ReadOnly = true;
+      // 
+      // publicKeyTextBox
+      // 
+      resources.ApplyResources(this.publicKeyTextBox, "publicKeyTextBox");
+      this.publicKeyTextBox.Name = "publicKeyTextBox";
+      this.publicKeyTextBox.ReadOnly = true;
+      // 
       // EntryPanel
       // 
       resources.ApplyResources(this, "$this");
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this.keyInfoGroupBox);
       this.Controls.Add(this.helpButton);
       this.Controls.Add(this.keyLocationPanel);
       this.Controls.Add(this.removeKeyAtCloseCheckBox);
@@ -91,6 +145,8 @@
       this.Controls.Add(this.hasSshKeyCheckBox);
       this.Name = "EntryPanel";
       ((System.ComponentModel.ISupportInitialize)(this.entrySettingsBindingSource)).EndInit();
+      this.keyInfoGroupBox.ResumeLayout(false);
+      this.keyInfoGroupBox.PerformLayout();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -104,6 +160,13 @@
         internal System.Windows.Forms.BindingSource entrySettingsBindingSource;
         private KeyLocationPanel keyLocationPanel;
         private System.Windows.Forms.Button helpButton;
+        private System.Windows.Forms.GroupBox keyInfoGroupBox;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox publicKeyTextBox;
+        private System.Windows.Forms.TextBox commentTextBox;
+        private System.Windows.Forms.TextBox fingerprintTextBox;
+        private System.Windows.Forms.Label label3;
 
     }
 }
