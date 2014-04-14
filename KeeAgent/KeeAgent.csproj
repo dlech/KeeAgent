@@ -36,7 +36,7 @@
     <Optimize>False</Optimize>
     <CustomCommands>
       <CustomCommands>
-        <Command type="Execute" command="bin/Debug/KeePass.exe --debug" />
+        <Command type="Execute" command="bin/Debug/KeePass.exe --debug --pw:test Test.kdbx" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
@@ -171,6 +171,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\KeeAgent-icon-mono.ico" />
+    <None Include="Test.kdbx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SshAgentLib\Ui\WinForms\SshAgentLib.Ui.WinForms.csproj">

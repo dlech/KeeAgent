@@ -15,4 +15,7 @@
       <CheckForUpdateConfigured>true</CheckForUpdateConfigured>
     </Start>
   </Application>
+  <Integration>
+    <LimitToSingleInstance>false</LimitToSingleInstance>
+  </Integration>
 </Configuration>
