@@ -38,7 +38,14 @@ namespace KeeAgent
 {
   public static class ExtensionMethods
   {
-    private const string cStringId = "KeeAgent.Settings";
+    /// <summary>
+    /// name of string entry that contains KeeAgent settings (obsolete)
+    /// </summary>
+    const string settingsStringId = "KeeAgent.Settings";
+    /// <summary>
+    /// Name of binary attachment that contains keeagent settings
+    /// </summary>
+    const string settingsBinaryId = "KeeAgent.settings";
 
     private static XmlSerializer mEntrySettingsSerializer;
     private static XmlSerializer mDatabaseSettingsSerializer;
@@ -70,7 +77,7 @@ namespace KeeAgent
     [Obsolete ("There are currently no database settings.")]
     public static DatabaseSettings GetKeeAgentSettings(this PwDatabase aDatabase)
     {
-      var settingsString = aDatabase.CustomData.Get(cStringId);
+      var settingsString = aDatabase.CustomData.Get(settingsStringId);
       if (!string.IsNullOrWhiteSpace(settingsString)) {
         using (var reader = XmlReader.Create(new StringReader(settingsString))) {
           if (DatabaseSettingsSerializer.CanDeserialize(reader)) {
@@ -87,41 +94,57 @@ namespace KeeAgent
     {
       using (var writer = new StringWriter()) {
         DatabaseSettingsSerializer.Serialize(writer, aSettings);
-        aDatabase.CustomData.Set(cStringId, writer.ToString());
+        aDatabase.CustomData.Set(settingsStringId, writer.ToString());
       }
     }
 
-    public static EntrySettings GetKeeAgentSettings(this PwEntry aEntry)
+    public static EntrySettings GetKeeAgentSettings(this PwEntry entry)
     {
-      var settingsString = aEntry.Strings.ReadSafe(cStringId);
-      if (!string.IsNullOrWhiteSpace(settingsString)) {
-        using (var reader = XmlReader.Create(new StringReader(settingsString))) {
-          if (EntrySettingsSerializer.CanDeserialize(reader)) {
-            return EntrySettingsSerializer.Deserialize(reader) as EntrySettings;
+      var settingsString = entry.Strings.ReadSafe(settingsStringId);
+      // move settings from string to binary attachment
+      if (settingsString != string.Empty) {
+        entry.Binaries.Set(settingsBinaryId,
+          new ProtectedBinary(false, Encoding.Unicode.GetBytes(settingsString)));
+        entry.Strings.Remove(settingsStringId);
+        entry.Touch(true);
+      }
+      var settingsBinary = entry.Binaries.Get(settingsBinaryId);
+      if (settingsBinary != null) {
+        settingsString = Encoding.Unicode.GetString(settingsBinary.ReadData());
+        if (!string.IsNullOrWhiteSpace(settingsString)) {
+          using (var reader = XmlReader.Create(new StringReader(settingsString))) {
+            if (EntrySettingsSerializer.CanDeserialize(reader)) {
+              return EntrySettingsSerializer.Deserialize(reader) as EntrySettings;
+            }
           }
         }
       }
       return new EntrySettings();
     }
 
-    public static void SetKeeAgentSettings(this PwEntry aEntry,
-      EntrySettings aSettings)
+    public static void SetKeeAgentSettings(this PwEntry entry,
+      EntrySettings settings)
     {
-      aEntry.Strings.SetKeeAgentSettings(aSettings);
+      entry.Binaries.SetKeeAgentSettings(settings);
+      // remove old settings string
+      if (entry.Strings.GetKeys().Contains(settingsStringId)) {
+        entry.Strings.Remove(settingsStringId);
+      }
     }
 
-    public static void SetKeeAgentSettings(this ProtectedStringDictionary aStringDictionary,
-      EntrySettings aSettings)
+    public static void SetKeeAgentSettings(this ProtectedBinaryDictionary binaries,
+      EntrySettings settings)
     {
       // only save if there is an existing entry or AllowUseOfSshKey is checked
       // this way we don't pollute entries that don't have SSH keys
-      if (aStringDictionary.GetKeys().Contains(cStringId) ||
-        aSettings.AllowUseOfSshKey)
+      if (binaries.Get(settingsBinaryId) != null ||
+        settings.AllowUseOfSshKey)
       {
         using (var writer = new StringWriter()) {
-          EntrySettingsSerializer.Serialize(writer, aSettings);
+          EntrySettingsSerializer.Serialize(writer, settings);
           // string is protected just to make UI look cleaner
-          aStringDictionary.Set(cStringId, new ProtectedString(true, writer.ToString()));
+          binaries.Set(settingsBinaryId,
+            new ProtectedBinary(false, Encoding.Unicode.GetBytes(writer.ToString())));
         }
       }
     }

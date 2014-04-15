@@ -392,8 +392,7 @@ namespace KeeAgent
         okButton.GotFocus += (sender, args) =>
         {
           if (optionsPanel.CurrentSettings != optionsPanel.IntialSettings) {
-            pwEntryForm.EntryStrings.SetKeeAgentSettings
-              (optionsPanel.CurrentSettings);
+            pwEntryForm.EntryBinaries.SetKeeAgentSettings(optionsPanel.CurrentSettings);
           }
         };
         pwEntryForm.EntrySaving += PwEntryForm_EntrySaving;
