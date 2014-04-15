@@ -33,15 +33,16 @@
       this.entrySettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.addKeyAtOpenCheckBox = new System.Windows.Forms.CheckBox();
       this.removeKeyAtCloseCheckBox = new System.Windows.Forms.CheckBox();
-      this.keyLocationPanel = new KeeAgent.UI.KeyLocationPanel();
       this.helpButton = new System.Windows.Forms.Button();
       this.keyInfoGroupBox = new System.Windows.Forms.GroupBox();
+      this.copyPublicKeybutton = new System.Windows.Forms.Button();
+      this.publicKeyTextBox = new System.Windows.Forms.TextBox();
+      this.commentTextBox = new System.Windows.Forms.TextBox();
+      this.fingerprintTextBox = new System.Windows.Forms.TextBox();
+      this.label3 = new System.Windows.Forms.Label();
       this.label2 = new System.Windows.Forms.Label();
       this.label1 = new System.Windows.Forms.Label();
-      this.label3 = new System.Windows.Forms.Label();
-      this.fingerprintTextBox = new System.Windows.Forms.TextBox();
-      this.commentTextBox = new System.Windows.Forms.TextBox();
-      this.publicKeyTextBox = new System.Windows.Forms.TextBox();
+      this.keyLocationPanel = new KeeAgent.UI.KeyLocationPanel();
       ((System.ComponentModel.ISupportInitialize)(this.entrySettingsBindingSource)).BeginInit();
       this.keyInfoGroupBox.SuspendLayout();
       this.SuspendLayout();
@@ -72,14 +73,6 @@
       this.removeKeyAtCloseCheckBox.Name = "removeKeyAtCloseCheckBox";
       this.removeKeyAtCloseCheckBox.UseVisualStyleBackColor = true;
       // 
-      // keyLocationPanel
-      // 
-      this.keyLocationPanel.BackColor = System.Drawing.Color.Transparent;
-      this.keyLocationPanel.DataBindings.Add(new System.Windows.Forms.Binding("KeyLocation", this.entrySettingsBindingSource, "Location", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.keyLocationPanel.KeyLocation = null;
-      resources.ApplyResources(this.keyLocationPanel, "keyLocationPanel");
-      this.keyLocationPanel.Name = "keyLocationPanel";
-      // 
       // helpButton
       // 
       resources.ApplyResources(this.helpButton, "helpButton");
@@ -91,6 +84,7 @@
       // keyInfoGroupBox
       // 
       resources.ApplyResources(this.keyInfoGroupBox, "keyInfoGroupBox");
+      this.keyInfoGroupBox.Controls.Add(this.copyPublicKeybutton);
       this.keyInfoGroupBox.Controls.Add(this.publicKeyTextBox);
       this.keyInfoGroupBox.Controls.Add(this.commentTextBox);
       this.keyInfoGroupBox.Controls.Add(this.fingerprintTextBox);
@@ -99,6 +93,36 @@
       this.keyInfoGroupBox.Controls.Add(this.label1);
       this.keyInfoGroupBox.Name = "keyInfoGroupBox";
       this.keyInfoGroupBox.TabStop = false;
+      // 
+      // copyPublicKeybutton
+      // 
+      resources.ApplyResources(this.copyPublicKeybutton, "copyPublicKeybutton");
+      this.copyPublicKeybutton.Name = "copyPublicKeybutton";
+      this.copyPublicKeybutton.UseVisualStyleBackColor = true;
+      this.copyPublicKeybutton.Click += new System.EventHandler(this.copyPublicKeybutton_Click);
+      // 
+      // publicKeyTextBox
+      // 
+      resources.ApplyResources(this.publicKeyTextBox, "publicKeyTextBox");
+      this.publicKeyTextBox.Name = "publicKeyTextBox";
+      this.publicKeyTextBox.ReadOnly = true;
+      // 
+      // commentTextBox
+      // 
+      resources.ApplyResources(this.commentTextBox, "commentTextBox");
+      this.commentTextBox.Name = "commentTextBox";
+      this.commentTextBox.ReadOnly = true;
+      // 
+      // fingerprintTextBox
+      // 
+      resources.ApplyResources(this.fingerprintTextBox, "fingerprintTextBox");
+      this.fingerprintTextBox.Name = "fingerprintTextBox";
+      this.fingerprintTextBox.ReadOnly = true;
+      // 
+      // label3
+      // 
+      resources.ApplyResources(this.label3, "label3");
+      this.label3.Name = "label3";
       // 
       // label2
       // 
@@ -110,28 +134,13 @@
       resources.ApplyResources(this.label1, "label1");
       this.label1.Name = "label1";
       // 
-      // label3
+      // keyLocationPanel
       // 
-      resources.ApplyResources(this.label3, "label3");
-      this.label3.Name = "label3";
-      // 
-      // fingerprintTextBox
-      // 
-      resources.ApplyResources(this.fingerprintTextBox, "fingerprintTextBox");
-      this.fingerprintTextBox.Name = "fingerprintTextBox";
-      this.fingerprintTextBox.ReadOnly = true;
-      // 
-      // commentTextBox
-      // 
-      resources.ApplyResources(this.commentTextBox, "commentTextBox");
-      this.commentTextBox.Name = "commentTextBox";
-      this.commentTextBox.ReadOnly = true;
-      // 
-      // publicKeyTextBox
-      // 
-      resources.ApplyResources(this.publicKeyTextBox, "publicKeyTextBox");
-      this.publicKeyTextBox.Name = "publicKeyTextBox";
-      this.publicKeyTextBox.ReadOnly = true;
+      this.keyLocationPanel.BackColor = System.Drawing.Color.Transparent;
+      this.keyLocationPanel.DataBindings.Add(new System.Windows.Forms.Binding("KeyLocation", this.entrySettingsBindingSource, "Location", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.keyLocationPanel.KeyLocation = null;
+      resources.ApplyResources(this.keyLocationPanel, "keyLocationPanel");
+      this.keyLocationPanel.Name = "keyLocationPanel";
       // 
       // EntryPanel
       // 
@@ -167,6 +176,7 @@
         private System.Windows.Forms.TextBox commentTextBox;
         private System.Windows.Forms.TextBox fingerprintTextBox;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button copyPublicKeybutton;
 
     }
 }

@@ -151,7 +151,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;hasSshKeyCheckBox.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="addKeyAtOpenCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -181,7 +181,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;addKeyAtOpenCheckBox.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="removeKeyAtCloseCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -211,31 +211,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;removeKeyAtCloseCheckBox.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="keyLocationPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 78</value>
-  </data>
-  <data name="keyLocationPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>449, 78</value>
-  </data>
-  <data name="keyLocationPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;keyLocationPanel.Name" xml:space="preserve">
-    <value>keyLocationPanel</value>
-  </data>
-  <data name="&gt;&gt;keyLocationPanel.Type" xml:space="preserve">
-    <value>KeeAgent.UI.KeyLocationPanel, KeeAgent, Version=0.4.1.2, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;keyLocationPanel.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;keyLocationPanel.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="helpButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
+  </data>
+  <data name="helpButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="helpButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>433, 308</value>
@@ -256,10 +238,40 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;helpButton.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="keyInfoGroupBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="copyPublicKeybutton.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="copyPublicKeybutton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="copyPublicKeybutton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>368, 88</value>
+  </data>
+  <data name="copyPublicKeybutton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="copyPublicKeybutton.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="copyPublicKeybutton.Text" xml:space="preserve">
+    <value>Cop&amp;y</value>
+  </data>
+  <data name="&gt;&gt;copyPublicKeybutton.Name" xml:space="preserve">
+    <value>copyPublicKeybutton</value>
+  </data>
+  <data name="&gt;&gt;copyPublicKeybutton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;copyPublicKeybutton.Parent" xml:space="preserve">
+    <value>keyInfoGroupBox</value>
+  </data>
+  <data name="&gt;&gt;copyPublicKeybutton.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="publicKeyTextBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -267,11 +279,8 @@
   <data name="publicKeyTextBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>9, 90</value>
   </data>
-  <data name="publicKeyTextBox.Multiline" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
   <data name="publicKeyTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>434, 44</value>
+    <value>353, 20</value>
   </data>
   <data name="publicKeyTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -286,13 +295,13 @@
     <value>keyInfoGroupBox</value>
   </data>
   <data name="&gt;&gt;publicKeyTextBox.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="commentTextBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
   <data name="commentTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>71, 16</value>
+    <value>71, 19</value>
   </data>
   <data name="commentTextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>372, 20</value>
@@ -310,13 +319,13 @@
     <value>keyInfoGroupBox</value>
   </data>
   <data name="&gt;&gt;commentTextBox.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="fingerprintTextBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
   <data name="fingerprintTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>71, 42</value>
+    <value>71, 45</value>
   </data>
   <data name="fingerprintTextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>372, 20</value>
@@ -334,7 +343,7 @@
     <value>keyInfoGroupBox</value>
   </data>
   <data name="&gt;&gt;fingerprintTextBox.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="label3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -343,7 +352,7 @@
     <value>NoControl</value>
   </data>
   <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 74</value>
+    <value>11, 74</value>
   </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
     <value>211, 13</value>
@@ -364,7 +373,7 @@
     <value>keyInfoGroupBox</value>
   </data>
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -373,7 +382,7 @@
     <value>NoControl</value>
   </data>
   <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 19</value>
+    <value>11, 22</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
     <value>54, 13</value>
@@ -394,13 +403,16 @@
     <value>keyInfoGroupBox</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 45</value>
+    <value>11, 48</value>
   </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>59, 13</value>
@@ -421,13 +433,13 @@
     <value>keyInfoGroupBox</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="keyInfoGroupBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 162</value>
+    <value>9, 185</value>
   </data>
   <data name="keyInfoGroupBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>449, 140</value>
+    <value>449, 117</value>
   </data>
   <data name="keyInfoGroupBox.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -446,6 +458,27 @@
   </data>
   <data name="&gt;&gt;keyInfoGroupBox.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="keyLocationPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 101</value>
+  </data>
+  <data name="keyLocationPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>449, 78</value>
+  </data>
+  <data name="keyLocationPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;keyLocationPanel.Name" xml:space="preserve">
+    <value>keyLocationPanel</value>
+  </data>
+  <data name="&gt;&gt;keyLocationPanel.Type" xml:space="preserve">
+    <value>KeeAgent.UI.KeyLocationPanel, KeeAgent, Version=0.4.1.2, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;keyLocationPanel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;keyLocationPanel.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

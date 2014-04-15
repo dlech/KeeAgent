@@ -4,7 +4,7 @@
 //  Author(s):
 //      David Lechner <david@lechnology.com>
 //
-//  Copyright (C) 2012-2013  David Lechner
+//  Copyright (C) 2012-2014  David Lechner
 //
 //  This program is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU General Public License
@@ -25,6 +25,8 @@ using System.Drawing;
 using System.Windows.Forms;
 using KeePass.Forms;
 using System.IO;
+using dlech.SshAgentLib;
+using KeePass.Util;
 
 namespace KeeAgent.UI
 {
@@ -60,6 +62,7 @@ namespace KeeAgent.UI
           mPwEntryForm.EntryRef.GetKeeAgentSettings();
         CurrentSettings = (EntrySettings)IntialSettings.Clone ();
         entrySettingsBindingSource.DataSource = CurrentSettings;
+        keyLocationPanel.KeyLocationChanged += delegate { UpdateKeyInfoDelayed(); };
       } else {
         Debug.Fail("Don't have settings to bind to");
       }
@@ -71,31 +74,57 @@ namespace KeeAgent.UI
       addKeyAtOpenCheckBox.Enabled = hasSshKeyCheckBox.Checked;
       removeKeyAtCloseCheckBox.Enabled = hasSshKeyCheckBox.Checked;
       keyLocationPanel.Enabled = hasSshKeyCheckBox.Checked;
+      UpdateKeyInfoDelayed();
+    }
+
+    void UpdateKeyInfoDelayed()
+    {
+      // Have to delay execution of this to avoid undesirable binding
+      // interaction.
+      var delayedInvokeTimer = new Timer();
+      delayedInvokeTimer.Tick += (sender, e2) =>
+      {
+        delayedInvokeTimer.Stop();
+        UpdateKeyInfo();
+      };
+      delayedInvokeTimer.Start();
+    }
+
+    void UpdateKeyInfo()
+    {
       if (hasSshKeyCheckBox.Checked) {
         switch (keyLocationPanel.KeyLocation.SelectedType) {
           case EntrySettings.LocationType.Attachment:
-            try {
-
-            } catch (Exception) {
-              commentTextBox.Text = "Error loading key from attachment";
-              fingerprintTextBox.Text = string.Empty;
-              publicKeyTextBox.Text = string.Empty;
-            }
-            break;
           case EntrySettings.LocationType.File:
-            try {              
-
+            try {
+              using (var key = CurrentSettings.
+                GetSshKey(mPwEntryForm.EntryStrings, mPwEntryForm.EntryBinaries)) {
+                commentTextBox.Text = key.Comment;
+                fingerprintTextBox.Text = key.GetMD5Fingerprint().ToHexString();
+                publicKeyTextBox.Text = key.GetAuthorizedKeyString();
+                copyPublicKeybutton.Enabled = true;
+              }
             } catch (Exception) {
-              commentTextBox.Text = string.Format("Error loading key from {0}",
-                Path.GetFullPath(keyLocationPanel.KeyLocation.FileName));
+              string file = "attachment";
+              if (keyLocationPanel.KeyLocation.SelectedType == EntrySettings.LocationType.File) {
+                try {
+                  file = Path.GetFullPath(CurrentSettings.Location.FileName);
+                } catch (Exception) {
+                  file = "file";
+                }
+              }
+              commentTextBox.Text = string.Format("<Error loading key from {0}>",
+                  file);
               fingerprintTextBox.Text = string.Empty;
               publicKeyTextBox.Text = string.Empty;
+              copyPublicKeybutton.Enabled = false;
             }
             break;
           default:
             commentTextBox.Text = "No key selected";
             fingerprintTextBox.Text = string.Empty;
             publicKeyTextBox.Text = string.Empty;
+            copyPublicKeybutton.Enabled = false;
             break;
         }
       } else {
@@ -113,6 +142,11 @@ namespace KeeAgent.UI
     private void helpButton_Click(object sender, EventArgs e)
     {
       Process.Start(Properties.Resources.WebHelpEntryOptions);
+    }
+
+    private void copyPublicKeybutton_Click(object sender, EventArgs e)
+    {
+      ClipboardUtil.Copy(publicKeyTextBox.Text, false, false, null, null, mPwEntryForm.Handle);
     }
   }
 }

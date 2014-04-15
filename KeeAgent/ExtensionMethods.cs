@@ -152,6 +152,12 @@ namespace KeeAgent
     public static ISshKey GetSshKey(this PwEntry aPwEntry)
     {
       var settings = aPwEntry.GetKeeAgentSettings();
+      return settings.GetSshKey(aPwEntry.Strings, aPwEntry.Binaries);
+    }
+
+    public static ISshKey GetSshKey(this EntrySettings settings,
+      ProtectedStringDictionary strings, ProtectedBinaryDictionary binaries)
+    {      
       if (!settings.AllowUseOfSshKey) {
         return null;
       }
@@ -159,7 +165,7 @@ namespace KeeAgent
         delegate(string comment)
         {
           var securePassphrase = new SecureString();
-          var passphrase = Encoding.UTF8.GetChars(aPwEntry.Strings
+          var passphrase = Encoding.UTF8.GetChars(strings
             .Get(PwDefs.PasswordField).ReadUtf8());
           foreach (var c in passphrase) {
             securePassphrase.AppendChar(c);
@@ -172,7 +178,7 @@ namespace KeeAgent
           if (string.IsNullOrWhiteSpace(settings.Location.AttachmentName)) {
             throw new NoAttachmentException();
           }
-          var keyData = aPwEntry.Binaries.Get(settings.Location.AttachmentName);
+          var keyData = binaries.Get(settings.Location.AttachmentName);
           return keyData.ReadData().ReadSshKey(getPassphraseCallback);
         case EntrySettings.LocationType.File:
           using (var keyFile = File.OpenRead(settings.Location.FileName)) {
