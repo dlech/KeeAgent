@@ -94,6 +94,7 @@ namespace KeeAgent.UI
           case EntrySettings.LocationType.Attachment:
           case EntrySettings.LocationType.File:
             try {
+              pwEntryForm.UpdateEntryStrings(true, false);
               using (var key = CurrentSettings.
                 GetSshKey(pwEntryForm.EntryStrings, pwEntryForm.EntryBinaries)) {
                 commentTextBox.Text = key.Comment;
