@@ -32,7 +32,7 @@ namespace KeeAgent.UI
 {
   public partial class EntryPanel : UserControl
   {
-    private PwEntryForm mPwEntryForm;
+    PwEntryForm pwEntryForm;
 
     public EntrySettings IntialSettings {
       get;
@@ -56,13 +56,14 @@ namespace KeeAgent.UI
     protected override void OnLoad(EventArgs e)
     {
       base.OnLoad(e);
-      mPwEntryForm = ParentForm as PwEntryForm;
-      if (mPwEntryForm != null) {
+      pwEntryForm = ParentForm as PwEntryForm;
+      if (pwEntryForm != null) {
         IntialSettings =
-          mPwEntryForm.EntryRef.GetKeeAgentSettings();
+          pwEntryForm.EntryRef.GetKeeAgentSettings();
         CurrentSettings = (EntrySettings)IntialSettings.Clone ();
         entrySettingsBindingSource.DataSource = CurrentSettings;
         keyLocationPanel.KeyLocationChanged += delegate { UpdateKeyInfoDelayed(); };
+        pwEntryForm.FormClosing += delegate { delayedUpdateKeyInfoTimer.Stop(); };
       } else {
         Debug.Fail("Don't have settings to bind to");
       }
@@ -82,13 +83,8 @@ namespace KeeAgent.UI
     {
       // Have to delay execution of this to avoid undesirable binding
       // interaction.
-      var delayedInvokeTimer = new Timer();
-      delayedInvokeTimer.Tick += (sender, e2) =>
-      {
-        delayedInvokeTimer.Stop();
-        UpdateKeyInfo();
-      };
-      delayedInvokeTimer.Start();
+      if (!delayedUpdateKeyInfoTimer.Enabled)
+        delayedUpdateKeyInfoTimer.Start();
     }
 
     void UpdateKeyInfo()
@@ -99,7 +95,7 @@ namespace KeeAgent.UI
           case EntrySettings.LocationType.File:
             try {
               using (var key = CurrentSettings.
-                GetSshKey(mPwEntryForm.EntryStrings, mPwEntryForm.EntryBinaries)) {
+                GetSshKey(pwEntryForm.EntryStrings, pwEntryForm.EntryBinaries)) {
                 commentTextBox.Text = key.Comment;
                 fingerprintTextBox.Text = key.GetMD5Fingerprint().ToHexString();
                 publicKeyTextBox.Text = key.GetAuthorizedKeyString();
@@ -147,7 +143,13 @@ namespace KeeAgent.UI
 
     private void copyPublicKeybutton_Click(object sender, EventArgs e)
     {
-      ClipboardUtil.Copy(publicKeyTextBox.Text, false, false, null, null, mPwEntryForm.Handle);
+      ClipboardUtil.Copy(publicKeyTextBox.Text, false, false, null, null, pwEntryForm.Handle);
+    }
+
+    private void delayedUpdateKeyIndoTimer_Tick(object sender, EventArgs e)
+    {
+      delayedUpdateKeyInfoTimer.Stop();
+      UpdateKeyInfo();
     }
   }
 }
