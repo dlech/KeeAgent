@@ -257,24 +257,29 @@ namespace KeeAgent
       mKeeAgentPwEntryContextMenuItem.Visible = false;
     }
 
-    private void mKeeAgentPwEntryContextMenuItem_Clicked(object aSender, EventArgs aArgs)
+    private void mKeeAgentPwEntryContextMenuItem_Clicked(object sender, EventArgs e)
     {
       foreach (var entry in mPluginHost.MainWindow.GetSelectedEntries()) {
         // if any selected entry contains an SSH key then we show the KeeAgent menu item
-        if (entry.GetKeeAgentSettings().AllowUseOfSshKey) {
+        var settings = entry.GetKeeAgentSettings();
+        if (settings.AllowUseOfSshKey) {
           try {
             var constraints = new List<Agent.KeyConstraint>();
-            if (!(mAgent is PageantClient) &&
-                Control.ModifierKeys.HasFlag(Keys.Control))
-            {
-              var dialog = new ConstraintsInputDialog();
-              dialog.ShowDialog();
-              if (dialog.DialogResult == DialogResult.OK) {
-                if (dialog.ConfirmConstraintChecked) {
-                  constraints.addConfirmConstraint();
+            if (!(mAgent is PageantClient)) {
+              if (Control.ModifierKeys.HasFlag(Keys.Control)) {
+                var dialog = new ConstraintsInputDialog(settings.UseConfirmConstraintWhenAdding);
+                dialog.ShowDialog();
+                if (dialog.DialogResult == DialogResult.OK) {
+                  if (dialog.ConfirmConstraintChecked) {
+                    constraints.addConfirmConstraint();
+                  }
+                  if (dialog.LifetimeConstraintChecked) {
+                    constraints.addLifetimeConstraint(dialog.LifetimeDuration);
+                  }
                 }
-                if (dialog.LifetimeConstraintChecked) {
-                  constraints.addLifetimeConstraint(dialog.LifetimeDuration);
+              } else {
+                if (settings.UseConfirmConstraintWhenAdding) {
+                  constraints.addConfirmConstraint();
                 }
               }
             }
@@ -678,6 +683,10 @@ namespace KeeAgent
           if (aConstraints != null) {
             foreach (var constraint in aConstraints) {
               key.AddConstraint(constraint);
+            }
+          } else {
+            if (settings.UseConfirmConstraintWhenAdding) {
+              key.addConfirmConstraint();
             }
           }
           if (Options.AlwaysConfirm &&

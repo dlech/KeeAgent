@@ -103,6 +103,7 @@ namespace KeeAgent
     public bool AllowUseOfSshKey { get; set; }
     public bool AddAtDatabaseOpen { get; set; }
     public bool RemoveAtDatabaseClose { get; set; }
+    public bool UseConfirmConstraintWhenAdding { get; set; }
     public LocationData Location { get; set; }
 
     public EntrySettings()
@@ -110,6 +111,7 @@ namespace KeeAgent
       AllowUseOfSshKey = false;
       AddAtDatabaseOpen = true;
       RemoveAtDatabaseClose = true;
+      UseConfirmConstraintWhenAdding = false;
       Location = new LocationData();
     }
 
@@ -122,6 +124,7 @@ namespace KeeAgent
       clone.AllowUseOfSshKey = AllowUseOfSshKey;
       clone.AddAtDatabaseOpen = AddAtDatabaseOpen;
       clone.RemoveAtDatabaseClose = RemoveAtDatabaseClose;
+      clone.UseConfirmConstraintWhenAdding = UseConfirmConstraintWhenAdding;
       clone.Location = (LocationData)Location.Clone();
       return clone;
     }
@@ -134,6 +137,7 @@ namespace KeeAgent
       return AllowUseOfSshKey == other.AllowUseOfSshKey &&
         AddAtDatabaseOpen == other.AddAtDatabaseOpen &&
         RemoveAtDatabaseClose == other.RemoveAtDatabaseClose &&
+        UseConfirmConstraintWhenAdding == other.UseConfirmConstraintWhenAdding &&
         Location == other.Location;
     }
     #endregion

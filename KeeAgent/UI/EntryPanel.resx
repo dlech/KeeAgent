@@ -457,6 +457,36 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;keyInfoGroupBox.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="confirmConstraintCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="confirmConstraintCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="confirmConstraintCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 78</value>
+  </data>
+  <data name="confirmConstraintCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>185, 17</value>
+  </data>
+  <data name="confirmConstraintCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="confirmConstraintCheckBox.Text" xml:space="preserve">
+    <value>Use confirm constraint for this key</value>
+  </data>
+  <data name="&gt;&gt;confirmConstraintCheckBox.Name" xml:space="preserve">
+    <value>confirmConstraintCheckBox</value>
+  </data>
+  <data name="&gt;&gt;confirmConstraintCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;confirmConstraintCheckBox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;confirmConstraintCheckBox.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="keyLocationPanel.Location" type="System.Drawing.Point, System.Drawing">

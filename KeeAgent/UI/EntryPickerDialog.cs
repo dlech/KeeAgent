@@ -4,7 +4,7 @@
 //  Author(s):
 //      David Lechner <david@lechnology.com>
 //
-//  Copyright (C) 2012-2013  David Lechner
+//  Copyright (C) 2012-2014  David Lechner
 //
 //  This program is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU General Public License
@@ -310,6 +310,8 @@ namespace KeeAgent.UI
     private void customTreeViewEx_AfterSelect(object sender, TreeViewEventArgs e)
     {
       SelectedEntry = e.Node.Tag as PwEntry;
+      mConfirmConstraintControl.Checked =
+        SelectedEntry.GetKeeAgentSettings().UseConfirmConstraintWhenAdding;
     }
 
     private void EntryPickerDialog_FormClosing(object sender,

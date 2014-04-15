@@ -73,6 +73,7 @@ namespace KeeAgent.UI
     {
       addKeyAtOpenCheckBox.Enabled = hasSshKeyCheckBox.Checked;
       removeKeyAtCloseCheckBox.Enabled = hasSshKeyCheckBox.Checked;
+      confirmConstraintCheckBox.Enabled = addKeyAtOpenCheckBox.Enabled;
       keyLocationPanel.Enabled = hasSshKeyCheckBox.Checked;
       UpdateKeyInfoDelayed();
     }

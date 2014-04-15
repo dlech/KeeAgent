@@ -30,7 +30,6 @@
       this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EntryPanel));
       this.hasSshKeyCheckBox = new System.Windows.Forms.CheckBox();
-      this.entrySettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.addKeyAtOpenCheckBox = new System.Windows.Forms.CheckBox();
       this.removeKeyAtCloseCheckBox = new System.Windows.Forms.CheckBox();
       this.helpButton = new System.Windows.Forms.Button();
@@ -42,9 +41,11 @@
       this.label3 = new System.Windows.Forms.Label();
       this.label2 = new System.Windows.Forms.Label();
       this.label1 = new System.Windows.Forms.Label();
+      this.confirmConstraintCheckBox = new System.Windows.Forms.CheckBox();
+      this.entrySettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.keyLocationPanel = new KeeAgent.UI.KeyLocationPanel();
-      ((System.ComponentModel.ISupportInitialize)(this.entrySettingsBindingSource)).BeginInit();
       this.keyInfoGroupBox.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.entrySettingsBindingSource)).BeginInit();
       this.SuspendLayout();
       // 
       // hasSshKeyCheckBox
@@ -54,10 +55,6 @@
       this.hasSshKeyCheckBox.Name = "hasSshKeyCheckBox";
       this.hasSshKeyCheckBox.UseVisualStyleBackColor = true;
       this.hasSshKeyCheckBox.CheckedChanged += new System.EventHandler(this.hasSshKeyCheckBox_CheckedChanged);
-      // 
-      // entrySettingsBindingSource
-      // 
-      this.entrySettingsBindingSource.DataSource = typeof(KeeAgent.EntrySettings);
       // 
       // addKeyAtOpenCheckBox
       // 
@@ -134,6 +131,17 @@
       resources.ApplyResources(this.label1, "label1");
       this.label1.Name = "label1";
       // 
+      // confirmConstraintCheckBox
+      // 
+      resources.ApplyResources(this.confirmConstraintCheckBox, "confirmConstraintCheckBox");
+      this.confirmConstraintCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.entrySettingsBindingSource, "UseConfirmConstraintWhenAdding", true));
+      this.confirmConstraintCheckBox.Name = "confirmConstraintCheckBox";
+      this.confirmConstraintCheckBox.UseVisualStyleBackColor = true;
+      // 
+      // entrySettingsBindingSource
+      // 
+      this.entrySettingsBindingSource.DataSource = typeof(KeeAgent.EntrySettings);
+      // 
       // keyLocationPanel
       // 
       this.keyLocationPanel.BackColor = System.Drawing.Color.Transparent;
@@ -146,6 +154,7 @@
       // 
       resources.ApplyResources(this, "$this");
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this.confirmConstraintCheckBox);
       this.Controls.Add(this.keyInfoGroupBox);
       this.Controls.Add(this.helpButton);
       this.Controls.Add(this.keyLocationPanel);
@@ -153,9 +162,9 @@
       this.Controls.Add(this.addKeyAtOpenCheckBox);
       this.Controls.Add(this.hasSshKeyCheckBox);
       this.Name = "EntryPanel";
-      ((System.ComponentModel.ISupportInitialize)(this.entrySettingsBindingSource)).EndInit();
       this.keyInfoGroupBox.ResumeLayout(false);
       this.keyInfoGroupBox.PerformLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.entrySettingsBindingSource)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -177,6 +186,7 @@
         private System.Windows.Forms.TextBox fingerprintTextBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button copyPublicKeybutton;
+        private System.Windows.Forms.CheckBox confirmConstraintCheckBox;
 
     }
 }
