@@ -123,18 +123,48 @@
   <metadata name="openFileDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>219, 17</value>
   </metadata>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="saveKeyToTempFileCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="saveKeyToTempFileCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="saveKeyToTempFileCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>97, 42</value>
+  </data>
+  <data name="saveKeyToTempFileCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>281, 17</value>
+  </data>
+  <data name="saveKeyToTempFileCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="saveKeyToTempFileCheckBox.Text" xml:space="preserve">
+    <value>Save attachment to temporary file when key is loaded </value>
+  </data>
+  <data name="&gt;&gt;saveKeyToTempFileCheckBox.Name" xml:space="preserve">
+    <value>saveKeyToTempFileCheckBox</value>
+  </data>
+  <data name="&gt;&gt;saveKeyToTempFileCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;saveKeyToTempFileCheckBox.Parent" xml:space="preserve">
+    <value>locationGroupBox</value>
+  </data>
+  <data name="&gt;&gt;saveKeyToTempFileCheckBox.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="fileNameTextBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="fileNameTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>97, 46</value>
+    <value>97, 68</value>
   </data>
   <data name="fileNameTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>221, 20</value>
+    <value>261, 20</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="fileNameTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
@@ -148,7 +178,7 @@
     <value>locationGroupBox</value>
   </data>
   <data name="&gt;&gt;fileNameTextBox.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="browseButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -157,7 +187,7 @@
     <value>NoControl</value>
   </data>
   <data name="browseButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>324, 44</value>
+    <value>364, 65</value>
   </data>
   <data name="browseButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
@@ -178,7 +208,7 @@
     <value>locationGroupBox</value>
   </data>
   <data name="&gt;&gt;browseButton.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="attachmentComboBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -187,7 +217,7 @@
     <value>97, 18</value>
   </data>
   <data name="attachmentComboBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>221, 21</value>
+    <value>261, 21</value>
   </data>
   <data name="attachmentComboBox.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -202,7 +232,7 @@
     <value>locationGroupBox</value>
   </data>
   <data name="&gt;&gt;attachmentComboBox.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="fileRadioButton.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -211,7 +241,7 @@
     <value>NoControl</value>
   </data>
   <data name="fileRadioButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 47</value>
+    <value>12, 69</value>
   </data>
   <data name="fileRadioButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>82, 17</value>
@@ -232,7 +262,7 @@
     <value>locationGroupBox</value>
   </data>
   <data name="&gt;&gt;fileRadioButton.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="attachmentRadioButton.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -262,7 +292,7 @@
     <value>locationGroupBox</value>
   </data>
   <data name="&gt;&gt;attachmentRadioButton.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="locationGroupBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -271,7 +301,7 @@
     <value>0, 0</value>
   </data>
   <data name="locationGroupBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>405, 78</value>
+    <value>445, 99</value>
   </data>
   <data name="locationGroupBox.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -283,7 +313,7 @@
     <value>locationGroupBox</value>
   </data>
   <data name="&gt;&gt;locationGroupBox.Type" xml:space="preserve">
-    <value>KeeAgent.UI.GroupBoxEx, KeeAgent, Version=0.3.2.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>KeeAgent.UI.GroupBoxEx, KeeAgent, Version=0.4.1.2, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;locationGroupBox.Parent" xml:space="preserve">
     <value>$this</value>
@@ -298,7 +328,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>405, 78</value>
+    <value>445, 99</value>
   </data>
   <data name="&gt;&gt;locationSettingsBindingSource.Name" xml:space="preserve">
     <value>locationSettingsBindingSource</value>

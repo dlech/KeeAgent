@@ -39,6 +39,7 @@ using KeePass.UI;
 using KeePass.Util;
 using KeePassLib;
 using KeePassLib.Utility;
+using KeePass.Util.Spr;
 
 namespace KeeAgent
 {
@@ -54,6 +55,7 @@ namespace KeeAgent
     private List<ISshKey> mRemoveKeyList;
     private UIHelper mUIHelper;
     private bool mSaveBeforeCloseQuestionMessageShown = false;
+    Dictionary<string, KeyFileInfo> keyFileMap = new Dictionary<string, KeyFileInfo>();
 
     private const string cPluginNamespace = "KeeAgent";
     private const string cAlwaysConfirmOptionName = cPluginNamespace + ".AlwaysConfirm";
@@ -63,6 +65,20 @@ namespace KeeAgent
     private const string cLogFileNameOptionName = cPluginNamespace + ".LogFileName";
     private const string cAgentModeOptionName = cPluginNamespace + ".AgentMode";
     private const string cUnlockOnActivityOptionName = cPluginNamespace + ".UnlockOnActivity";
+    const string keyFilePathSprPlaceholder = @"{KEEAGENT:KEYFILEPATH}";
+    const string identFileOptSprPlaceholder = @"{KEEAGENT:IDENTFILEOPT}";
+
+    class KeyFileInfo
+    {
+      public KeyFileInfo(string path, bool isTemporary)
+      {
+        Path = path;
+        IsTemporary = isTemporary;
+      }
+
+      public string Path { get; private set; }
+      public bool IsTemporary { get; private set; }
+    }
 
     public Options Options { get; private set; }
 
@@ -124,6 +140,9 @@ namespace KeeAgent
         AddMenuItems();
         GlobalWindowManager.WindowAdded += WindowAddedHandler;
         MessageService.MessageShowing += MessageService_MessageShowing;
+        SprEngine.FilterCompile += SprEngine_FilterCompile;
+        SprEngine.FilterPlaceholderHints.Add(keyFilePathSprPlaceholder);
+        SprEngine.FilterPlaceholderHints.Add(identFileOptSprPlaceholder);
         if (mDebug) Log("Succeeded");
         return true;
       } catch (PageantRunningException) {
@@ -141,6 +160,9 @@ namespace KeeAgent
     {
       GlobalWindowManager.WindowAdded -= WindowAddedHandler;
       MessageService.MessageShowing -= MessageService_MessageShowing;
+      SprEngine.FilterCompile -= SprEngine_FilterCompile;
+      SprEngine.FilterPlaceholderHints.Remove(keyFilePathSprPlaceholder);
+      SprEngine.FilterPlaceholderHints.Remove(identFileOptSprPlaceholder);
       if (mDebug) Log("Terminating KeeAgent");
       var pagent = mAgent as PageantAgent;
       if (pagent != null) {
@@ -547,6 +569,17 @@ namespace KeeAgent
         var constraint = new Agent.KeyConstraint();
         constraint.Type = Agent.KeyConstraintType.SSH_AGENT_CONSTRAIN_CONFIRM;
         aEventArgs.Key.AddConstraint(constraint);
+      }      
+      if (aEventArgs.Action == Agent.KeyListChangeEventAction.Remove) {
+        var fingerprint = aEventArgs.Key.GetMD5Fingerprint().ToHexString();
+        if (keyFileMap.ContainsKey(fingerprint) && keyFileMap[fingerprint].IsTemporary) {
+          try {
+            File.Delete(keyFileMap[fingerprint].Path);
+            keyFileMap.Remove(fingerprint);
+          } catch (Exception ex) {
+            Debug.Fail(ex.Message, ex.StackTrace);
+          }
+        }
       }
     }
 
@@ -678,12 +711,30 @@ namespace KeeAgent
       }
     }
 
-    public ISshKey AddEntry(PwEntry aEntry,
-                            ICollection<Agent.KeyConstraint> aConstraints)
+    private void SprEngine_FilterCompile(object sender, SprEventArgs e)
     {
-      var settings = aEntry.GetKeeAgentSettings();
+      if (!e.Context.Flags.HasFlag(SprCompileFlags.ExtNonActive))
+        return;
+      var path = string.Empty;
       try {
-        var key = aEntry.GetSshKey();
+        using (var key = e.Context.Entry.GetSshKey()) {
+          var fingerprint = key.GetMD5Fingerprint().ToHexString();
+          if (keyFileMap.ContainsKey(fingerprint))
+            path = keyFileMap[fingerprint].Path;
+        }
+      } catch (Exception) { }
+      e.Text = StrUtil.ReplaceCaseInsensitive(e.Text,
+        keyFilePathSprPlaceholder, path);
+      e.Text = StrUtil.ReplaceCaseInsensitive(e.Text,
+        identFileOptSprPlaceholder, string.Format("-i \"{0}\"", path));
+    }
+
+    public ISshKey AddEntry(PwEntry entry,
+                            ICollection<Agent.KeyConstraint> constraints)
+    {
+      var settings = entry.GetKeeAgentSettings();
+      try {
+        var key = entry.GetSshKey();
 
         if (mAgent is PageantClient) {
           // Pageant errors if you try to add a key that is already loaded
@@ -695,8 +746,8 @@ namespace KeeAgent
           }
         } else {
           // also, Pageant does not support constraints
-          if (aConstraints != null) {
-            foreach (var constraint in aConstraints) {
+          if (constraints != null) {
+            foreach (var constraint in constraints) {
               key.AddConstraint(constraint);
             }
           } else {
@@ -711,6 +762,25 @@ namespace KeeAgent
           }
         }
         mAgent.AddKey(key);
+        if (settings.Location.SelectedType == EntrySettings.LocationType.Attachment
+          && settings.Location.SaveAttachmentToTempFile)
+        {
+          try {
+            var data = entry.Binaries.Get(settings.Location.AttachmentName).ReadData();
+            var tempPath = Path.Combine(UrlUtil.GetTempPath(), "KeeAgent");
+            if (!Directory.Exists(tempPath))
+              Directory.CreateDirectory(tempPath);
+            var fileName = Path.Combine(tempPath, settings.Location.AttachmentName);
+            File.WriteAllBytes(fileName, data);
+            keyFileMap[key.GetMD5Fingerprint().ToHexString()] = new KeyFileInfo(fileName, true);
+          } catch (Exception ex) {
+            Debug.Fail(ex.Message, ex.StackTrace);
+          }
+        }
+        if (settings.Location.SelectedType == EntrySettings.LocationType.File) {
+          keyFileMap[key.GetMD5Fingerprint().ToHexString()] =
+            new KeyFileInfo(settings.Location.FileName, false);
+        }
         return key;
       } catch (Exception ex) {
         if (ex is NoAttachmentException) {

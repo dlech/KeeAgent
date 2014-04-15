@@ -38,12 +38,14 @@ namespace KeeAgent
     {
       public LocationType? SelectedType { get; set; }
       public string AttachmentName { get; set; }
+      public bool SaveAttachmentToTempFile { get; set; }
       public string FileName { get; set; }
 
       public LocationData()
       {
         SelectedType = null;
         AttachmentName = string.Empty;
+        SaveAttachmentToTempFile = false;
         FileName = string.Empty;
       }
 
@@ -54,6 +56,7 @@ namespace KeeAgent
         var clone = new LocationData();
         clone.SelectedType = SelectedType;
         clone.AttachmentName = AttachmentName;
+        clone.SaveAttachmentToTempFile = SaveAttachmentToTempFile;
         clone.FileName = FileName;
         return clone;
       }
@@ -66,6 +69,7 @@ namespace KeeAgent
       {
         return SelectedType == other.SelectedType &&
           AttachmentName == other.AttachmentName &&
+          SaveAttachmentToTempFile == other.SaveAttachmentToTempFile &&
           FileName == other.FileName;
       }
 

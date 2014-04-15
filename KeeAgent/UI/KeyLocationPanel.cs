@@ -152,6 +152,7 @@ namespace KeeAgent.UI
     private void UpdateControlStates()
     {
       attachmentComboBox.Enabled = attachmentRadioButton.Checked;
+      saveKeyToTempFileCheckBox.Enabled = attachmentRadioButton.Checked;
       fileNameTextBox.Enabled = fileRadioButton.Checked;
       browseButton.Enabled = fileRadioButton.Checked;
     }

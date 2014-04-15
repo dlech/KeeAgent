@@ -177,6 +177,7 @@
     <None Include="Resources\KeeAgent-icon-mono.ico" />
     <None Include="Test.kdbx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <ExcludeFromPlgx />
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -32,6 +32,7 @@
       this.locationSettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
       this.locationGroupBox = new KeeAgent.UI.GroupBoxEx();
+      this.saveKeyToTempFileCheckBox = new System.Windows.Forms.CheckBox();
       this.fileNameTextBox = new System.Windows.Forms.TextBox();
       this.browseButton = new System.Windows.Forms.Button();
       this.attachmentComboBox = new System.Windows.Forms.ComboBox();
@@ -48,6 +49,7 @@
       // 
       // locationGroupBox
       // 
+      this.locationGroupBox.Controls.Add(this.saveKeyToTempFileCheckBox);
       this.locationGroupBox.Controls.Add(this.fileNameTextBox);
       this.locationGroupBox.Controls.Add(this.browseButton);
       this.locationGroupBox.Controls.Add(this.attachmentComboBox);
@@ -58,6 +60,13 @@
       this.locationGroupBox.Name = "locationGroupBox";
       this.locationGroupBox.SelectedRadioButton = "";
       this.locationGroupBox.TabStop = false;
+      // 
+      // saveKeyToTempFileCheckBox
+      // 
+      resources.ApplyResources(this.saveKeyToTempFileCheckBox, "saveKeyToTempFileCheckBox");
+      this.saveKeyToTempFileCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.locationSettingsBindingSource, "SaveAttachmentToTempFile", true));
+      this.saveKeyToTempFileCheckBox.Name = "saveKeyToTempFileCheckBox";
+      this.saveKeyToTempFileCheckBox.UseVisualStyleBackColor = true;
       // 
       // fileNameTextBox
       // 
@@ -119,6 +128,7 @@
         private System.Windows.Forms.TextBox fileNameTextBox;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         internal System.Windows.Forms.BindingSource locationSettingsBindingSource;
+        private System.Windows.Forms.CheckBox saveKeyToTempFileCheckBox;
 
     }
 }
