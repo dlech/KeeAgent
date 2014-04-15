@@ -4,7 +4,7 @@
 //  Author(s):
 //      David Lechner <david@lechnology.com>
 //
-//  Copyright (C) 2012-2013  David Lechner
+//  Copyright (C) 2012-2014  David Lechner
 //
 //  This program is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU General Public License
@@ -404,6 +404,18 @@ namespace KeeAgent
         pwEntryForm.FormClosing += PwEntryForm_FormClosing;
       }
 
+      /* Add KeeAgent tab to Database Settings dialog */
+      var databaseSettingForm = aEventArgs.Form as DatabaseSettingsForm;
+      if (databaseSettingForm != null) {
+        databaseSettingForm.Shown +=
+          delegate(object sender, EventArgs args)
+          {
+            var dbSettingsPanel =
+              new DatabaseSettingsPanel(mPluginHost.MainWindow.ActiveDatabase);
+            databaseSettingForm.AddTab(dbSettingsPanel);
+          };
+      }
+
       /* Add KeeAgent tab to Options dialog */
       var optionsForm = aEventArgs.Form as OptionsForm;
       if (optionsForm != null) {
@@ -580,17 +592,20 @@ namespace KeeAgent
       }
     }
 
-    private void MainForm_FileOpened(object aSender,
-                                     FileOpenedEventArgs aEventArgs)
+    private void MainForm_FileOpened(object sender, FileOpenedEventArgs e)
     {
       try {
-        if (aEventArgs.Database.RootGroup == null) {
+        if (e.Database.RootGroup == null) {
           return;
         }
         var exitFor = false;
-        foreach (var entry in aEventArgs.Database.RootGroup.GetEntries(true)) {
+        foreach (var entry in e.Database.RootGroup.GetEntries(true)) {
           if (exitFor) {
             break;
+          }
+          if (entry.Expires && entry.ExpiryTime <= DateTime.Now
+            && !e.Database.GetKeeAgentSettings().AllowAutoLoadExpiredEntryKey) {
+            continue;
           }
           var settings = entry.GetKeeAgentSettings();
           if (settings.AllowUseOfSshKey && settings.AddAtDatabaseOpen) {

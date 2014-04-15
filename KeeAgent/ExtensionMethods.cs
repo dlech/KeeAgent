@@ -4,7 +4,7 @@
 //  Author(s):
 //      David Lechner <david@lechnology.com>
 //
-//  Copyright (C) 2012-2013  David Lechner
+//  Copyright (C) 2012-2014  David Lechner
 //
 //  This program is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU General Public License
@@ -74,7 +74,6 @@ namespace KeeAgent
       }
     }
 
-    [Obsolete ("There are currently no database settings.")]
     public static DatabaseSettings GetKeeAgentSettings(this PwDatabase aDatabase)
     {
       var settingsString = aDatabase.CustomData.Get(settingsStringId);
@@ -88,7 +87,6 @@ namespace KeeAgent
       return new DatabaseSettings();
     }
 
-    [Obsolete ("There are currently no database settings.")]
     public static void SetKeeAgentSettings(this PwDatabase aDatabase,
       DatabaseSettings aSettings)
     {
