@@ -111,6 +111,10 @@ namespace KeeAgent.UI
       base.OnLoad(e);
       if (DesignMode) { return; }
       mPwEntryForm = ParentForm as PwEntryForm;
+      ParentForm.FormClosing += delegate {
+        while (populateComboBoxTimer.Enabled)
+          Application.DoEvents();
+      };
       UpdateControlStates();
     }
 
@@ -121,32 +125,13 @@ namespace KeeAgent.UI
       {
         // Have to delay execution of this to avoid undesirable binding
         // interaction.
-        var delayedInvokeTimer = new Timer();
-        delayedInvokeTimer.Tick += (sender, e2) =>
-        {
-          delayedInvokeTimer.Stop();
-          attachmentRadioButton.Checked = true;
-          if (attachmentComboBox.Items.Count > 0 &&
-            attachmentComboBox.SelectedIndex == -1)
-          {
-            // select the first .ppk file in the list
-            for (var i = 0; i < attachmentComboBox.Items.Count; i++ )
-            {
-              var itemName = attachmentComboBox.Items[i] as string;
-              if (itemName != null &&
-                itemName.EndsWith(".ppk", StringComparison.OrdinalIgnoreCase))
-              {
-                attachmentComboBox.SelectedIndex = i;
-                return;
-              }
-            }
-            // or the first file if a .ppk does not exist
-            attachmentComboBox.SelectedIndex = 0;
-          }
-        };
-        delayedInvokeTimer.Interval = 100;
-        delayedInvokeTimer.Start();
+        PopulateComboBoxDelayed();
       }
+    }
+
+    void PopulateComboBoxDelayed()
+    {
+      populateComboBoxTimer.Start();
     }
 
     private void UpdateControlStates()
@@ -203,6 +188,26 @@ namespace KeeAgent.UI
     {
       if (KeyLocationChanged != null) {
         KeyLocationChanged(this, new EventArgs());
+      }
+    }
+
+    private void populateComboBoxTimer_Tick(object sender, EventArgs e)
+    {
+      populateComboBoxTimer.Stop();
+      attachmentRadioButton.Checked = true;
+      if (attachmentComboBox.Items.Count > 0 &&
+        attachmentComboBox.SelectedIndex == -1) {
+        // select the first .ppk file in the list
+        for (var i = 0; i < attachmentComboBox.Items.Count; i++) {
+          var itemName = attachmentComboBox.Items[i] as string;
+          if (itemName != null &&
+            itemName.EndsWith(".ppk", StringComparison.OrdinalIgnoreCase)) {
+            attachmentComboBox.SelectedIndex = i;
+            return;
+          }
+        }
+        // or the first file if a .ppk does not exist
+        attachmentComboBox.SelectedIndex = 0;
       }
     }
   }

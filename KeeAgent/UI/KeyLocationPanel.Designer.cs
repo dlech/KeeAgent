@@ -38,6 +38,7 @@
       this.attachmentComboBox = new System.Windows.Forms.ComboBox();
       this.fileRadioButton = new System.Windows.Forms.RadioButton();
       this.attachmentRadioButton = new System.Windows.Forms.RadioButton();
+      this.populateComboBoxTimer = new System.Windows.Forms.Timer(this.components);
       ((System.ComponentModel.ISupportInitialize)(this.locationSettingsBindingSource)).BeginInit();
       this.locationGroupBox.SuspendLayout();
       this.SuspendLayout();
@@ -105,6 +106,10 @@
       this.attachmentRadioButton.UseVisualStyleBackColor = true;
       this.attachmentRadioButton.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
       // 
+      // populateComboBoxTimer
+      // 
+      this.populateComboBoxTimer.Tick += new System.EventHandler(this.populateComboBoxTimer_Tick);
+      // 
       // KeyLocationPanel
       // 
       resources.ApplyResources(this, "$this");
@@ -129,6 +134,7 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         internal System.Windows.Forms.BindingSource locationSettingsBindingSource;
         private System.Windows.Forms.CheckBox saveKeyToTempFileCheckBox;
+        private System.Windows.Forms.Timer populateComboBoxTimer;
 
     }
 }
