@@ -131,24 +131,24 @@
     <value>..\Resources\KeeAgent-icon-mono.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="WebHelpAddFromFile" xml:space="preserve">
-    <value>http://lechnology.com/KeeAgent+Manager#AddFromFile</value>
+    <value>http://lechnology.com/software/keeagent/usage/keeagent-manager/#from-file</value>
   </data>
   <data name="WebHelpDatabaseSettings" xml:space="preserve">
-    <value>http://lechnology.com/KeeAgent+Options+and+Settings#Database_Settings</value>
+    <value>http://lechnology.com/software/keeagent/usage/options-and-settings/#database-settings</value>
   </data>
   <data name="WebHelpEntryOptions" xml:space="preserve">
-    <value>http://lechnology.com/KeeAgent+Options+and+Settings#Entry_Settings</value>
+    <value>http://lechnology.com/software/keeagent/usage/options-and-settings/#entry-settings</value>
   </data>
   <data name="WebHelpEntryPicker" xml:space="preserve">
-    <value>http://lechnology.com/KeeAgent+Manager#EntryPicker</value>
+    <value>http://lechnology.com/software/keeagent/usage/keeagent-manager/#entry-picker</value>
   </data>
   <data name="WebHelpGlobalOptions" xml:space="preserve">
-    <value>http://lechnology.com/KeeAgent+Options+and+Settings#Global_Options</value>
+    <value>http://lechnology.com/software/keeagent/usage/options-and-settings/#global-options</value>
   </data>
   <data name="WebHelpHome" xml:space="preserve">
-    <value>http://lechnology.com/KeeAgent</value>
+    <value>http://lechnology.com/software/keeagent/</value>
   </data>
   <data name="WebHelpKeeAgentManager" xml:space="preserve">
-    <value>http://lechnology.com/KeeAgent+Manager</value>
+    <value>http://lechnology.com/software/keeagent/usage/keeagent-manager/</value>
   </data>
 </root>

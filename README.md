@@ -5,9 +5,9 @@ stand-alone agent or it can interface with an external agent.
 
 USAGE
 -----
-See http://lechnology.com/KeeAgent
+See http://lechnology.com/software/keeagent
 
 
 COPYRIGHT
 ---------
-(C) 2012-2013 David Lechner <david@lechnology.com>
+(C) 2012-2014 David Lechner <david@lechnology.com>
