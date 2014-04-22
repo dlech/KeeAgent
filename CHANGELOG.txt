@@ -4,7 +4,7 @@ v0.5.0 (2014-04-22)
 * Fix Entry Settings form can close in invalid state in Mono
 * Add SSH key info to KeeAgent tab of Entry Settings dialog (Known issue: does
   not update correctly in Mono)
-* Add confirm constraint option to indiviual entries
+* Add confirm constraint option to individual entries
 * Add option to save key file to temporary file for use by external programs
 * KeeAgent settings are now stored in a binary attached to each entry instead
   of in a string (Important: settings will be lost if you downgrade KeeAgent)
