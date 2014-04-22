@@ -1,3 +1,16 @@
+v0.5.0 (2014-04-22)
+-------------------
+* "Unlock Database On SSH Activity" from database settings to global options
+* Fix Entry Settings form can close in invalid state in Mono
+* Add SSH key info to KeeAgent tab of Entry Settings dialog (Known issue: does
+  not update correctly in Mono)
+* Add confirm constraint option to indiviual entries
+* Add option to save key file to temporary file for use by external programs
+* KeeAgent settings are now stored in a binary attached to each entry instead
+  of in a string (Important: settings will be lost if you downgrade KeeAgent)
+* Expired entries are no longer automatically loaded
+* Add placeholders for accessing key files
+
 v0.4.1 (2013-08-07)
 -------------------
 * Fix Help links
