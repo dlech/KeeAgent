@@ -40,9 +40,11 @@ namespace KeeAgent.UI
     /// <param name="aMessage">The message to display</param>
     public void ShowBalloonNotification(string aMessage) {
       MethodInvoker invoker = delegate() {
-        mPluginHost.MainWindow.MainNotifyIcon.ShowBalloonTip(
-          5000, Translatable.KeeAgent,
-          aMessage, ToolTipIcon.Info);
+        if (mPluginHost.MainWindow.MainNotifyIcon != null) {
+          mPluginHost.MainWindow.MainNotifyIcon.ShowBalloonTip(
+            5000, Translatable.KeeAgent,
+            aMessage, ToolTipIcon.Info);
+        }
       };
       InvokeMainWindow(invoker, true);
     }

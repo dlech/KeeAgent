@@ -248,7 +248,7 @@ namespace KeeAgent
       mNotifyIconContextMenuItem.Image = Resources.KeeAgentIcon_png;
       mNotifyIconContextMenuItem.Click += manageKeeAgentMenuItem_Click;
       var notifyIconContextMenu =
-        mPluginHost.MainWindow.MainNotifyIcon.ContextMenuStrip;
+        mPluginHost.MainWindow.TrayContextMenu;
       var secondSeparatorIndex =
               notifyIconContextMenu.Items.IndexOfKey("m_ctxTraySep1");
       notifyIconContextMenu.Items.Insert(secondSeparatorIndex,
