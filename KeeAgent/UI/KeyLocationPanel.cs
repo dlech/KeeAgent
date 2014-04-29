@@ -88,22 +88,33 @@ namespace KeeAgent.UI
           }
         };
       locationGroupBox.DataBindings["SelectedRadioButton"].Parse +=
-        delegate(object aSender, ConvertEventArgs aEventArgs)
-        {
-          if (aEventArgs.DesiredType == typeof(EntrySettings.LocationType?) &&
-            aEventArgs.Value is string) {
-            var valueString = aEventArgs.Value as string;
+        delegate(object sender, ConvertEventArgs e) {
+          if (e.DesiredType == typeof(EntrySettings.LocationType?) &&
+              e.Value is string)
+          {
+            var valueString = e.Value as string;
             if (valueString == attachmentRadioButton.Name) {
-              aEventArgs.Value = EntrySettings.LocationType.Attachment;
+              e.Value = EntrySettings.LocationType.Attachment;
             } else if (valueString == fileRadioButton.Name) {
-              aEventArgs.Value = EntrySettings.LocationType.File;
+              e.Value = EntrySettings.LocationType.File;
             } else {
-              aEventArgs.Value = null;
+              e.Value = null;
             }
           } else {
             Debug.Fail("unexpected");
           }
         };
+      // workaround for BindingSource.BindingComplete event not working in Mono
+      if (Type.GetType("Mono.Runtime") != null) {
+        locationGroupBox.SelectedRadioButtonChanged +=
+          (sender, e) =>  OnKeyLocationChanged();
+        attachmentComboBox.SelectionChangeCommitted +=
+          (sender, e) =>  OnKeyLocationChanged();
+        saveKeyToTempFileCheckBox.CheckedChanged +=
+          (sender, e) =>  OnKeyLocationChanged();
+        fileNameTextBox.TextChanged +=
+          (sender, e) =>  OnKeyLocationChanged();
+      }
     }
 
     protected override void OnLoad(EventArgs e)
@@ -175,6 +186,7 @@ namespace KeeAgent.UI
       }
     }
 
+    // MONO BUG: This does not run on Mono
     private void locationSettingsBindingSource_BindingComplete(object sender,
       BindingCompleteEventArgs e)
     {

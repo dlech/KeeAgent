@@ -62,7 +62,9 @@ namespace KeeAgent.UI
           pwEntryForm.EntryRef.GetKeeAgentSettings();
         CurrentSettings = (EntrySettings)IntialSettings.Clone ();
         entrySettingsBindingSource.DataSource = CurrentSettings;
-        keyLocationPanel.KeyLocationChanged += delegate { UpdateKeyInfoDelayed(); };
+        keyLocationPanel.KeyLocationChanged += delegate {
+          UpdateKeyInfoDelayed();
+        };
         pwEntryForm.FormClosing += delegate {
           while (delayedUpdateKeyInfoTimer.Enabled)
             Application.DoEvents();
