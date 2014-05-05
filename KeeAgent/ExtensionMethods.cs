@@ -66,9 +66,7 @@ namespace KeeAgent
       get
       {
         if (mDatabaseSettingsSerializer == null) {
-#pragma warning disable 618 // ignore use of obsolete type
           mDatabaseSettingsSerializer = new XmlSerializer(typeof(DatabaseSettings));
-#pragma warning restore 618
         }
         return mDatabaseSettingsSerializer;
       }
