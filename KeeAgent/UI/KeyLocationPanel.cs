@@ -54,6 +54,11 @@ namespace KeeAgent.UI
           locationSettingsBindingSource.DataSource = typeof(EntrySettings.LocationData);
         } else {
           locationSettingsBindingSource.DataSource = value;
+          // on Mono, the bindings do not set the inital value properly
+          if (Type.GetType("Mono.Runtime") != null) {
+            if (KeyLocation != null && KeyLocation.SelectedType == null)
+              KeyLocation.SelectedType = EntrySettings.LocationType.Attachment;
+          }
         }
         OnKeyLocationChanged();
       }
