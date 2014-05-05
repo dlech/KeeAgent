@@ -177,7 +177,10 @@ namespace KeeAgent
             throw new NoAttachmentException();
           }
           var keyData = binaries.Get(settings.Location.AttachmentName);
-          return keyData.ReadData().ReadSshKey(getPassphraseCallback);
+          var key = keyData.ReadData().ReadSshKey(getPassphraseCallback);
+          if (string.IsNullOrWhiteSpace(key.Comment))
+            key.Comment = settings.Location.AttachmentName;
+          return key;
         case EntrySettings.LocationType.File:
           using (var keyFile = File.OpenRead(settings.Location.FileName)) {
             return keyFile.ReadSshKey(getPassphraseCallback);
