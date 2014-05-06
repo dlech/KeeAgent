@@ -20,6 +20,7 @@
 //  along with this program; if not, see <http://www.gnu.org/licenses>
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -28,11 +29,11 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
-using dlech.SshAgentLib;
-using KeeAgent.Properties;
 using KeePassLib;
 using KeePassLib.Collections;
 using KeePassLib.Security;
+using dlech.SshAgentLib;
+using KeeAgent.Properties;
 
 namespace KeeAgent
 {
@@ -169,23 +170,48 @@ namespace KeeAgent
           Array.Clear(passphrase, 0, passphrase.Length);
           return securePassphrase;
         };
+      Func<Stream> getPrivateKeyStream;
+      Func<Stream> getPublicKeyStream = null;
       switch (settings.Location.SelectedType) {
         case EntrySettings.LocationType.Attachment:
           if (string.IsNullOrWhiteSpace(settings.Location.AttachmentName)) {
             throw new NoAttachmentException();
           }
-          var keyData = binaries.Get(settings.Location.AttachmentName);
-          var key = keyData.ReadData().ReadSshKey(getPassphraseCallback);
-          if (string.IsNullOrWhiteSpace(key.Comment))
-            key.Comment = settings.Location.AttachmentName;
-          return key;
+          var privateKeyData = binaries.Get(settings.Location.AttachmentName);
+          var publicKeyData = binaries.Get(settings.Location.AttachmentName + ".pub");
+          getPrivateKeyStream = () => new MemoryStream(privateKeyData.ReadData());
+          if (publicKeyData != null)
+            getPublicKeyStream = () => new MemoryStream(publicKeyData.ReadData());
+          return GetSshKey(getPrivateKeyStream, getPublicKeyStream,
+                           settings.Location.AttachmentName, getPassphraseCallback);
         case EntrySettings.LocationType.File:
-          using (var keyFile = File.OpenRead(settings.Location.FileName)) {
-            return keyFile.ReadSshKey(getPassphraseCallback);
-          }
+          getPrivateKeyStream = () => File.OpenRead(settings.Location.FileName);
+          var publicKeyFile = settings.Location.FileName + ".pub";
+          if (File.Exists(publicKeyFile))
+            getPublicKeyStream = () => File.OpenRead(publicKeyFile);
+          return GetSshKey(getPrivateKeyStream, getPublicKeyStream,
+                           settings.Location.AttachmentName, getPassphraseCallback);
         default:
           return null;
       }
+    }
+
+    static ISshKey GetSshKey(Func<Stream> getPrivateKeyStream,
+                             Func<Stream> getPublicKeyStream,
+                             string fallbackComment,
+                             KeyFormatter.GetPassphraseCallback getPassphrase)
+    {
+      ISshKey key;
+      using (var privateKeyStream = getPrivateKeyStream())
+        key = privateKeyStream.ReadSshKey(getPassphrase);
+      if (string.IsNullOrWhiteSpace(key.Comment) && getPublicKeyStream != null) {
+        using (var stream = getPublicKeyStream())
+          key.Comment = KeyFormatter.GetComment(stream.ReadAllLines(Encoding.UTF8));
+      }
+      if (string.IsNullOrWhiteSpace(key.Comment)) {
+        key.Comment = fallbackComment;
+      }
+      return key;
     }
 
     public static void AddTab(this Form aForm, UserControl aPanel)
@@ -215,6 +241,15 @@ namespace KeeAgent
       } catch (Exception ex) {
         // Can't have exception here or KeePass freezes.
         Debug.Fail(ex.ToString());
+      }
+    }
+
+    public static IEnumerable<string> ReadAllLines(this Stream stream, Encoding encoding)
+    {
+      using (var reader = new StreamReader(stream, encoding)) {
+        while (!reader.EndOfStream) {
+          yield return reader.ReadLine();
+        }
       }
     }
   }
