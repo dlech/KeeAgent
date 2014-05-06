@@ -1,3 +1,8 @@
+v0.5.1 (2014-5-5)
+-----------------
+* Fix issue with public key info not loading in Entry Settings on Mono
+* Add feature to get key comment for OpenSSH keys
+
 v0.5.0 (2014-04-22)
 -------------------
 * "Unlock Database On SSH Activity" from database settings to global options
