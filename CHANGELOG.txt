@@ -1,3 +1,8 @@
+v0.5.2 (2014-7-24)
+-----------------
+* Fix issue with DSA authentication failing ~1% of the time because of signature
+  length less than 40 bytes
+
 v0.5.1 (2014-5-5)
 -----------------
 * Fix issue with public key info not loading in Entry Settings on Mono
