@@ -252,5 +252,17 @@ namespace KeeAgent
         }
       }
     }
+
+    public static string GetFullPath(this PwEntry entry)
+    {
+      var builder = new StringBuilder(entry.Strings.Get(PwDefs.TitleField).ReadString ());
+      var parent = entry.ParentGroup;
+      while (parent != null) {
+        builder.Insert(0, Path.DirectorySeparatorChar);
+        builder.Insert(0, parent.Name);
+        parent = parent.ParentGroup;
+      }
+      return builder.ToString ();
+    }
   }
 }

@@ -651,7 +651,7 @@ namespace KeeAgent
             try {
               AddEntry(entry, null);
             } catch (Exception) {
-              if (MessageService.AskYesNo ("Do you want to attempt to load additional keys?")) {
+              if (MessageService.AskYesNo("Do you want to attempt to load additional keys?")) {
                 exitFor = true;
               }
             }
@@ -789,33 +789,42 @@ namespace KeeAgent
         }
         return key;
       } catch (Exception ex) {
+        var firstLine = string.Format("KeeAgent: Error while loading key from entry '{0}'",
+          entry.GetFullPath());
         if (ex is NoAttachmentException) {
           MessageService.ShowWarning(new string[] {
-             "KeeAgent Error - No attachment specified in KeePass entry"
+            firstLine,
+             "No attachment specified in KeePass entry"
            });
         } else if (ex is FileNotFoundException || ex is DirectoryNotFoundException) {
           MessageService.ShowWarning(new string[] {
-            "KeeAgent Error - Could not find file",
+            firstLine,
+            "Could not find file",
             settings.Location.FileName
            });
         } else if (ex is KeyFormatterException || ex is PpkFormatterException) {
           MessageService.ShowWarning(new string[] {
-            "KeeAgent Error - Could not load file",
-            settings.Location.FileName,
+            firstLine,
+            string.Format ("Could not load file {0}",
+              settings.Location.SelectedType == EntrySettings.LocationType.File 
+                ? string.Format("'{0}'", settings.Location.FileName)
+                : string.Format("from attachment '{0}'", settings.Location.AttachmentName)),
             "Possible causes:",
             "- Passphrase was entered incorrectly",
             "- File is corrupt or has been tampered"
            });
         } else if (ex is AgentFailureException) {
           MessageService.ShowWarning(new string[] {
-            "KeeAgent Error - Agent Failure",
+            firstLine,
+            "Agent Failure",
             "Possible causes:",
             "- Key is already loaded in agent",
             "- Agent is locked"
           });
         } else {
           MessageService.ShowWarning(new string[] {
-            "KeeAgent Error - Unexpected error",
+            firstLine,
+            "Unexpected error",
             ex.ToString()
           });
           Debug.Fail(ex.ToString());
