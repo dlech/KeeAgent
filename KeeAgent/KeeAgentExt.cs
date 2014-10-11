@@ -636,6 +636,12 @@ namespace KeeAgent
           if (exitFor) {
             break;
           }
+          if (e.Database.RecycleBinEnabled) {
+            var recylceBin = e.Database.RootGroup.FindGroup(e.Database.RecycleBinUuid, true);
+            if (recylceBin != null && entry.IsContainedIn(recylceBin)) {
+              continue;
+            }
+          }
           if (entry.Expires && entry.ExpiryTime <= DateTime.Now
             && !e.Database.GetKeeAgentSettings().AllowAutoLoadExpiredEntryKey) {
             continue;
