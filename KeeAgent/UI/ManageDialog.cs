@@ -4,7 +4,7 @@
 //  Author(s):
 //      David Lechner <david@lechnology.com>
 //
-//  Copyright (C) 2012-2013  David Lechner
+//  Copyright (C) 2012-2014  David Lechner
 //
 //  This program is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU General Public License
@@ -71,12 +71,12 @@ namespace KeeAgent.UI
 
       // update title depending on Agent Mode
       mExt = aExt;
-      if (mExt.mAgent is Agent) {
+      if (mExt.agent is Agent) {
         Text += Translatable.TitleSuffixAgentMode;
       } else {
         Text += Translatable.TitleSuffixClientMode;
       }
-      keyInfoView.SetAgent(mExt.mAgent);
+      keyInfoView.SetAgent(mExt.agent);
     }
 
     protected override void OnShown (EventArgs e)
@@ -93,16 +93,16 @@ namespace KeeAgent.UI
     private void addButtonFromKeePassMenuItem_Click(object sender, EventArgs e)
     {
       var openDatabaseCount =
-        mExt.mPluginHost.MainWindow.DocumentManager.GetOpenDatabases().Count;
+        mExt.pluginHost.MainWindow.DocumentManager.GetOpenDatabases().Count;
       if (openDatabaseCount == 0) {
         MessageService.ShowWarning("No open databases found.",
           "Please open or unlock a database and then try again.");
         return;
       }
 
-      var showConstraintControls = !(mExt.mAgent is PageantClient);
+      var showConstraintControls = !(mExt.agent is PageantClient);
       var entryPicker =
-        new EntryPickerDialog(mExt.mPluginHost, showConstraintControls);
+        new EntryPickerDialog(mExt.pluginHost, showConstraintControls);
       var result = entryPicker.ShowDialog();
       if (result == DialogResult.OK) {
         try {
@@ -111,7 +111,7 @@ namespace KeeAgent.UI
           // error message already shown
         }
       }
-      if (mExt.mAgent is AgentClient) {
+      if (mExt.agent is AgentClient) {
         keyInfoView.ReloadKeyListView();
       }
     }

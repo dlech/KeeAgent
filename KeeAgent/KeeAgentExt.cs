@@ -19,52 +19,57 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program; if not, see <http://www.gnu.org/licenses>
 
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
+
 using dlech.SshAgentLib;
 using dlech.SshAgentLib.WinForms;
+
 using KeeAgent.Properties;
 using KeeAgent.UI;
+
 using KeePass.App;
 using KeePass.Forms;
 using KeePass.Plugins;
 using KeePass.Resources;
 using KeePass.UI;
 using KeePass.Util;
+using KeePass.Util.Spr;
 using KeePassLib;
 using KeePassLib.Utility;
-using KeePass.Util.Spr;
 
 namespace KeeAgent
 {
   public sealed partial class KeeAgentExt : Plugin
   {
-    internal IPluginHost mPluginHost;
-    internal bool mDebug;
-    internal IAgent mAgent;
+    internal IPluginHost pluginHost;
+    internal bool debug;
+    internal IAgent agent;
 
-    private ToolStripMenuItem mKeeAgentMenuItem;
-    private ToolStripMenuItem mKeeAgentPwEntryContextMenuItem;
-    private ToolStripMenuItem mNotifyIconContextMenuItem;
-    private List<ISshKey> mRemoveKeyList;
-    private UIHelper mUIHelper;
-    private bool mSaveBeforeCloseQuestionMessageShown = false;
+    ToolStripMenuItem keeAgentMenuItem;
+    ToolStripMenuItem keeAgentPwEntryContextMenuItem;
+    ToolStripMenuItem notifyIconContextMenuItem;
+    List<ISshKey> removeKeyList;
+    UIHelper uiHelper;
+    bool saveBeforeCloseQuestionMessageShown = false;
     Dictionary<string, KeyFileInfo> keyFileMap = new Dictionary<string, KeyFileInfo>();
 
-    private const string cPluginNamespace = "KeeAgent";
-    private const string cAlwaysConfirmOptionName = cPluginNamespace + ".AlwaysConfirm";
-    private const string cShowBalloonOptionName = cPluginNamespace + ".ShowBalloon";
-    private const string cNotificationOptionName = cPluginNamespace + ".Notification";
-    private const string cLogginEnabledOptionName = cPluginNamespace + ".LoggingEnabled";
-    private const string cLogFileNameOptionName = cPluginNamespace + ".LogFileName";
-    private const string cAgentModeOptionName = cPluginNamespace + ".AgentMode";
-    private const string cUnlockOnActivityOptionName = cPluginNamespace + ".UnlockOnActivity";
+    const string pluginNamespace = "KeeAgent";
+    const string alwaysConfirmOptionName = pluginNamespace + ".AlwaysConfirm";
+    const string showBalloonOptionName = pluginNamespace + ".ShowBalloon";
+    const string notificationOptionName = pluginNamespace + ".Notification";
+    const string logginEnabledOptionName = pluginNamespace + ".LoggingEnabled";
+    const string logFileNameOptionName = pluginNamespace + ".LogFileName";
+    const string agentModeOptionName = pluginNamespace + ".AgentMode";
+    const string unlockOnActivityOptionName = pluginNamespace + ".UnlockOnActivity";
     const string keyFilePathSprPlaceholder = @"{KEEAGENT:KEYFILEPATH}";
     const string identFileOptSprPlaceholder = @"{KEEAGENT:IDENTFILEOPT}";
 
@@ -82,17 +87,17 @@ namespace KeeAgent
 
     public Options Options { get; private set; }
 
-    public override bool Initialize(IPluginHost aHost)
+    public override bool Initialize(IPluginHost host)
     {
-      mPluginHost = aHost;
-      mUIHelper = new UIHelper(mPluginHost);
-      mRemoveKeyList = new List<ISshKey>();
-      mDebug = (mPluginHost
+      pluginHost = host;
+      uiHelper = new UIHelper(pluginHost);
+      removeKeyList = new List<ISshKey>();
+      debug = (pluginHost
           .CommandLineArgs[AppDefs.CommandLineOptions.Debug] != null);
 
       LoadOptions();
 
-      if (mDebug) Log("Loading KeeAgent...");
+      if (debug) Log("Loading KeeAgent...");
 
       var isWindows = Environment.OSVersion.Platform == PlatformID.Win32NT;
       var domainSocketPath = 
@@ -110,11 +115,10 @@ namespace KeeAgent
               // IMPORTANT: if you change this callback, you need to make sure
               // that it does not block the main event loop.
               pagent.ConfirmUserPermissionCallback = Default.ConfirmCallback;
-              mAgent = pagent;
+              agent = pagent;
             } else {
               if (string.IsNullOrEmpty (domainSocketPath)) {
-              var agent = new UnixAgent();
-              mAgent = agent;
+              agent = new UnixAgent();
               }
             }
           } catch (PageantRunningException) {
@@ -123,18 +127,18 @@ namespace KeeAgent
             }
           }
         }
-        if (mAgent == null) {
+        if (agent == null) {
           if (isWindows) {
-          mAgent = new PageantClient();
+          agent = new PageantClient();
           } else {
-            mAgent = new UnixClient();
+            agent = new UnixClient();
           }
         }
-        mPluginHost.MainWindow.FileOpened += MainForm_FileOpened;
-        mPluginHost.MainWindow.FileClosingPost += MainForm_FileClosing;
-        mPluginHost.MainWindow.FileClosed += MainForm_FileClosed;
+        pluginHost.MainWindow.FileOpened += MainForm_FileOpened;
+        pluginHost.MainWindow.FileClosingPost += MainForm_FileClosing;
+        pluginHost.MainWindow.FileClosed += MainForm_FileClosed;
         // load all database that are already opened
-        foreach (var database in mPluginHost.MainWindow.DocumentManager.Documents) {
+        foreach (var database in pluginHost.MainWindow.DocumentManager.Documents) {
           MainForm_FileOpened(this, new FileOpenedEventArgs(database.Database));
         }
         AddMenuItems();
@@ -143,12 +147,12 @@ namespace KeeAgent
         SprEngine.FilterCompile += SprEngine_FilterCompile;
         SprEngine.FilterPlaceholderHints.Add(keyFilePathSprPlaceholder);
         SprEngine.FilterPlaceholderHints.Add(identFileOptSprPlaceholder);
-        if (mDebug) Log("Succeeded");
+        if (debug) Log("Succeeded");
         return true;
       } catch (PageantRunningException) {
         ShowPageantRunningErrorMessage();
       } catch (Exception ex) {
-        if (mDebug) Log("Failed");
+        if (debug) Log("Failed");
         MessageService.ShowWarning("KeeAgent failed to load:", ex.Message);
         // TODO: show stack trace here
         Terminate();
@@ -163,8 +167,8 @@ namespace KeeAgent
       SprEngine.FilterCompile -= SprEngine_FilterCompile;
       SprEngine.FilterPlaceholderHints.Remove(keyFilePathSprPlaceholder);
       SprEngine.FilterPlaceholderHints.Remove(identFileOptSprPlaceholder);
-      if (mDebug) Log("Terminating KeeAgent");
-      var pagent = mAgent as PageantAgent;
+      if (debug) Log("Terminating KeeAgent");
+      var pagent = agent as PageantAgent;
       if (pagent != null) {
         // need to shutdown agent or app won't exit
         pagent.Dispose();
@@ -197,15 +201,15 @@ namespace KeeAgent
     private void AddMenuItems()
     {
       /* add item to Tools menu */
-      mKeeAgentMenuItem = new ToolStripMenuItem();
-      mKeeAgentMenuItem.Text = Translatable.KeeAgent;
-      mKeeAgentMenuItem.ToolTipText = Translatable.KeeAgentMenuItemToolTip;
-      mKeeAgentMenuItem.Image = Resources.KeeAgentIcon_png;
-      mKeeAgentMenuItem.Click += manageKeeAgentMenuItem_Click;
-      mPluginHost.MainWindow.ToolsMenu.DropDownItems.Add(mKeeAgentMenuItem);
+      keeAgentMenuItem = new ToolStripMenuItem();
+      keeAgentMenuItem.Text = Translatable.KeeAgent;
+      keeAgentMenuItem.ToolTipText = Translatable.KeeAgentMenuItemToolTip;
+      keeAgentMenuItem.Image = Resources.KeeAgentIcon_png;
+      keeAgentMenuItem.Click += manageKeeAgentMenuItem_Click;
+      pluginHost.MainWindow.ToolsMenu.DropDownItems.Add(keeAgentMenuItem);
 
       /* add item to help menu */
-      var foundToolstripItem = mPluginHost.MainWindow.MainMenuStrip.Items.Find("m_menuHelp", true);
+      var foundToolstripItem = pluginHost.MainWindow.MainMenuStrip.Items.Find("m_menuHelp", true);
       if (foundToolstripItem.Length > 0) {
         var helpMenu = foundToolstripItem[0] as ToolStripMenuItem;
         var keeAgentHelpMenuItem = new ToolStripMenuItem();
@@ -220,74 +224,74 @@ namespace KeeAgent
       }
 
       /* add item to Password Entry context menu */
-      var foundControl = mPluginHost.MainWindow.Controls.Find("m_lvEntries", true);
+      var foundControl = pluginHost.MainWindow.Controls.Find("m_lvEntries", true);
       if (foundControl.Length > 0) {
         var entryListView = foundControl[0] as CustomListViewEx;
         if (entryListView != null) {
           var pwEntryContextMenu = entryListView.ContextMenuStrip;
           if (pwEntryContextMenu != null) {
-            mKeeAgentPwEntryContextMenuItem = new ToolStripMenuItem();
-            mKeeAgentPwEntryContextMenuItem.Text =
+            keeAgentPwEntryContextMenuItem = new ToolStripMenuItem();
+            keeAgentPwEntryContextMenuItem.Text =
               Translatable.AddToKeeAgentContextMenuItem;
-            mKeeAgentPwEntryContextMenuItem.Click +=
+            keeAgentPwEntryContextMenuItem.Click +=
               mKeeAgentPwEntryContextMenuItem_Clicked;
-            mKeeAgentPwEntryContextMenuItem.Image = Resources.KeeAgentIcon_png;
+            keeAgentPwEntryContextMenuItem.Image = Resources.KeeAgentIcon_png;
             var firstSeparatorIndex =
               pwEntryContextMenu.Items.IndexOfKey("m_ctxEntrySep0");
             pwEntryContextMenu.Items.Insert(firstSeparatorIndex,
-              mKeeAgentPwEntryContextMenuItem);
+              keeAgentPwEntryContextMenuItem);
             pwEntryContextMenu.Opening += PwEntry_ContextMenu_Opening;
           }
         }
       }
 
       /* add item to notification icon context menu */
-      mNotifyIconContextMenuItem = new ToolStripMenuItem();
-      mNotifyIconContextMenuItem.Text = Translatable.KeeAgent;
-      mNotifyIconContextMenuItem.ToolTipText = Translatable.KeeAgentMenuItemToolTip;
-      mNotifyIconContextMenuItem.Image = Resources.KeeAgentIcon_png;
-      mNotifyIconContextMenuItem.Click += manageKeeAgentMenuItem_Click;
+      notifyIconContextMenuItem = new ToolStripMenuItem();
+      notifyIconContextMenuItem.Text = Translatable.KeeAgent;
+      notifyIconContextMenuItem.ToolTipText = Translatable.KeeAgentMenuItemToolTip;
+      notifyIconContextMenuItem.Image = Resources.KeeAgentIcon_png;
+      notifyIconContextMenuItem.Click += manageKeeAgentMenuItem_Click;
       var notifyIconContextMenu =
-        mPluginHost.MainWindow.TrayContextMenu;
+        pluginHost.MainWindow.TrayContextMenu;
       var secondSeparatorIndex =
               notifyIconContextMenu.Items.IndexOfKey("m_ctxTraySep1");
       notifyIconContextMenu.Items.Insert(secondSeparatorIndex,
-        mNotifyIconContextMenuItem);
+        notifyIconContextMenuItem);
     }
 
     private void PwEntry_ContextMenu_Opening(object aSender, CancelEventArgs aArgs)
     {
-      var selectedEntries = mPluginHost.MainWindow.GetSelectedEntries();
+      var selectedEntries = pluginHost.MainWindow.GetSelectedEntries();
       if (selectedEntries != null) {
         foreach (var entry in selectedEntries) {
           // if any selected entry contains an SSH key then we show the KeeAgent menu item
           if (entry.GetKeeAgentSettings().AllowUseOfSshKey) {
-            mKeeAgentPwEntryContextMenuItem.Visible = true;
-            var agent = mAgent as Agent;
+            keeAgentPwEntryContextMenuItem.Visible = true;
+            var agent = this.agent as Agent;
             if (agent != null && agent.IsLocked)
             {
-              mKeeAgentPwEntryContextMenuItem.Enabled = false;
-              mKeeAgentPwEntryContextMenuItem.Text = "KeeAgent Locked";
+              keeAgentPwEntryContextMenuItem.Enabled = false;
+              keeAgentPwEntryContextMenuItem.Text = "KeeAgent Locked";
             } else {
-              mKeeAgentPwEntryContextMenuItem.Enabled = true;
-              mKeeAgentPwEntryContextMenuItem.Text = "Load Entry in KeeAgent";
+              keeAgentPwEntryContextMenuItem.Enabled = true;
+              keeAgentPwEntryContextMenuItem.Text = "Load Entry in KeeAgent";
             }
             return;
           }
         }
       }
-      mKeeAgentPwEntryContextMenuItem.Visible = false;
+      keeAgentPwEntryContextMenuItem.Visible = false;
     }
 
     private void mKeeAgentPwEntryContextMenuItem_Clicked(object sender, EventArgs e)
     {
-      foreach (var entry in mPluginHost.MainWindow.GetSelectedEntries()) {
+      foreach (var entry in pluginHost.MainWindow.GetSelectedEntries()) {
         // if any selected entry contains an SSH key then we show the KeeAgent menu item
         var settings = entry.GetKeeAgentSettings();
         if (settings.AllowUseOfSshKey) {
           try {
             var constraints = new List<Agent.KeyConstraint>();
-            if (!(mAgent is PageantClient)) {
+            if (!(agent is PageantClient)) {
               if (Control.ModifierKeys.HasFlag(Keys.Control)) {
                 var dialog = new ConstraintsInputDialog(settings.UseConfirmConstraintWhenAdding);
                 dialog.ShowDialog();
@@ -315,13 +319,13 @@ namespace KeeAgent
 
     private void RemoveMenuItems()
     {
-      if (mPluginHost != null && mPluginHost.MainWindow != null &&
-          mKeeAgentMenuItem != null) {
+      if (pluginHost != null && pluginHost.MainWindow != null &&
+          keeAgentMenuItem != null) {
 
         /* get Tools menu */
-        ToolStripMenuItem toolsMenu = mPluginHost.MainWindow.ToolsMenu;
+        ToolStripMenuItem toolsMenu = pluginHost.MainWindow.ToolsMenu;
         /* remove items from tools menu */
-        toolsMenu.DropDownItems.Remove(mKeeAgentMenuItem);
+        toolsMenu.DropDownItems.Remove(keeAgentMenuItem);
       }
     }
 
@@ -333,36 +337,36 @@ namespace KeeAgent
     private void ShowManageDialog()
     {
       using (ManageDialog dialog = new ManageDialog(this)) {
-        dialog.ShowDialog(mPluginHost.MainWindow);
+        dialog.ShowDialog(pluginHost.MainWindow);
       }
     }
 
     internal void SaveGlobalOptions()
     {
-      var config = mPluginHost.CustomConfig;
-      config.SetBool(cAlwaysConfirmOptionName, Options.AlwaysConfirm);
-      config.SetString(cShowBalloonOptionName, Options.ShowBalloon.ToString());
-      config.SetBool(cLogginEnabledOptionName, Options.LoggingEnabled);
-      config.SetString(cLogFileNameOptionName, Options.LogFileName);
-      config.SetString(cAgentModeOptionName, Options.AgentMode.ToString());
-      config.SetBool (cUnlockOnActivityOptionName, Options.UnlockOnActivity);
+      var config = pluginHost.CustomConfig;
+      config.SetBool(alwaysConfirmOptionName, Options.AlwaysConfirm);
+      config.SetString(showBalloonOptionName, Options.ShowBalloon.ToString());
+      config.SetBool(logginEnabledOptionName, Options.LoggingEnabled);
+      config.SetString(logFileNameOptionName, Options.LogFileName);
+      config.SetString(agentModeOptionName, Options.AgentMode.ToString());
+      config.SetBool (unlockOnActivityOptionName, Options.UnlockOnActivity);
     }
 
     private void LoadOptions()
     {
       Options = new Options();
-      var config = mPluginHost.CustomConfig;
+      var config = pluginHost.CustomConfig;
 
-      Options.AlwaysConfirm = config.GetBool(cAlwaysConfirmOptionName, false);
-      Options.ShowBalloon = config.GetBool(cShowBalloonOptionName, true);
-      Options.LoggingEnabled = config.GetBool(cLogginEnabledOptionName, false);
-      Options.UnlockOnActivity = config.GetBool (cUnlockOnActivityOptionName, true);
+      Options.AlwaysConfirm = config.GetBool(alwaysConfirmOptionName, false);
+      Options.ShowBalloon = config.GetBool(showBalloonOptionName, true);
+      Options.LoggingEnabled = config.GetBool(logginEnabledOptionName, false);
+      Options.UnlockOnActivity = config.GetBool (unlockOnActivityOptionName, true);
 
       string defaultLogFileNameValue = Path.Combine(
           Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
           "KeeAgent.log");
       string configFileLogFileNameValue =
-          config.GetString(cLogFileNameOptionName);
+          config.GetString(logFileNameOptionName);
       if (string.IsNullOrEmpty(configFileLogFileNameValue)) {
         Options.LogFileName = defaultLogFileNameValue;
       } else {
@@ -370,7 +374,7 @@ namespace KeeAgent
       }
 
       AgentMode configAgentMode;
-      if (Enum.TryParse<AgentMode>(config.GetString(cAgentModeOptionName),
+      if (Enum.TryParse<AgentMode>(config.GetString(agentModeOptionName),
         out configAgentMode)) {
         Options.AgentMode = configAgentMode;
       } else {
@@ -380,7 +384,7 @@ namespace KeeAgent
       /* the Notification option is obsolete, so we read it and then clear it. */
       NotificationOptions configFileNotificationValue;
       if (Enum.TryParse<NotificationOptions>(config
-        .GetString(cNotificationOptionName), out configFileNotificationValue)) {
+        .GetString(notificationOptionName), out configFileNotificationValue)) {
 
         switch (configFileNotificationValue) {
           case NotificationOptions.AlwaysAsk:
@@ -391,7 +395,7 @@ namespace KeeAgent
             Options.ShowBalloon = false;
             break;
         }
-        config.SetString(cNotificationOptionName, string.Empty);
+        config.SetString(notificationOptionName, string.Empty);
       }
     }
 
@@ -433,7 +437,7 @@ namespace KeeAgent
           delegate(object sender, EventArgs args)
           {
             var dbSettingsPanel =
-              new DatabaseSettingsPanel(mPluginHost.MainWindow.ActiveDatabase);
+              new DatabaseSettingsPanel(pluginHost.MainWindow.ActiveDatabase);
             databaseSettingForm.AddTab(dbSettingsPanel);
           };
       }
@@ -458,7 +462,7 @@ namespace KeeAgent
 
       var entryForm = aSender as PwEntryForm;
       if (entryForm != null && (entryForm.DialogResult == DialogResult.OK ||
-        mSaveBeforeCloseQuestionMessageShown)) {
+        saveBeforeCloseQuestionMessageShown)) {
         var foundControls = entryForm.Controls.Find("EntryPanel", true);
         if (foundControls.Length != 1) {
           return;
@@ -517,13 +521,13 @@ namespace KeeAgent
           }
         }
       }
-      mSaveBeforeCloseQuestionMessageShown = false;
+      saveBeforeCloseQuestionMessageShown = false;
     }
 
     private void PwEntryForm_FormClosing(object aSender,
       FormClosingEventArgs aEventArgs)
     {
-      mSaveBeforeCloseQuestionMessageShown = false;
+      saveBeforeCloseQuestionMessageShown = false;
     }
 
     private void OptionsForm_FormClosed(object aSender,
@@ -554,7 +558,7 @@ namespace KeeAgent
         } else {
           notifyText = Translatable.NotifyUnlocked;
         }
-        mUIHelper.ShowBalloonNotification(notifyText);
+        uiHelper.ShowBalloonNotification(notifyText);
       }
     }
 
@@ -586,7 +590,7 @@ namespace KeeAgent
     private void Pageant_MessageReceived(object aSender,
       Agent.MessageReceivedEventArgs aEventArgs)
     {
-      var mainWindow = mPluginHost.MainWindow;
+      var mainWindow = pluginHost.MainWindow;
 
       var thread = new Thread(
         delegate()
@@ -621,7 +625,7 @@ namespace KeeAgent
       if (Options.ShowBalloon) {
         string notifyText = string.Format(Translatable.NotifyKeyFetched,
           aEventArgs.Key.Comment);
-        mUIHelper.ShowBalloonNotification(notifyText);
+        uiHelper.ShowBalloonNotification(notifyText);
       }
     }
 
@@ -667,8 +671,8 @@ namespace KeeAgent
       FileClosingEventArgs aEventArgs)
     {
       try {
-        mRemoveKeyList.Clear();
-        var allKeys = mAgent.GetAllKeys();
+        removeKeyList.Clear();
+        var allKeys = agent.GetAllKeys();
         foreach (var entry in aEventArgs.Database.RootGroup.GetEntries(true)) {
           try {
             var settings = entry.GetKeeAgentSettings();
@@ -681,7 +685,7 @@ namespace KeeAgent
               if (removeKey == null) {
                 continue;
               }
-              mRemoveKeyList.Add(removeKey);
+              removeKeyList.Add(removeKey);
             }
           } catch (Exception ex) {
             // keep trying the rest of the keys
@@ -698,10 +702,10 @@ namespace KeeAgent
       FileClosedEventArgs aEventArgs)
     {
       try {
-        foreach (var key in mRemoveKeyList) {
-          mAgent.RemoveKey(key);
+        foreach (var key in removeKeyList) {
+          agent.RemoveKey(key);
         }
-        mRemoveKeyList.Clear();
+        removeKeyList.Clear();
       } catch (Exception ex) {
         // can't be crashing KeePass
         Debug.Fail(ex.ToString());
@@ -713,7 +717,7 @@ namespace KeeAgent
     {
       if (aEventArgs.Title == PwDefs.ShortProductName &&
         aEventArgs.Text == KPRes.SaveBeforeCloseQuestion) {
-        mSaveBeforeCloseQuestionMessageShown = true;
+        saveBeforeCloseQuestionMessageShown = true;
       }
     }
 
@@ -741,12 +745,20 @@ namespace KeeAgent
       var settings = entry.GetKeeAgentSettings();
       try {
         var key = entry.GetSshKey();
-
-        if (mAgent is PageantClient) {
+        string db_name = "<Unknown database>";
+        try {
+          var database = pluginHost.MainWindow.DocumentManager.GetOpenDatabases()
+            .Where((db) => db.RootGroup.FindEntry(entry.Uuid, true) != null).Single();
+          db_name = database.Name;
+        } catch (Exception) {
+          Debug.Fail("Duplicate UUIDs?");
+        }
+        key.Source = string.Format("{0}: {1}", db_name, entry.GetFullPath());
+        if (agent is PageantClient) {
           // Pageant errors if you try to add a key that is already loaded
           // so try to remove the key first so that it behaves like other agents
           try {
-            mAgent.RemoveKey(key);
+            agent.RemoveKey(key);
           } catch (Exception) {
             // ignore failure
           }
@@ -767,7 +779,7 @@ namespace KeeAgent
             key.addConfirmConstraint();
           }
         }
-        mAgent.AddKey(key);
+        agent.AddKey(key);
         if (settings.Location.SelectedType == EntrySettings.LocationType.Attachment
           && settings.Location.SaveAttachmentToTempFile)
         {
