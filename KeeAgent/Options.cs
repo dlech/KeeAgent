@@ -67,5 +67,27 @@ namespace KeeAgent
     /// When true, all databases will be unlocked when an SSH key is requested (Agent mode only).
     /// </summary>
     public bool UnlockOnActivity { get; set; }
+
+    /// <summary>
+    /// When true and using PagentAgent, a socket file will be created at
+    /// CygwinSocketPath that can be used with cygwin
+    /// </summary>
+    public bool UseCygwinSocket { get; set; }
+
+    /// <summary>
+    /// The path for the file created when using UseCygwinSocket
+    /// </summary>
+    public string CygwinSocketPath { get; set; }
+
+    /// <summary>
+    /// When true and using PagentAgent, a socket file will be created at
+    /// MsysSocketPath that can be used with msys
+    /// </summary>
+    public bool UseMsysSocket { get; set; }
+
+    /// <summary>
+    /// The path for the file created when using UseCygwinSocketUseMsysSocket
+    /// </summary>
+    public string MsysSocketPath { get; set; }
   }
 }

@@ -70,6 +70,10 @@ namespace KeeAgent
     const string logFileNameOptionName = pluginNamespace + ".LogFileName";
     const string agentModeOptionName = pluginNamespace + ".AgentMode";
     const string unlockOnActivityOptionName = pluginNamespace + ".UnlockOnActivity";
+    const string useCygwinSocketOptionName = pluginNamespace + ".UseCygwinSocket";
+    const string cygwinSocketPathOptionName = pluginNamespace + ".CygwinSocketPath";
+    const string useMsysSocketOptionName = pluginNamespace + ".UseMsysSocket";
+    const string msysSocketPathOptionName = pluginNamespace + ".MsysSocketPath";
     const string keyFilePathSprPlaceholder = @"{KEEAGENT:KEYFILEPATH}";
     const string identFileOptSprPlaceholder = @"{KEEAGENT:IDENTFILEOPT}";
 
@@ -116,6 +120,12 @@ namespace KeeAgent
               // that it does not block the main event loop.
               pagent.ConfirmUserPermissionCallback = Default.ConfirmCallback;
               agent = pagent;
+              if (Options.UseCygwinSocket) {
+                StartCygwinSocket();
+              }
+              if (Options.UseMsysSocket) {
+                StartMsysSocket();
+              }
             } else {
               if (string.IsNullOrEmpty (domainSocketPath)) {
               agent = new UnixAgent();
@@ -129,7 +139,7 @@ namespace KeeAgent
         }
         if (agent == null) {
           if (isWindows) {
-          agent = new PageantClient();
+            agent = new PageantClient();
           } else {
             agent = new UnixClient();
           }
@@ -196,6 +206,50 @@ namespace KeeAgent
       // TODO - find a way to implement this using something like Castle
       // DynamicProxy or LinFu so that we can compile against KeePass <= 2.17
       get { return "http://updates.lechnology.com/KeePassPlugins"; }
+    }
+
+    public void StartCygwinSocket()
+    {
+      var pagent = agent as PageantAgent;
+      if (pagent == null)
+        return;
+      try {
+        pagent.StartCygwinSocket(Options.CygwinSocketPath);
+      } catch (Exception ex) {
+        MessageService.ShowWarning("Failed to start Cygwin socket:",
+          ex.Message);
+        // TODO: show better explanation of common errors.
+      }
+    }
+
+    public void StopCygwinSocket()
+    {
+      var pagent = agent as PageantAgent;
+      if (pagent == null)
+        return;
+      pagent.StopCygwinSocket();
+    }
+
+    public void StartMsysSocket()
+    {
+      var pagent = agent as PageantAgent;
+      if (pagent == null)
+        return;
+      try {
+        pagent.StartMsysSocket(Options.MsysSocketPath);
+      } catch (Exception ex) {
+        MessageService.ShowWarning("Failed to start MSYS socket:",
+          ex.Message);
+        // TODO: show better explanation of common errors.
+      }
+    }
+
+    public void StopMsysSocket()
+    {
+      var pagent = agent as PageantAgent;
+      if (pagent == null)
+        return;
+      pagent.StopMsysSocket();
     }
 
     private void AddMenuItems()
@@ -349,7 +403,11 @@ namespace KeeAgent
       config.SetBool(logginEnabledOptionName, Options.LoggingEnabled);
       config.SetString(logFileNameOptionName, Options.LogFileName);
       config.SetString(agentModeOptionName, Options.AgentMode.ToString());
-      config.SetBool (unlockOnActivityOptionName, Options.UnlockOnActivity);
+      config.SetBool(unlockOnActivityOptionName, Options.UnlockOnActivity);
+      config.SetBool(useCygwinSocketOptionName, Options.UseCygwinSocket);
+      config.SetString(cygwinSocketPathOptionName, Options.CygwinSocketPath);
+      config.SetBool(useMsysSocketOptionName, Options.UseMsysSocket );
+      config.SetString(msysSocketPathOptionName, Options.MsysSocketPath);
     }
 
     private void LoadOptions()
@@ -360,7 +418,11 @@ namespace KeeAgent
       Options.AlwaysConfirm = config.GetBool(alwaysConfirmOptionName, false);
       Options.ShowBalloon = config.GetBool(showBalloonOptionName, true);
       Options.LoggingEnabled = config.GetBool(logginEnabledOptionName, false);
-      Options.UnlockOnActivity = config.GetBool (unlockOnActivityOptionName, true);
+      Options.UnlockOnActivity = config.GetBool(unlockOnActivityOptionName, true);
+      Options.UseCygwinSocket = config.GetBool(useCygwinSocketOptionName, false);
+      Options.CygwinSocketPath = config.GetString(cygwinSocketPathOptionName);
+      Options.UseMsysSocket = config.GetBool(useMsysSocketOptionName, false);
+      Options.MsysSocketPath = config.GetString(msysSocketPathOptionName);
 
       string defaultLogFileNameValue = Path.Combine(
           Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),

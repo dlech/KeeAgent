@@ -33,6 +33,15 @@
       this.modeComboBox = new System.Windows.Forms.ComboBox();
       this.modeLabel = new System.Windows.Forms.Label();
       this.helpButton = new System.Windows.Forms.Button();
+      this.groupBox1 = new System.Windows.Forms.GroupBox();
+      this.label1 = new System.Windows.Forms.Label();
+      this.useCygwinSocketCheckBox = new System.Windows.Forms.CheckBox();
+      this.label3 = new System.Windows.Forms.Label();
+      this.useMsysSocketCheckBox = new System.Windows.Forms.CheckBox();
+      this.cygwinSocketPathTextBox = new System.Windows.Forms.TextBox();
+      this.msysSocketPathTextBox = new System.Windows.Forms.TextBox();
+      this.label4 = new System.Windows.Forms.Label();
+      this.groupBox1.SuspendLayout();
       this.SuspendLayout();
       // 
       // customListViewEx
@@ -72,15 +81,68 @@
       this.helpButton.UseVisualStyleBackColor = true;
       this.helpButton.Click += new System.EventHandler(this.helpButton_Click);
       // 
+      // groupBox1
+      // 
+      resources.ApplyResources(this.groupBox1, "groupBox1");
+      this.groupBox1.Controls.Add(this.msysSocketPathTextBox);
+      this.groupBox1.Controls.Add(this.label4);
+      this.groupBox1.Controls.Add(this.cygwinSocketPathTextBox);
+      this.groupBox1.Controls.Add(this.useMsysSocketCheckBox);
+      this.groupBox1.Controls.Add(this.label3);
+      this.groupBox1.Controls.Add(this.useCygwinSocketCheckBox);
+      this.groupBox1.Controls.Add(this.label1);
+      this.groupBox1.Name = "groupBox1";
+      this.groupBox1.TabStop = false;
+      // 
+      // label1
+      // 
+      resources.ApplyResources(this.label1, "label1");
+      this.label1.Name = "label1";
+      // 
+      // useCygwinSocketCheckBox
+      // 
+      resources.ApplyResources(this.useCygwinSocketCheckBox, "useCygwinSocketCheckBox");
+      this.useCygwinSocketCheckBox.Name = "useCygwinSocketCheckBox";
+      this.useCygwinSocketCheckBox.UseVisualStyleBackColor = true;
+      // 
+      // label3
+      // 
+      resources.ApplyResources(this.label3, "label3");
+      this.label3.Name = "label3";
+      // 
+      // useMsysSocketCheckBox
+      // 
+      resources.ApplyResources(this.useMsysSocketCheckBox, "useMsysSocketCheckBox");
+      this.useMsysSocketCheckBox.Name = "useMsysSocketCheckBox";
+      this.useMsysSocketCheckBox.UseVisualStyleBackColor = true;
+      // 
+      // cygwinSocketPathTextBox
+      // 
+      resources.ApplyResources(this.cygwinSocketPathTextBox, "cygwinSocketPathTextBox");
+      this.cygwinSocketPathTextBox.Name = "cygwinSocketPathTextBox";
+      // 
+      // msysSocketPathTextBox
+      // 
+      resources.ApplyResources(this.msysSocketPathTextBox, "msysSocketPathTextBox");
+      this.msysSocketPathTextBox.Name = "msysSocketPathTextBox";
+      // 
+      // label4
+      // 
+      resources.ApplyResources(this.label4, "label4");
+      this.label4.Name = "label4";
+      // 
       // OptionsPanel
       // 
       resources.ApplyResources(this, "$this");
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this.groupBox1);
       this.Controls.Add(this.helpButton);
       this.Controls.Add(this.modeLabel);
       this.Controls.Add(this.modeComboBox);
       this.Controls.Add(this.customListViewEx);
       this.Name = "OptionsPanel";
+      this.groupBox1.ResumeLayout(false);
+      this.groupBox1.PerformLayout();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -93,5 +155,13 @@
         private System.Windows.Forms.ComboBox modeComboBox;
         private System.Windows.Forms.Label modeLabel;
         private System.Windows.Forms.Button helpButton;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox msysSocketPathTextBox;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox cygwinSocketPathTextBox;
+        private System.Windows.Forms.CheckBox useMsysSocketCheckBox;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox useCygwinSocketCheckBox;
     }
 }

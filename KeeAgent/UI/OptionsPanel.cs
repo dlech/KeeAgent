@@ -4,7 +4,7 @@
 //  Author(s):
 //      David Lechner <david@lechnology.com>
 //
-//  Copyright (C) 2012-2013  David Lechner
+//  Copyright (C) 2012-2014  David Lechner
 //
 //  This program is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU General Public License
@@ -25,17 +25,19 @@ using System.Drawing;
 using System.Windows.Forms;
 using dlech.SshAgentLib;
 using KeePass.UI;
+using System.IO;
+using KeePassLib.Utility;
 
 namespace KeeAgent.UI
 {
   public partial class OptionsPanel : UserControl
   {
-    private KeeAgentExt mExt;
-    private CheckedLVItemDXList mOptionsList;
+    private KeeAgentExt ext;
+    private CheckedLVItemDXList optionsList;
 
-    public OptionsPanel(KeeAgentExt aExt)
+    public OptionsPanel(KeeAgentExt ext)
     {
-      mExt = aExt;
+      this.ext = ext;
 
       InitializeComponent();
 
@@ -46,7 +48,7 @@ namespace KeeAgent.UI
       modeComboBox.Items.Add(Translatable.OptionAgentModeAuto);
       modeComboBox.Items.Add(Translatable.OptionAgentModeAgent);
       modeComboBox.Items.Add(Translatable.OptionAgentModeClient);
-      switch (mExt.Options.AgentMode) {
+      switch (ext.Options.AgentMode) {
         case AgentMode.Client:
           modeComboBox.SelectedItem = Translatable.OptionAgentModeClient;
           break;
@@ -62,22 +64,25 @@ namespace KeeAgent.UI
       customListViewEx.UseCompatibleStateImageBehavior = false;
       UIUtil.SetExplorerTheme(customListViewEx, false);
 
-      mOptionsList = new CheckedLVItemDXList(customListViewEx, true);
-      var agentModeOptionsGroup =
-        new ListViewGroup("agentMode",
+      optionsList = new CheckedLVItemDXList(customListViewEx, true);
+      var agentModeOptionsGroup = new ListViewGroup("agentMode",
                           "Agent Mode Options (no effect in Client Mode)");
-      customListViewEx.Groups.Add (agentModeOptionsGroup);
-      mOptionsList.CreateItem(aExt.Options, "AlwaysConfirm", agentModeOptionsGroup,
+      customListViewEx.Groups.Add(agentModeOptionsGroup);
+      optionsList.CreateItem(ext.Options, "AlwaysConfirm", agentModeOptionsGroup,
         Translatable.OptionAlwaysConfirm);
-      mOptionsList.CreateItem(aExt.Options, "ShowBalloon", agentModeOptionsGroup,
+      optionsList.CreateItem(ext.Options, "ShowBalloon", agentModeOptionsGroup,
         Translatable.OptionShowBalloon);
       //mOptionsList.CreateItem(aExt.Options, "LoggingEnabled", optionsGroup,
       //  Translatable.optionLoggingEnabled);
-      mOptionsList.CreateItem (aExt.Options, "UnlockOnActivity", agentModeOptionsGroup,
+      optionsList.CreateItem (ext.Options, "UnlockOnActivity", agentModeOptionsGroup,
        Translatable.OptionUnlockOnActivity);
       columnHeader.Width = customListViewEx.ClientRectangle.Width -
         UIUtil.GetVScrollBarWidth() - 1;
-      mOptionsList.UpdateData(false);
+      useCygwinSocketCheckBox.Checked = ext.Options.UseCygwinSocket;
+      cygwinSocketPathTextBox.Text = ext.Options.CygwinSocketPath;
+      useMsysSocketCheckBox.Checked = ext.Options.UseMsysSocket;
+      msysSocketPathTextBox.Text = ext.Options.MsysSocketPath;
+      optionsList.UpdateData(false);
     }
 
     protected override void OnLoad(EventArgs e)
@@ -85,26 +90,52 @@ namespace KeeAgent.UI
       base.OnLoad(e);
       if (ParentForm != null) {
         ParentForm.FormClosing +=
-          delegate(object aSender, FormClosingEventArgs aEventArgs)
+          delegate(object sender, FormClosingEventArgs e2)
           {
             if (ParentForm.DialogResult == DialogResult.OK) {
+              if (useCygwinSocketCheckBox.Checked
+                && string.IsNullOrWhiteSpace(cygwinSocketPathTextBox.Text))
+              {
+                MessageService.ShowWarning("Must specify path for Cygwin socket.");
+                e2.Cancel = true;
+                return;
+              }
+              if (useMsysSocketCheckBox.Checked
+                && string.IsNullOrWhiteSpace(msysSocketPathTextBox.Text))
+              {
+                MessageService.ShowWarning("Must specify path for MSYS socket.");
+                e2.Cancel = true;
+                return;
+              }
               SaveChanges();
+              if (ext.Options.UseCygwinSocket)
+                ext.StartCygwinSocket();
+              else
+                ext.StopCygwinSocket();
+              if (ext.Options.UseMsysSocket)
+                ext.StartMsysSocket();
+              else
+                ext.StopMsysSocket();
             }
-            mOptionsList.Release();
+            optionsList.Release();
           };
       }
     }
 
     private void SaveChanges()
     {
-      mOptionsList.UpdateData(true);
+      optionsList.UpdateData(true);
       if (modeComboBox.Text == Translatable.OptionAgentModeAgent) {
-        mExt.Options.AgentMode = AgentMode.Server;
+        ext.Options.AgentMode = AgentMode.Server;
       } else if (modeComboBox.Text == Translatable.OptionAgentModeClient) {
-        mExt.Options.AgentMode = AgentMode.Client;
+        ext.Options.AgentMode = AgentMode.Client;
       } else {
-        mExt.Options.AgentMode = AgentMode.Auto;
+        ext.Options.AgentMode = AgentMode.Auto;
       }
+      ext.Options.UseCygwinSocket = useCygwinSocketCheckBox.Checked;
+      ext.Options.CygwinSocketPath = cygwinSocketPathTextBox.Text;
+      ext.Options.UseMsysSocket = useMsysSocketCheckBox.Checked;
+      ext.Options.MsysSocketPath = msysSocketPathTextBox.Text;
     }
 
     private void helpButton_Click(object sender, EventArgs e)

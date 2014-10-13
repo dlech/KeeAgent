@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30324.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeeAgent", "KeeAgent\KeeAgent.csproj", "{742863F2-52ED-41E0-92A1-8EEA60EB75EF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeeAgentTestProject", "KeeAgentTestProject\KeeAgentTestProject.csproj", "{D181A56F-743F-429F-BA31-1827C39A176C}"
@@ -23,35 +25,36 @@ Global
 		ReleasePlgx|Any CPU = ReleasePlgx|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3BEB6FAE-B14D-4281-8168-DB2A4A0C5FC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3BEB6FAE-B14D-4281-8168-DB2A4A0C5FC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3BEB6FAE-B14D-4281-8168-DB2A4A0C5FC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3BEB6FAE-B14D-4281-8168-DB2A4A0C5FC4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3BEB6FAE-B14D-4281-8168-DB2A4A0C5FC4}.ReleasePlgx|Any CPU.ActiveCfg = Release|Any CPU
-		{3BEB6FAE-B14D-4281-8168-DB2A4A0C5FC4}.ReleasePlgx|Any CPU.Build.0 = Release|Any CPU
 		{742863F2-52ED-41E0-92A1-8EEA60EB75EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{742863F2-52ED-41E0-92A1-8EEA60EB75EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{742863F2-52ED-41E0-92A1-8EEA60EB75EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{742863F2-52ED-41E0-92A1-8EEA60EB75EF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{742863F2-52ED-41E0-92A1-8EEA60EB75EF}.ReleasePlgx|Any CPU.ActiveCfg = ReleasePlgx|Any CPU
 		{742863F2-52ED-41E0-92A1-8EEA60EB75EF}.ReleasePlgx|Any CPU.Build.0 = ReleasePlgx|Any CPU
+		{D181A56F-743F-429F-BA31-1827C39A176C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D181A56F-743F-429F-BA31-1827C39A176C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D181A56F-743F-429F-BA31-1827C39A176C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D181A56F-743F-429F-BA31-1827C39A176C}.ReleasePlgx|Any CPU.ActiveCfg = Release|Any CPU
 		{9163B6B6-0603-4C6E-BC67-7111ED8CDDE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9163B6B6-0603-4C6E-BC67-7111ED8CDDE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9163B6B6-0603-4C6E-BC67-7111ED8CDDE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9163B6B6-0603-4C6E-BC67-7111ED8CDDE1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9163B6B6-0603-4C6E-BC67-7111ED8CDDE1}.ReleasePlgx|Any CPU.ActiveCfg = Release|Any CPU
 		{9163B6B6-0603-4C6E-BC67-7111ED8CDDE1}.ReleasePlgx|Any CPU.Build.0 = Release|Any CPU
-		{D181A56F-743F-429F-BA31-1827C39A176C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D181A56F-743F-429F-BA31-1827C39A176C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D181A56F-743F-429F-BA31-1827C39A176C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D181A56F-743F-429F-BA31-1827C39A176C}.ReleasePlgx|Any CPU.ActiveCfg = Release|Any CPU
+		{3BEB6FAE-B14D-4281-8168-DB2A4A0C5FC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BEB6FAE-B14D-4281-8168-DB2A4A0C5FC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BEB6FAE-B14D-4281-8168-DB2A4A0C5FC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BEB6FAE-B14D-4281-8168-DB2A4A0C5FC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BEB6FAE-B14D-4281-8168-DB2A4A0C5FC4}.ReleasePlgx|Any CPU.ActiveCfg = Release|Any CPU
+		{3BEB6FAE-B14D-4281-8168-DB2A4A0C5FC4}.ReleasePlgx|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = KeeAgent\KeeAgent.csproj
 		Policies = $0
-		$0.TextStylePolicy = $1
+		$0.TextStylePolicy = $3
 		$1.inheritsSet = null
 		$1.scope = text/x-csharp
 		$0.CSharpFormattingPolicy = $2
@@ -66,7 +69,6 @@ Global
 		$2.inheritsSet = Mono
 		$2.inheritsScope = text/x-csharp
 		$2.scope = text/x-csharp
-		$0.TextStylePolicy = $3
 		$3.TabWidth = 2
 		$3.IndentWidth = 2
 		$3.NoTabsAfterNonTabs = True
@@ -75,8 +77,5 @@ Global
 		$3.inheritsScope = text/plain
 		$3.scope = text/plain
 		version = 0.5.2.0
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
