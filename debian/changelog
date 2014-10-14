@@ -1,0 +1,53 @@
+keepass2-plugin-keeagent (0.5.2-1) trusty; urgency=medium
+
+  * New upstream release.
+
+ -- David Lechner <david@lechnology.com>  Thu, 24 Jul 2014 18:51:10 -0500
+
+keepass2-plugin-keeagent (0.4.1-3) trusty; urgency=medium
+
+  * Fix compiling on headless machine with Mono 3.x
+
+ -- David Lechner <david@lechnology.com>  Mon, 28 Apr 2014 19:30:18 -0500
+
+keepass2-plugin-keeagent (0.4.1-2) trusty; urgency=medium
+
+  * Fix compatibiltiy with KeebuntuAppIndicator plugin
+
+ -- David Lechner <david@lechnology.com>  Sun, 27 Apr 2014 22:31:58 -0500
+
+keepass2-plugin-keeagent (0.4.1-1) raring; urgency=low
+
+  * Add dependency on ssh-askpass
+
+ -- David Lechner <david@lechnology.com>  Mon, 09 Dec 2013 14:08:57 -0600
+
+keepass2-plugin-keeagent (0.4.1-0) raring; urgency=low
+
+  * New upstream release.
+
+ -- David Lechner <david@lechnology.com>  Wed, 07 Aug 2013 18:17:35 -0500
+
+keepass2-plugin-keeagent (0.3.11-0) raring; urgency=low
+
+  * New upstream release.
+
+ -- David Lechner <david@lechnology.com>  Tue, 23 Jul 2013 16:36:41 -0500
+
+keepass2-plugin-keeagent (0.3.9-2) raring; urgency=low
+
+  * Add missing dependancy (libmono-system-data-datasetextensions4.0-cil)
+
+ -- David Lechner <david@lechnology.com>  Wed, 29 May 2013 18:51:05 -0500
+
+keepass2-plugin-keeagent (0.3.9-1) raring; urgency=low
+
+  * New upstream release.
+
+ -- David Lechner <david@lechnology.com>  Fri, 24 May 2013 20:56:09 -0500
+
+keepass2-plugin-keeagent (0.3.8-1) raring; urgency=low
+
+  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+
+ -- David Lechner <david@lechnology.com>  Sat, 20 Apr 2013 01:40:40 -0500

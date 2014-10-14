@@ -1,0 +1,23 @@
+Source: keepass2-plugin-keeagent
+Section: utils
+Priority: optional
+Maintainer: David Lechner <david@lechnology.com>
+Build-Depends: debhelper (>= 8.0.0), cli-common-dev (>= 0.7),
+               keepass2, keepass2-plugin-dev
+Standards-Version: 3.9.5
+Homepage: http://lechnology.com/KeeAgent
+#Vcs-Git: git://git.debian.org/collab-maint/keepass2-plugin-keeagent.git
+#Vcs-Browser: http://git.debian.org/?p=collab-maint/keepass2-plugin-keeagent.git;a=summary
+
+Package: keepass2-plugin-keeagent
+Architecture: all
+Depends: keepass2 (>= 2.19),
+         mono-dmcs,
+         libmono-system-data-datasetextensions4.0-cil,
+         ssh-askpass,
+         ${misc:Depends},
+         ${cil:Depends}
+Description: SSH agent plugin for KeePass 2.x
+ Allows users of KeePass 2.x to manage their SSH keys directly from KeePass,
+ including automatically loading keys that are stored in a KeePass database.
+
