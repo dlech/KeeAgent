@@ -1,3 +1,11 @@
+keepass2-plugin-keeagent (0.5.3) trusty; urgency=medium
+
+  * Fix entries in the recycle bin are loaded at start when they should be ignored.
+  * More informative error messages when key fails to load.
+  * Add column to agent manager that shows where the key came from.
+
+ -- David Lechner <david@lechnology.com>  Mon, 13 Oct 2014 19:15:18 -0500
+
 keepass2-plugin-keeagent (0.5.2-1) trusty; urgency=medium
 
   * New upstream release.
