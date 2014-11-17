@@ -142,5 +142,42 @@ namespace KeeAgent.UI
     {
       Process.Start(Properties.Resources.WebHelpGlobalOptions);
     }
+
+    private void cygwinPathBrowseButton_Click(object sender, EventArgs e)
+    {
+      var file = browseForPath();
+      if (file != null)
+        cygwinSocketPathTextBox.Text = file;
+    }
+
+    private void msysPathBrowseButton_Click(object sender, EventArgs e)
+    {
+      var file = browseForPath();
+      if (file != null)
+        msysSocketPathTextBox.Text = file;
+    }
+
+    private string browseForPath()
+    {
+      // TODO: Would be nice if we could change the name of the "OK" button from
+      // "Save" to "Select".
+      var dialog = new SaveFileDialog()
+      {
+        Title = "Enter Socket File Name",
+        Filter = "All files (*.*)|*.*",
+        CheckFileExists = false,
+        OverwritePrompt = false,
+      };
+      dialog.FileOk += (s, e) =>
+      {
+        if (File.Exists(dialog.FileName)) {
+          MessageService.ShowWarning("File exists.", "Enter a new file name.");
+          e.Cancel = true;
+        }
+      };
+      if (dialog.ShowDialog() == DialogResult.Cancel)
+        return null;
+      return dialog.FileName;    
+    }
   }
 }

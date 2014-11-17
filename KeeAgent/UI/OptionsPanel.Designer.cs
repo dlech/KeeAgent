@@ -34,13 +34,15 @@
       this.modeLabel = new System.Windows.Forms.Label();
       this.helpButton = new System.Windows.Forms.Button();
       this.groupBox1 = new System.Windows.Forms.GroupBox();
-      this.label1 = new System.Windows.Forms.Label();
-      this.useCygwinSocketCheckBox = new System.Windows.Forms.CheckBox();
-      this.label3 = new System.Windows.Forms.Label();
-      this.useMsysSocketCheckBox = new System.Windows.Forms.CheckBox();
-      this.cygwinSocketPathTextBox = new System.Windows.Forms.TextBox();
       this.msysSocketPathTextBox = new System.Windows.Forms.TextBox();
       this.label4 = new System.Windows.Forms.Label();
+      this.cygwinSocketPathTextBox = new System.Windows.Forms.TextBox();
+      this.useMsysSocketCheckBox = new System.Windows.Forms.CheckBox();
+      this.label3 = new System.Windows.Forms.Label();
+      this.useCygwinSocketCheckBox = new System.Windows.Forms.CheckBox();
+      this.label1 = new System.Windows.Forms.Label();
+      this.cygwinPathBrowseButton = new System.Windows.Forms.Button();
+      this.msysPathBrowseButton = new System.Windows.Forms.Button();
       this.groupBox1.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -84,6 +86,8 @@
       // groupBox1
       // 
       resources.ApplyResources(this.groupBox1, "groupBox1");
+      this.groupBox1.Controls.Add(this.msysPathBrowseButton);
+      this.groupBox1.Controls.Add(this.cygwinPathBrowseButton);
       this.groupBox1.Controls.Add(this.msysSocketPathTextBox);
       this.groupBox1.Controls.Add(this.label4);
       this.groupBox1.Controls.Add(this.cygwinSocketPathTextBox);
@@ -94,33 +98,6 @@
       this.groupBox1.Name = "groupBox1";
       this.groupBox1.TabStop = false;
       // 
-      // label1
-      // 
-      resources.ApplyResources(this.label1, "label1");
-      this.label1.Name = "label1";
-      // 
-      // useCygwinSocketCheckBox
-      // 
-      resources.ApplyResources(this.useCygwinSocketCheckBox, "useCygwinSocketCheckBox");
-      this.useCygwinSocketCheckBox.Name = "useCygwinSocketCheckBox";
-      this.useCygwinSocketCheckBox.UseVisualStyleBackColor = true;
-      // 
-      // label3
-      // 
-      resources.ApplyResources(this.label3, "label3");
-      this.label3.Name = "label3";
-      // 
-      // useMsysSocketCheckBox
-      // 
-      resources.ApplyResources(this.useMsysSocketCheckBox, "useMsysSocketCheckBox");
-      this.useMsysSocketCheckBox.Name = "useMsysSocketCheckBox";
-      this.useMsysSocketCheckBox.UseVisualStyleBackColor = true;
-      // 
-      // cygwinSocketPathTextBox
-      // 
-      resources.ApplyResources(this.cygwinSocketPathTextBox, "cygwinSocketPathTextBox");
-      this.cygwinSocketPathTextBox.Name = "cygwinSocketPathTextBox";
-      // 
       // msysSocketPathTextBox
       // 
       resources.ApplyResources(this.msysSocketPathTextBox, "msysSocketPathTextBox");
@@ -130,6 +107,47 @@
       // 
       resources.ApplyResources(this.label4, "label4");
       this.label4.Name = "label4";
+      // 
+      // cygwinSocketPathTextBox
+      // 
+      resources.ApplyResources(this.cygwinSocketPathTextBox, "cygwinSocketPathTextBox");
+      this.cygwinSocketPathTextBox.Name = "cygwinSocketPathTextBox";
+      // 
+      // useMsysSocketCheckBox
+      // 
+      resources.ApplyResources(this.useMsysSocketCheckBox, "useMsysSocketCheckBox");
+      this.useMsysSocketCheckBox.Name = "useMsysSocketCheckBox";
+      this.useMsysSocketCheckBox.UseVisualStyleBackColor = true;
+      // 
+      // label3
+      // 
+      resources.ApplyResources(this.label3, "label3");
+      this.label3.Name = "label3";
+      // 
+      // useCygwinSocketCheckBox
+      // 
+      resources.ApplyResources(this.useCygwinSocketCheckBox, "useCygwinSocketCheckBox");
+      this.useCygwinSocketCheckBox.Name = "useCygwinSocketCheckBox";
+      this.useCygwinSocketCheckBox.UseVisualStyleBackColor = true;
+      // 
+      // label1
+      // 
+      resources.ApplyResources(this.label1, "label1");
+      this.label1.Name = "label1";
+      // 
+      // cygwinPathBrowseButton
+      // 
+      resources.ApplyResources(this.cygwinPathBrowseButton, "cygwinPathBrowseButton");
+      this.cygwinPathBrowseButton.Name = "cygwinPathBrowseButton";
+      this.cygwinPathBrowseButton.UseVisualStyleBackColor = true;
+      this.cygwinPathBrowseButton.Click += new System.EventHandler(this.cygwinPathBrowseButton_Click);
+      // 
+      // msysPathBrowseButton
+      // 
+      resources.ApplyResources(this.msysPathBrowseButton, "msysPathBrowseButton");
+      this.msysPathBrowseButton.Name = "msysPathBrowseButton";
+      this.msysPathBrowseButton.UseVisualStyleBackColor = true;
+      this.msysPathBrowseButton.Click += new System.EventHandler(this.msysPathBrowseButton_Click);
       // 
       // OptionsPanel
       // 
@@ -163,5 +181,7 @@
         private System.Windows.Forms.CheckBox useMsysSocketCheckBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox useCygwinSocketCheckBox;
+        private System.Windows.Forms.Button msysPathBrowseButton;
+        private System.Windows.Forms.Button cygwinPathBrowseButton;
     }
 }

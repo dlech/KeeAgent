@@ -222,6 +222,66 @@
   <data name="groupBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left, Right</value>
   </data>
+  <data name="msysPathBrowseButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="msysPathBrowseButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="msysPathBrowseButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>458, 89</value>
+  </data>
+  <data name="msysPathBrowseButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="msysPathBrowseButton.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="msysPathBrowseButton.Text" xml:space="preserve">
+    <value>Browse…</value>
+  </data>
+  <data name="&gt;&gt;msysPathBrowseButton.Name" xml:space="preserve">
+    <value>msysPathBrowseButton</value>
+  </data>
+  <data name="&gt;&gt;msysPathBrowseButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;msysPathBrowseButton.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;msysPathBrowseButton.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="cygwinPathBrowseButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="cygwinPathBrowseButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cygwinPathBrowseButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>458, 40</value>
+  </data>
+  <data name="cygwinPathBrowseButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="cygwinPathBrowseButton.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="cygwinPathBrowseButton.Text" xml:space="preserve">
+    <value>Browse…</value>
+  </data>
+  <data name="&gt;&gt;cygwinPathBrowseButton.Name" xml:space="preserve">
+    <value>cygwinPathBrowseButton</value>
+  </data>
+  <data name="&gt;&gt;cygwinPathBrowseButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cygwinPathBrowseButton.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;cygwinPathBrowseButton.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="msysSocketPathTextBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
@@ -229,7 +289,7 @@
     <value>67, 91</value>
   </data>
   <data name="msysSocketPathTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>466, 20</value>
+    <value>385, 20</value>
   </data>
   <data name="msysSocketPathTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -244,7 +304,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;msysSocketPathTextBox.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>2</value>
   </data>
   <data name="label4.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -274,7 +334,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>3</value>
   </data>
   <data name="cygwinSocketPathTextBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -283,7 +343,7 @@
     <value>67, 42</value>
   </data>
   <data name="cygwinSocketPathTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>466, 20</value>
+    <value>385, 20</value>
   </data>
   <data name="cygwinSocketPathTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -298,7 +358,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;cygwinSocketPathTextBox.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="useMsysSocketCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -328,7 +388,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;useMsysSocketCheckBox.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>5</value>
   </data>
   <data name="label3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -355,7 +415,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>6</value>
   </data>
   <data name="useCygwinSocketCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -382,7 +442,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;useCygwinSocketCheckBox.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>7</value>
   </data>
   <data name="label1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
@@ -412,7 +472,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>8</value>
   </data>
   <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>7, 166</value>
