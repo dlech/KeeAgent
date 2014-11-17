@@ -203,8 +203,6 @@ namespace KeeAgent
     /// </summary> 
     public override string UpdateUrl
     {
-      // TODO - find a way to implement this using something like Castle
-      // DynamicProxy or LinFu so that we can compile against KeePass <= 2.17
       get { return "http://updates.lechnology.com/KeePassPlugins"; }
     }
 
