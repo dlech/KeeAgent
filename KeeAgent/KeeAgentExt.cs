@@ -214,7 +214,8 @@ namespace KeeAgent
       if (pagent == null)
         return;
       try {
-        pagent.StartCygwinSocket(Options.CygwinSocketPath);
+        pagent.StartCygwinSocket(Environment.ExpandEnvironmentVariables(
+          Options.CygwinSocketPath));
       } catch (Exception ex) {
         MessageService.ShowWarning("Failed to start Cygwin socket:",
           ex.Message);
@@ -236,7 +237,8 @@ namespace KeeAgent
       if (pagent == null)
         return;
       try {
-        pagent.StartMsysSocket(Options.MsysSocketPath);
+        pagent.StartMsysSocket(Environment.ExpandEnvironmentVariables(
+          Options.MsysSocketPath));
       } catch (Exception ex) {
         MessageService.ShowWarning("Failed to start MSYS socket:",
           ex.Message);
