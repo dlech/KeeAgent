@@ -15,6 +15,32 @@
       <CheckForUpdateConfigured>true</CheckForUpdateConfigured>
     </Start>
   </Application>
+  <MainWindow>
+		<EntryListColumnCollection>
+			<Column>
+				<Type>Title</Type>
+				<Width>90</Width>
+			</Column>
+			<Column>
+				<Type>PluginExt</Type>
+				<CustomName>SSH Key Status</CustomName>
+				<Width>90</Width>
+			</Column>
+			<Column>
+				<Type>UserName</Type>
+				<Width>90</Width>
+			</Column>
+			<Column>
+				<Type>Password</Type>
+				<Width>90</Width>
+				<HideWithAsterisks>true</HideWithAsterisks>
+			</Column>
+			<Column>
+				<Type>Url</Type>
+				<Width>90</Width>
+			</Column>
+		</EntryListColumnCollection>
+  </MainWindow>
   <Integration>
     <LimitToSingleInstance>false</LimitToSingleInstance>
   </Integration>

@@ -61,6 +61,7 @@ namespace KeeAgent
     UIHelper uiHelper;
     bool saveBeforeCloseQuestionMessageShown = false;
     Dictionary<string, KeyFileInfo> keyFileMap = new Dictionary<string, KeyFileInfo>();
+    KeeAgentColumnProvider columnProvider;
 
     const string pluginNamespace = "KeeAgent";
     const string alwaysConfirmOptionName = pluginNamespace + ".AlwaysConfirm";
@@ -112,10 +113,11 @@ namespace KeeAgent
           try {
             if (isWindows) {
               var pagent = new PageantAgent();
-              pagent.Locked += Pageant_Locked;
-              pagent.KeyUsed += Pageant_KeyUsed;
-              pagent.KeyListChanged += Pageant_KeyListChanged;
-              pagent.MessageReceived += Pageant_MessageReceived;
+              pagent.Locked += PageantAgent_Locked;
+              pagent.KeyUsed += PageantAgent_KeyUsed;
+              pagent.KeyAdded += PageantAgent_KeyAdded;
+              pagent.KeyRemoved += PageantAgent_KeyRemoved;
+              pagent.MessageReceived += PageantAgent_MessageReceived;
               // IMPORTANT: if you change this callback, you need to make sure
               // that it does not block the main event loop.
               pagent.ConfirmUserPermissionCallback = Default.ConfirmCallback;
@@ -154,19 +156,23 @@ namespace KeeAgent
         AddMenuItems();
         GlobalWindowManager.WindowAdded += WindowAddedHandler;
         MessageService.MessageShowing += MessageService_MessageShowing;
+        columnProvider = new KeeAgentColumnProvider(agent);
+        host.ColumnProviderPool.Add(columnProvider);
         SprEngine.FilterCompile += SprEngine_FilterCompile;
         SprEngine.FilterPlaceholderHints.Add(keyFilePathSprPlaceholder);
         SprEngine.FilterPlaceholderHints.Add(identFileOptSprPlaceholder);
-        if (debug) Log("Succeeded");
+        if (debug)
+          Log("Succeeded");
         return true;
       } catch (PageantRunningException) {
         ShowPageantRunningErrorMessage();
       } catch (Exception ex) {
-        if (debug) Log("Failed");
         MessageService.ShowWarning("KeeAgent failed to load:", ex.Message);
         // TODO: show stack trace here
-        Terminate();
       }
+      if (debug)
+        Log("Failed");
+      Terminate();
       return false;
     }
 
@@ -177,6 +183,11 @@ namespace KeeAgent
       SprEngine.FilterCompile -= SprEngine_FilterCompile;
       SprEngine.FilterPlaceholderHints.Remove(keyFilePathSprPlaceholder);
       SprEngine.FilterPlaceholderHints.Remove(identFileOptSprPlaceholder);
+      if (columnProvider != null) {
+        pluginHost.ColumnProviderPool.Remove(columnProvider);
+        columnProvider.Dispose();
+        columnProvider = null;
+      }
       if (debug) Log("Terminating KeeAgent");
       var pagent = agent as PageantAgent;
       if (pagent != null) {
@@ -611,7 +622,7 @@ namespace KeeAgent
       }
     }
 
-    private void Pageant_Locked(object aSender, Agent.LockEventArgs aEventArgs)
+    private void PageantAgent_Locked(object aSender, Agent.LockEventArgs aEventArgs)
     {
       if (Options.ShowBalloon) {
         string notifyText;
@@ -624,32 +635,31 @@ namespace KeeAgent
       }
     }
 
-    private void Pageant_KeyListChanged(object aSender,
-      Agent.KeyListChangeEventArgs aEventArgs)
+    private void PageantAgent_KeyAdded(object sender,SshKeyEventArgs e)
     {
-      if (Options.AlwaysConfirm &&
-          aEventArgs.Action == Agent.KeyListChangeEventAction.Add &&
-          !aEventArgs.Key.HasConstraint(
-            Agent.KeyConstraintType.SSH_AGENT_CONSTRAIN_CONFIRM)) {
-
+      if (Options.AlwaysConfirm && !e.Key.HasConstraint(
+            Agent.KeyConstraintType.SSH_AGENT_CONSTRAIN_CONFIRM))
+      {
         var constraint = new Agent.KeyConstraint();
         constraint.Type = Agent.KeyConstraintType.SSH_AGENT_CONSTRAIN_CONFIRM;
-        aEventArgs.Key.AddConstraint(constraint);
-      }      
-      if (aEventArgs.Action == Agent.KeyListChangeEventAction.Remove) {
-        var fingerprint = aEventArgs.Key.GetMD5Fingerprint().ToHexString();
-        if (keyFileMap.ContainsKey(fingerprint) && keyFileMap[fingerprint].IsTemporary) {
-          try {
-            File.Delete(keyFileMap[fingerprint].Path);
-            keyFileMap.Remove(fingerprint);
-          } catch (Exception ex) {
-            Debug.Fail(ex.Message, ex.StackTrace);
-          }
+        e.Key.AddConstraint(constraint);
+      }
+    }
+
+    private void PageantAgent_KeyRemoved(object aSender, SshKeyEventArgs aEventArgs)
+    {
+      var fingerprint = aEventArgs.Key.GetMD5Fingerprint().ToHexString();
+      if (keyFileMap.ContainsKey(fingerprint) && keyFileMap[fingerprint].IsTemporary) {
+        try {
+          File.Delete(keyFileMap[fingerprint].Path);
+          keyFileMap.Remove(fingerprint);
+        } catch (Exception ex) {
+          Debug.Fail(ex.Message, ex.StackTrace);
         }
       }
     }
 
-    private void Pageant_MessageReceived(object aSender,
+    private void PageantAgent_MessageReceived(object aSender,
       Agent.MessageReceivedEventArgs aEventArgs)
     {
       var mainWindow = pluginHost.MainWindow;
@@ -682,7 +692,7 @@ namespace KeeAgent
       }
     }
 
-    private void Pageant_KeyUsed(object aSender, Agent.KeyUsedEventArgs aEventArgs)
+    private void PageantAgent_KeyUsed(object aSender, Agent.KeyUsedEventArgs aEventArgs)
     {
       if (Options.ShowBalloon) {
         string notifyText = string.Format(Translatable.NotifyKeyFetched,
