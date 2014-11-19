@@ -43,9 +43,13 @@
       this.label1 = new System.Windows.Forms.Label();
       this.confirmConstraintCheckBox = new System.Windows.Forms.CheckBox();
       this.delayedUpdateKeyInfoTimer = new System.Windows.Forms.Timer(this.components);
+      this.lifetimeConstraintCheckBox = new System.Windows.Forms.CheckBox();
+      this.lifetimeConstraintNumericUpDown = new System.Windows.Forms.NumericUpDown();
+      this.lifetimeConstraintLabel = new System.Windows.Forms.Label();
       this.entrySettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.keyLocationPanel = new KeeAgent.UI.KeyLocationPanel();
       this.keyInfoGroupBox.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.lifetimeConstraintNumericUpDown)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.entrySettingsBindingSource)).BeginInit();
       this.SuspendLayout();
       // 
@@ -143,6 +147,35 @@
       // 
       this.delayedUpdateKeyInfoTimer.Tick += new System.EventHandler(this.delayedUpdateKeyIndoTimer_Tick);
       // 
+      // lifetimeConstraintCheckBox
+      // 
+      resources.ApplyResources(this.lifetimeConstraintCheckBox, "lifetimeConstraintCheckBox");
+      this.lifetimeConstraintCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.entrySettingsBindingSource, "UseLifetimeConstraintWhenAdding", true));
+      this.lifetimeConstraintCheckBox.Name = "lifetimeConstraintCheckBox";
+      this.lifetimeConstraintCheckBox.UseVisualStyleBackColor = true;
+      this.lifetimeConstraintCheckBox.CheckedChanged += new System.EventHandler(this.lifetimeConstraintCheckBox_CheckedChanged);
+      // 
+      // lifetimeConstraintNumericUpDown
+      // 
+      this.lifetimeConstraintNumericUpDown.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.entrySettingsBindingSource, "LifetimeConstraintDuration", true));
+      resources.ApplyResources(this.lifetimeConstraintNumericUpDown, "lifetimeConstraintNumericUpDown");
+      this.lifetimeConstraintNumericUpDown.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+      this.lifetimeConstraintNumericUpDown.Name = "lifetimeConstraintNumericUpDown";
+      this.lifetimeConstraintNumericUpDown.Value = new decimal(new int[] {
+            600,
+            0,
+            0,
+            0});
+      // 
+      // lifetimeConstraintLabel
+      // 
+      resources.ApplyResources(this.lifetimeConstraintLabel, "lifetimeConstraintLabel");
+      this.lifetimeConstraintLabel.Name = "lifetimeConstraintLabel";
+      // 
       // entrySettingsBindingSource
       // 
       this.entrySettingsBindingSource.DataSource = typeof(KeeAgent.EntrySettings);
@@ -159,6 +192,9 @@
       // 
       resources.ApplyResources(this, "$this");
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this.lifetimeConstraintLabel);
+      this.Controls.Add(this.lifetimeConstraintNumericUpDown);
+      this.Controls.Add(this.lifetimeConstraintCheckBox);
       this.Controls.Add(this.confirmConstraintCheckBox);
       this.Controls.Add(this.keyInfoGroupBox);
       this.Controls.Add(this.helpButton);
@@ -169,6 +205,7 @@
       this.Name = "EntryPanel";
       this.keyInfoGroupBox.ResumeLayout(false);
       this.keyInfoGroupBox.PerformLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.lifetimeConstraintNumericUpDown)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.entrySettingsBindingSource)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
@@ -193,6 +230,9 @@
         private System.Windows.Forms.Button copyPublicKeybutton;
         private System.Windows.Forms.CheckBox confirmConstraintCheckBox;
         private System.Windows.Forms.Timer delayedUpdateKeyInfoTimer;
+        private System.Windows.Forms.CheckBox lifetimeConstraintCheckBox;
+        private System.Windows.Forms.NumericUpDown lifetimeConstraintNumericUpDown;
+        private System.Windows.Forms.Label lifetimeConstraintLabel;
 
     }
 }

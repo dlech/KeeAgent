@@ -117,8 +117,11 @@ namespace KeeAgent
 
     internal void Agent_KeyAddedOrRemoved(object sender, SshKeyEventArgs e)
     {
-      // only update the entry list
-      KeePass.Program.MainForm.UpdateUI(false, null, false, null, true, null, false);
+      ext.pluginHost.MainWindow.Invoke((MethodInvoker)delegate()
+      {
+        // only update the entry list
+        ext.pluginHost.MainWindow.UpdateUI(false, null, false, null, true, null, false);
+      });
     }
 
     private void Dispose(bool disposing)

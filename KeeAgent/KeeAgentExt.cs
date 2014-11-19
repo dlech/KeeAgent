@@ -846,6 +846,9 @@ namespace KeeAgent
             if (settings.UseConfirmConstraintWhenAdding) {
               key.addConfirmConstraint();
             }
+            if (settings.UseLifetimeConstraintWhenAdding) {
+              key.addLifetimeConstraint(settings.LifetimeConstraintDuration);
+            }
           }
           if (Options.AlwaysConfirm &&
               !key.HasConstraint(Agent.KeyConstraintType.SSH_AGENT_CONSTRAIN_CONFIRM))

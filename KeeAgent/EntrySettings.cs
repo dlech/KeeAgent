@@ -108,6 +108,8 @@ namespace KeeAgent
     public bool AddAtDatabaseOpen { get; set; }
     public bool RemoveAtDatabaseClose { get; set; }
     public bool UseConfirmConstraintWhenAdding { get; set; }
+    public bool UseLifetimeConstraintWhenAdding { get; set; }
+    public uint LifetimeConstraintDuration { get; set; }
     public LocationData Location { get; set; }
 
     public EntrySettings()
@@ -116,6 +118,8 @@ namespace KeeAgent
       AddAtDatabaseOpen = true;
       RemoveAtDatabaseClose = true;
       UseConfirmConstraintWhenAdding = false;
+      UseLifetimeConstraintWhenAdding = false;
+      LifetimeConstraintDuration = 600;
       Location = new LocationData();
     }
 
@@ -129,6 +133,8 @@ namespace KeeAgent
       clone.AddAtDatabaseOpen = AddAtDatabaseOpen;
       clone.RemoveAtDatabaseClose = RemoveAtDatabaseClose;
       clone.UseConfirmConstraintWhenAdding = UseConfirmConstraintWhenAdding;
+      clone.UseLifetimeConstraintWhenAdding = UseLifetimeConstraintWhenAdding;
+      clone.LifetimeConstraintDuration = LifetimeConstraintDuration;
       clone.Location = (LocationData)Location.Clone();
       return clone;
     }
@@ -142,6 +148,8 @@ namespace KeeAgent
         AddAtDatabaseOpen == other.AddAtDatabaseOpen &&
         RemoveAtDatabaseClose == other.RemoveAtDatabaseClose &&
         UseConfirmConstraintWhenAdding == other.UseConfirmConstraintWhenAdding &&
+        UseLifetimeConstraintWhenAdding == other.UseLifetimeConstraintWhenAdding &&
+        LifetimeConstraintDuration == other.LifetimeConstraintDuration &&
         Location == other.Location;
     }
     #endregion

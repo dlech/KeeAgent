@@ -151,7 +151,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;hasSshKeyCheckBox.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>9</value>
   </data>
   <data name="addKeyAtOpenCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -181,7 +181,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;addKeyAtOpenCheckBox.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>8</value>
   </data>
   <data name="removeKeyAtCloseCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -211,7 +211,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;removeKeyAtCloseCheckBox.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>7</value>
   </data>
   <data name="helpButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -238,7 +238,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;helpButton.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>5</value>
   </data>
   <data name="keyInfoGroupBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -460,7 +460,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;keyInfoGroupBox.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>4</value>
   </data>
   <data name="confirmConstraintCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -472,13 +472,13 @@
     <value>9, 78</value>
   </data>
   <data name="confirmConstraintCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 17</value>
+    <value>131, 17</value>
   </data>
   <data name="confirmConstraintCheckBox.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
   <data name="confirmConstraintCheckBox.Text" xml:space="preserve">
-    <value>Use confirm constraint for this key</value>
+    <value>Use confirm constraint</value>
   </data>
   <data name="&gt;&gt;confirmConstraintCheckBox.Name" xml:space="preserve">
     <value>confirmConstraintCheckBox</value>
@@ -490,11 +490,92 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;confirmConstraintCheckBox.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>3</value>
   </data>
   <metadata name="delayedUpdateKeyInfoTimer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="lifetimeConstraintCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lifetimeConstraintCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lifetimeConstraintCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>146, 78</value>
+  </data>
+  <data name="lifetimeConstraintCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>129, 17</value>
+  </data>
+  <data name="lifetimeConstraintCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="lifetimeConstraintCheckBox.Text" xml:space="preserve">
+    <value>Use lifetime constraint</value>
+  </data>
+  <data name="&gt;&gt;lifetimeConstraintCheckBox.Name" xml:space="preserve">
+    <value>lifetimeConstraintCheckBox</value>
+  </data>
+  <data name="&gt;&gt;lifetimeConstraintCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lifetimeConstraintCheckBox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lifetimeConstraintCheckBox.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="lifetimeConstraintNumericUpDown.Location" type="System.Drawing.Point, System.Drawing">
+    <value>281, 77</value>
+  </data>
+  <data name="lifetimeConstraintNumericUpDown.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 20</value>
+  </data>
+  <data name="lifetimeConstraintNumericUpDown.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;lifetimeConstraintNumericUpDown.Name" xml:space="preserve">
+    <value>lifetimeConstraintNumericUpDown</value>
+  </data>
+  <data name="&gt;&gt;lifetimeConstraintNumericUpDown.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lifetimeConstraintNumericUpDown.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lifetimeConstraintNumericUpDown.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="lifetimeConstraintLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lifetimeConstraintLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lifetimeConstraintLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>343, 79</value>
+  </data>
+  <data name="lifetimeConstraintLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>47, 13</value>
+  </data>
+  <data name="lifetimeConstraintLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="lifetimeConstraintLabel.Text" xml:space="preserve">
+    <value>seconds</value>
+  </data>
+  <data name="&gt;&gt;lifetimeConstraintLabel.Name" xml:space="preserve">
+    <value>lifetimeConstraintLabel</value>
+  </data>
+  <data name="&gt;&gt;lifetimeConstraintLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lifetimeConstraintLabel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lifetimeConstraintLabel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="keyLocationPanel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
@@ -511,13 +592,13 @@
     <value>keyLocationPanel</value>
   </data>
   <data name="&gt;&gt;keyLocationPanel.Type" xml:space="preserve">
-    <value>KeeAgent.UI.KeyLocationPanel, KeeAgent, Version=0.4.1.2, Culture=neutral, PublicKeyToken=null</value>
+    <value>KeeAgent.UI.KeyLocationPanel, KeeAgent, Version=0.5.3.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;keyLocationPanel.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;keyLocationPanel.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>6</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

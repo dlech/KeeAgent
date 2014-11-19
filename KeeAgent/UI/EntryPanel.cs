@@ -80,6 +80,9 @@ namespace KeeAgent.UI
       addKeyAtOpenCheckBox.Enabled = hasSshKeyCheckBox.Checked;
       removeKeyAtCloseCheckBox.Enabled = hasSshKeyCheckBox.Checked;
       confirmConstraintCheckBox.Enabled = addKeyAtOpenCheckBox.Enabled;
+      lifetimeConstraintCheckBox.Enabled = addKeyAtOpenCheckBox.Enabled;
+      lifetimeConstraintNumericUpDown.Enabled = lifetimeConstraintCheckBox.Enabled
+        && lifetimeConstraintCheckBox.Checked;
       keyLocationPanel.Enabled = hasSshKeyCheckBox.Checked;
       UpdateKeyInfoDelayed();
     }
@@ -138,6 +141,11 @@ namespace KeeAgent.UI
     }
 
     private void hasSshKeyCheckBox_CheckedChanged(object sender, EventArgs e)
+    {
+      UpdateControlStates();
+    }
+
+    private void lifetimeConstraintCheckBox_CheckedChanged(object sender, EventArgs e)
     {
       UpdateControlStates();
     }
