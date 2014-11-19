@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddToKeeAgentContextMenuItem" xml:space="preserve">
-    <value>Add SS&amp;H Key to KeeAgent</value>
+  <data name="LoadKeyContextMenuItem" xml:space="preserve">
+    <value>Load SS&amp;H Key</value>
   </data>
   <data name="ButtonLock" xml:space="preserve">
     <value>Lock</value>

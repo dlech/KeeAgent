@@ -39,20 +39,20 @@ namespace KeeAgent
         sshKeyStatusColumnName
       };
 
-    IAgent agent;
+    KeeAgentExt ext;
 
     public override string[] ColumnNames
     {
       get { return columnNames.ToArray(); }
     }
 
-    public KeeAgentColumnProvider(IAgent agent)
+    public KeeAgentColumnProvider(KeeAgentExt ext)
     {
-      if (agent == null)
-        throw new ArgumentNullException("agent");
-      this.agent = agent;
-      agent.KeyAdded += Agent_KeyAddedOrRemoved;
-      agent.KeyRemoved += Agent_KeyAddedOrRemoved;
+      if (ext == null)
+        throw new ArgumentNullException("ext");
+      this.ext = ext;
+      ext.agent.KeyAdded += Agent_KeyAddedOrRemoved;
+      ext.agent.KeyRemoved += Agent_KeyAddedOrRemoved;
     }
 
     ~KeeAgentColumnProvider()
@@ -68,7 +68,7 @@ namespace KeeAgent
             var key = entry.GetSshKey();
             if (key == null)
               return "N/A";
-            if (agent.GetAllKeys().Get(key.Version, key.GetPublicKeyBlob()) != null)
+            if (ext.agent.GetAllKeys().Get(key.Version, key.GetPublicKeyBlob()) != null)
               return "Loaded";
           } catch (PpkFormatterException) {
             return "Error";
@@ -100,11 +100,11 @@ namespace KeeAgent
             var key = entry.GetSshKey();
             if (key == null)
               break;
-            var agentKey = agent.GetAllKeys().Get(key.Version, key.GetPublicKeyBlob());
+            var agentKey = ext.agent.GetAllKeys().Get(key.Version, key.GetPublicKeyBlob());
             if (agentKey == null)
-              agent.AddKey(key);
+              ext.AddEntry(entry, null);
             else
-              agent.RemoveKey(agentKey);
+              ext.agent.RemoveKey(agentKey);
           } catch (Exception ex) {
             Debug.Fail(ex.Message);
           }
@@ -123,8 +123,8 @@ namespace KeeAgent
 
     private void Dispose(bool disposing)
     {
-      agent.KeyAdded -= Agent_KeyAddedOrRemoved;
-      agent.KeyRemoved -= Agent_KeyAddedOrRemoved;
+      ext.agent.KeyAdded -= Agent_KeyAddedOrRemoved;
+      ext.agent.KeyRemoved -= Agent_KeyAddedOrRemoved;
     }
 
     public void Dispose()

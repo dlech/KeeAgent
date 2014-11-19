@@ -55,8 +55,10 @@ namespace KeeAgent
     internal IAgent agent;
 
     ToolStripMenuItem keeAgentMenuItem;
-    ToolStripMenuItem keeAgentPwEntryContextMenuItem;
+    ToolStripMenuItem pwEntryContextMenuLoadKeyMenuItem;
+    ToolStripMenuItem pwEntryContextMenuLoadKeyOpenUrlMenuItem;
     ToolStripMenuItem notifyIconContextMenuItem;
+    ToolStripMenuItem pwEntryContextMenuUrlOpenMenuItem;
     List<ISshKey> removeKeyList;
     UIHelper uiHelper;
     bool saveBeforeCloseQuestionMessageShown = false;
@@ -156,7 +158,7 @@ namespace KeeAgent
         AddMenuItems();
         GlobalWindowManager.WindowAdded += WindowAddedHandler;
         MessageService.MessageShowing += MessageService_MessageShowing;
-        columnProvider = new KeeAgentColumnProvider(agent);
+        columnProvider = new KeeAgentColumnProvider(this);
         host.ColumnProviderPool.Add(columnProvider);
         SprEngine.FilterCompile += SprEngine_FilterCompile;
         SprEngine.FilterPlaceholderHints.Add(keyFilePathSprPlaceholder);
@@ -295,17 +297,31 @@ namespace KeeAgent
         if (entryListView != null) {
           var pwEntryContextMenu = entryListView.ContextMenuStrip;
           if (pwEntryContextMenu != null) {
-            keeAgentPwEntryContextMenuItem = new ToolStripMenuItem();
-            keeAgentPwEntryContextMenuItem.Text =
-              Translatable.AddToKeeAgentContextMenuItem;
-            keeAgentPwEntryContextMenuItem.Click +=
-              mKeeAgentPwEntryContextMenuItem_Clicked;
-            keeAgentPwEntryContextMenuItem.Image = Resources.KeeAgentIcon_png;
+            pwEntryContextMenuLoadKeyMenuItem = new ToolStripMenuItem() {
+              Text = Translatable.LoadKeyContextMenuItem,
+              Image = Resources.KeeAgentIcon_png,
+              ShortcutKeys = Keys.Control | Keys.K,
+            };
+            pwEntryContextMenuLoadKeyMenuItem.Click +=
+              PwEntryContextMenuLoadKeyItem_Clicked;
+            pwEntryContextMenuLoadKeyOpenUrlMenuItem = new ToolStripMenuItem()
+            {
+              Text = Translatable.LoadKeyContextMenuItem,
+              Image = Resources.KeeAgentIcon_png,
+              ShortcutKeys = Keys.Control | Keys.Shift | Keys.K,
+              Visible = false
+            };
+            pwEntryContextMenuLoadKeyOpenUrlMenuItem.Click +=
+              PwEntryContextMenuLoadKeyItem_Clicked;
             var firstSeparatorIndex =
               pwEntryContextMenu.Items.IndexOfKey("m_ctxEntrySep0");
             pwEntryContextMenu.Items.Insert(firstSeparatorIndex,
-              keeAgentPwEntryContextMenuItem);
+              pwEntryContextMenuLoadKeyMenuItem);
+            pwEntryContextMenu.Items.Insert(firstSeparatorIndex,
+              pwEntryContextMenuLoadKeyOpenUrlMenuItem);
             pwEntryContextMenu.Opening += PwEntry_ContextMenu_Opening;
+            pwEntryContextMenuUrlOpenMenuItem =
+              pwEntryContextMenu.Items.Find("m_ctxEntryOpenUrl", true).SingleOrDefault() as ToolStripMenuItem;
           }
         }
       }
@@ -324,57 +340,43 @@ namespace KeeAgent
         notifyIconContextMenuItem);
     }
 
-    private void PwEntry_ContextMenu_Opening(object aSender, CancelEventArgs aArgs)
+    private void PwEntry_ContextMenu_Opening(object sender, CancelEventArgs e)
     {
       var selectedEntries = pluginHost.MainWindow.GetSelectedEntries();
       if (selectedEntries != null) {
         foreach (var entry in selectedEntries) {
           // if any selected entry contains an SSH key then we show the KeeAgent menu item
           if (entry.GetKeeAgentSettings().AllowUseOfSshKey) {
-            keeAgentPwEntryContextMenuItem.Visible = true;
+            pwEntryContextMenuLoadKeyMenuItem.Visible = true;
             var agent = this.agent as Agent;
             if (agent != null && agent.IsLocked)
             {
-              keeAgentPwEntryContextMenuItem.Enabled = false;
-              keeAgentPwEntryContextMenuItem.Text = "KeeAgent Locked";
+              pwEntryContextMenuLoadKeyMenuItem.Enabled = false;
+              pwEntryContextMenuLoadKeyMenuItem.Text = Translatable.StatusLocked;
             } else {
-              keeAgentPwEntryContextMenuItem.Enabled = true;
-              keeAgentPwEntryContextMenuItem.Text = "Load Entry in KeeAgent";
+              pwEntryContextMenuLoadKeyMenuItem.Enabled = true;
+              pwEntryContextMenuLoadKeyMenuItem.Text = Translatable.LoadKeyContextMenuItem;
             }
             return;
           }
         }
       }
-      keeAgentPwEntryContextMenuItem.Visible = false;
+      pwEntryContextMenuLoadKeyMenuItem.Visible = false;
     }
 
-    private void mKeeAgentPwEntryContextMenuItem_Clicked(object sender, EventArgs e)
+    private void PwEntryContextMenuLoadKeyItem_Clicked(object sender, EventArgs e)
     {
       foreach (var entry in pluginHost.MainWindow.GetSelectedEntries()) {
         // if any selected entry contains an SSH key then we show the KeeAgent menu item
         var settings = entry.GetKeeAgentSettings();
         if (settings.AllowUseOfSshKey) {
           try {
-            var constraints = new List<Agent.KeyConstraint>();
-            if (!(agent is PageantClient)) {
-              if (Control.ModifierKeys.HasFlag(Keys.Control)) {
-                var dialog = new ConstraintsInputDialog(settings.UseConfirmConstraintWhenAdding);
-                dialog.ShowDialog();
-                if (dialog.DialogResult == DialogResult.OK) {
-                  if (dialog.ConfirmConstraintChecked) {
-                    constraints.addConfirmConstraint();
-                  }
-                  if (dialog.LifetimeConstraintChecked) {
-                    constraints.addLifetimeConstraint(dialog.LifetimeDuration);
-                  }
-                }
-              } else {
-                if (settings.UseConfirmConstraintWhenAdding) {
-                  constraints.addConfirmConstraint();
-                }
-              }
+            AddEntry(entry, null);
+            if (Control.ModifierKeys.HasFlag(Keys.Shift)
+              && pwEntryContextMenuUrlOpenMenuItem != null)
+            {
+              pwEntryContextMenuUrlOpenMenuItem.PerformClick();  
             }
-            AddEntry(entry, constraints);
           } catch (Exception) {
             // AddEntry should have already shown error message
           }
