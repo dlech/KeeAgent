@@ -1,3 +1,12 @@
+v0.5.4 (2014-11-18)
+-------------------
+* Add password entry list column to indicate SSH key status.
+* Add keyboard shortcut for loading key from selected entries.
+* Add per-entry lifetime constraint settings.
+* Add browse buttons for selecting Cygwin/MSYS socket files.
+* Allow use of environment variables in Cygwin/MSYS socket file path.
+* Restrict permissions of Cygwin/MSYS socket file to current user only.
+
 v0.5.3 (2014-10-13)
 -------------------
 * Fix entries in the recycle bin are loaded at start when they should be ignored.
