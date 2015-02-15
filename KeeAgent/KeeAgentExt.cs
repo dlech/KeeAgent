@@ -225,6 +225,7 @@ namespace KeeAgent
       if (pagent == null)
         return;
       try {
+        pagent.StopCygwinSocket();
         pagent.StartCygwinSocket(Environment.ExpandEnvironmentVariables(
           Options.CygwinSocketPath));
       } catch (Exception ex) {
@@ -248,6 +249,7 @@ namespace KeeAgent
       if (pagent == null)
         return;
       try {
+        pagent.StopMsysSocket();
         pagent.StartMsysSocket(Environment.ExpandEnvironmentVariables(
           Options.MsysSocketPath));
       } catch (Exception ex) {
