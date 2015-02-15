@@ -132,6 +132,7 @@
       resources.ApplyResources(this.useMsysSocketCheckBox, "useMsysSocketCheckBox");
       this.useMsysSocketCheckBox.Name = "useMsysSocketCheckBox";
       this.useMsysSocketCheckBox.UseVisualStyleBackColor = true;
+      this.useMsysSocketCheckBox.CheckedChanged += new System.EventHandler(this.useMsysSocketCheckBox_CheckedChanged);
       // 
       // label3
       // 
@@ -143,6 +144,7 @@
       resources.ApplyResources(this.useCygwinSocketCheckBox, "useCygwinSocketCheckBox");
       this.useCygwinSocketCheckBox.Name = "useCygwinSocketCheckBox";
       this.useCygwinSocketCheckBox.UseVisualStyleBackColor = true;
+      this.useCygwinSocketCheckBox.CheckedChanged += new System.EventHandler(this.useCygwinSocketCheckBox_CheckedChanged);
       // 
       // label1
       // 

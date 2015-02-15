@@ -225,6 +225,9 @@
   <data name="msysPathBrowseButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
+  <data name="msysPathBrowseButton.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="msysPathBrowseButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -255,6 +258,9 @@
   <data name="cygwinPathBrowseButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
+  <data name="cygwinPathBrowseButton.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="cygwinPathBrowseButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -284,6 +290,9 @@
   </data>
   <data name="msysSocketPathTextBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
+  </data>
+  <data name="msysSocketPathTextBox.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="msysSocketPathTextBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>67, 91</value>
@@ -338,6 +347,9 @@
   </data>
   <data name="cygwinSocketPathTextBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
+  </data>
+  <data name="cygwinSocketPathTextBox.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="cygwinSocketPathTextBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>67, 42</value>

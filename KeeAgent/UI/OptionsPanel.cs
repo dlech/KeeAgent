@@ -179,5 +179,17 @@ namespace KeeAgent.UI
         return null;
       return dialog.FileName;
     }
+
+    private void useCygwinSocketCheckBox_CheckedChanged(object sender, EventArgs e)
+    {
+      cygwinSocketPathTextBox.Enabled = useCygwinSocketCheckBox.Checked;
+      cygwinPathBrowseButton.Enabled = useCygwinSocketCheckBox.Checked;
+    }
+
+    private void useMsysSocketCheckBox_CheckedChanged(object sender, EventArgs e)
+    {
+      msysSocketPathTextBox.Enabled = useMsysSocketCheckBox.Checked;
+      msysPathBrowseButton.Enabled = useMsysSocketCheckBox.Checked;
+    }
   }
 }
