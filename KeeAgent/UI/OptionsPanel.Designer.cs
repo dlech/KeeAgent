@@ -34,6 +34,8 @@
       this.modeLabel = new System.Windows.Forms.Label();
       this.helpButton = new System.Windows.Forms.Button();
       this.groupBox1 = new System.Windows.Forms.GroupBox();
+      this.msysPathBrowseButton = new System.Windows.Forms.Button();
+      this.cygwinPathBrowseButton = new System.Windows.Forms.Button();
       this.msysSocketPathTextBox = new System.Windows.Forms.TextBox();
       this.label4 = new System.Windows.Forms.Label();
       this.cygwinSocketPathTextBox = new System.Windows.Forms.TextBox();
@@ -41,8 +43,6 @@
       this.label3 = new System.Windows.Forms.Label();
       this.useCygwinSocketCheckBox = new System.Windows.Forms.CheckBox();
       this.label1 = new System.Windows.Forms.Label();
-      this.cygwinPathBrowseButton = new System.Windows.Forms.Button();
-      this.msysPathBrowseButton = new System.Windows.Forms.Button();
       this.groupBox1.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -98,6 +98,20 @@
       this.groupBox1.Name = "groupBox1";
       this.groupBox1.TabStop = false;
       // 
+      // msysPathBrowseButton
+      // 
+      resources.ApplyResources(this.msysPathBrowseButton, "msysPathBrowseButton");
+      this.msysPathBrowseButton.Name = "msysPathBrowseButton";
+      this.msysPathBrowseButton.UseVisualStyleBackColor = true;
+      this.msysPathBrowseButton.Click += new System.EventHandler(this.msysPathBrowseButton_Click);
+      // 
+      // cygwinPathBrowseButton
+      // 
+      resources.ApplyResources(this.cygwinPathBrowseButton, "cygwinPathBrowseButton");
+      this.cygwinPathBrowseButton.Name = "cygwinPathBrowseButton";
+      this.cygwinPathBrowseButton.UseVisualStyleBackColor = true;
+      this.cygwinPathBrowseButton.Click += new System.EventHandler(this.cygwinPathBrowseButton_Click);
+      // 
       // msysSocketPathTextBox
       // 
       resources.ApplyResources(this.msysSocketPathTextBox, "msysSocketPathTextBox");
@@ -134,20 +148,6 @@
       // 
       resources.ApplyResources(this.label1, "label1");
       this.label1.Name = "label1";
-      // 
-      // cygwinPathBrowseButton
-      // 
-      resources.ApplyResources(this.cygwinPathBrowseButton, "cygwinPathBrowseButton");
-      this.cygwinPathBrowseButton.Name = "cygwinPathBrowseButton";
-      this.cygwinPathBrowseButton.UseVisualStyleBackColor = true;
-      this.cygwinPathBrowseButton.Click += new System.EventHandler(this.cygwinPathBrowseButton_Click);
-      // 
-      // msysPathBrowseButton
-      // 
-      resources.ApplyResources(this.msysPathBrowseButton, "msysPathBrowseButton");
-      this.msysPathBrowseButton.Name = "msysPathBrowseButton";
-      this.msysPathBrowseButton.UseVisualStyleBackColor = true;
-      this.msysPathBrowseButton.Click += new System.EventHandler(this.msysPathBrowseButton_Click);
       // 
       // OptionsPanel
       // 

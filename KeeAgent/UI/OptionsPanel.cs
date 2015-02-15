@@ -177,7 +177,7 @@ namespace KeeAgent.UI
       };
       if (dialog.ShowDialog() == DialogResult.Cancel)
         return null;
-      return dialog.FileName;    
+      return dialog.FileName;
     }
   }
 }
