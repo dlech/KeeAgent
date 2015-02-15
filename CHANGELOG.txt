@@ -1,3 +1,8 @@
+v0.6.0 (2015-02-14)
+-------------------
+* Cygwin/MSYS socket file text box and browse button are disabled when the
+  checkbox is not checked.
+
 v0.5.4 (2014-11-18)
 -------------------
 * Add password entry list column to indicate SSH key status.

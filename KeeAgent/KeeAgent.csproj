@@ -10,7 +10,7 @@
       </Prerequisites>
     </PlgxConfiguration>
     <PlgxToolDir>$(MSBuildProjectDirectory)\..\KeePassPluginDevTools\PlgxTools\bin\Release\</PlgxToolDir>
-    <ReleaseVersion>0.5.4.0</ReleaseVersion>
+    <ReleaseVersion>0.6.0.0</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
