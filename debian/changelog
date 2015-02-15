@@ -1,3 +1,9 @@
+keepass2-plugin-keeagent (0.6.0) trusty; urgency=medium
+
+  * Stable release.
+
+ -- David Lechner <david@lechnology.com>  Sat, 14 Feb 2015 22:14:26 -0600
+
 keepass2-plugin-keeagent (0.5.4) trusty; urgency=medium
 
   * Add password entry list column to indicate SSH key status.
