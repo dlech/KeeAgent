@@ -731,7 +731,7 @@ namespace KeeAgent
             try {
               AddEntry(entry, null);
             } catch (Exception) {
-              if (MessageService.AskYesNo("Do you want to attempt to load additional keys?")) {
+              if (!MessageService.AskYesNo("Do you want to attempt to load additional keys?")) {
                 exitFor = true;
               }
             }
