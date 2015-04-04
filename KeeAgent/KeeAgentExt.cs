@@ -708,6 +708,11 @@ namespace KeeAgent
     private void MainForm_FileOpened(object sender, FileOpenedEventArgs e)
     {
       try {
+        var agentModeAgent = agent as Agent;
+        if (agentModeAgent.IsLocked) {
+            // don't do anything if agent is locked
+            return;
+        }
         if (e.Database.RootGroup == null) {
           return;
         }

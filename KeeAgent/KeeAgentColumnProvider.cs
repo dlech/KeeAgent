@@ -36,8 +36,8 @@ namespace KeeAgent
   {
     const string sshKeyStatusColumnName = "SSH Key Status";
     readonly string[] columnNames = {
-        sshKeyStatusColumnName
-      };
+      sshKeyStatusColumnName
+    };
 
     KeeAgentExt ext;
 
@@ -53,6 +53,10 @@ namespace KeeAgent
       this.ext = ext;
       ext.agent.KeyAdded += Agent_KeyAddedOrRemoved;
       ext.agent.KeyRemoved += Agent_KeyAddedOrRemoved;
+      var agentModeAgent = ext.agent as Agent;
+      if (agentModeAgent != null) {
+          agentModeAgent.Locked += Agent_Locked;
+      }
     }
 
     ~KeeAgentColumnProvider()
@@ -61,9 +65,13 @@ namespace KeeAgent
     }
 
     public override string GetCellData(string columnName, KeePassLib.PwEntry entry)
-    {      
+    {
       switch (columnName) {
         case sshKeyStatusColumnName:
+          var agentModeAgent = ext.agent as Agent;
+          if (agentModeAgent != null && agentModeAgent.IsLocked) {
+            return "Agent Locked";
+          }
           try {
             var key = entry.GetSshKey();
             if (key == null)
@@ -117,8 +125,17 @@ namespace KeeAgent
 
     internal void Agent_KeyAddedOrRemoved(object sender, SshKeyEventArgs e)
     {
-      ext.pluginHost.MainWindow.Invoke((MethodInvoker)delegate()
-      {
+      UpdateUI();
+    }
+      
+    private void Agent_Locked(object aSender, Agent.LockEventArgs aEventArgs)
+    {
+        UpdateUI();
+    }
+
+    void UpdateUI ()
+    {
+      ext.pluginHost.MainWindow.Invoke((MethodInvoker)delegate() {
         // only update the entry list
         ext.pluginHost.MainWindow.UpdateUI(false, null, false, null, true, null, false);
       });
@@ -126,8 +143,14 @@ namespace KeeAgent
 
     private void Dispose(bool disposing)
     {
-      ext.agent.KeyAdded -= Agent_KeyAddedOrRemoved;
-      ext.agent.KeyRemoved -= Agent_KeyAddedOrRemoved;
+      if (disposing) {
+        ext.agent.KeyAdded -= Agent_KeyAddedOrRemoved;
+        ext.agent.KeyRemoved -= Agent_KeyAddedOrRemoved;
+        var agentModeAgent = ext.agent as Agent;
+        if (agentModeAgent != null) {
+          agentModeAgent.Locked -= Agent_Locked;
+        }
+      }
     }
 
     public void Dispose()
