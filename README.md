@@ -75,4 +75,4 @@ These are not saved in KeeAgent.csproj, so you have to manually set them up.
 
 COPYRIGHT
 ---------
-(C) 2012-2014 David Lechner <david@lechnology.com>
+(C) 2012-2015 David Lechner <david@lechnology.com>

@@ -1,3 +1,13 @@
+keepass2-plugin-keeagent (0.6.1) trusty; urgency=medium
+
+  [ LeoVerto ]
+  * Fix inverted addtional keys prompt. Closes #100
+
+  [ David Lechner ]
+  * Fix issues with agent mode lock.
+
+ -- David Lechner <david@lechnology.com>  Sun, 12 Apr 2015 13:43:25 -0500
+
 keepass2-plugin-keeagent (0.6.0) trusty; urgency=medium
 
   * Stable release.
