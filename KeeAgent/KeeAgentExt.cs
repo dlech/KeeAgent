@@ -350,8 +350,8 @@ namespace KeeAgent
           // if any selected entry contains an SSH key then we show the KeeAgent menu item
           if (entry.GetKeeAgentSettings().AllowUseOfSshKey) {
             pwEntryContextMenuLoadKeyMenuItem.Visible = true;
-            var agent = this.agent as Agent;
-            if (agent != null && agent.IsLocked)
+            var agentModeAgent = this.agent as Agent;
+            if (agentModeAgent != null && agentModeAgent.IsLocked)
             {
               pwEntryContextMenuLoadKeyMenuItem.Enabled = false;
               pwEntryContextMenuLoadKeyMenuItem.Text = Translatable.StatusLocked;
@@ -709,7 +709,7 @@ namespace KeeAgent
     {
       try {
         var agentModeAgent = agent as Agent;
-        if (agentModeAgent.IsLocked) {
+        if (agentModeAgent != null && agentModeAgent.IsLocked) {
             // don't do anything if agent is locked
             return;
         }

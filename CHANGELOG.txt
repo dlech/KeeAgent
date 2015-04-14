@@ -1,3 +1,7 @@
+v0.6.2 (2015-04-14)
+-------------------
+* Fix keys not loading automatically when database is opened.
+
 v0.6.1 (2015-04-12)
 -------------------
 * Fix inverted Yes/No buttons on error dialog when loading key on database
