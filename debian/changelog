@@ -1,3 +1,9 @@
+keepass2-plugin-keeagent (0.6.2) trusty; urgency=medium
+
+  * Fix keys not loading automatically when database is opened.
+
+ -- David Lechner <david@lechnology.com>  Tue, 14 Apr 2015 13:26:43 -0500
+
 keepass2-plugin-keeagent (0.6.1) trusty; urgency=medium
 
   [ LeoVerto ]
