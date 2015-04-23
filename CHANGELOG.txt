@@ -1,3 +1,8 @@
+v0.6.3 (2015-04-23)
+-------------------
+* Fix "Unexpected error" when using KeeAgent in client mode with Pageant on
+  Windows.
+
 v0.6.2 (2015-04-14)
 -------------------
 * Fix keys not loading automatically when database is opened.
