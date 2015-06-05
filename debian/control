@@ -6,8 +6,8 @@ Build-Depends: debhelper (>= 8.0.0), cli-common-dev (>= 0.7),
                keepass2, keepass2-plugin-dev
 Standards-Version: 3.9.5
 Homepage: http://lechnology.com/KeeAgent
-#Vcs-Git: git://git.debian.org/collab-maint/keepass2-plugin-keeagent.git
-#Vcs-Browser: http://git.debian.org/?p=collab-maint/keepass2-plugin-keeagent.git;a=summary
+Vcs-Git: git://github.com/dlech/KeeAgent.git
+Vcs-Browser: https://github.com/dlech/KeeAgent
 
 Package: keepass2-plugin-keeagent
 Architecture: all

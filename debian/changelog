@@ -1,3 +1,11 @@
+keepass2-plugin-keeagent (0.7.0) trusty; urgency=medium
+
+  * Add support for "new" OpenSSH private key file format.
+  * Add support for Ed25519 keys.
+  * Fixup debian/copyright
+
+ -- David Lechner <david@lechnology.com>  Fri, 05 Jun 2015 16:44:51 -0500
+
 keepass2-plugin-keeagent (0.6.2) trusty; urgency=medium
 
   * Fix keys not loading automatically when database is opened.
