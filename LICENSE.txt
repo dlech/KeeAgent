@@ -1,0 +1,5 @@
+KeeAgent is licensed under GPLv2 (see GPL2.txt).
+
+It also includes lots of other software with varying licenses.
+
+See SshAgentLib/LICENSE.txt for more information.
