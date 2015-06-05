@@ -186,6 +186,7 @@
       <Name>SshAgentLib</Name>
       <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\SshAgentLib.dll</PlgxReference>
       <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\BouncyCastle.Crypto.dll</PlgxReference>
+	  <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\Chaos.NaCl.dll</PlgxReference>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -227,6 +228,6 @@
     <CallTarget Targets="BuildPlgx" />
     <Delete Files="$(OutDir)Microsoft.WindowsAPICodePack.dll;$(OutDir)Microsoft.WindowsAPICodePack.Shell.dll" />
     <Delete Files="$(OutDir)SshAgentLib.WinForms.dll;$(OutDir)SshAgentLib.dll;$(OutDir)BouncyCastle.Crypto.dll" />
-    <Delete Files="$(OutDir)$(AssemblyName)$(TargetExt)" />
+    <Delete Files="$(OutDir)Chaos.NaCl.dll;$(OutDir)$(AssemblyName)$(TargetExt)" />
   </Target>
 </Project>
