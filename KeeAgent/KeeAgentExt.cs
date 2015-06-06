@@ -4,7 +4,7 @@
 //  Author(s):
 //      David Lechner <david@lechnology.com>
 //
-//  Copyright (C) 2012-2015  David Lechner
+//  Copyright (C) 2012-2015  David Lechner <david@lechnology.com>
 //
 //  This program is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU General Public License
@@ -696,11 +696,14 @@ namespace KeeAgent
       }
     }
 
-    private void PageantAgent_KeyUsed(object aSender, Agent.KeyUsedEventArgs aEventArgs)
+    private void PageantAgent_KeyUsed(object sender, Agent.KeyUsedEventArgs e)
     {
       if (Options.ShowBalloon) {
+          var appText = e.OtherProcess == null
+              ? Translatable.NotifyKeyFetchedUnknownApplication
+              : string.Format("{0} ({1})", e.OtherProcess.MainWindowTitle, e.OtherProcess.ProcessName);
         string notifyText = string.Format(Translatable.NotifyKeyFetched,
-          aEventArgs.Key.Comment);
+          e.Key.Comment, appText);
         uiHelper.ShowBalloonNotification(notifyText);
       }
     }

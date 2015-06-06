@@ -126,10 +126,6 @@
   <data name="ButtonUnlock" xml:space="preserve">
     <value>Unlock</value>
   </data>
-  <data name="ConfirmKeyFetch" xml:space="preserve">
-    <value>Another application is requesting SSH key '{0}'. Do you want to allow this?</value>
-    <comment>{0} is the key comment</comment>
-  </data>
   <data name="ErrPageantRunning" xml:space="preserve">
     <value>Pageant is already running. KeeAgent plugin will not be loaded.</value>
   </data>
@@ -152,8 +148,8 @@
     <value>Manage SSH Keys</value>
   </data>
   <data name="NotifyKeyFetched" xml:space="preserve">
-    <value>SSH key '{0}' was fetched by another application.</value>
-    <comment>{0} is the key comment</comment>
+    <value>SSH key '{0}' was used by {1}.</value>
+    <comment>{0} is the key comment, {1} is the name of the application</comment>
   </data>
   <data name="NotifyLocked" xml:space="preserve">
     <value>KeeAgent is now locked</value>
@@ -199,5 +195,9 @@
   </data>
   <data name="UnknownAlgorithm" xml:space="preserve">
     <value>Unknown Algorithm</value>
+  </data>
+  <data name="NotifyKeyFetchedUnknownApplication" xml:space="preserve">
+    <value>another application</value>
+    <comment>This is used as {1} in NotifyKeyFetched</comment>
   </data>
 </root>

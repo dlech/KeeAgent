@@ -79,15 +79,6 @@ namespace KeeAgent {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Another application is requesting SSH key &apos;{0}&apos;. Do you want to allow this?.
-        /// </summary>
-        internal static string ConfirmKeyFetch {
-            get {
-                return ResourceManager.GetString("ConfirmKeyFetch", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Pageant is already running. KeeAgent plugin will not be loaded..
         /// </summary>
         internal static string ErrPageantRunning {
@@ -151,11 +142,20 @@ namespace KeeAgent {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SSH key &apos;{0}&apos; was fetched by another application..
+        ///   Looks up a localized string similar to SSH key &apos;{0}&apos; was used by {1}..
         /// </summary>
         internal static string NotifyKeyFetched {
             get {
                 return ResourceManager.GetString("NotifyKeyFetched", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to another application.
+        /// </summary>
+        internal static string NotifyKeyFetchedUnknownApplication {
+            get {
+                return ResourceManager.GetString("NotifyKeyFetchedUnknownApplication", resourceCulture);
             }
         }
         
