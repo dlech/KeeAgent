@@ -1,5 +1,11 @@
+Beta v0.7.1 (2015-06-06)
+------------------------
+* Add support for displaying information about the requesting client program
+  in the confirmation dialog and the balloon notification. Note: this only
+  works for PuTTY compatilble programs, not cygwin/msys.
+
 Beta v0.7.0 (2015-06-05)
--------------------
+------------------------
 * Add support for "new" Openssh private key file format that was introduced in
   Openssh v6.5.
 * Add support for Ed25519 keys (also introduced in Openssh v6.5).
@@ -25,7 +31,7 @@ v0.6.0 (2015-02-14)
   checkbox is not checked.
 
 Beta v0.5.4 (2014-11-18)
--------------------
+------------------------
 * Add password entry list column to indicate SSH key status.
 * Add keyboard shortcut for loading key from selected entries.
 * Add per-entry lifetime constraint settings.
@@ -34,24 +40,24 @@ Beta v0.5.4 (2014-11-18)
 * Restrict permissions of Cygwin/MSYS socket file to current user only.
 
 Beta v0.5.3 (2014-10-13)
--------------------
+------------------------
 * Fix entries in the recycle bin are loaded at start when they should be ignored.
 * More informative error messages when key fails to load.
 * Add column to agent manager that shows where the key came from.
 * Add support for Cygwin/MSYS integration
 
 Beta v0.5.2 (2014-7-24)
------------------
+-----------------------
 * Fix issue with DSA authentication failing ~1% of the time because of signature
   length less than 40 bytes
 
 Beta v0.5.1 (2014-5-5)
------------------
+----------------------
 * Fix issue with public key info not loading in Entry Settings on Mono
 * Add feature to get key comment for OpenSSH keys
 
 Beta v0.5.0 (2014-04-22)
--------------------
+------------------------
 * "Unlock Database On SSH Activity" from database settings to global options
 * Fix Entry Settings form can close in invalid state in Mono
 * Add SSH key info to KeeAgent tab of Entry Settings dialog (Known issue: does
