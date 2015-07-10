@@ -1,3 +1,11 @@
+Beta v0.7.2 (2015-07-09)
+------------------------
+* Add support for displaying information about the requesting client program
+  in the confirmation dialog and the balloon notification for cygwin/msys
+  sockets.
+* Silently overwrite cygwin/msys socket files if they already exist. Will not
+  overwrite other types of files.
+
 Beta v0.7.1 (2015-06-06)
 ------------------------
 * Add support for displaying information about the requesting client program
