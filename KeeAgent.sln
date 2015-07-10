@@ -65,7 +65,7 @@ Global
 		$1.TabsToSpaces = False
 		$1.inheritsSet = VisualStudio
 		$1.inheritsScope = text/plain
-		version = 0.6.2
+		version = 0.7.3
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
