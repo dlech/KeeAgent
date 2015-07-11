@@ -1,3 +1,8 @@
+Beta v0.7.4 (2015-07-10)
+------------------------
+* Add feature to allow selection of key when client program requests a list
+  of all keys (Agent mode only).
+
 Beta v0.7.3 (2015-07-10)
 ------------------------
 * Fix Ed25519 keys not working in Client Mode.
