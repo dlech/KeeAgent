@@ -200,4 +200,7 @@
     <value>another application</value>
     <comment>This is used as {1} in NotifyKeyFetched</comment>
   </data>
+  <data name="OptionUserPicksKeyOnRequestIdentities" xml:space="preserve">
+    <value>Show key selection dialog when a client program requests a list of all keys</value>
+  </data>
 </root>

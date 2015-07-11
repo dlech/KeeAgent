@@ -77,6 +77,8 @@ namespace KeeAgent
     const string cygwinSocketPathOptionName = pluginNamespace + ".CygwinSocketPath";
     const string useMsysSocketOptionName = pluginNamespace + ".UseMsysSocket";
     const string msysSocketPathOptionName = pluginNamespace + ".MsysSocketPath";
+    const string userPicksKeyOnRequestIdentitiesOptionName =
+      pluginNamespace + ".UserPicksKeyOnRequestIdentities";
     const string keyFilePathSprPlaceholder = @"{KEEAGENT:KEYFILEPATH}";
     const string identFileOptSprPlaceholder = @"{KEEAGENT:IDENTFILEOPT}";
 
@@ -120,8 +122,9 @@ namespace KeeAgent
               pagent.KeyAdded += PageantAgent_KeyAdded;
               pagent.KeyRemoved += PageantAgent_KeyRemoved;
               pagent.MessageReceived += PageantAgent_MessageReceived;
-              // IMPORTANT: if you change this callback, you need to make sure
-              // that it does not block the main event loop.
+              // IMPORTANT: if you change either of these callbacks, you need
+              // to make sure that they do not block the main event loop.
+              pagent.FilterKeyListCallback = FilterKeyList;
               pagent.ConfirmUserPermissionCallback = Default.ConfirmCallback;
               agent = pagent;
               if (Options.UseCygwinSocket) {
@@ -423,6 +426,8 @@ namespace KeeAgent
       config.SetString(cygwinSocketPathOptionName, Options.CygwinSocketPath);
       config.SetBool(useMsysSocketOptionName, Options.UseMsysSocket );
       config.SetString(msysSocketPathOptionName, Options.MsysSocketPath);
+      config.SetBool(userPicksKeyOnRequestIdentitiesOptionName,
+        Options.UserPicksKeyOnRequestIdentities);
     }
 
     private void LoadOptions()
@@ -438,6 +443,8 @@ namespace KeeAgent
       Options.CygwinSocketPath = config.GetString(cygwinSocketPathOptionName);
       Options.UseMsysSocket = config.GetBool(useMsysSocketOptionName, false);
       Options.MsysSocketPath = config.GetString(msysSocketPathOptionName);
+      Options.UserPicksKeyOnRequestIdentities =
+        config.GetBool(userPicksKeyOnRequestIdentitiesOptionName, false);
 
       string defaultLogFileNameValue = Path.Combine(
           Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
@@ -930,6 +937,27 @@ namespace KeeAgent
         }
         throw;
       }
+    }
+
+    ICollection<ISshKey> FilterKeyList(ICollection<ISshKey> list)
+    {
+      if (!Options.UserPicksKeyOnRequestIdentities || list.Count <= 1) {
+        return list;
+      }
+
+      // TODO: Using the main thread here will cause a lockup with IOProtocolExt
+      pluginHost.MainWindow.Invoke((MethodInvoker)delegate
+      {
+        var dialog = new KeyPicker(list);
+        dialog.TopMost = true;
+        dialog.ShowDialog(pluginHost.MainWindow);
+        if (dialog.DialogResult == DialogResult.OK) {
+          list = dialog.SelectedKeys.ToList();
+        } else {
+          list.Clear();
+        }
+      });
+      return list;
     }
   } // class
 } // namespace

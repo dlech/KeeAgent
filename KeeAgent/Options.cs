@@ -33,7 +33,7 @@ namespace KeeAgent
     }
 
     /// <summary>
-    /// Show notification balloon when client uses key (Agent mode only)
+    /// Show notification balloon when client uses keys (Agent mode only)
     /// </summary>
     public bool ShowBalloon { get; set; }
 
@@ -64,7 +64,7 @@ namespace KeeAgent
     public AgentMode AgentMode { get; set; }
 
     /// <summary>
-    /// When true, all databases will be unlocked when an SSH key is requested (Agent mode only).
+    /// When true, all databases will be unlocked when an SSH keys is requested (Agent mode only).
     /// </summary>
     public bool UnlockOnActivity { get; set; }
 
@@ -89,5 +89,12 @@ namespace KeeAgent
     /// The path for the file created when using UseCygwinSocketUseMsysSocket
     /// </summary>
     public string MsysSocketPath { get; set; }
+
+    /// <summary>
+    /// When <c>true</c>, the user will be prompted to select a keys from the
+    /// loaded keys in response to a client program requesting a list of
+    /// identities.
+    /// </summary>
+    public static bool UserPicksKeyOnRequestIdentities { get; set; }
   }
 }

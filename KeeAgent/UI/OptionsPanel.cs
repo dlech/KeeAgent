@@ -76,6 +76,8 @@ namespace KeeAgent.UI
       //  Translatable.optionLoggingEnabled);
       optionsList.CreateItem (ext.Options, "UnlockOnActivity", agentModeOptionsGroup,
        Translatable.OptionUnlockOnActivity);
+      optionsList.CreateItem(ext.Options, "UserPicksKeyOnRequestIdentities",
+        agentModeOptionsGroup, Translatable.OptionUserPicksKeyOnRequestIdentities);
       columnHeader.Width = customListViewEx.ClientRectangle.Width -
         UIUtil.GetVScrollBarWidth() - 1;
       useCygwinSocketCheckBox.Checked = ext.Options.UseCygwinSocket;
