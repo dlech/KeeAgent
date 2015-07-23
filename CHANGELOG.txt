@@ -1,3 +1,7 @@
+Beta v0.7.5 (2015-07-23)
+------------------------
+* Fix deadlock when using OpenSSH >= v6.8.p1 in Cygwin.
+
 Beta v0.7.4 (2015-07-10)
 ------------------------
 * Add feature to allow selection of key when client program requests a list
