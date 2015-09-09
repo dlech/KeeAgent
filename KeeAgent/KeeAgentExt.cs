@@ -912,7 +912,7 @@ namespace KeeAgent
           MessageService.ShowWarning(new string[] {
             firstLine,
             string.Format ("Could not load file {0}",
-              settings.Location.SelectedType == EntrySettings.LocationType.File 
+              settings.Location.SelectedType == EntrySettings.LocationType.File
                 ? string.Format("'{0}'", settings.Location.FileName)
                 : string.Format("from attachment '{0}'", settings.Location.AttachmentName)),
             "Possible causes:",
@@ -926,6 +926,12 @@ namespace KeeAgent
             "Possible causes:",
             "- Key is already loaded in agent",
             "- Agent is locked"
+          });
+        } else if (ex is AgentNotRunningException) {
+          MessageService.ShowWarning(new string[] {
+            firstLine,
+            "Could not add key because no SSH agent was found.",
+            "Please make sure your SSH agent program is running (e.g. Pageant)."
           });
         } else {
           MessageService.ShowWarning(new string[] {
