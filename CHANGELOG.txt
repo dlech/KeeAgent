@@ -1,3 +1,14 @@
+Beta v0.7.6 (2015-09-21)
+------------------------
+* Add support for ECDSA and ED25519 keys in PuTTY Private Key (.ppk) files.
+  Thanks to @angelsl for implementing this!
+* Better error message when running in Client Mode and the external SSH agent
+  is not running.
+* Double-clicking a row in the new key selection feature will now select that
+  key and close the dialog.
+* Attempt to use the same passphrase when loading multiple keys from external
+  files.
+
 Beta v0.7.5 (2015-07-23)
 ------------------------
 * Fix deadlock when using OpenSSH >= v6.8.p1 in Cygwin.
