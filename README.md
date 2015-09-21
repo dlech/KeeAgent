@@ -14,18 +14,7 @@ Pull requests are welcome!
 
 ### Building KeeAgent in Visual Studio (Windows)
 
-#### Prerequisites
-* [Mono for Windows](http://www.go-mono.com/mono-downloads/download.html)
-    * Once this is installed, add Mono.Posix to the GAC (using the Visual Studio Developer Command Prompt - run as administrator)
-
-            gacutil -i <path-to-mono-install>\lib\mono\4.0\Mono.Posix.dll
-
-    * Restart Visual Studio if needed
-* KeePassPluginDevTools
-
 #### Setting up the KeeAgent solution in Visual Studio
-
-##### Create Local.proj file
 
 ##### Setup Debug Properties
 
@@ -41,26 +30,12 @@ These are not saved in KeeAgent.csproj, so you have to manually set them up.
 
 ### Building KeeAgent in Xamarin Studio (Linux/Mac)
 
-* Suggest that you use at Monodevelop >= 4.0
+* Suggest that you use at Monodevelop >= 5.0
 * Make sure you are using the OpenSSH SSH agent and not the GNOME Keyring SSH agent. [Instructions here](http://lechnology.com/software/keeagent/installation/#disable-ssh-component-of-gnome-keyring).
-* Get my KeePass plugin dev tools.
-    * On Ubuntu and derivatives, you can download from my ppa:
-
-            sudo apt-add-repository ppa:dlech/keepass2-plugin-dev
-            sudo apt-get update
-            sudo apt-get install keepass2-plugin-dev
-
-    * Other platforms, you can download and build from `git://github.com/dlech/KeePassPluginDevTools`. Be sure to build the *Release* configuration and not *Debug*. Note: you will need to edit the `Local.proj` file mentioned below to specify the path where the binary files are.
 
 * Get the code:
 
-        git clone git://github.com/dlech/KeeAgent
-        cd KeeAgent
-        git submodule init
-        git submodule update
-        cp Local.proj.sample.linux Local.proj
-        # You need to edit Local.proj unless you installed keepass2 and keepass2-plugin-dev from .deb packages
-        mozroots --import --sync # this is so SSL works with nuget
+        git clone git://github.com/dlech/KeeAgent --recursive
 
 * In monodevelop:
     * In Edit > Preferences... > Projects > Build, check the box that says *Compile the project using MSBuild/Xbuild*. In newer versions, this option is not there (it is set per project in the project options). You must restart Monodevelop after making this change.
