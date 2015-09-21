@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\Local.proj" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -62,6 +61,10 @@
     <ProjectReference Include="..\KeeAgent\KeeAgent.csproj">
       <Project>{742863F2-52ED-41E0-92A1-8EEA60EB75EF}</Project>
       <Name>KeeAgent</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KeePass2.x\KeePass\KeePass.csproj">
+      <Project>{10938016-dee2-4a25-9a5a-8fd3444379ca}</Project>
+      <Name>KeePass</Name>
     </ProjectReference>
     <ProjectReference Include="..\SshAgentLib\SshAgentLib\SshAgentLib.csproj">
       <Project>{9163B6B6-0603-4C6E-BC67-7111ED8CDDE1}</Project>

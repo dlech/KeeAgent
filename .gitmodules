@@ -1,3 +1,7 @@
 [submodule "SshAgentLib"]
 	path = SshAgentLib
 	url = git://github.com/dlech/SshAgentLib.git
+[submodule "KeePass2.x"]
+	path = KeePass2.x
+	url = git://github.com/dlech/KeePass2.x
+	branch = VS2015

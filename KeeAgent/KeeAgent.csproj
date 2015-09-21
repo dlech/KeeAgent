@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\Local.proj" />
   <PropertyGroup>
     <!-- For building .plgx -->
     <PlgxConfiguration>
@@ -176,6 +175,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\KeePass2.x\KeePass\KeePass.csproj">
+      <Project>{10938016-dee2-4a25-9a5a-8fd3444379ca}</Project>
+      <Name>KeePass</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SshAgentLib\Ui\WinForms\SshAgentLib.Ui.WinForms.csproj">
       <Project>{3BEB6FAE-B14D-4281-8168-DB2A4A0C5FC4}</Project>
       <Name>SshAgentLib.Ui.WinForms</Name>
@@ -223,7 +226,6 @@
     </CustomCommands>
   </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(KeePassPluginDevToolsPath)Plgx.targets" />
   <Target Name="AfterBuild" Condition="'$(Configuration)' == 'ReleasePlgx'">
     <CallTarget Targets="BuildPlgx" />
     <Delete Files="$(OutDir)Microsoft.WindowsAPICodePack.dll;$(OutDir)Microsoft.WindowsAPICodePack.Shell.dll" />
