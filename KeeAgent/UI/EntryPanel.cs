@@ -4,7 +4,7 @@
 //  Author(s):
 //      David Lechner <david@lechnology.com>
 //
-//  Copyright (C) 2012-2014  David Lechner
+//  Copyright (C) 2012-2015  David Lechner
 //
 //  This program is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU General Public License
@@ -27,6 +27,7 @@ using KeePass.Forms;
 using System.IO;
 using dlech.SshAgentLib;
 using KeePass.Util;
+using KeePass.Util.Spr;
 
 namespace KeeAgent.UI
 {
@@ -103,8 +104,9 @@ namespace KeeAgent.UI
           case EntrySettings.LocationType.File:
             try {
               pwEntryForm.UpdateEntryStrings(true, false);
+              var context = new SprContext(pwEntryForm.EntryRef, pwEntryForm.EntryRef.GetDatabase (), SprCompileFlags.Deref);
               using (var key = CurrentSettings.
-                GetSshKey(pwEntryForm.EntryStrings, pwEntryForm.EntryBinaries)) {
+                GetSshKey(pwEntryForm.EntryStrings, pwEntryForm.EntryBinaries, context)) {
                 commentTextBox.Text = key.Comment;
                 fingerprintTextBox.Text = key.GetMD5Fingerprint().ToHexString();
                 publicKeyTextBox.Text = key.GetAuthorizedKeyString();

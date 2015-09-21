@@ -4,7 +4,7 @@
 //  Author(s):
 //      David Lechner <david@lechnology.com>
 //
-//  Copyright (C) 2012-2014  David Lechner
+//  Copyright (C) 2012-2015  David Lechner
 //
 //  This program is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU General Public License
@@ -24,16 +24,19 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Security;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
+
+using dlech.SshAgentLib;
+using KeeAgent.Properties;
+using KeePass.Util.Spr;
 using KeePassLib;
 using KeePassLib.Collections;
 using KeePassLib.Security;
-using dlech.SshAgentLib;
-using KeeAgent.Properties;
 
 namespace KeeAgent
 {
@@ -146,14 +149,16 @@ namespace KeeAgent
       }
     }
 
-    public static ISshKey GetSshKey(this PwEntry aPwEntry)
+    public static ISshKey GetSshKey(this PwEntry entry)
     {
-      var settings = aPwEntry.GetKeeAgentSettings();
-      return settings.GetSshKey(aPwEntry.Strings, aPwEntry.Binaries);
+      var settings = entry.GetKeeAgentSettings();
+      var context = new SprContext(entry, entry.GetDatabase(), SprCompileFlags.Deref);
+      return settings.GetSshKey(entry.Strings, entry.Binaries, context);
     }
 
     public static ISshKey GetSshKey(this EntrySettings settings,
-      ProtectedStringDictionary strings, ProtectedBinaryDictionary binaries)
+      ProtectedStringDictionary strings, ProtectedBinaryDictionary binaries,
+      SprContext sprContext)
     {      
       if (!settings.AllowUseOfSshKey) {
         return null;
@@ -162,12 +167,11 @@ namespace KeeAgent
         delegate(string comment)
         {
           var securePassphrase = new SecureString();
-          var passphrase = Encoding.UTF8.GetChars(strings
-            .Get(PwDefs.PasswordField).ReadUtf8());
+            var passphrase = SprEngine.Compile(strings.ReadSafe(
+                          PwDefs.PasswordField), sprContext);
           foreach (var c in passphrase) {
             securePassphrase.AppendChar(c);
           }
-          Array.Clear(passphrase, 0, passphrase.Length);
           return securePassphrase;
         };
       Func<Stream> getPrivateKeyStream;
@@ -263,6 +267,17 @@ namespace KeeAgent
         parent = parent.ParentGroup;
       }
       return builder.ToString ();
+    }
+
+    public static PwDatabase GetDatabase(this PwEntry entry)
+    {
+      var rootGroup = entry.ParentGroup;
+      while (rootGroup.ParentGroup != null) {
+        rootGroup = rootGroup.ParentGroup;
+      }
+      var db = KeePass.Program.MainForm.DocumentManager.GetOpenDatabases()
+        .SingleOrDefault(d => d.RootGroup == rootGroup);
+      return db;
     }
   }
 }
