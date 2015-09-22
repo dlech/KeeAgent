@@ -39,11 +39,11 @@ These are not saved in KeeAgent.csproj, so you have to manually set them up.
 
 * In monodevelop:
     * In Edit > Preferences... > Projects > Build, check the box that says *Compile the project using MSBuild/Xbuild*. In newer versions, this option is not there (it is set per project in the project options). You must restart Monodevelop after making this change.
-    * Make sure you have the nuget addin installed.
+    * If you are using an older version of MonoDevelop, make sure you have the nuget addin installed.
         * Add `http://mrward.github.com/monodevelop-nuget-addin-repository/4.0/main.mrep` to the addin sources.
         * see https://github.com/mrward/monodevelop-nuget-addin for more info
     * Open the `KeeAgent.sln` file.
-    * Expand `SshAgentLib` project and right-click on *References*. Select *Restore NuGet Packages*. This will download the BouncyCastle crypto library.
+    * Expand `SshAgentLib` project and right-click on *References*. Select *Restore NuGet Packages*.
     * Close and re-open the solution if it still says that BouncyCastle is missing.
     * Should be good to build and run now.
 
