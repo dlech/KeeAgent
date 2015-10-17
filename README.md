@@ -28,7 +28,7 @@ These are not saved in KeeAgent.csproj, so you have to manually set them up.
 
     Also leave out the `--debug` command line argument for these configurations.
 
-### Building KeeAgent in Xamarin Studio (Linux/Mac)
+### Building KeeAgent in Xamarin Studio (Linux/OS X)
 
 * Suggest that you use at Monodevelop >= 5.0
 * Make sure you are using the OpenSSH SSH agent and not the GNOME Keyring SSH agent. [Instructions here](http://lechnology.com/software/keeagent/installation/#disable-ssh-component-of-gnome-keyring).
@@ -47,6 +47,24 @@ These are not saved in KeeAgent.csproj, so you have to manually set them up.
     * Close and re-open the solution if it still says that BouncyCastle is missing.
     * Should be good to build and run now.
 
+### Building KeeAgent from the Command Line (Linux/OS X)
+
+* Make sure you have a fairly recent mono (>= v3.2.x)
+
+* Get the code:
+
+        git clone git://github.com/dlech/KeeAgent --recursive
+        cd KeeAgent
+
+* Restore the nuget packages:
+
+        wget https://nuget.org/nuget.exe
+        mono nuget.exe restore
+
+* And build:
+        xbuild /property:Configuration=ReleasePlgx KeeAgent.sln
+
+* The plgx file will be at `bin/ReleasePlgx/KeeAgent.plgx`.
 
 COPYRIGHT
 ---------
