@@ -32,12 +32,15 @@ namespace KeeAgent.UI
 {
   public partial class OptionsPanel : UserControl
   {
-    private KeeAgentExt ext;
-    private CheckedLVItemDXList optionsList;
+    KeeAgentExt ext;
+    CheckedLVItemDXList optionsList;
+    bool isUnix;
 
     public OptionsPanel(KeeAgentExt ext)
     {
       this.ext = ext;
+      isUnix = Environment.OSVersion.Platform == PlatformID.Unix
+        || Environment.OSVersion.Platform == PlatformID.MacOSX;
 
       InitializeComponent();
 
@@ -80,10 +83,22 @@ namespace KeeAgent.UI
         agentModeOptionsGroup, Translatable.OptionUserPicksKeyOnRequestIdentities);
       columnHeader.Width = customListViewEx.ClientRectangle.Width -
         UIUtil.GetVScrollBarWidth() - 1;
-      useCygwinSocketCheckBox.Checked = ext.Options.UseCygwinSocket;
-      cygwinSocketPathTextBox.Text = ext.Options.CygwinSocketPath;
-      useMsysSocketCheckBox.Checked = ext.Options.UseMsysSocket;
-      msysSocketPathTextBox.Text = ext.Options.MsysSocketPath;
+      if (isUnix) {
+        groupBox1.Text = "Agent mode socket file";
+        useCygwinSocketCheckBox.Visible = false;
+        cygwinSocketPathTextBox.Text = ext.Options.UnixSocketPath;
+        cygwinSocketPathTextBox.Enabled = true;
+        cygwinPathBrowseButton.Enabled = true;
+        useMsysSocketCheckBox.Visible = false;
+        label4.Visible = false;
+        msysSocketPathTextBox.Visible = false;
+        msysPathBrowseButton.Visible = false;
+      } else {
+        useCygwinSocketCheckBox.Checked = ext.Options.UseCygwinSocket;
+        cygwinSocketPathTextBox.Text = ext.Options.CygwinSocketPath;
+        useMsysSocketCheckBox.Checked = ext.Options.UseMsysSocket;
+        msysSocketPathTextBox.Text = ext.Options.MsysSocketPath;
+      }
       optionsList.UpdateData(false);
     }
 
@@ -93,38 +108,47 @@ namespace KeeAgent.UI
       if (ParentForm != null) {
         ParentForm.FormClosing +=
           delegate(object sender, FormClosingEventArgs e2)
-          {
-            if (ParentForm.DialogResult == DialogResult.OK) {
-              if (useCygwinSocketCheckBox.Checked
-                && string.IsNullOrWhiteSpace(cygwinSocketPathTextBox.Text))
-              {
-                MessageService.ShowWarning("Must specify path for Cygwin socket.");
-                e2.Cancel = true;
-                return;
-              }
-              if (useMsysSocketCheckBox.Checked
-                && string.IsNullOrWhiteSpace(msysSocketPathTextBox.Text))
-              {
-                MessageService.ShowWarning("Must specify path for MSYS socket.");
-                e2.Cancel = true;
-                return;
-              }
-              SaveChanges();
-              if (ext.Options.UseCygwinSocket)
+        {
+          if (ParentForm.DialogResult == DialogResult.OK) {
+            if (!isUnix && useCygwinSocketCheckBox.Checked
+              && string.IsNullOrWhiteSpace(cygwinSocketPathTextBox.Text))
+            {
+              MessageService.ShowWarning("Must specify path for Cygwin socket file.");
+              e2.Cancel = true;
+              return;
+            }
+            if (!isUnix && useMsysSocketCheckBox.Checked
+              && string.IsNullOrWhiteSpace(msysSocketPathTextBox.Text))
+            {
+              MessageService.ShowWarning("Must specify path for MSYS socket file.");
+              e2.Cancel = true;
+              return;
+            }
+            if (isUnix && modeComboBox.Text != Translatable.OptionAgentModeClient
+              && string.IsNullOrWhiteSpace (cygwinSocketPathTextBox.Text))
+            {
+              MessageService.ShowWarning("Must specify path for Agent socket file.");
+              e2.Cancel = true;
+              return;
+            }
+            SaveChanges();
+            if (ext.Options.UseCygwinSocket) {
                 ext.StartCygwinSocket();
-              else
+            } else {
                 ext.StopCygwinSocket();
-              if (ext.Options.UseMsysSocket)
+            }
+            if (ext.Options.UseMsysSocket) {
                 ext.StartMsysSocket();
-              else
+            } else {
                 ext.StopMsysSocket();
             }
-            optionsList.Release();
-          };
+          }
+          optionsList.Release();
+        };
       }
     }
 
-    private void SaveChanges()
+    void SaveChanges()
     {
       optionsList.UpdateData(true);
       if (modeComboBox.Text == Translatable.OptionAgentModeAgent) {
@@ -134,32 +158,36 @@ namespace KeeAgent.UI
       } else {
         ext.Options.AgentMode = AgentMode.Auto;
       }
-      ext.Options.UseCygwinSocket = useCygwinSocketCheckBox.Checked;
-      ext.Options.CygwinSocketPath = cygwinSocketPathTextBox.Text;
-      ext.Options.UseMsysSocket = useMsysSocketCheckBox.Checked;
-      ext.Options.MsysSocketPath = msysSocketPathTextBox.Text;
+      if (isUnix) {
+        ext.Options.UnixSocketPath = cygwinSocketPathTextBox.Text;
+      } else {
+        ext.Options.UseCygwinSocket = useCygwinSocketCheckBox.Checked;
+        ext.Options.CygwinSocketPath = cygwinSocketPathTextBox.Text;
+        ext.Options.UseMsysSocket = useMsysSocketCheckBox.Checked;
+        ext.Options.MsysSocketPath = msysSocketPathTextBox.Text;
+      }
     }
 
-    private void helpButton_Click(object sender, EventArgs e)
+    void helpButton_Click(object sender, EventArgs e)
     {
       Process.Start(Properties.Resources.WebHelpGlobalOptions);
     }
 
-    private void cygwinPathBrowseButton_Click(object sender, EventArgs e)
+    void cygwinPathBrowseButton_Click(object sender, EventArgs e)
     {
       var file = browseForPath();
       if (file != null)
         cygwinSocketPathTextBox.Text = file;
     }
 
-    private void msysPathBrowseButton_Click(object sender, EventArgs e)
+    void msysPathBrowseButton_Click(object sender, EventArgs e)
     {
       var file = browseForPath();
       if (file != null)
         msysSocketPathTextBox.Text = file;
     }
 
-    private string browseForPath()
+    string browseForPath()
     {
       // TODO: Would be nice if we could change the name of the "OK" button from
       // "Save" to "Select".
@@ -177,21 +205,26 @@ namespace KeeAgent.UI
           e.Cancel = true;
         }
       };
-      if (dialog.ShowDialog() == DialogResult.Cancel)
+      if (dialog.ShowDialog () == DialogResult.Cancel) {
         return null;
+      }
       return dialog.FileName;
     }
 
-    private void useCygwinSocketCheckBox_CheckedChanged(object sender, EventArgs e)
+    void useCygwinSocketCheckBox_CheckedChanged(object sender, EventArgs e)
     {
-      cygwinSocketPathTextBox.Enabled = useCygwinSocketCheckBox.Checked;
-      cygwinPathBrowseButton.Enabled = useCygwinSocketCheckBox.Checked;
+      if (!isUnix) {
+        cygwinSocketPathTextBox.Enabled = useCygwinSocketCheckBox.Checked;
+        cygwinPathBrowseButton.Enabled = useCygwinSocketCheckBox.Checked;
+      }
     }
 
-    private void useMsysSocketCheckBox_CheckedChanged(object sender, EventArgs e)
+    void useMsysSocketCheckBox_CheckedChanged(object sender, EventArgs e)
     {
-      msysSocketPathTextBox.Enabled = useMsysSocketCheckBox.Checked;
-      msysPathBrowseButton.Enabled = useMsysSocketCheckBox.Checked;
+      if (!isUnix) {
+        msysSocketPathTextBox.Enabled = useMsysSocketCheckBox.Checked;
+        msysPathBrowseButton.Enabled = useMsysSocketCheckBox.Checked;
+      }
     }
   }
 }

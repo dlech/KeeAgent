@@ -242,4 +242,13 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\PlgxTool.1.0.0\build\PlgxTool.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PlgxTool.1.0.0\build\PlgxTool.targets'))" />
   </Target>
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties>
+        <Policies>
+          <DotNetNamingPolicy DirectoryNamespaceAssociation="PrefixedFlat" ResourceNamePolicy="FileFormatDefault" />
+        </Policies>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
 </Project>

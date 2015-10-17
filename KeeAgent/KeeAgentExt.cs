@@ -77,6 +77,7 @@ namespace KeeAgent
     const string cygwinSocketPathOptionName = pluginNamespace + ".CygwinSocketPath";
     const string useMsysSocketOptionName = pluginNamespace + ".UseMsysSocket";
     const string msysSocketPathOptionName = pluginNamespace + ".MsysSocketPath";
+    const string unixSocketPathOptionName = pluginNamespace + ".UnixSocketPath";
     const string userPicksKeyOnRequestIdentitiesOptionName =
       pluginNamespace + ".UserPicksKeyOnRequestIdentities";
     const string keyFilePathSprPlaceholder = @"{KEEAGENT:KEYFILEPATH}";
@@ -110,12 +111,13 @@ namespace KeeAgent
 
       var isWindows = Environment.OSVersion.Platform == PlatformID.Win32NT;
       var domainSocketPath = 
-        Environment.GetEnvironmentVariable (UnixClient.SSH_AUTHSOCKET_ENV_NAME);
+        Environment.GetEnvironmentVariable (UnixClient.SshAuthSockName);
       try {
-        // TODO check OS - currently only works on Windows
         if (Options.AgentMode != AgentMode.Client) {
-          try {
-            if (isWindows) {
+          if (isWindows) {
+            // In windows, try to start an agent. If Pageant is running, we will
+            // get an exception.
+            try {
               var pagent = new PageantAgent();
               pagent.Locked += PageantAgent_Locked;
               pagent.KeyUsed += PageantAgent_KeyUsed;
@@ -133,14 +135,16 @@ namespace KeeAgent
               if (Options.UseMsysSocket) {
                 StartMsysSocket();
               }
-            } else {
-              if (string.IsNullOrEmpty (domainSocketPath)) {
-              agent = new UnixAgent();
+            } catch (PageantRunningException) {
+              if (Options.AgentMode != AgentMode.Auto) {
+                throw;
               }
             }
-          } catch (PageantRunningException) {
-            if (Options.AgentMode != AgentMode.Auto) {
-              throw;
+          } else {
+            // In Unix, we only try to start an agent if Agent mode was explicitly
+            // selected or there is no agent running (indicated by environment variable).
+            if (Options.AgentMode == AgentMode.Server || string.IsNullOrWhiteSpace (domainSocketPath)) {
+              agent = new UnixAgent(Options.UnixSocketPath);
             }
           }
         }
@@ -166,17 +170,12 @@ namespace KeeAgent
         SprEngine.FilterCompile += SprEngine_FilterCompile;
         SprEngine.FilterPlaceholderHints.Add(keyFilePathSprPlaceholder);
         SprEngine.FilterPlaceholderHints.Add(identFileOptSprPlaceholder);
-        if (debug)
-          Log("Succeeded");
         return true;
       } catch (PageantRunningException) {
         ShowPageantRunningErrorMessage();
       } catch (Exception ex) {
         MessageService.ShowWarning("KeeAgent failed to load:", ex.Message);
-        // TODO: show stack trace here
       }
-      if (debug)
-        Log("Failed");
       Terminate();
       return false;
     }
@@ -194,10 +193,10 @@ namespace KeeAgent
         columnProvider = null;
       }
       if (debug) Log("Terminating KeeAgent");
-      var pagent = agent as PageantAgent;
-      if (pagent != null) {
+      var agentModeAgent = agent as Agent;
+      if (agentModeAgent != null) {
         // need to shutdown agent or app won't exit
-        pagent.Dispose();
+        agentModeAgent.Dispose();
       }
       RemoveMenuItems();
     }
@@ -426,6 +425,7 @@ namespace KeeAgent
       config.SetString(cygwinSocketPathOptionName, Options.CygwinSocketPath);
       config.SetBool(useMsysSocketOptionName, Options.UseMsysSocket );
       config.SetString(msysSocketPathOptionName, Options.MsysSocketPath);
+      config.SetString(unixSocketPathOptionName, Options.UnixSocketPath);
       config.SetBool(userPicksKeyOnRequestIdentitiesOptionName,
         Options.UserPicksKeyOnRequestIdentities);
     }
@@ -443,6 +443,7 @@ namespace KeeAgent
       Options.CygwinSocketPath = config.GetString(cygwinSocketPathOptionName);
       Options.UseMsysSocket = config.GetBool(useMsysSocketOptionName, false);
       Options.MsysSocketPath = config.GetString(msysSocketPathOptionName);
+      Options.UnixSocketPath = config.GetString(unixSocketPathOptionName);
       Options.UserPicksKeyOnRequestIdentities =
         config.GetBool(userPicksKeyOnRequestIdentitiesOptionName, false);
 

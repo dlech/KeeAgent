@@ -91,6 +91,12 @@ namespace KeeAgent
     public string MsysSocketPath { get; set; }
 
     /// <summary>
+    /// The path for creating a unix socket in Agent mode on unix-like platforms
+    /// </summary>
+    /// <value>The unix socket path.</value>
+    public string UnixSocketPath { get; set; }
+
+    /// <summary>
     /// When <c>true</c>, the user will be prompted to select a keys from the
     /// loaded keys in response to a client program requesting a list of
     /// identities.
