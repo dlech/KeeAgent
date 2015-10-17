@@ -14,11 +14,14 @@ export DH_VERBOSE=1
 
 override_dh_auto_clean:
 	xbuild /target:Clean /property:Configuration=ReleasePlgx KeeAgent.sln
-	rm -f Local.proj
 	dh_auto_clean
 
+override_dh_auto_configure:
+	wget https://nuget.org/nuget.exe
+	mono nuget.exe restore
+	dh_auto_configure
+
 override_dh_auto_build:
-	cp Local.proj.sample.linux Local.proj
 	xbuild /property:Configuration=ReleasePlgx KeeAgent.sln
 
 override_dh_install:

@@ -1,3 +1,7 @@
+Beta v0.7.7 (2015-10-16)
+------------------------
+* Support for Agent mode on Linux/OS X.
+
 Beta v0.7.6 (2015-09-21)
 ------------------------
 * Add support for ECDSA and ED25519 keys in PuTTY Private Key (.ppk) files.

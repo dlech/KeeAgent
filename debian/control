@@ -2,8 +2,7 @@ Source: keepass2-plugin-keeagent
 Section: utils
 Priority: optional
 Maintainer: David Lechner <david@lechnology.com>
-Build-Depends: debhelper (>= 8.0.0), cli-common-dev (>= 0.7),
-               keepass2, keepass2-plugin-dev
+Build-Depends: debhelper (>= 8.0.0), cli-common-dev (>= 0.7), wget
 Standards-Version: 3.9.5
 Homepage: http://lechnology.com/KeeAgent
 Vcs-Git: git://github.com/dlech/KeeAgent.git

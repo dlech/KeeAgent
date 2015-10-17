@@ -9,7 +9,7 @@
       </Prerequisites>
     </PlgxConfiguration>
     <PlgxToolDir>$(MSBuildProjectDirectory)\..\KeePassPluginDevTools\PlgxTools\bin\Release\</PlgxToolDir>
-    <ReleaseVersion>0.7.3</ReleaseVersion>
+    <ReleaseVersion>0.7.7</ReleaseVersion>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -179,7 +179,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KeePass2.x\KeePass\KeePass.csproj">
-      <Project>{10938016-dee2-4a25-9a5a-8fd3444379ca}</Project>
+      <Project>{10938016-DEE2-4A25-9A5A-8FD3444379CA}</Project>
       <Name>KeePass</Name>
     </ProjectReference>
     <ProjectReference Include="..\SshAgentLib\Ui\WinForms\SshAgentLib.Ui.WinForms.csproj">
@@ -201,7 +201,6 @@
     <None Include="Properties\DataSources\EntrySettings.LocationData.datasource" />
     <None Include="Resources\KeeAgent-icon.ico" />
     <None Include="KeePass.config.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <ExcludeFromPlgx />
     </None>
     <None Include="KeePass.exe.config">

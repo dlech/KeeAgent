@@ -7,8 +7,8 @@ License: MIT
 
 Files: SshAgentLib/packages/NUnit*/*
 Copyright: 2002-2012 Charlie Poole
-Copyright: 2002-2004 James W. Newkirk, Michael C. Two, Alexei A. Vorontsov
-Copyright: 2000-2002 Philip A. Craig
+           2002-2004 James W. Newkirk, Michael C. Two, Alexei A. Vorontsov
+           2000-2002 Philip A. Craig
 License: Nunit
  This software is provided 'as-is', without any express or implied warranty. In
  no event will the authors be held liable for any damages arising from the use of
@@ -34,14 +34,14 @@ License: Nunit
 
 Files: SshAgentLib/SshAgentLib/Crypto/BCrypt.cs
 Copyright: 2006 Damien Miller <djm@mindrot.org>
-Copyright: 2013 Ryan D. Emerle
-Copyright: 2013 Ted Unangst <tedu@openbsd.org>
-Copyright: 2015 David Lechner <david@lechnology.com>
+           2013 Ryan D. Emerle
+           2013 Ted Unangst <tedu@openbsd.org>
+           2015 David Lechner <david@lechnology.com>
 License: MIT
 
 Files: SshAgentLib/Chaos.Nacl/*
 Copyright: Public Domain
-License: Public Domain
+License: public-domain
  This software is in the public domain and has no copyright.
 
 Files: SshAgentLib/SshAgentLib/Microsoft/*
@@ -115,7 +115,7 @@ License: Microsoft Limited Public License
 
 Files: SshAgentLib/Ui/WinForms/FileDlgExtenders/*
 Copyright: 2006 Gustavo Franco <gustavo_franco@hotmail.com>
-Copyright: 2007-2010Decebal Mihailescu
+           2007-2010Decebal Mihailescu
 License: BSD
 
 Files: SshAgentLib/Ui/WinForms/SplitButton.cs
@@ -279,7 +279,7 @@ License: MICROSOFT WINDOWS API CODE PACK FOR MICROSOFT .NET FRAMEWORK
  celles-ci ne le permettent pas.
 
 Files: SshAgentLib/*
-Copyright 2012-2015 David Lechner <david@lechnology.com>
+Copyright: 2012-2015 David Lechner <david@lechnology.com>
 License: MIT
 
 Files: *
@@ -303,7 +303,7 @@ License: GPL-2+
  On Debian systems, the complete text of the GNU General
  Public License version 2 can be found in "/usr/share/common-licenses/GPL-2".
 
-License : MIT
+License: MIT
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights

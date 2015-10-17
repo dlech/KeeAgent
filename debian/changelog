@@ -1,3 +1,19 @@
+keepass2-plugin-keeagent (0.7.7) trusty; urgency=medium
+
+  * Support for Agent mode in Linux.
+  * Add support for ECDSA and ED25519 keys in PuTTY Private Key (.ppk) files.
+    Thanks to @angelsl for implementing this!
+  * Better error message when running in Client Mode and the external SSH agent
+    is not running.
+  * Double-clicking a row in the new key selection feature will now select that
+    key and close the dialog.
+  * Attempt to use the same passphrase when loading multiple keys from external
+    files.
+  * Add feature to allow selection of key when client program requests a list
+    of all keys (Agent mode only).
+
+ -- David Lechner <david@lechnology.com>  Fri, 16 Oct 2015 23:25:51 -0500
+
 keepass2-plugin-keeagent (0.7.3) trusty; urgency=medium
 
   * Fix Ed25519 keys not working in client mode.
