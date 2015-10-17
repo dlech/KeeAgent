@@ -1,4 +1,4 @@
-keepass2-plugin-keeagent (0.7.7) trusty; urgency=medium
+keepass2-plugin-keeagent (0.7.7.1) trusty; urgency=medium
 
   * Support for Agent mode in Linux.
   * Add support for ECDSA and ED25519 keys in PuTTY Private Key (.ppk) files.

@@ -16,11 +16,6 @@ override_dh_auto_clean:
 	xbuild /target:Clean /property:Configuration=ReleasePlgx KeeAgent.sln
 	dh_auto_clean
 
-override_dh_auto_configure:
-	wget https://nuget.org/nuget.exe
-	mono nuget.exe restore
-	dh_auto_configure
-
 override_dh_auto_build:
 	xbuild /property:Configuration=ReleasePlgx KeeAgent.sln
 
