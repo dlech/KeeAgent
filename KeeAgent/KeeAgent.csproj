@@ -9,7 +9,7 @@
       </Prerequisites>
     </PlgxConfiguration>
     <PlgxToolDir>$(MSBuildProjectDirectory)\..\KeePassPluginDevTools\PlgxTools\bin\Release\</PlgxToolDir>
-    <ReleaseVersion>0.7.7</ReleaseVersion>
+    <ReleaseVersion>0.7.9</ReleaseVersion>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>

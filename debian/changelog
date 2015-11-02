@@ -1,3 +1,12 @@
+keepass2-plugin-keeagent (0.7.9) trusty; urgency=medium
+
+  * Fix error when starting for the first time on Linux without an external ssh
+    agent.
+  * Fix constraints and agent manager buttons not working in Agent mode on
+    Linux.
+
+ -- David Lechner <david@lechnology.com>  Mon, 02 Nov 2015 16:20:24 -0600
+
 keepass2-plugin-keeagent (0.7.7.1) trusty; urgency=medium
 
   * Support for Agent mode in Linux.

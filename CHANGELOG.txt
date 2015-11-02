@@ -1,3 +1,9 @@
+Beta v0.7.9 (2015-11-02)
+------------------------
+* Fix error when starting for the first time on Linux without an external ssh
+  agent.
+* Fix constraints and agent manager buttons not working in Agent mode on Linux.
+
 Beta v0.7.8 (2015-10-22)
 ------------------------
 * Fix crash when using Cygwin/MSYS sockets.
