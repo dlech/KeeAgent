@@ -144,7 +144,17 @@ namespace KeeAgent
             // In Unix, we only try to start an agent if Agent mode was explicitly
             // selected or there is no agent running (indicated by environment variable).
             if (Options.AgentMode == AgentMode.Server || string.IsNullOrWhiteSpace (domainSocketPath)) {
-              agent = new UnixAgent(Options.UnixSocketPath);
+              var unixAgent = new UnixAgent(Options.UnixSocketPath);
+              unixAgent.Locked += PageantAgent_Locked;
+              unixAgent.KeyUsed += PageantAgent_KeyUsed;
+              unixAgent.KeyAdded += PageantAgent_KeyAdded;
+              unixAgent.KeyRemoved += PageantAgent_KeyRemoved;
+              unixAgent.MessageReceived += PageantAgent_MessageReceived;
+              // IMPORTANT: if you change either of these callbacks, you need
+              // to make sure that they do not block the main event loop.
+              unixAgent.FilterKeyListCallback = FilterKeyList;
+              unixAgent.ConfirmUserPermissionCallback = Default.ConfirmCallback;
+              agent = unixAgent;
             }
           }
         }
