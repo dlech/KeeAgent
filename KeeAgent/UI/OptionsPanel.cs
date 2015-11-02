@@ -142,6 +142,9 @@ namespace KeeAgent.UI
             } else {
                 ext.StopMsysSocket();
             }
+            if (isUnix) {
+              ext.StartUnixSocket ();
+            }
           }
           optionsList.Release();
         };

@@ -144,7 +144,7 @@ namespace KeeAgent
             // In Unix, we only try to start an agent if Agent mode was explicitly
             // selected or there is no agent running (indicated by environment variable).
             if (Options.AgentMode == AgentMode.Server || string.IsNullOrWhiteSpace (domainSocketPath)) {
-              var unixAgent = new UnixAgent(Options.UnixSocketPath);
+              var unixAgent = new UnixAgent();
               unixAgent.Locked += PageantAgent_Locked;
               unixAgent.KeyUsed += PageantAgent_KeyUsed;
               unixAgent.KeyAdded += PageantAgent_KeyAdded;
@@ -155,6 +155,19 @@ namespace KeeAgent
               unixAgent.FilterKeyListCallback = FilterKeyList;
               unixAgent.ConfirmUserPermissionCallback = Default.ConfirmCallback;
               agent = unixAgent;
+              try {
+                unixAgent.StartUnixSocket (Options.UnixSocketPath);
+              } catch (ArgumentNullException) {
+                var autoModeMessage = Options.AgentMode == AgentMode.Auto
+                  ? " to use KeeAgent in Agent mode or enable an external SSH agent in your " +
+                  "desktop session manager to use KeeAgent in Client mode."
+                  : ".";
+                MessageService.ShowWarning("KeeAgent: No path specified for Agent socket file.",
+                  "Please enter a file in the KeeAgent options (Tools > Options... > KeeAgent tab)" +
+                  autoModeMessage);
+              } catch (Exception ex) {
+                MessageService.ShowWarning(ex.Message);
+              }
             }
           }
         }
@@ -277,6 +290,34 @@ namespace KeeAgent
       if (pagent == null)
         return;
       pagent.StopMsysSocket();
+    }
+
+    public void StartUnixSocket()
+    {
+      var unixAgent = agent as UnixAgent;
+      if (unixAgent == null)
+        return;
+      try {
+        unixAgent.StopUnixSocket();
+        var socketPath = Options.UnixSocketPath;
+        if (socketPath.StartsWith("~/", StringComparison.Ordinal)) {
+          socketPath = Path.Combine("%HOME%", socketPath.Substring (2));
+        }
+        unixAgent.StartUnixSocket(Environment.ExpandEnvironmentVariables(
+          socketPath));
+      } catch (Exception ex) {
+        MessageService.ShowWarning("Failed to start Unix socket:",
+          ex.Message);
+        // TODO: show better explanation of common errors.
+      }
+    }
+
+    public void StopUnixSocket()
+    {
+      var unixAgent = agent as UnixAgent;
+      if (unixAgent == null)
+        return;
+      unixAgent.StopUnixSocket();
     }
 
     private void AddMenuItems()
