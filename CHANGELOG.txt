@@ -1,3 +1,8 @@
+Beta v0.7.10 (2015-11-04)
+------------------------
+* Fix "Failed to start Unix Agent: Access Denied" error when starting KeePass
+  with KeeAgent in Agent mode on Linux.
+
 Beta v0.7.9 (2015-11-02)
 ------------------------
 * Fix error when starting for the first time on Linux without an external ssh

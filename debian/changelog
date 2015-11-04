@@ -1,3 +1,10 @@
+keepass2-plugin-keeagent (0.7.10) trusty; urgency=medium
+
+  * Fix "Failed to start Unix Agent: Access Denied" error when starting KeePass
+    with KeeAgent in Agent mode on Linux. 
+
+ -- David Lechner <david@lechnology.com>  Wed, 04 Nov 2015 13:53:53 -0600
+
 keepass2-plugin-keeagent (0.7.9) trusty; urgency=medium
 
   * Fix error when starting for the first time on Linux without an external ssh
