@@ -156,7 +156,12 @@ namespace KeeAgent
               unixAgent.ConfirmUserPermissionCallback = Default.ConfirmCallback;
               agent = unixAgent;
               try {
-                unixAgent.StartUnixSocket (Options.UnixSocketPath);
+                var socketPath = Options.UnixSocketPath;
+                if (socketPath.StartsWith("~/", StringComparison.Ordinal)) {
+                  socketPath = Path.Combine("%HOME%", socketPath.Substring (2));
+                }
+                socketPath = Environment.ExpandEnvironmentVariables(socketPath);
+                unixAgent.StartUnixSocket (socketPath);
               } catch (ArgumentNullException) {
                 var autoModeMessage = Options.AgentMode == AgentMode.Auto
                   ? " to use KeeAgent in Agent mode or enable an external SSH agent in your " +
