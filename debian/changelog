@@ -1,3 +1,9 @@
+keepass2-plugin-keeagent (0.7.11) trusty; urgency=medium
+
+  * Add workaround for ruby net-ssh. 
+
+ -- David Lechner <david@lechnology.com>  Sun, 08 Nov 2015 17:42:43 -0600
+
 keepass2-plugin-keeagent (0.7.10) trusty; urgency=medium
 
   * Fix "Failed to start Unix Agent: Access Denied" error when starting KeePass
