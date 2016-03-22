@@ -20,7 +20,7 @@ Pull requests are welcome!
 
 These are not saved in KeeAgent.csproj, so you have to manually set them up.
 * Open the project properties for the KeeAgent project.
-* On the *Debug* tab, in the *Start Action* section, select *Start external program:* and enter `<path-to-project>/bin/Debug/KeePass.exe`, where "<path-to-project>" is the actual path on your machine.
+* On the *Debug* tab, in the *Start Action* section, select *Start external program:* and enter `<path-to-project>/bin/Debug/KeePass.exe`, where `<path-to-project>` is the actual path on your machine.
 
    If you have not tried to build the project yet, then you will get an error that the program does not exist. Ignore the error.
 * Then in the *Start Options* section, set *Command line arguments to `--debug --pw:test Test.kdbx`.
