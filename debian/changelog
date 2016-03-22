@@ -1,3 +1,14 @@
+keepass2-plugin-keeagent (0.7.12) trusty; urgency=medium
+
+  * Replace confirm constraint checkbox when global confirm option is enabled.
+  * Activate key picker dialog when shown.
+  * Use CTRL+L instead of CTRL+K
+  * Fix Unix Agent mode not working with concurrent connections.
+  * Fix Agent Manager dialog buttons not all visible.
+  * Extend socket timeout to 5 seconds.
+
+ -- David Lechner <david@lechnology.com>  Mon, 21 Mar 2016 22:13:41 -0500
+
 keepass2-plugin-keeagent (0.7.11) trusty; urgency=medium
 
   * Add workaround for ruby net-ssh. 
