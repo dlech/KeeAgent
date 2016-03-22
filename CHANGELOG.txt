@@ -1,9 +1,21 @@
+Beta v0.7.12 (2016-03-21)
+-------------------------
+* Change keyboard shortcuts to use "L" instead of "K".
+* Confirm constraint checkbox in "Edit Entry" dialog is not shown when global
+  confirmation option is enabled.
+* Key picker dialog is activated when shown and can now use arrow keys and
+  enter key to pick a key without having to use mouse or tab.
+* Extend socket timeout from 2 seconds to 5 seconds.
+* Fix Agent Manager dialog buttons not all visible on Mono.
+* Fix Unix Agent mode not working on newer versions of OpenSSH with multiple
+  connections (concurrent agent socket connections).
+
 Beta v0.7.11 (2015-11-08)
-------------------------
+-------------------------
 * Add workaround for ruby net-ssh.
 
 Beta v0.7.10 (2015-11-04)
-------------------------
+-------------------------
 * Fix "Failed to start Unix Agent: Access Denied" error when starting KeePass
   with KeeAgent in Agent mode on Linux.
 
