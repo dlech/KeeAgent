@@ -62,6 +62,7 @@ These are not saved in KeeAgent.csproj, so you have to manually set them up.
         mono nuget.exe restore
 
 * And build:
+
         xbuild /property:Configuration=ReleasePlgx KeeAgent.sln
 
 * The plgx file will be at `bin/ReleasePlgx/KeeAgent.plgx`.
