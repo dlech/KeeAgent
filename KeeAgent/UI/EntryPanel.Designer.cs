@@ -30,6 +30,7 @@
       this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EntryPanel));
       this.hasSshKeyCheckBox = new System.Windows.Forms.CheckBox();
+      this.entrySettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.addKeyAtOpenCheckBox = new System.Windows.Forms.CheckBox();
       this.removeKeyAtCloseCheckBox = new System.Windows.Forms.CheckBox();
       this.helpButton = new System.Windows.Forms.Button();
@@ -46,11 +47,10 @@
       this.lifetimeConstraintCheckBox = new System.Windows.Forms.CheckBox();
       this.lifetimeConstraintNumericUpDown = new System.Windows.Forms.NumericUpDown();
       this.lifetimeConstraintLabel = new System.Windows.Forms.Label();
-      this.entrySettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.keyLocationPanel = new KeeAgent.UI.KeyLocationPanel();
+      ((System.ComponentModel.ISupportInitialize)(this.entrySettingsBindingSource)).BeginInit();
       this.keyInfoGroupBox.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.lifetimeConstraintNumericUpDown)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.entrySettingsBindingSource)).BeginInit();
       this.SuspendLayout();
       // 
       // hasSshKeyCheckBox
@@ -60,6 +60,10 @@
       this.hasSshKeyCheckBox.Name = "hasSshKeyCheckBox";
       this.hasSshKeyCheckBox.UseVisualStyleBackColor = true;
       this.hasSshKeyCheckBox.CheckedChanged += new System.EventHandler(this.hasSshKeyCheckBox_CheckedChanged);
+      // 
+      // entrySettingsBindingSource
+      // 
+      this.entrySettingsBindingSource.DataSource = typeof(KeeAgent.EntrySettings);
       // 
       // addKeyAtOpenCheckBox
       // 
@@ -176,10 +180,6 @@
       resources.ApplyResources(this.lifetimeConstraintLabel, "lifetimeConstraintLabel");
       this.lifetimeConstraintLabel.Name = "lifetimeConstraintLabel";
       // 
-      // entrySettingsBindingSource
-      // 
-      this.entrySettingsBindingSource.DataSource = typeof(KeeAgent.EntrySettings);
-      // 
       // keyLocationPanel
       // 
       resources.ApplyResources(this.keyLocationPanel, "keyLocationPanel");
@@ -203,10 +203,10 @@
       this.Controls.Add(this.addKeyAtOpenCheckBox);
       this.Controls.Add(this.hasSshKeyCheckBox);
       this.Name = "EntryPanel";
+      ((System.ComponentModel.ISupportInitialize)(this.entrySettingsBindingSource)).EndInit();
       this.keyInfoGroupBox.ResumeLayout(false);
       this.keyInfoGroupBox.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.lifetimeConstraintNumericUpDown)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.entrySettingsBindingSource)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 

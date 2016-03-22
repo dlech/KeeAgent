@@ -4,7 +4,7 @@
 //  Author(s):
 //      David Lechner <david@lechnology.com>
 //
-//  Copyright (C) 2012-2015  David Lechner
+//  Copyright (C) 2012-2016 David Lechner
 //
 //  This program is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU General Public License
@@ -278,6 +278,22 @@ namespace KeeAgent
       var db = KeePass.Program.MainForm.DocumentManager.GetOpenDatabases()
         .SingleOrDefault(d => d.RootGroup == rootGroup);
       return db;
+    }
+
+    /// <summary>
+    /// Replace a control with a label that indicates that the global confirm
+    /// constraint option is enabled.
+    /// </summary>
+    /// <param name="control"></param>
+    public static void ReplaceWithGlobalConfirmMessage(this Control control)
+    {
+      control.Hide();
+      control.Parent.Controls.Add(new Label() {
+        Text = Translatable.GlobalConfirmEnabled,
+        ForeColor = SystemColors.GrayText,
+        Location = control.Location,
+        Size = control.Size,
+      });
     }
   }
 }

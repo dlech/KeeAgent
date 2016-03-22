@@ -102,7 +102,7 @@ namespace KeeAgent.UI
 
       var showConstraintControls = !(mExt.agent is PageantClient);
       var entryPicker =
-        new EntryPickerDialog(mExt.pluginHost, showConstraintControls);
+        new EntryPickerDialog(mExt, showConstraintControls);
       var result = entryPicker.ShowDialog();
       if (result == DialogResult.OK) {
         try {

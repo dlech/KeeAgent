@@ -4,7 +4,7 @@
 //  Author(s):
 //      David Lechner <david@lechnology.com>
 //
-//  Copyright (C) 2012-2014  David Lechner
+//  Copyright (C) 2012-2014,2016 David Lechner
 //
 //  This program is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU General Public License
@@ -36,7 +36,7 @@ namespace KeeAgent.UI
 {
   public partial class EntryPickerDialog : Form
   {
-    public IPluginHost mPluginHost;
+    public KeeAgentExt ext;
     public DateTime mCachedNow;
     public PwDatabase mActiveDb;
     public Font mExpiredFont, mBoldFont, mItalicFont;
@@ -58,9 +58,9 @@ namespace KeeAgent.UI
       }
     }
 
-    public EntryPickerDialog(IPluginHost aPluginHost, bool aShowConstraintControls)
+    public EntryPickerDialog(KeeAgentExt ext, bool aShowConstraintControls)
     {
-      mPluginHost = aPluginHost;
+      this.ext = ext;
       InitializeComponent();
       if (!aShowConstraintControls) {
         Controls.Remove(mTableLayoutPanel);
@@ -87,6 +87,10 @@ namespace KeeAgent.UI
         Controls.Add(helpButton);
       }
 
+      if (ext.Options.AlwaysConfirm) {
+        mConfirmConstraintControl.ReplaceWithGlobalConfirmMessage();
+      }
+
       mExpiredFont = FontUtil.CreateFont(mCustomTreeViewEx.Font, FontStyle.Strikeout);
       mBoldFont = FontUtil.CreateFont(mCustomTreeViewEx.Font, FontStyle.Bold);
       mItalicFont = FontUtil.CreateFont(mCustomTreeViewEx.Font, FontStyle.Italic);
@@ -100,7 +104,7 @@ namespace KeeAgent.UI
       mCachedNow = DateTime.Now;
       bool entriesFound = false;
 
-      foreach (var db in mPluginHost.MainWindow.DocumentManager.GetOpenDatabases()) {
+      foreach (var db in ext.pluginHost.MainWindow.DocumentManager.GetOpenDatabases()) {
         mActiveDb = db;
         UpdateImageLists();
 
@@ -230,7 +234,7 @@ namespace KeeAgent.UI
               entry.SetKeeAgentSettings(settings);
               entry.Touch(true);
               mActiveDb.Modified = true;
-              mPluginHost.MainWindow.UpdateUI(false, null, false, null, false, null, false);
+              ext.pluginHost.MainWindow.UpdateUI(false, null, false, null, false, null, false);
               sshKeyFound = true;
               break;
             } catch (Exception) {
@@ -271,7 +275,7 @@ namespace KeeAgent.UI
       imgList.ColorDepth = ColorDepth.Depth32Bit;
 
       List<Image> lStdImages = new List<Image>();
-      foreach (Image imgStd in mPluginHost.MainWindow.ClientIcons.Images) {
+      foreach (Image imgStd in ext.pluginHost.MainWindow.ClientIcons.Images) {
         lStdImages.Add(imgStd);
       }
       imgList.Images.AddRange(lStdImages.ToArray());

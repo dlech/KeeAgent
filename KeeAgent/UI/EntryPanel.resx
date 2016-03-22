@@ -592,7 +592,7 @@
     <value>keyLocationPanel</value>
   </data>
   <data name="&gt;&gt;keyLocationPanel.Type" xml:space="preserve">
-    <value>KeeAgent.UI.KeyLocationPanel, KeeAgent, Version=0.5.3.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>KeeAgent.UI.KeyLocationPanel, KeeAgent, Version=0.7.11.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;keyLocationPanel.Parent" xml:space="preserve">
     <value>$this</value>
@@ -612,17 +612,17 @@
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
     <value>467, 342</value>
   </data>
-  <data name="&gt;&gt;delayedUpdateKeyInfoTimer.Name" xml:space="preserve">
-    <value>delayedUpdateKeyInfoTimer</value>
-  </data>
-  <data name="&gt;&gt;delayedUpdateKeyInfoTimer.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;entrySettingsBindingSource.Name" xml:space="preserve">
     <value>entrySettingsBindingSource</value>
   </data>
   <data name="&gt;&gt;entrySettingsBindingSource.Type" xml:space="preserve">
     <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;delayedUpdateKeyInfoTimer.Name" xml:space="preserve">
+    <value>delayedUpdateKeyInfoTimer</value>
+  </data>
+  <data name="&gt;&gt;delayedUpdateKeyInfoTimer.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>EntryPanel</value>

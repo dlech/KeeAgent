@@ -167,13 +167,13 @@
     <value>Client</value>
   </data>
   <data name="OptionAlwaysConfirm" xml:space="preserve">
-    <value>Always require manual confirmation when a client program requests to use a key</value>
+    <value>Always require user confirmation when a client program requests to use a key</value>
   </data>
   <data name="OptionLoggingEnabled" xml:space="preserve">
     <value>Enable debug logging</value>
   </data>
   <data name="OptionShowBalloon" xml:space="preserve">
-    <value>Show a notification balloon whenever a key is used by a client program</value>
+    <value>Show a notification whenever a key is used by a client program</value>
   </data>
   <data name="OptionsMenuItem" xml:space="preserve">
     <value>Options...</value>
@@ -202,5 +202,8 @@
   </data>
   <data name="OptionUserPicksKeyOnRequestIdentities" xml:space="preserve">
     <value>Show key selection dialog when a client program requests a list of all keys</value>
+  </data>
+  <data name="GlobalConfirmEnabled" xml:space="preserve">
+    <value>*Global confirm enabled*</value>
   </data>
 </root>

@@ -553,7 +553,7 @@ namespace KeeAgent
       /* Add KeeAgent tab to PwEntryForm dialog */
       var pwEntryForm = aEventArgs.Form as PwEntryForm;
       if (pwEntryForm != null) {
-        var optionsPanel = new EntryPanel();
+        var optionsPanel = new EntryPanel(this);
         pwEntryForm.Shown +=
           delegate(object sender, EventArgs args)
           {

@@ -4,7 +4,7 @@
 //  Author(s):
 //      David Lechner <david@lechnology.com>
 //
-//  Copyright (C) 2012-2015  David Lechner
+//  Copyright (C) 2012-2016 David Lechner
 //
 //  This program is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU General Public License
@@ -34,6 +34,7 @@ namespace KeeAgent.UI
   public partial class EntryPanel : UserControl
   {
     PwEntryForm pwEntryForm;
+    KeeAgentExt ext;
 
     public EntrySettings IntialSettings {
       get;
@@ -45,8 +46,9 @@ namespace KeeAgent.UI
       private set;
     }
 
-    public EntryPanel()
+    public EntryPanel(KeeAgentExt ext)
     {
+      this.ext = ext;
       InitializeComponent();
 
       // make transparent so tab styling shows
@@ -72,6 +74,10 @@ namespace KeeAgent.UI
         };
       } else {
         Debug.Fail("Don't have settings to bind to");
+      }
+      // replace the confirm constraint checkbox if the global confirm option is enabled
+      if (ext.Options.AlwaysConfirm) {
+        confirmConstraintCheckBox.ReplaceWithGlobalConfirmMessage();
       }
       UpdateControlStates();
     }
