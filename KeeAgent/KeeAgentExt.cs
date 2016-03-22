@@ -1012,6 +1012,7 @@ namespace KeeAgent
       pluginHost.MainWindow.Invoke((MethodInvoker)delegate
       {
         var dialog = new KeyPicker(list);
+        dialog.Shown += (sender, e) => dialog.Activate();
         dialog.TopMost = true;
         dialog.ShowDialog(pluginHost.MainWindow);
         if (dialog.DialogResult == DialogResult.OK) {
