@@ -68,6 +68,11 @@ namespace KeeAgent.UI
       UIUtil.SetExplorerTheme(customListViewEx, false);
 
       optionsList = new CheckedLVItemDXList(customListViewEx, true);
+      var optionsGroup = new ListViewGroup("common", "Options");
+      customListViewEx.Groups.Add(optionsGroup);
+      optionsList.CreateItem(ext.Options, "IgnoreMissingExternalKeyFiles",
+        optionsGroup, Translatable.OptionIgnoreMissingExternalKeyFiles);
+
       var agentModeOptionsGroup = new ListViewGroup("agentMode",
                           "Agent Mode Options (no effect in Client Mode)");
       customListViewEx.Groups.Add(agentModeOptionsGroup);
@@ -81,6 +86,7 @@ namespace KeeAgent.UI
        Translatable.OptionUnlockOnActivity);
       optionsList.CreateItem(ext.Options, "UserPicksKeyOnRequestIdentities",
         agentModeOptionsGroup, Translatable.OptionUserPicksKeyOnRequestIdentities);
+
       columnHeader.Width = customListViewEx.ClientRectangle.Width -
         UIUtil.GetVScrollBarWidth() - 1;
       if (isUnix) {
