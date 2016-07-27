@@ -223,6 +223,15 @@ namespace KeeAgent {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ignore missing key files.
+        /// </summary>
+        internal static string OptionIgnoreMissingFiles {
+            get {
+                return ResourceManager.GetString("OptionIgnoreMissingFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enable debug logging.
         /// </summary>
         internal static string OptionLoggingEnabled {

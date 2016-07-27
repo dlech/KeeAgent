@@ -80,6 +80,7 @@ namespace KeeAgent
     const string unixSocketPathOptionName = pluginNamespace + ".UnixSocketPath";
     const string userPicksKeyOnRequestIdentitiesOptionName =
       pluginNamespace + ".UserPicksKeyOnRequestIdentities";
+    const string ignoreMissingFilesName = pluginNamespace + ".IgnoreMissingFilesName";
     const string keyFilePathSprPlaceholder = @"{KEEAGENT:KEYFILEPATH}";
     const string identFileOptSprPlaceholder = @"{KEEAGENT:IDENTFILEOPT}";
 
@@ -484,6 +485,7 @@ namespace KeeAgent
       config.SetString(unixSocketPathOptionName, Options.UnixSocketPath);
       config.SetBool(userPicksKeyOnRequestIdentitiesOptionName,
         Options.UserPicksKeyOnRequestIdentities);
+      config.SetBool(ignoreMissingFilesName, Options.IgnoreMissingFiles);
     }
 
     private void LoadOptions()
@@ -502,6 +504,7 @@ namespace KeeAgent
       Options.UnixSocketPath = config.GetString(unixSocketPathOptionName);
       Options.UserPicksKeyOnRequestIdentities =
         config.GetBool(userPicksKeyOnRequestIdentitiesOptionName, false);
+      Options.IgnoreMissingFiles = config.GetBool(ignoreMissingFilesName, false);
 
       string defaultLogFileNameValue = Path.Combine(
           Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
@@ -802,7 +805,11 @@ namespace KeeAgent
           if (settings.AllowUseOfSshKey && settings.AddAtDatabaseOpen) {
             try {
               AddEntry(entry, null);
-            } catch (Exception) {
+            } catch (Exception ex) {
+                if (Options.IgnoreMissingFiles && (ex is FileNotFoundException || ex is DirectoryNotFoundException)) {
+                    continue;
+                }
+            
               if (!MessageService.AskYesNo("Do you want to attempt to load additional keys?")) {
                 exitFor = true;
               }
@@ -960,11 +967,15 @@ namespace KeeAgent
              "No attachment specified in KeePass entry"
            });
         } else if (ex is FileNotFoundException || ex is DirectoryNotFoundException) {
-          MessageService.ShowWarning(new string[] {
-            firstLine,
-            "Could not find file",
-            settings.Location.FileName
-           });
+
+            if (!Options.IgnoreMissingFiles) { 
+                MessageService.ShowWarning(new string[] {
+                  firstLine,
+                  "Could not find file",
+                  settings.Location.FileName
+                 });
+            }
+
         } else if (ex is KeyFormatterException || ex is PpkFormatterException) {
           MessageService.ShowWarning(new string[] {
             firstLine,
