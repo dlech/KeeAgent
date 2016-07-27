@@ -20,6 +20,7 @@
 //  along with this program; if not, see <http://www.gnu.org/licenses>
 
 using System;
+using System.IO;
 using System.Xml.Serialization;
 
 namespace KeeAgent
@@ -40,6 +41,18 @@ namespace KeeAgent
       public string AttachmentName { get; set; }
       public bool SaveAttachmentToTempFile { get; set; }
       public string FileName { get; set; }
+      public string ResolvedFileName
+      {
+          get
+          {
+              String resolvedFileName = FileName;
+              if (resolvedFileName.StartsWith("~/", StringComparison.Ordinal))
+              {
+                  resolvedFileName = Path.Combine("%HOME%", resolvedFileName.Substring(2));
+              }
+              return Environment.ExpandEnvironmentVariables(resolvedFileName);
+          }
+      }
 
       public LocationData()
       {

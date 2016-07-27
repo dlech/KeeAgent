@@ -633,7 +633,7 @@ namespace KeeAgent
             case EntrySettings.LocationType.File:
               if (string.IsNullOrWhiteSpace(settings.Location.FileName)) {
                 errorMessage = "Must specify file name";
-              } else if (!File.Exists(settings.Location.FileName)) {
+              } else if (!File.Exists(settings.Location.ResolvedFileName)) {
                 errorMessage = "File does not exist";
               }
               break;

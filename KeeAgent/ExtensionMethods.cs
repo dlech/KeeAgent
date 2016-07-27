@@ -189,8 +189,8 @@ namespace KeeAgent
           return GetSshKey(getPrivateKeyStream, getPublicKeyStream,
                            settings.Location.AttachmentName, getPassphraseCallback);
         case EntrySettings.LocationType.File:
-          getPrivateKeyStream = () => File.OpenRead(settings.Location.FileName);
-          var publicKeyFile = settings.Location.FileName + ".pub";
+          getPrivateKeyStream = () => File.OpenRead(settings.Location.ResolvedFileName);
+          var publicKeyFile = settings.Location.ResolvedFileName + ".pub";
           if (File.Exists(publicKeyFile))
             getPublicKeyStream = () => File.OpenRead(publicKeyFile);
           return GetSshKey(getPrivateKeyStream, getPublicKeyStream,
