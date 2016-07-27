@@ -189,8 +189,9 @@ namespace KeeAgent
           return GetSshKey(getPrivateKeyStream, getPublicKeyStream,
                            settings.Location.AttachmentName, getPassphraseCallback);
         case EntrySettings.LocationType.File:
-          getPrivateKeyStream = () => File.OpenRead(settings.Location.FileName);
-          var publicKeyFile = settings.Location.FileName + ".pub";
+          var filename = settings.Location.FileName.ExpandEnvironmentVariables();
+          getPrivateKeyStream = () => File.OpenRead(filename);
+          var publicKeyFile = filename + ".pub";
           if (File.Exists(publicKeyFile))
             getPublicKeyStream = () => File.OpenRead(publicKeyFile);
           return GetSshKey(getPrivateKeyStream, getPublicKeyStream,
@@ -294,6 +295,20 @@ namespace KeeAgent
         Location = control.Location,
         Size = control.Size,
       });
+    }
+
+      /// <summary>
+      /// Expand environment variables in a filename. Also expandes ~/ to %HOME% environment variable.
+      /// </summary>
+      /// <param name="path"></param>
+    public static String ExpandEnvironmentVariables(this String filename)
+    {      
+        if (filename.StartsWith("~/", StringComparison.Ordinal))
+        {
+            filename = Path.Combine("%HOME%", filename.Substring(2));
+        }
+
+        return Environment.ExpandEnvironmentVariables(filename);
     }
   }
 }
