@@ -78,12 +78,14 @@
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.keyInfoView);
       this.HelpButton = true;
+      this.KeyPreview = true;
       this.MaximizeBox = false;
       this.MinimizeBox = false;
       this.Name = "ManageDialog";
       this.ShowInTaskbar = false;
       this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.ManageDialog_HelpButtonClicked);
       this.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.ManageDialog_HelpRequested);
+      this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ManageDialog_KeyDown);
       this.addButtonMenuStrip.ResumeLayout(false);
       this.ResumeLayout(false);
 

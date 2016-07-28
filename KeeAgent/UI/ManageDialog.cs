@@ -136,5 +136,13 @@ namespace KeeAgent.UI
     {
       Process.Start(Properties.Resources.WebHelpKeeAgentManager);
     }
+
+    private void ManageDialog_KeyDown(object sender, KeyEventArgs e)
+    {
+      if (e.KeyCode == Keys.Escape) {
+        e.Handled = true;
+        Close();
+      }
+    }
   }
 }
