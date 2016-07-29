@@ -1,3 +1,10 @@
+keepass2-plugin-keeagent (0.8.0) trusty; urgency=medium
+
+  * Fix up margins on key manager dialog
+  * Close key manager when escape is pressed.
+
+ -- David Lechner <david@lechnology.com>  Thu, 28 Jul 2016 19:22:41 -0500
+
 keepass2-plugin-keeagent (0.7.12) trusty; urgency=medium
 
   * Replace confirm constraint checkbox when global confirm option is enabled.
