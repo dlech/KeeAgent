@@ -173,7 +173,7 @@
     <None Include="packages.config" />
     <None Include="Resources\KeeAgent-icon-mono.ico" />
     <None Include="Test.kdbx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <ExcludeFromPlgx />
     </None>
   </ItemGroup>
