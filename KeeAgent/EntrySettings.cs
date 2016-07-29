@@ -45,12 +45,7 @@ namespace KeeAgent
       {
           get
           {
-              String resolvedFileName = FileName;
-              if (resolvedFileName.StartsWith("~/", StringComparison.Ordinal))
-              {
-                  resolvedFileName = Path.Combine("%HOME%", resolvedFileName.Substring(2));
-              }
-              return Environment.ExpandEnvironmentVariables(resolvedFileName);
+              return ExtensionMethods.ExpandEnvironmentVariables(FileName);
           }
       }
 

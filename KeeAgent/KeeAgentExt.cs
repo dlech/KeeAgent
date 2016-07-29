@@ -156,11 +156,7 @@ namespace KeeAgent
               unixAgent.ConfirmUserPermissionCallback = Default.ConfirmCallback;
               agent = unixAgent;
               try {
-                var socketPath = Options.UnixSocketPath;
-                if (socketPath.StartsWith("~/", StringComparison.Ordinal)) {
-                  socketPath = Path.Combine("%HOME%", socketPath.Substring (2));
-                }
-                socketPath = Environment.ExpandEnvironmentVariables(socketPath);
+                var socketPath = ExtensionMethods.ExpandEnvironmentVariables(Options.UnixSocketPath);
                 unixAgent.StartUnixSocket (socketPath);
               } catch (ArgumentNullException) {
                 var autoModeMessage = Options.AgentMode == AgentMode.Auto
@@ -304,10 +300,7 @@ namespace KeeAgent
         return;
       try {
         unixAgent.StopUnixSocket();
-        var socketPath = Options.UnixSocketPath;
-        if (socketPath.StartsWith("~/", StringComparison.Ordinal)) {
-          socketPath = Path.Combine("%HOME%", socketPath.Substring (2));
-        }
+        var socketPath = ExtensionMethods.ExpandEnvironmentVariables(Options.UnixSocketPath);
         unixAgent.StartUnixSocket(Environment.ExpandEnvironmentVariables(
           socketPath));
       } catch (Exception ex) {

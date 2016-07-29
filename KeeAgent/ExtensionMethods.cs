@@ -295,5 +295,19 @@ namespace KeeAgent
         Size = control.Size,
       });
     }
+
+      /// <summary>
+      /// Expand environment variables in a filename. Also expandes ~/ to %HOME% environment variable.
+      /// </summary>
+      /// <param name="path"></param>
+    public static String ExpandEnvironmentVariables(String filename)
+    {      
+        if (filename.StartsWith("~/", StringComparison.Ordinal))
+        {
+            filename = Path.Combine("%HOME%", filename.Substring(2));
+        }
+
+        return Environment.ExpandEnvironmentVariables(filename);
+    }
   }
 }
