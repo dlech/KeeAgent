@@ -202,6 +202,7 @@
     <None Include="Resources\KeeAgent-icon.ico" />
     <None Include="KeePass.config.xml">
       <ExcludeFromPlgx />
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="KeePass.exe.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
