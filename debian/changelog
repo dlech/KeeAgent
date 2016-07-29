@@ -1,3 +1,9 @@
+keepass2-plugin-keeagent (0.8.1) trusty; urgency=medium
+
+  * Fix assembly version for release 0.8.1
+
+ -- David Lechner <david@lechnology.com>  Thu, 28 Jul 2016 20:44:58 -0500
+
 keepass2-plugin-keeagent (0.8.0) trusty; urgency=medium
 
   * Fix up margins on key manager dialog
