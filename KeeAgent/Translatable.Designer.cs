@@ -223,11 +223,11 @@ namespace KeeAgent {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ignore missing key files.
+        ///   Looks up a localized string similar to Ignore missing external key files.
         /// </summary>
-        internal static string OptionIgnoreMissingFiles {
+        internal static string OptionIgnoreMissingExternalKeyFiles {
             get {
-                return ResourceManager.GetString("OptionIgnoreMissingFiles", resourceCulture);
+                return ResourceManager.GetString("OptionIgnoreMissingExternalKeyFiles", resourceCulture);
             }
         }
         

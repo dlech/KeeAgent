@@ -107,6 +107,6 @@ namespace KeeAgent
     /// When <c>true</c>, we will not display a warning about missing keyfiles
     /// in the filesystem.
     /// </summary>
-    public static bool IgnoreMissingFiles { get; set; }
+    public static bool IgnoreMissingExternalKeyFiles { get; set; }
   }
 }

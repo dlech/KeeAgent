@@ -80,7 +80,7 @@ namespace KeeAgent
     const string unixSocketPathOptionName = pluginNamespace + ".UnixSocketPath";
     const string userPicksKeyOnRequestIdentitiesOptionName =
       pluginNamespace + ".UserPicksKeyOnRequestIdentities";
-    const string ignoreMissingFilesName = pluginNamespace + ".IgnoreMissingFilesName";
+    const string ignoreMissingExternalKeyFilesName = pluginNamespace + ".IgnoreMissingExternalKeyFilesName";
     const string keyFilePathSprPlaceholder = @"{KEEAGENT:KEYFILEPATH}";
     const string identFileOptSprPlaceholder = @"{KEEAGENT:IDENTFILEOPT}";
 
@@ -485,7 +485,7 @@ namespace KeeAgent
       config.SetString(unixSocketPathOptionName, Options.UnixSocketPath);
       config.SetBool(userPicksKeyOnRequestIdentitiesOptionName,
         Options.UserPicksKeyOnRequestIdentities);
-      config.SetBool(ignoreMissingFilesName, Options.IgnoreMissingFiles);
+      config.SetBool(ignoreMissingExternalKeyFilesName, Options.IgnoreMissingExternalKeyFiles);
     }
 
     private void LoadOptions()
@@ -504,7 +504,7 @@ namespace KeeAgent
       Options.UnixSocketPath = config.GetString(unixSocketPathOptionName);
       Options.UserPicksKeyOnRequestIdentities =
         config.GetBool(userPicksKeyOnRequestIdentitiesOptionName, false);
-      Options.IgnoreMissingFiles = config.GetBool(ignoreMissingFilesName, false);
+      Options.IgnoreMissingExternalKeyFiles = config.GetBool(ignoreMissingExternalKeyFilesName, false);
 
       string defaultLogFileNameValue = Path.Combine(
           Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
@@ -806,7 +806,7 @@ namespace KeeAgent
             try {
               AddEntry(entry, null);
             } catch (Exception ex) {
-                if (Options.IgnoreMissingFiles && (ex is FileNotFoundException || ex is DirectoryNotFoundException)) {
+                if (Options.IgnoreMissingExternalKeyFiles && (ex is FileNotFoundException || ex is DirectoryNotFoundException)) {
                     continue;
                 }
             
@@ -968,7 +968,7 @@ namespace KeeAgent
            });
         } else if (ex is FileNotFoundException || ex is DirectoryNotFoundException) {
 
-            if (!Options.IgnoreMissingFiles) { 
+            if (!Options.IgnoreMissingExternalKeyFiles) { 
                 MessageService.ShowWarning(new string[] {
                   firstLine,
                   "Could not find file",

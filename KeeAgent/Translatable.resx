@@ -206,7 +206,7 @@
   <data name="GlobalConfirmEnabled" xml:space="preserve">
     <value>*Global confirm enabled*</value>
   </data>
-  <data name="OptionIgnoreMissingFiles" xml:space="preserve">
-    <value>Ignore missing key files</value>
+  <data name="OptionIgnoreMissingExternalKeyFiles" xml:space="preserve">
+    <value>Ignore missing external key files</value>
   </data>
 </root>

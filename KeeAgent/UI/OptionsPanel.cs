@@ -81,8 +81,8 @@ namespace KeeAgent.UI
        Translatable.OptionUnlockOnActivity);
       optionsList.CreateItem(ext.Options, "UserPicksKeyOnRequestIdentities",
         agentModeOptionsGroup, Translatable.OptionUserPicksKeyOnRequestIdentities);
-      optionsList.CreateItem(ext.Options, "IgnoreMissingFiles",
-        agentModeOptionsGroup, Translatable.OptionIgnoreMissingFiles);
+      optionsList.CreateItem(ext.Options, "IgnoreMissingExternalKeyFiles",
+        agentModeOptionsGroup, Translatable.OptionIgnoreMissingExternalKeyFiles);
 
       columnHeader.Width = customListViewEx.ClientRectangle.Width -
         UIUtil.GetVScrollBarWidth() - 1;
