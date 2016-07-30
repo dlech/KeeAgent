@@ -41,13 +41,6 @@ namespace KeeAgent
       public string AttachmentName { get; set; }
       public bool SaveAttachmentToTempFile { get; set; }
       public string FileName { get; set; }
-      public string ResolvedFileName
-      {
-          get
-          {
-              return ExtensionMethods.ExpandEnvironmentVariables(FileName);
-          }
-      }
 
       public LocationData()
       {

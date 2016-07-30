@@ -156,7 +156,7 @@ namespace KeeAgent
               unixAgent.ConfirmUserPermissionCallback = Default.ConfirmCallback;
               agent = unixAgent;
               try {
-                var socketPath = ExtensionMethods.ExpandEnvironmentVariables(Options.UnixSocketPath);
+                var socketPath = Options.UnixSocketPath.ExpandEnvironmentVariables();
                 unixAgent.StartUnixSocket (socketPath);
               } catch (ArgumentNullException) {
                 var autoModeMessage = Options.AgentMode == AgentMode.Auto
@@ -300,7 +300,7 @@ namespace KeeAgent
         return;
       try {
         unixAgent.StopUnixSocket();
-        var socketPath = ExtensionMethods.ExpandEnvironmentVariables(Options.UnixSocketPath);
+        var socketPath = Options.UnixSocketPath.ExpandEnvironmentVariables();
         unixAgent.StartUnixSocket(Environment.ExpandEnvironmentVariables(
           socketPath));
       } catch (Exception ex) {
@@ -626,7 +626,7 @@ namespace KeeAgent
             case EntrySettings.LocationType.File:
               if (string.IsNullOrWhiteSpace(settings.Location.FileName)) {
                 errorMessage = "Must specify file name";
-              } else if (!File.Exists(settings.Location.ResolvedFileName)) {
+              } else if (!File.Exists(settings.Location.FileName.ExpandEnvironmentVariables())) {
                 errorMessage = "File does not exist";
               }
               break;
