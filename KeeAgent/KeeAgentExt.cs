@@ -156,11 +156,7 @@ namespace KeeAgent
               unixAgent.ConfirmUserPermissionCallback = Default.ConfirmCallback;
               agent = unixAgent;
               try {
-                var socketPath = Options.UnixSocketPath;
-                if (socketPath.StartsWith("~/", StringComparison.Ordinal)) {
-                  socketPath = Path.Combine("%HOME%", socketPath.Substring (2));
-                }
-                socketPath = Environment.ExpandEnvironmentVariables(socketPath);
+                var socketPath = Options.UnixSocketPath.ExpandEnvironmentVariables();
                 unixAgent.StartUnixSocket (socketPath);
               } catch (ArgumentNullException) {
                 var autoModeMessage = Options.AgentMode == AgentMode.Auto
@@ -304,10 +300,7 @@ namespace KeeAgent
         return;
       try {
         unixAgent.StopUnixSocket();
-        var socketPath = Options.UnixSocketPath;
-        if (socketPath.StartsWith("~/", StringComparison.Ordinal)) {
-          socketPath = Path.Combine("%HOME%", socketPath.Substring (2));
-        }
+        var socketPath = Options.UnixSocketPath.ExpandEnvironmentVariables();
         unixAgent.StartUnixSocket(Environment.ExpandEnvironmentVariables(
           socketPath));
       } catch (Exception ex) {
@@ -633,7 +626,7 @@ namespace KeeAgent
             case EntrySettings.LocationType.File:
               if (string.IsNullOrWhiteSpace(settings.Location.FileName)) {
                 errorMessage = "Must specify file name";
-              } else if (!File.Exists(settings.Location.FileName)) {
+              } else if (!File.Exists(settings.Location.FileName.ExpandEnvironmentVariables())) {
                 errorMessage = "File does not exist";
               }
               break;

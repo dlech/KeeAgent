@@ -122,7 +122,7 @@ namespace KeeAgent.UI
               string file = "attachment";
               if (keyLocationPanel.KeyLocation.SelectedType == EntrySettings.LocationType.File) {
                 try {
-                  file = Path.GetFullPath(CurrentSettings.Location.FileName);
+                  file = Path.GetFullPath(CurrentSettings.Location.FileName.ExpandEnvironmentVariables());
                 } catch (Exception) {
                   file = "file";
                 }
