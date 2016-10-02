@@ -102,5 +102,11 @@ namespace KeeAgent
     /// identities.
     /// </summary>
     public static bool UserPicksKeyOnRequestIdentities { get; set; }
+
+    /// <summary>
+    /// When <c>true</c>, we will not display a warning about missing keyfiles
+    /// in the filesystem.
+    /// </summary>
+    public static bool IgnoreMissingExternalKeyFiles { get; set; }
   }
 }
