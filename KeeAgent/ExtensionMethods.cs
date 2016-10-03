@@ -37,6 +37,7 @@ using KeePass.Util.Spr;
 using KeePassLib;
 using KeePassLib.Collections;
 using KeePassLib.Security;
+using System.Runtime.InteropServices;
 
 namespace KeeAgent
 {
@@ -309,6 +310,51 @@ namespace KeeAgent
         }
 
         return Environment.ExpandEnvironmentVariables(filename);
+    }
+
+    /// <summary>
+    /// Set window z order to the bottom.
+    /// </summary>
+    /// <param name="form"></param>
+    public static void SetWindowPosBottom(this Form form)
+    {
+      if (Type.GetType("Mono.Runtime") == null) {
+        SetWindowPos(form.Handle, (IntPtr)HWND.BOTTOM, 0, 0, 0, 0,
+          SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOACTIVATE);
+      } else {
+        // TODO: handle mono
+      }
+    }
+
+    [DllImport("user32.dll")]
+    static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int Width, int Height, SetWindowPosFlags flags);
+
+    enum HWND
+    {
+      BOTTOM = 1,
+      NOTOPMOST = -2,
+      TOP = 0,
+      TOPMOST = -1,
+    }
+
+    [Flags]
+    enum SetWindowPosFlags
+    {
+      SWP_NOSIZE = 0x0001,
+      SWP_NOMOVE = 0x0002,
+      SWP_NOZORDER = 0x0004,
+      SWP_NOREDRAW = 0x0008,
+      SWP_NOACTIVATE = 0x0010,
+      SWP_FRAMECHANGED = 0x0020,
+      SWP_SHOWWINDOW = 0x0040,
+      SWP_HIDEWINDOW = 0x0080,
+      SWP_NOCOPYBITS = 0x0100,
+      SWP_NOOWNERZORDER = 0x0200,
+      SWP_NOSENDCHANGING = 0x0400,
+      SWP_DRAWFRAME = 0x0020,
+      SWP_NOREPOSITION = 0x0200,
+      SWP_DEFERERASE = 0x2000,
+      SWP_ASYNCWINDOWPOS = 0x4000
     }
   }
 }
