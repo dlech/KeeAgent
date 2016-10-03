@@ -314,8 +314,19 @@ namespace KeeAgent.UI
     private void customTreeViewEx_AfterSelect(object sender, TreeViewEventArgs e)
     {
       SelectedEntry = e.Node.Tag as PwEntry;
+
+      // Set constraint flag from selected item
       mConfirmConstraintControl.Checked =
         SelectedEntry.GetKeeAgentSettings().UseConfirmConstraintWhenAdding;
+
+      // Set lifetime flag from selected item; also, if item does have a
+      // lifetime, set the lifetime duration
+      mLifetimeConstraintControl.Checked =
+        SelectedEntry.GetKeeAgentSettings().UseLifetimeConstraintWhenAdding;
+      if ( mLifetimeConstraintControl.Checked ) {
+         mLifetimeConstraintControl.Lifetime =
+           SelectedEntry.GetKeeAgentSettings().LifetimeConstraintDuration;
+      }
     }
 
     private void EntryPickerDialog_FormClosing(object sender,
