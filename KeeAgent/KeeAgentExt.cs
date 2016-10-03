@@ -1015,6 +1015,7 @@ namespace KeeAgent
       // TODO: Using the main thread here will cause a lockup with IOProtocolExt
       pluginHost.MainWindow.Invoke((MethodInvoker)delegate
       {
+        //var zIndex = pluginHost.MainWindow.GetZIndex();
         var dialog = new KeyPicker(list);
         dialog.Shown += (sender, e) => dialog.Activate();
         dialog.TopMost = true;
@@ -1024,6 +1025,7 @@ namespace KeeAgent
         } else {
           list.Clear();
         }
+        pluginHost.MainWindow.SetWindowPosBottom();
       });
       return list;
     }
