@@ -5,7 +5,7 @@ v0.8.1 (2016-07-28)
 v0.8.0 (2016-07-28)
 -------------------
 * Close key manager dialog when ESC is pressed
-* Add magins in key manager dialog
+* Add margins in key manager dialog
 
 Beta v0.7.12 (2016-03-21)
 -------------------------
