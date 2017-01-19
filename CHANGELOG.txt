@@ -1,3 +1,13 @@
+Beta v0.9.0 (2017-01-18)
+------------------------
+* Change keyboard shortcuts to use "M" instead of "L"
+* Fix lifetime checkbox not working (thanks Matthew Rhoten)
+* KeePass window moves to bottom z-order after picking a key
+* Confirmation dialog is system modal (thanks Alan Reyes)
+* New option to ignore missing key files (thanks Alan Reyes)
+* Can now use environment variables in key file path (thanks Alan Reyes)
+* Rearrange columns in KeeAgent manager
+
 v0.8.1 (2016-07-28)
 -------------------
 * Fixed incorrect assembly version
