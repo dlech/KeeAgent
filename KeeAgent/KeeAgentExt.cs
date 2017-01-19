@@ -354,7 +354,7 @@ namespace KeeAgent
             pwEntryContextMenuLoadKeyMenuItem = new ToolStripMenuItem() {
               Text = Translatable.LoadKeyContextMenuItem,
               Image = Resources.KeeAgentIcon_png,
-              ShortcutKeys = Keys.Control | Keys.L,
+              ShortcutKeys = Keys.Control | Keys.M,
             };
             pwEntryContextMenuLoadKeyMenuItem.Click +=
               PwEntryContextMenuLoadKeyItem_Clicked;
@@ -362,7 +362,7 @@ namespace KeeAgent
             {
               Text = Translatable.LoadKeyContextMenuItem,
               Image = Resources.KeeAgentIcon_png,
-              ShortcutKeys = Keys.Control | Keys.Shift | Keys.L,
+              ShortcutKeys = Keys.Control | Keys.Shift | Keys.M,
               Visible = false
             };
             pwEntryContextMenuLoadKeyOpenUrlMenuItem.Click +=
