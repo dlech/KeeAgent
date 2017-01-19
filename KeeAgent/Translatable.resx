@@ -209,4 +209,7 @@
   <data name="OptionIgnoreMissingExternalKeyFiles" xml:space="preserve">
     <value>Ignore entries with missing external key files when automatically loading keys</value>
   </data>
+  <data name="LoadKeyOpenUrlContextMenuItem" xml:space="preserve">
+    <value>Load SS&amp;H Key and Open URL</value>
+  </data>
 </root>
