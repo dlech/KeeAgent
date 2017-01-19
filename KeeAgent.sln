@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26020.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeeAgent", "KeeAgent\KeeAgent.csproj", "{742863F2-52ED-41E0-92A1-8EEA60EB75EF}"
 EndProject
@@ -16,8 +16,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SshAgentLib", "SshAgentLib\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SshAgentLib.Ui.WinForms", "SshAgentLib\Ui\WinForms\SshAgentLib.Ui.WinForms.csproj", "{3BEB6FAE-B14D-4281-8168-DB2A4A0C5FC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chaos.NaCl", "SshAgentLib\Chaos.NaCl\Chaos.NaCl\Chaos.NaCl.csproj", "{AE28FD14-7985-4707-A963-C94B8597AE50}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeePass", "KeePass2.x\KeePass\KeePass.csproj", "{10938016-DEE2-4A25-9A5A-8FD3444379CA}"
 EndProject
 Global
@@ -27,18 +25,6 @@ Global
 		ReleasePlgx|Any CPU = ReleasePlgx|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{10938016-DEE2-4A25-9A5A-8FD3444379CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{10938016-DEE2-4A25-9A5A-8FD3444379CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{10938016-DEE2-4A25-9A5A-8FD3444379CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{10938016-DEE2-4A25-9A5A-8FD3444379CA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{10938016-DEE2-4A25-9A5A-8FD3444379CA}.ReleasePlgx|Any CPU.ActiveCfg = Release|Any CPU
-		{10938016-DEE2-4A25-9A5A-8FD3444379CA}.ReleasePlgx|Any CPU.Build.0 = Release|Any CPU
-		{3BEB6FAE-B14D-4281-8168-DB2A4A0C5FC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3BEB6FAE-B14D-4281-8168-DB2A4A0C5FC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3BEB6FAE-B14D-4281-8168-DB2A4A0C5FC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3BEB6FAE-B14D-4281-8168-DB2A4A0C5FC4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3BEB6FAE-B14D-4281-8168-DB2A4A0C5FC4}.ReleasePlgx|Any CPU.ActiveCfg = Release|Any CPU
-		{3BEB6FAE-B14D-4281-8168-DB2A4A0C5FC4}.ReleasePlgx|Any CPU.Build.0 = Release|Any CPU
 		{742863F2-52ED-41E0-92A1-8EEA60EB75EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{742863F2-52ED-41E0-92A1-8EEA60EB75EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{742863F2-52ED-41E0-92A1-8EEA60EB75EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -51,14 +37,21 @@ Global
 		{9163B6B6-0603-4C6E-BC67-7111ED8CDDE1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9163B6B6-0603-4C6E-BC67-7111ED8CDDE1}.ReleasePlgx|Any CPU.ActiveCfg = Release|Any CPU
 		{9163B6B6-0603-4C6E-BC67-7111ED8CDDE1}.ReleasePlgx|Any CPU.Build.0 = Release|Any CPU
-		{AE28FD14-7985-4707-A963-C94B8597AE50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AE28FD14-7985-4707-A963-C94B8597AE50}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AE28FD14-7985-4707-A963-C94B8597AE50}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AE28FD14-7985-4707-A963-C94B8597AE50}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AE28FD14-7985-4707-A963-C94B8597AE50}.ReleasePlgx|Any CPU.ActiveCfg = Release|Any CPU
-		{AE28FD14-7985-4707-A963-C94B8597AE50}.ReleasePlgx|Any CPU.Build.0 = Release|Any CPU
+		{3BEB6FAE-B14D-4281-8168-DB2A4A0C5FC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BEB6FAE-B14D-4281-8168-DB2A4A0C5FC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BEB6FAE-B14D-4281-8168-DB2A4A0C5FC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BEB6FAE-B14D-4281-8168-DB2A4A0C5FC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BEB6FAE-B14D-4281-8168-DB2A4A0C5FC4}.ReleasePlgx|Any CPU.ActiveCfg = Release|Any CPU
+		{3BEB6FAE-B14D-4281-8168-DB2A4A0C5FC4}.ReleasePlgx|Any CPU.Build.0 = Release|Any CPU
+		{10938016-DEE2-4A25-9A5A-8FD3444379CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10938016-DEE2-4A25-9A5A-8FD3444379CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10938016-DEE2-4A25-9A5A-8FD3444379CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10938016-DEE2-4A25-9A5A-8FD3444379CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10938016-DEE2-4A25-9A5A-8FD3444379CA}.ReleasePlgx|Any CPU.ActiveCfg = Release|Any CPU
+		{10938016-DEE2-4A25-9A5A-8FD3444379CA}.ReleasePlgx|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0
@@ -68,8 +61,5 @@ Global
 		$1.inheritsSet = VisualStudio
 		$1.inheritsScope = text/plain
 		version = 0.7.11
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
