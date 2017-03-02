@@ -188,6 +188,7 @@ namespace KeeAgent.UI
       if (result == DialogResult.OK) {
         fileNameTextBox.Text = openFileDialog.FileName;
         fileNameTextBox.Focus();
+        browseButton.Focus();
       }
     }
 
