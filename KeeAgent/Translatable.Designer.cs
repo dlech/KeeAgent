@@ -160,6 +160,15 @@ namespace KeeAgent {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Load SS&amp;H Keys.
+        /// </summary>
+        internal static string LoadKeysContextMenuItem {
+            get {
+                return ResourceManager.GetString("LoadKeysContextMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SSH key &apos;{0}&apos; was used by {1}..
         /// </summary>
         internal static string NotifyKeyFetched {

@@ -55,6 +55,7 @@ namespace KeeAgent
     internal IAgent agent;
 
     ToolStripMenuItem keeAgentMenuItem;
+    ToolStripMenuItem groupContextMenuLoadKeysMenuItem;
     ToolStripMenuItem pwEntryContextMenuLoadKeyMenuItem;
     ToolStripMenuItem pwEntryContextMenuLoadKeyOpenUrlMenuItem;
     ToolStripMenuItem notifyIconContextMenuItem;
@@ -344,8 +345,27 @@ namespace KeeAgent
         helpMenu.DropDownItems.Insert(firstSeparatorIndex, keeAgentHelpMenuItem);
       }
 
+      /* add item to Group context menu */
+      var foundControl = pluginHost.MainWindow.Controls.Find("m_tvGroups", true);
+      if (foundControl.Length > 0) {
+        var groupTreeView = foundControl[0] as CustomTreeViewEx;
+        if (groupTreeView != null) {
+          var groupContextMenu = groupTreeView.ContextMenuStrip;
+          if (groupContextMenu != null) {
+            groupContextMenuLoadKeysMenuItem = new ToolStripMenuItem() {
+              Image = Resources.KeeAgentIcon_png,
+              ShortcutKeys = Keys.Control | Keys.M,
+            };
+            groupContextMenuLoadKeysMenuItem.Click += GroupContextMenuLoadKeysMenuItem_Click;
+            var ctxGroupSep2Index = groupContextMenu.Items.IndexOfKey("m_ctxGroupSep2");
+            groupContextMenu.Items.Insert(ctxGroupSep2Index, groupContextMenuLoadKeysMenuItem);
+            groupContextMenu.Opening += GroupContextMenu_Opening;
+          }
+        }
+      }
+
       /* add item to Password Entry context menu */
-      var foundControl = pluginHost.MainWindow.Controls.Find("m_lvEntries", true);
+      foundControl = pluginHost.MainWindow.Controls.Find("m_lvEntries", true);
       if (foundControl.Length > 0) {
         var entryListView = foundControl[0] as CustomListViewEx;
         if (entryListView != null) {
@@ -392,6 +412,46 @@ namespace KeeAgent
               notifyIconContextMenu.Items.IndexOfKey("m_ctxTraySep1");
       notifyIconContextMenu.Items.Insert(secondSeparatorIndex,
         notifyIconContextMenuItem);
+    }
+
+    private void GroupContextMenu_Opening(object sender, CancelEventArgs e)
+    {
+      groupContextMenuLoadKeysMenuItem.Visible = false;
+      var activeDatabase = pluginHost.MainWindow.ActiveDatabase;
+      var recycleBin = activeDatabase.RootGroup.FindGroup(activeDatabase.RecycleBinUuid, true);
+      var selectedGroup = pluginHost.MainWindow.GetSelectedGroup();
+      foreach (var entry in selectedGroup.GetEntries(true)) {
+        if (activeDatabase.RecycleBinEnabled) {
+          if (entry.IsContainedIn(recycleBin)) {
+            continue;
+          }
+        }
+        var settings = entry.GetKeeAgentSettings();
+        if (settings.AllowUseOfSshKey) {
+          groupContextMenuLoadKeysMenuItem.Visible = true;
+          groupContextMenuLoadKeysMenuItem.Text = Translatable.LoadKeysContextMenuItem;
+          break;
+        }
+      }
+    }
+
+    private void GroupContextMenuLoadKeysMenuItem_Click(object sender, EventArgs e)
+    {
+      groupContextMenuLoadKeysMenuItem.Visible = false;
+      var activeDatabase = pluginHost.MainWindow.ActiveDatabase;
+      var recycleBin = activeDatabase.RootGroup.FindGroup(activeDatabase.RecycleBinUuid, true);
+      var selectedGroup = pluginHost.MainWindow.GetSelectedGroup();
+      foreach (var entry in selectedGroup.GetEntries(true)) {
+        if (activeDatabase.RecycleBinEnabled) {
+          if (entry.IsContainedIn(recycleBin)) {
+            continue;
+          }
+        }
+        var settings = entry.GetKeeAgentSettings();
+        if (settings.AllowUseOfSshKey) {
+          AddEntry(entry, null);
+        }
+      }
     }
 
     private void PwEntry_ContextMenu_Opening(object sender, CancelEventArgs e)

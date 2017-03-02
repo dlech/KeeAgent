@@ -212,4 +212,7 @@
   <data name="LoadKeyOpenUrlContextMenuItem" xml:space="preserve">
     <value>Load SS&amp;H Key and Open URL</value>
   </data>
+  <data name="LoadKeysContextMenuItem" xml:space="preserve">
+    <value>Load SS&amp;H Keys</value>
+  </data>
 </root>
