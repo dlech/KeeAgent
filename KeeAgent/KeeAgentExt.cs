@@ -492,7 +492,7 @@ namespace KeeAgent
         if (settings.AllowUseOfSshKey) {
           try {
             AddEntry(entry, null);
-            if (Control.ModifierKeys.HasFlag(Keys.Shift)
+            if (object.ReferenceEquals(sender, pwEntryContextMenuLoadKeyOpenUrlMenuItem)
               && pwEntryContextMenuUrlOpenMenuItem != null)
             {
               pwEntryContextMenuUrlOpenMenuItem.PerformClick();  
