@@ -331,7 +331,7 @@ namespace KeeAgent
       pluginHost.MainWindow.ToolsMenu.DropDownItems.Add(keeAgentMenuItem);
 
       /* add item to help menu */
-      var foundToolstripItem = pluginHost.MainWindow.MainMenuStrip.Items.Find("m_menuHelp", true);
+      var foundToolstripItem = pluginHost.MainWindow.MainMenuStrip.Items.Find("m_menuHelp", false);
       if (foundToolstripItem.Length > 0) {
         var helpMenu = foundToolstripItem[0] as ToolStripMenuItem;
         var keeAgentHelpMenuItem = new ToolStripMenuItem();
@@ -389,12 +389,17 @@ namespace KeeAgent
             pwEntryContextMenu.Items.Insert(firstSeparatorIndex,
               pwEntryContextMenuLoadKeyMenuItem);
             pwEntryContextMenu.Opening += PwEntry_ContextMenu_Opening;
-            pwEntryContextMenuUrlOpenMenuItem =
-              pwEntryContextMenu.Items.Find("m_ctxEntryOpenUrl", true).SingleOrDefault() as ToolStripMenuItem;
-            if (pwEntryContextMenuUrlOpenMenuItem != null) {
-              var urlMenu = pwEntryContextMenuUrlOpenMenuItem.GetCurrentParent();
-              var openUrlIndex = urlMenu.Items.IndexOf(pwEntryContextMenuUrlOpenMenuItem);
-              urlMenu.Items.Insert(openUrlIndex + 1, pwEntryContextMenuLoadKeyOpenUrlMenuItem);
+            // Mono does not support searchAllChildren, so we have to recurse
+            // manually instead of setting searchAllChildren to true.
+            var urlSubmenu = pwEntryContextMenu.Items.Find ("m_ctxEntryUrl", false).SingleOrDefault () as ToolStripMenuItem;
+            if (urlSubmenu != null) {
+              pwEntryContextMenuUrlOpenMenuItem =
+                urlSubmenu.DropDownItems.Find ("m_ctxEntryOpenUrl", false).SingleOrDefault () as ToolStripMenuItem;
+              if (pwEntryContextMenuUrlOpenMenuItem != null) {
+                var urlMenu = pwEntryContextMenuUrlOpenMenuItem.GetCurrentParent ();
+                var openUrlIndex = urlMenu.Items.IndexOf (pwEntryContextMenuUrlOpenMenuItem);
+                urlMenu.Items.Insert (openUrlIndex + 1, pwEntryContextMenuLoadKeyOpenUrlMenuItem);
+              }
             }
           }
         }
