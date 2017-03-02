@@ -821,14 +821,19 @@ namespace KeeAgent
       }
     }
 
-    private void MainForm_FileClosing(object aSender,
-      FileClosingEventArgs aEventArgs)
+    private void MainForm_FileClosing(object sender, FileClosingEventArgs e)
     {
       try {
         removeKeyList.Clear();
         var allKeys = agent.GetAllKeys();
-        foreach (var entry in aEventArgs.Database.RootGroup.GetEntries(true)) {
+        foreach (var entry in e.Database.RootGroup.GetEntries(true)) {
           try {
+            if (e.Database.RecycleBinEnabled) {
+              var recylceBin = e.Database.RootGroup.FindGroup(e.Database.RecycleBinUuid, true);
+              if (recylceBin != null && entry.IsContainedIn(recylceBin)) {
+                continue;
+              }
+            }
             var settings = entry.GetKeeAgentSettings();
             if (settings.AllowUseOfSshKey && settings.RemoveAtDatabaseClose) {
               var matchKey = entry.GetSshKey();
