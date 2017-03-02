@@ -492,15 +492,14 @@ namespace KeeAgent
         if (settings.AllowUseOfSshKey) {
           try {
             AddEntry(entry, null);
-            if (object.ReferenceEquals(sender, pwEntryContextMenuLoadKeyOpenUrlMenuItem)
-              && pwEntryContextMenuUrlOpenMenuItem != null)
-            {
-              pwEntryContextMenuUrlOpenMenuItem.PerformClick();  
-            }
           } catch (Exception) {
             // AddEntry should have already shown error message
           }
         }
+      }
+      if (object.ReferenceEquals(sender, pwEntryContextMenuLoadKeyOpenUrlMenuItem)
+        && pwEntryContextMenuUrlOpenMenuItem != null) {
+        pwEntryContextMenuUrlOpenMenuItem.PerformClick();
       }
     }
 
