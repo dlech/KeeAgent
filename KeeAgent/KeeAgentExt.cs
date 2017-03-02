@@ -157,19 +157,21 @@ namespace KeeAgent
               unixAgent.FilterKeyListCallback = FilterKeyList;
               unixAgent.ConfirmUserPermissionCallback = Default.ConfirmCallback;
               agent = unixAgent;
-              try {
-                var socketPath = Options.UnixSocketPath.ExpandEnvironmentVariables();
-                unixAgent.StartUnixSocket (socketPath);
-              } catch (ArgumentNullException) {
+              if (Options.UnixSocketPath == null) {
                 var autoModeMessage = Options.AgentMode == AgentMode.Auto
                   ? " to use KeeAgent in Agent mode or enable an external SSH agent in your " +
                   "desktop session manager to use KeeAgent in Client mode."
                   : ".";
-                MessageService.ShowWarning("KeeAgent: No path specified for Agent socket file.",
-                  "Please enter a file in the KeeAgent options (Tools > Options... > KeeAgent tab)" +
-                  autoModeMessage);
-              } catch (Exception ex) {
-                MessageService.ShowWarning(ex.Message);
+                MessageService.ShowWarning ("KeeAgent: No path specified for Agent socket file.",
+                   "Please enter a file in the KeeAgent options (Tools > Options... > KeeAgent tab) and restart KeePass" +
+                   autoModeMessage);
+              } else {
+                try {
+                  var socketPath = Options.UnixSocketPath.ExpandEnvironmentVariables ();
+                  unixAgent.StartUnixSocket (socketPath);
+                } catch (Exception ex) {
+                  MessageService.ShowWarning (ex.Message);
+                }
               }
             }
           }
