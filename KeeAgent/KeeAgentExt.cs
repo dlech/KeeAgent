@@ -474,7 +474,9 @@ namespace KeeAgent
               pwEntryContextMenuLoadKeyOpenUrlMenuItem.Text = Translatable.StatusLocked;
             } else {
               pwEntryContextMenuLoadKeyMenuItem.Enabled = true;
-              pwEntryContextMenuLoadKeyOpenUrlMenuItem.Enabled = pwEntryContextMenuUrlOpenMenuItem.Enabled;
+              if (pwEntryContextMenuUrlOpenMenuItem != null) {
+                pwEntryContextMenuLoadKeyOpenUrlMenuItem.Enabled = pwEntryContextMenuUrlOpenMenuItem.Enabled;
+              }
               pwEntryContextMenuLoadKeyMenuItem.Text = Translatable.LoadKeyContextMenuItem;
               pwEntryContextMenuLoadKeyOpenUrlMenuItem.Text = Translatable.LoadKeyOpenUrlContextMenuItem;
             }
