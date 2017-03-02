@@ -33,11 +33,6 @@
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
     <WarningLevel>4</WarningLevel>
     <Optimize>False</Optimize>
-    <CustomCommands>
-      <CustomCommands>
-        <Command type="Execute" command="bin/Debug/KeePass.exe --debug --pw:test Test.kdbx" />
-      </CustomCommands>
-    </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <OutputPath>bin\Release\</OutputPath>
@@ -51,7 +46,10 @@
     <WarningLevel>4</WarningLevel>
     <CustomCommands>
       <CustomCommands>
-        <Command type="Execute" command="bin/Release/KeePass.exe" />
+        <Command>
+          <type>Execute</type>
+          <command>bin/Release/KeePass.exe</command>
+        </Command>
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
@@ -224,9 +222,19 @@
     <WarningLevel>4</WarningLevel>
     <CustomCommands>
       <CustomCommands>
-        <Command type="Execute" command="bin/ReleasePlgx/KeePass.exe --debug --saveplgxcr" />
+        <Command>
+          <type>Execute</type>
+          <command>bin/ReleasePlgx/KeePass.exe --debug --saveplgxcr</command>
+        </Command>
       </CustomCommands>
     </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
+    <StartAction>Program</StartAction>
+    <StartProgram>KeePass.exe</StartProgram>
+    <StartArguments>--debug --pw:test Test.kdbx</StartArguments>
+    <StartWorkingDirectory>bin\Debug</StartWorkingDirectory>
+    <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild" Condition="'$(Configuration)' == 'ReleasePlgx'">
