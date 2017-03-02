@@ -60,7 +60,7 @@ namespace KeeAgent.UI
               KeyLocation.SelectedType = EntrySettings.LocationType.Attachment;
           }
         }
-        OnKeyLocationChanged();
+        FireKeyLocationChanged();
       }
     }
 
@@ -112,13 +112,13 @@ namespace KeeAgent.UI
       // workaround for BindingSource.BindingComplete event not working in Mono
       if (Type.GetType("Mono.Runtime") != null) {
         locationGroupBox.SelectedRadioButtonChanged +=
-          (sender, e) =>  OnKeyLocationChanged();
+          (sender, e) =>  FireKeyLocationChanged();
         attachmentComboBox.SelectionChangeCommitted +=
-          (sender, e) =>  OnKeyLocationChanged();
+          (sender, e) =>  FireKeyLocationChanged();
         saveKeyToTempFileCheckBox.CheckedChanged +=
-          (sender, e) =>  OnKeyLocationChanged();
+          (sender, e) =>  FireKeyLocationChanged();
         fileNameTextBox.TextChanged +=
-          (sender, e) =>  OnKeyLocationChanged();
+          (sender, e) =>  FireKeyLocationChanged();
       }
     }
 
@@ -197,11 +197,11 @@ namespace KeeAgent.UI
     {
       if (e.BindingCompleteContext == BindingCompleteContext.DataSourceUpdate) {
         e.Binding.BindingManagerBase.EndCurrentEdit();
-        OnKeyLocationChanged();
+        FireKeyLocationChanged();
       }
     }
 
-    private void OnKeyLocationChanged()
+    private void FireKeyLocationChanged()
     {
       if (KeyLocationChanged != null) {
         KeyLocationChanged(this, new EventArgs());
