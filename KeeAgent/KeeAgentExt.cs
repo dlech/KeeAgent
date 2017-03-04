@@ -107,6 +107,8 @@ namespace KeeAgent
       debug = (pluginHost
           .CommandLineArgs[AppDefs.CommandLineOptions.Debug] != null);
 
+      CustomResourceManager.Override(typeof(Resources));
+
       LoadOptions();
 
       if (debug) Log("Loading KeeAgent...");

@@ -38,6 +38,7 @@ using KeePassLib;
 using KeePassLib.Collections;
 using KeePassLib.Security;
 using System.Runtime.InteropServices;
+using KeePass.UI;
 
 namespace KeeAgent
 {
@@ -233,9 +234,9 @@ namespace KeeAgent
         }
         if (tabControl.ImageList == null) {
           tabControl.ImageList = new ImageList();
+          tabControl.ImageList.ImageSize = new Size(DpiUtil.ScaleIntX(16), DpiUtil.ScaleIntY(16));
         }
-        var imageIndex = tabControl.ImageList.Images.Add(Resources.KeeAgentIcon_png,
-                                                         Color.Transparent);
+        var imageIndex = tabControl.ImageList.Images.Add(Resources.KeeAgentIcon_png, Color.Transparent);
         var newTab = new TabPage(Translatable.KeeAgent);
         newTab.ImageIndex = imageIndex;
         //newTab.ImageKey = cTabImageKey;
