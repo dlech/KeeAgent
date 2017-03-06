@@ -54,6 +54,16 @@ namespace KeeAgent.UI
       // make transparent so tab styling shows
       SetStyle(ControlStyles.SupportsTransparentBackColor, true);
       BackColor = Color.Transparent;
+
+      // fix up layout in Mono
+      if (Type.GetType ("Mono.Runtime") != null) {
+        const int xOffset = -24;
+        helpButton.Left += xOffset;
+        keyInfoGroupBox.Width += xOffset;
+        keyLocationPanel.Width = keyInfoGroupBox.Width;
+        commentTextBox.Width -= 6;
+        fingerprintTextBox.Width -= 6;
+      }
     }
 
     protected override void OnLoad(EventArgs e)
