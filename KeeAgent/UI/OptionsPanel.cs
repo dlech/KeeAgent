@@ -38,11 +38,19 @@ namespace KeeAgent.UI
 
     public OptionsPanel(KeeAgentExt ext)
     {
+      InitializeComponent ();
+      if (Type.GetType ("Mono.Runtime") != null) {
+        const int xOffset = -30;
+        const int yOffset = -30;
+        helpButton.Left += xOffset;
+        customListViewEx.Width += xOffset;
+        groupBox1.Width += xOffset;
+        groupBox1.Height += yOffset;
+      }
+
       this.ext = ext;
       isUnix = Environment.OSVersion.Platform == PlatformID.Unix
         || Environment.OSVersion.Platform == PlatformID.MacOSX;
-
-      InitializeComponent();
 
       // make transparent so tab styling shows
       SetStyle(ControlStyles.SupportsTransparentBackColor, true);

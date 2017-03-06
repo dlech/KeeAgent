@@ -4,7 +4,7 @@
 //  Author(s):
 //      David Lechner <david@lechnology.com>
 //
-//  Copyright (C) 2013-2014  David Lechner
+//  Copyright (C) 2013-2014,2017  David Lechner
 //
 //  This program is free software; you can redistribute it and/or
 //  modify it under the terms of the GNU General Public License
@@ -73,30 +73,28 @@ namespace KeeAgent.UI
       BackColor = Color.Transparent;
 
       locationGroupBox.DataBindings["SelectedRadioButton"].Format +=
-        delegate(object aSender, ConvertEventArgs aEventArgs)
-        {
+        delegate (object aSender, ConvertEventArgs aEventArgs) {
           if (aEventArgs.DesiredType == typeof(string)) {
             var type = aEventArgs.Value as EntrySettings.LocationType?;
             switch (type) {
-              case EntrySettings.LocationType.Attachment:
-                aEventArgs.Value = attachmentRadioButton.Name;
-                break;
-              case EntrySettings.LocationType.File:
-                aEventArgs.Value = fileRadioButton.Name;
-                break;
-              default:
-                aEventArgs.Value = string.Empty;
-                break;
+            case EntrySettings.LocationType.Attachment:
+              aEventArgs.Value = attachmentRadioButton.Name;
+            break;
+            case EntrySettings.LocationType.File:
+              aEventArgs.Value = fileRadioButton.Name;
+            break;
+            default:
+              aEventArgs.Value = string.Empty;
+            break;
             }
           } else {
             Debug.Fail("unexpected");
           }
         };
       locationGroupBox.DataBindings["SelectedRadioButton"].Parse +=
-        delegate(object sender, ConvertEventArgs e) {
+        delegate (object sender, ConvertEventArgs e) {
           if (e.DesiredType == typeof(EntrySettings.LocationType?) &&
-              e.Value is string)
-          {
+              e.Value is string) {
             var valueString = e.Value as string;
             if (valueString == attachmentRadioButton.Name) {
               e.Value = EntrySettings.LocationType.Attachment;
@@ -108,7 +106,7 @@ namespace KeeAgent.UI
           } else {
             Debug.Fail("unexpected");
           }
-        };
+      };
       // workaround for BindingSource.BindingComplete event not working in Mono
       if (Type.GetType("Mono.Runtime") != null) {
         locationGroupBox.SelectedRadioButtonChanged +=
@@ -125,7 +123,15 @@ namespace KeeAgent.UI
     protected override void OnLoad(EventArgs e)
     {
       base.OnLoad(e);
-      if (DesignMode) { return; }
+      if (DesignMode) {
+        return;
+      }
+      if (Type.GetType("Mono.Runtime") != null) {
+        // fix up layout in Mono
+        const int xOffset = -72;
+        attachmentComboBox.Width += xOffset;
+        fileNameTextBox.Width += xOffset;
+      }
       mPwEntryForm = ParentForm as PwEntryForm;
       ParentForm.FormClosing += delegate {
         while (populateComboBoxTimer.Enabled)
