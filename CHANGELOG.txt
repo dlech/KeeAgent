@@ -1,3 +1,12 @@
+Beta v0.9.1 (2017-03-06)
+------------------------
+* Fix some high DPI scaling issues on Windows
+* Fix some layout issues on Mono
+* Fix loading keys larger than 4096 bytes into Pageant
+* Ignore keys in Recycle Bin when closing/locking database
+* Add password group context menu item for loading all keys in a group
+* Fix each URL being run multiple times when multiple keys are selected
+
 Beta v0.9.0 (2017-01-18)
 ------------------------
 * Change keyboard shortcuts to use "M" instead of "L"
