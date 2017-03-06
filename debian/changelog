@@ -1,3 +1,30 @@
+keepass2-plugin-keeagent (0.9.1) trusty; urgency=medium
+
+  [ Alan Reyes ]
+  * Added logic to expand environment variables in key file path
+  * Added option to ignore missing files (don't show warining) when loading keys
+
+  [ David Lechner ]
+  * Add extension method for moving window to the bottom z order
+  * Move KeePass main window to bottom z-order after picking a key
+
+  [ Matthew Rhoten ]
+  * Honor lifetime checkbox and lifetime duration when importing keeagent item to agent from keepass
+
+  [ David Lechner ]
+  * Change entry load shortcut keys to use M
+  * Make Load SSH Key and Open URL shortcut discoverable
+  * Ignore entries in recycle bin when removing keys
+  * Add Group context menu item for loading ssh keys
+  * Fix Key Info showing error after external file is selected
+  * Fix Load SSH Key and Open URL menu item not working
+  * Only "click" open url once
+  * Fix bad error message on *nix when no ssh-agent and no socket
+    path specificed
+  * Fix some layouts in Mono
+
+ -- David Lechner <david@lechnology.com>  Mon, 06 Mar 2017 13:05:34 -0600
+
 keepass2-plugin-keeagent (0.8.1) trusty; urgency=medium
 
   * Fix assembly version for release 0.8.1
