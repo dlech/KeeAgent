@@ -1057,6 +1057,7 @@ namespace KeeAgent
               settings.Location.SelectedType == EntrySettings.LocationType.File
                 ? string.Format("'{0}'", settings.Location.FileName)
                 : string.Format("from attachment '{0}'", settings.Location.AttachmentName)),
+            ex.Message,
             "Possible causes:",
             "- Passphrase was entered incorrectly",
             "- File is corrupt or has been tampered"
