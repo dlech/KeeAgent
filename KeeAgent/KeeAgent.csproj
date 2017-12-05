@@ -44,14 +44,6 @@
     <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
     <WarningLevel>4</WarningLevel>
-    <CustomCommands>
-      <CustomCommands>
-        <Command>
-          <type>Execute</type>
-          <command>bin/Release/KeePass.exe</command>
-        </Command>
-      </CustomCommands>
-    </CustomCommands>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Resources\KeeAgent-icon.ico</ApplicationIcon>
@@ -220,20 +212,23 @@
     <Optimize>True</Optimize>
     <OutputPath>bin\ReleasePlgx</OutputPath>
     <WarningLevel>4</WarningLevel>
-    <CustomCommands>
-      <CustomCommands>
-        <Command>
-          <type>Execute</type>
-          <command>bin/ReleasePlgx/KeePass.exe --debug --saveplgxcr</command>
-        </Command>
-      </CustomCommands>
-    </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
     <StartAction>Program</StartAction>
     <StartProgram>KeePass.exe</StartProgram>
     <StartArguments>--debug --pw:test Test.kdbx</StartArguments>
     <StartWorkingDirectory>bin\Debug</StartWorkingDirectory>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Custom Command' ">
+    <StartAction>Program</StartAction>
+    <StartProgram>bin\Release\KeePass.exe</StartProgram>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Custom Command 3' ">
+    <StartAction>Program</StartAction>
+    <StartProgram>bin\ReleasePlgx\KeePass.exe</StartProgram>
+    <StartArguments>--debug --saveplgxcr</StartArguments>
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -254,7 +249,7 @@
     <MonoDevelop>
       <Properties>
         <Policies>
-          <DotNetNamingPolicy DirectoryNamespaceAssociation="PrefixedFlat" ResourceNamePolicy="FileFormatDefault" />
+          <DotNetNamingPolicy ResourceNamePolicy="FileFormatDefault" DirectoryNamespaceAssociation="PrefixedFlat" />
         </Policies>
       </Properties>
     </MonoDevelop>
