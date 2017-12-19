@@ -33,6 +33,7 @@ _ReSharper*/
 [Tt]est[Rr]esult*
 _UpgradeReport*
 *.zip
+.vs/
 
 *.resources
 *.userprefs
