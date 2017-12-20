@@ -91,6 +91,12 @@ namespace KeeAgent
     public string MsysSocketPath { get; set; }
 
     /// <summary>
+    /// When <c>true</c> and using PagentAgent, a named pipe will be created
+    /// at //./pipe/openssh-ssh-agent that can be used with Windows OpenSSH
+    /// </summary>
+    public bool UseWindowsOpenSshPipe { get; set; }
+
+    /// <summary>
     /// The path for creating a unix socket in Agent mode on unix-like platforms
     /// </summary>
     /// <value>The unix socket path.</value>

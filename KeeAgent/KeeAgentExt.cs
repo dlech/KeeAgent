@@ -78,6 +78,7 @@ namespace KeeAgent
     const string cygwinSocketPathOptionName = pluginNamespace + ".CygwinSocketPath";
     const string useMsysSocketOptionName = pluginNamespace + ".UseMsysSocket";
     const string msysSocketPathOptionName = pluginNamespace + ".MsysSocketPath";
+    const string useWindowsOpenSshPipeName = pluginNamespace + ".UseWindowsOpenSshPipe";
     const string unixSocketPathOptionName = pluginNamespace + ".UnixSocketPath";
     const string userPicksKeyOnRequestIdentitiesOptionName =
       pluginNamespace + ".UserPicksKeyOnRequestIdentities";
@@ -138,6 +139,9 @@ namespace KeeAgent
               }
               if (Options.UseMsysSocket) {
                 StartMsysSocket();
+              }
+              if (Options.UseWindowsOpenSshPipe) {
+                StartWindowsOpenSshPipe();
               }
             } catch (PageantRunningException) {
               if (Options.AgentMode != AgentMode.Auto) {
@@ -297,6 +301,34 @@ namespace KeeAgent
       if (pagent == null)
         return;
       pagent.StopMsysSocket();
+    }
+
+    public void StartWindowsOpenSshPipe()
+    {
+      var pagent = agent as PageantAgent;
+      if (pagent == null)
+        return;
+      try {
+        pagent.StopWindowsOpenSshPipe();
+        pagent.StartWindowsOpenSshPipe();
+      }
+      catch (PageantRunningException) {
+        MessageService.ShowWarning("Windows OpensSSH agent is already running.",
+          "KeeAgent cannot listen for Windows OpenSSH requests.");
+      }
+      catch (Exception ex) {
+        MessageService.ShowWarning("Failed to start Windows OpenSSH agent:",
+          ex.Message);
+        // TODO: show better explanation of common errors.
+      }
+    }
+
+    public void StopWindowsOpenSssh()
+    {
+      var pagent = agent as PageantAgent;
+      if (pagent == null)
+        return;
+      pagent.StopWindowsOpenSshPipe();
     }
 
     public void StartUnixSocket()
@@ -551,6 +583,7 @@ namespace KeeAgent
       config.SetString(cygwinSocketPathOptionName, Options.CygwinSocketPath);
       config.SetBool(useMsysSocketOptionName, Options.UseMsysSocket );
       config.SetString(msysSocketPathOptionName, Options.MsysSocketPath);
+      config.SetBool(useWindowsOpenSshPipeName, Options.UseWindowsOpenSshPipe);
       config.SetString(unixSocketPathOptionName, Options.UnixSocketPath);
       config.SetBool(userPicksKeyOnRequestIdentitiesOptionName,
         Options.UserPicksKeyOnRequestIdentities);
@@ -570,6 +603,7 @@ namespace KeeAgent
       Options.CygwinSocketPath = config.GetString(cygwinSocketPathOptionName);
       Options.UseMsysSocket = config.GetBool(useMsysSocketOptionName, false);
       Options.MsysSocketPath = config.GetString(msysSocketPathOptionName);
+      Options.UseWindowsOpenSshPipe = config.GetBool(useWindowsOpenSshPipeName, false);
       Options.UnixSocketPath = config.GetString(unixSocketPathOptionName);
       Options.UserPicksKeyOnRequestIdentities =
         config.GetBool(userPicksKeyOnRequestIdentitiesOptionName, false);

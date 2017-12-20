@@ -215,4 +215,7 @@
   <data name="LoadKeysContextMenuItem" xml:space="preserve">
     <value>Load SS&amp;H Keys</value>
   </data>
+  <data name="OptionUseWindowsOpenSshPipe" xml:space="preserve">
+    <value>Enable agent for Windows OpenSSH (expreimental)</value>
+  </data>
 </root>
