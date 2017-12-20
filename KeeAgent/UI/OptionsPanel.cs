@@ -94,6 +94,10 @@ namespace KeeAgent.UI
        Translatable.OptionUnlockOnActivity);
       optionsList.CreateItem(ext.Options, "UserPicksKeyOnRequestIdentities",
         agentModeOptionsGroup, Translatable.OptionUserPicksKeyOnRequestIdentities);
+      if (!isUnix) {
+        optionsList.CreateItem(ext.Options, "UseWindowsOpenSshPipe",
+          agentModeOptionsGroup, Translatable.OptionUseWindowsOpenSshPipe);
+      }
 
       columnHeader.Width = customListViewEx.ClientRectangle.Width -
         UIUtil.GetVScrollBarWidth() - 1;
@@ -155,6 +159,11 @@ namespace KeeAgent.UI
                 ext.StartMsysSocket();
             } else {
                 ext.StopMsysSocket();
+            }
+            if (ext.Options.UseWindowsOpenSshPipe) {
+              ext.StartWindowsOpenSshPipe();
+            } else {
+              ext.StopWindowsOpenSssh();
             }
             if (isUnix) {
               ext.StartUnixSocket ();
