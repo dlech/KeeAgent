@@ -1,5 +1,6 @@
 Unreleased
 ----------
+* Add support for aes256-ctr cipher in OpenSSH private key files
 * Experimental support for Windows OpenSSH
 * Additional error message when key fails to load
 
