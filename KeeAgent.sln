@@ -76,6 +76,5 @@ Global
 		$2.NewLineForClausesInQuery = False
 		$2.IndentSwitchSection = False
 		$0.DotNetNamingPolicy = $3
-		version = 0.7.11
 	EndGlobalSection
 EndGlobal

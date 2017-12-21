@@ -9,7 +9,6 @@
     <RootNamespace>KeeAgentTestProject</RootNamespace>
     <AssemblyName>KeeAgentTestProject</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <ReleaseVersion>0.7.3</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>
