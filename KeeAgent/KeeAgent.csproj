@@ -215,7 +215,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
     <StartAction>Program</StartAction>
-    <StartProgram>KeePass.exe</StartProgram>
+    <StartProgram>bin\Debug\KeePass.exe</StartProgram>
     <StartArguments>--debug --pw:test Test.kdbx</StartArguments>
     <StartWorkingDirectory>bin\Debug</StartWorkingDirectory>
     <ConsolePause>false</ConsolePause>
