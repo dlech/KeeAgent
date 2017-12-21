@@ -1,3 +1,11 @@
+keepass2-plugin-keeagent (0.9.2) trusty; urgency=medium
+
+  * Add support for aes256-ctr cipher in OpenSSH private key files
+  * Experimental support for Windows OpenSSH
+  * Additional error message when key fails to load
+
+ -- David Lechner <david@lechnology.com>  Wed, 20 Dec 2017 20:17:27 -0600
+
 keepass2-plugin-keeagent (0.9.1) trusty; urgency=medium
 
   [ Alan Reyes ]

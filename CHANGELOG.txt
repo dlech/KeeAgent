@@ -1,5 +1,5 @@
-Unreleased
-----------
+Beta v0.9.2 (2017-12-20)
+------------------------
 * Add support for aes256-ctr cipher in OpenSSH private key files
 * Experimental support for Windows OpenSSH
 * Additional error message when key fails to load
