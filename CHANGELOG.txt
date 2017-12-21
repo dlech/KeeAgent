@@ -1,3 +1,8 @@
+Unreleased
+----------
+* Experimental support for Windows OpenSSH
+* Additional error message when key fails to load
+
 Beta v0.9.1 (2017-03-06)
 ------------------------
 * Fix some high DPI scaling issues on Windows
