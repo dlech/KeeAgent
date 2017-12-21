@@ -56,20 +56,26 @@ Global
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0
 		$0.TextStylePolicy = $1
-		$1.inheritsSet = VisualStudio
-		$1.inheritsScope = text/plain
 		$1.scope = text/x-csharp
-		$1.TabWidth = 2
-		$1.IndentWidth = 2
-		$1.EolMarker = Windows
+		$1.FileWidth = 80
+		$1.TabsToSpaces = True
 		$0.CSharpFormattingPolicy = $2
-		$2.SpacingAfterMethodDeclarationName = False
-		$2.SpaceAfterMethodCallName = False
-		$2.SpaceBeforeOpenSquareBracket = False
-		$2.inheritsSet = Mono
-		$2.inheritsScope = text/x-csharp
 		$2.scope = text/x-csharp
-		$2.IndentSwitchSection = True
+		$2.NewLinesForBracesInProperties = False
+		$2.NewLinesForBracesInAccessors = False
+		$2.NewLinesForBracesInAnonymousMethods = False
+		$2.NewLinesForBracesInControlBlocks = False
+		$2.NewLinesForBracesInAnonymousTypes = False
+		$2.NewLinesForBracesInObjectCollectionArrayInitializers = False
+		$2.NewLinesForBracesInLambdaExpressionBody = False
+		$2.NewLineForElse = False
+		$2.NewLineForCatch = False
+		$2.NewLineForFinally = False
+		$2.NewLineForMembersInObjectInit = False
+		$2.NewLineForMembersInAnonymousTypes = False
+		$2.NewLineForClausesInQuery = False
+		$2.IndentSwitchSection = False
+		$0.DotNetNamingPolicy = $3
 		version = 0.7.11
 	EndGlobalSection
 EndGlobal
