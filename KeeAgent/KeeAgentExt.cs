@@ -1085,13 +1085,17 @@ namespace KeeAgent
             }
 
         } else if (ex is KeyFormatterException || ex is PpkFormatterException) {
+          var message = ex.Message;
+          if (ex.InnerException != null) {
+            message = ex.InnerException.Message;
+          }
           MessageService.ShowWarning(new string[] {
             firstLine,
             string.Format ("Could not load file {0}",
               settings.Location.SelectedType == EntrySettings.LocationType.File
                 ? string.Format("'{0}'", settings.Location.FileName)
                 : string.Format("from attachment '{0}'", settings.Location.AttachmentName)),
-            ex.Message,
+            message,
             "Possible causes:",
             "- Passphrase was entered incorrectly",
             "- File is corrupt or has been tampered"
