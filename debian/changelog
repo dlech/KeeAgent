@@ -1,3 +1,10 @@
+keepass2-plugin-keeagent (0.9.3) trusty; urgency=medium
+
+  * Add context menu to Key Manager
+  * Fix some keys failing to load when using mono --verify-all
+
+ -- David Lechner <david@lechnology.com>  Thu, 25 Jan 2018 21:33:04 -0600
+
 keepass2-plugin-keeagent (0.9.2) trusty; urgency=medium
 
   * Add support for aes256-ctr cipher in OpenSSH private key files
