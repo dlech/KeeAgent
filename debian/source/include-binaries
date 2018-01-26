@@ -1,8 +1,5 @@
-SshAgentLib/lib/BouncyCastle/BouncyCastle.Crypto.dll
-SshAgentLib/lib/NUnit/nunit.framework.dll
 SshAgentLib/SshAgentLibTests/Resources/ssh1-rsa-no-passphrase.ppk
 SshAgentLib/SshAgentLibTests/Resources/ssh1-rsa.ppk
 SshAgentLib/SshAgentLibTests/Resources/rsa1_no_passphrase
 SshAgentLib/SshAgentLibTests/Resources/rsa1_with_passphrase
 SshAgentLib/Ui/WinForms/Resources/checkmark.png
-
