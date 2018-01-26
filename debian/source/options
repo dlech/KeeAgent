@@ -1,0 +1,4 @@
+tar-ignore=.*
+tar-ignore=graphics/
+tar-ignore=KeePass2.x/
+tar-ignore=KeeAgentTestProject/
