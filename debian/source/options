@@ -1,6 +1,5 @@
 tar-ignore=.*
 tar-ignore=graphics
-tar-ignore=KeePass2.x
 tar-ignore=KeeAgentTestProject
 tar-ignore=*/bin
 tar-ignore=*/obj
