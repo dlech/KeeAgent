@@ -1,3 +1,7 @@
+v 0.10.0 (2018-04-11)
+---------------------
+* No changes since v0.9.3
+
 Beta v0.9.3 (2018-01-25)
 ------------------------
 * Add context menu to Key Manager
