@@ -1,3 +1,10 @@
+keepass2-plugin-keeagent (0.10.1) trusty; urgency=medium
+
+  * Fix compatibility with KeeAgent v2.39
+  * Fix layout of agent lock/unlock passphrase dialog
+
+ -- David Lechner <david@lechnology.com>  Thu, 12 Apr 2018 15:48:01 -0500
+
 keepass2-plugin-keeagent (0.10.0.2) trusty; urgency=medium
 
   * KeePass 2.39 will break this plugin
