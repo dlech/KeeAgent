@@ -1,5 +1,6 @@
 Unreleased
 ----------
+* Fix layout of agent lock/unlock passphrase dialog
 * Fix comptibility with KeePass 2.39
 
 v 0.10.0 (2018-04-11)
