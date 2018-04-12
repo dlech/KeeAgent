@@ -22,7 +22,6 @@
 using System;
 using System.Windows.Forms;
 using dlech.SshAgentLib;
-using KeePass.UI;
 
 namespace KeeAgent.UI
 {

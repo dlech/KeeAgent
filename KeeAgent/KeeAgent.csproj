@@ -112,6 +112,7 @@
     <Compile Include="UI\OptionsPanel.Designer.cs">
       <DependentUpon>OptionsPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\SecureEdit.cs" />
     <Compile Include="UI\TreeViewEx.cs">
       <SubType>Component</SubType>
     </Compile>
