@@ -10,7 +10,7 @@ Vcs-Browser: https://github.com/dlech/KeeAgent
 
 Package: keepass2-plugin-keeagent
 Architecture: all
-Depends: keepass2 (>= 2.19),
+Depends: keepass2 (<< 2.39),
          mono-dmcs,
          libmono-system-data-datasetextensions4.0-cil,
          ssh-askpass,
