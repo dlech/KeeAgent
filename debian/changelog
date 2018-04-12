@@ -1,3 +1,9 @@
+keepass2-plugin-keeagent (0.10.0.2) trusty; urgency=medium
+
+  * KeePass 2.39 will break this plugin
+
+ -- David Lechner <david@lechnology.com>  Thu, 12 Apr 2018 10:46:37 -0500
+
 keepass2-plugin-keeagent (0.10.0.1) trusty; urgency=medium
 
   * No changes since 0.9.3 (stable release)
