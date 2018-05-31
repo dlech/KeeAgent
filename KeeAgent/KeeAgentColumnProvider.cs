@@ -109,10 +109,12 @@ namespace KeeAgent
             if (key == null)
               break;
             var agentKey = ext.agent.GetAllKeys().Get(key.Version, key.GetPublicKeyBlob());
-            if (agentKey == null)
+            if (agentKey == null) {
               ext.AddEntry(entry, null);
-            else
-              ext.agent.RemoveKey(agentKey);
+            }
+            else {
+              ext.RemoveKey(agentKey);
+            }
           } catch (Exception ex) {
             Debug.Fail(ex.Message);
           }

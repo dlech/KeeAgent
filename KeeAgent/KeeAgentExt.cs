@@ -820,17 +820,9 @@ namespace KeeAgent
       }
     }
 
-    private void PageantAgent_KeyRemoved(object aSender, SshKeyEventArgs aEventArgs)
+    private void PageantAgent_KeyRemoved(object sender, SshKeyEventArgs e)
     {
-      var fingerprint = aEventArgs.Key.GetMD5Fingerprint().ToHexString();
-      if (keyFileMap.ContainsKey(fingerprint) && keyFileMap[fingerprint].IsTemporary) {
-        try {
-          File.Delete(keyFileMap[fingerprint].Path);
-          keyFileMap.Remove(fingerprint);
-        } catch (Exception ex) {
-          Debug.Fail(ex.Message, ex.StackTrace);
-        }
-      }
+      RemoveKey(e.Key);
     }
 
     private void PageantAgent_MessageReceived(object aSender,
@@ -966,7 +958,7 @@ namespace KeeAgent
     {
       try {
         foreach (var key in removeKeyList) {
-          agent.RemoveKey(key);
+          RemoveKey(key);
         }
         removeKeyList.Clear();
       } catch (Exception ex) {
@@ -1021,7 +1013,7 @@ namespace KeeAgent
           // Pageant errors if you try to add a key that is already loaded
           // so try to remove the key first so that it behaves like other agents
           try {
-            agent.RemoveKey(key);
+            RemoveKey(key);
           } catch (Exception) {
             // ignore failure
           }
@@ -1127,6 +1119,20 @@ namespace KeeAgent
           Debug.Fail(ex.ToString());
         }
         throw;
+      }
+    }
+
+    public void RemoveKey(ISshKey key) {
+      agent.RemoveKey(key);
+
+      var fingerprint = key.GetMD5Fingerprint().ToHexString();
+      if (keyFileMap.ContainsKey(fingerprint) && keyFileMap[fingerprint].IsTemporary) {
+        try {
+          File.Delete(keyFileMap[fingerprint].Path);
+          keyFileMap.Remove(fingerprint);
+        } catch (Exception ex) {
+          Debug.Fail(ex.Message, ex.StackTrace);
+        }
       }
     }
 
