@@ -1056,6 +1056,8 @@ namespace KeeAgent
               Directory.CreateDirectory(tempPath);
             var fileName = Path.Combine(tempPath, settings.Location.AttachmentName);
             File.WriteAllBytes(fileName, data);
+            // try to set unix file permissions required by OpenSSH ssh-agent
+            Util.TryChmod(fileName, Convert.ToInt32("600", 8));
             keyFileMap[key.GetMD5Fingerprint().ToHexString()] = new KeyFileInfo(fileName, true);
           } catch (Exception ex) {
             Debug.Fail(ex.Message, ex.StackTrace);
