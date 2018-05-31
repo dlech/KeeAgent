@@ -1052,8 +1052,10 @@ namespace KeeAgent
           try {
             var data = entry.Binaries.Get(settings.Location.AttachmentName).ReadData();
             var tempPath = Path.Combine(UrlUtil.GetTempPath(), "KeeAgent");
-            if (!Directory.Exists(tempPath))
+            if (!Directory.Exists(tempPath)) {
               Directory.CreateDirectory(tempPath);
+            }
+            Util.TryChmod(tempPath, Convert.ToInt32("700", 8));
             var fileName = Path.Combine(tempPath, settings.Location.AttachmentName);
             File.WriteAllBytes(fileName, data);
             // try to set unix file permissions required by OpenSSH ssh-agent
