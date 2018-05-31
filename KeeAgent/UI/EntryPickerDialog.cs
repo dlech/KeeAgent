@@ -49,10 +49,10 @@ namespace KeeAgent.UI
       {
         var constraints = new List<Agent.KeyConstraint>();
         if (mConfirmConstraintControl.Checked) {
-          constraints.addConfirmConstraint();
+          constraints.AddConfirmConstraint();
         }
         if (mLifetimeConstraintControl.Checked) {
-          constraints.addLifetimeConstraint(mLifetimeConstraintControl.Lifetime);
+          constraints.AddLifetimeConstraint(mLifetimeConstraintControl.Lifetime);
         }
         return constraints;
       }
