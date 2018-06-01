@@ -4,6 +4,7 @@
 	"recommendations": [
 		// Extension identifier format: ${publisher}.${name}. Example: vscode.csharp
 		"ms-vscode.csharp",
+		"ms-vscode.mono-debug",
 		"lextudio.restructuredtext"
 	]
 }
