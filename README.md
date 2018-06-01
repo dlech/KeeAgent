@@ -58,7 +58,7 @@ These are not saved in KeeAgent.csproj, so you have to manually set them up.
 
 * Restore the nuget packages:
 
-        wget https://nuget.org/nuget.exe
+        wget https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
         mono nuget.exe restore
 
 * And build:
@@ -69,4 +69,4 @@ These are not saved in KeeAgent.csproj, so you have to manually set them up.
 
 COPYRIGHT
 ---------
-(C) 2012-2017 David Lechner <david@lechnology.com>
+(C) 2012-2018 David Lechner <david@lechnology.com>
