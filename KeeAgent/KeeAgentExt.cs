@@ -323,7 +323,7 @@ namespace KeeAgent
       }
     }
 
-    public void StopWindowsOpenSssh()
+    public void StopWindowsOpenSsh()
     {
       var pagent = agent as PageantAgent;
       if (pagent == null)
@@ -887,8 +887,8 @@ namespace KeeAgent
             break;
           }
           if (e.Database.RecycleBinEnabled) {
-            var recylceBin = e.Database.RootGroup.FindGroup(e.Database.RecycleBinUuid, true);
-            if (recylceBin != null && entry.IsContainedIn(recylceBin)) {
+            var recycleBin = e.Database.RootGroup.FindGroup(e.Database.RecycleBinUuid, true);
+            if (recycleBin != null && entry.IsContainedIn(recycleBin)) {
               continue;
             }
           }
@@ -925,8 +925,8 @@ namespace KeeAgent
         foreach (var entry in e.Database.RootGroup.GetEntries(true)) {
           try {
             if (e.Database.RecycleBinEnabled) {
-              var recylceBin = e.Database.RootGroup.FindGroup(e.Database.RecycleBinUuid, true);
-              if (recylceBin != null && entry.IsContainedIn(recylceBin)) {
+              var recycleBin = e.Database.RootGroup.FindGroup(e.Database.RecycleBinUuid, true);
+              if (recycleBin != null && entry.IsContainedIn(recycleBin)) {
                 continue;
               }
             }
