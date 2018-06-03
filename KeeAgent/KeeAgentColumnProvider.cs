@@ -130,7 +130,7 @@ namespace KeeAgent
       UpdateUI();
     }
       
-    private void Agent_Locked(object aSender, Agent.LockEventArgs aEventArgs)
+    private void Agent_Locked(object sender, Agent.LockEventArgs e)
     {
         UpdateUI();
     }

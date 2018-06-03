@@ -558,7 +558,7 @@ namespace KeeAgent
       }
     }
 
-    private void manageKeeAgentMenuItem_Click(object aSource, EventArgs aEvent)
+    private void manageKeeAgentMenuItem_Click(object sender, EventArgs e)
     {
       ShowManageDialog();
     }
@@ -653,21 +653,19 @@ namespace KeeAgent
     /// Kudos to the luckyrat for figuring out how to to this in KeePassRPC
     /// (KeeFox) and open-sourcing the code so I could copy/learn from it.
     ///</remarks>
-    private void WindowAddedHandler(object aSender,
-                                    GwmWindowEventArgs aEventArgs)
+    private void WindowAddedHandler(object sender, GwmWindowEventArgs e)
     {
       /* Add KeeAgent tab to PwEntryForm dialog */
-      var pwEntryForm = aEventArgs.Form as PwEntryForm;
+      var pwEntryForm = e.Form as PwEntryForm;
       if (pwEntryForm != null) {
         var optionsPanel = new EntryPanel(this);
-        pwEntryForm.Shown +=
-          delegate(object sender, EventArgs args)
+        pwEntryForm.Shown += (s, e2) =>
           {
             pwEntryForm.AddTab(optionsPanel);
           };
         var foundControls = pwEntryForm.Controls.Find("m_btnOK", true);
         var okButton = foundControls[0] as Button;
-        okButton.GotFocus += (sender, args) =>
+        okButton.GotFocus += (s, e2) =>
         {
           if (optionsPanel.CurrentSettings != optionsPanel.IntialSettings) {
             pwEntryForm.EntryBinaries.SetKeeAgentSettings(optionsPanel.CurrentSettings);
@@ -678,10 +676,9 @@ namespace KeeAgent
       }
 
       /* Add KeeAgent tab to Database Settings dialog */
-      var databaseSettingForm = aEventArgs.Form as DatabaseSettingsForm;
+      var databaseSettingForm = e.Form as DatabaseSettingsForm;
       if (databaseSettingForm != null) {
-        databaseSettingForm.Shown +=
-          delegate(object sender, EventArgs args)
+        databaseSettingForm.Shown += (s, e2) =>
           {
             var dbSettingsPanel =
               new DatabaseSettingsPanel(pluginHost.MainWindow.ActiveDatabase);
@@ -690,10 +687,9 @@ namespace KeeAgent
       }
 
       /* Add KeeAgent tab to Options dialog */
-      var optionsForm = aEventArgs.Form as OptionsForm;
+      var optionsForm = e.Form as OptionsForm;
       if (optionsForm != null) {
-        optionsForm.Shown +=
-          delegate(object sender, EventArgs args)
+        optionsForm.Shown += (s, e2) =>
           {
             var optionsPanel = new OptionsPanel(this);
             optionsForm.AddTab(optionsPanel);
@@ -702,12 +698,11 @@ namespace KeeAgent
       }
     }
 
-    private void PwEntryForm_EntrySaving(object aSender,
-      CancellableOperationEventArgs aEventArgs)
+    private void PwEntryForm_EntrySaving(object sender, CancellableOperationEventArgs e)
     {
       /* Get reference to new settings */
 
-      var entryForm = aSender as PwEntryForm;
+      var entryForm = sender as PwEntryForm;
       if (entryForm != null && (entryForm.DialogResult == DialogResult.OK ||
         saveBeforeCloseQuestionMessageShown)) {
         var foundControls = entryForm.Controls.Find("EntryPanel", true);
@@ -764,23 +759,21 @@ namespace KeeAgent
               }
             }
             MessageService.ShowWarning(errorMessage);
-            aEventArgs.Cancel = true;
+            e.Cancel = true;
           }
         }
       }
       saveBeforeCloseQuestionMessageShown = false;
     }
 
-    private void PwEntryForm_FormClosing(object aSender,
-      FormClosingEventArgs aEventArgs)
+    private void PwEntryForm_FormClosing(object sender, FormClosingEventArgs e)
     {
       saveBeforeCloseQuestionMessageShown = false;
     }
 
-    private void OptionsForm_FormClosed(object aSender,
-      FormClosedEventArgs aEventArgs)
+    private void OptionsForm_FormClosed(object sender, FormClosedEventArgs e)
     {
-      var optionsForm = aSender as OptionsForm;
+      var optionsForm = sender as OptionsForm;
       if (optionsForm != null && optionsForm.DialogResult == DialogResult.OK) {
         SaveGlobalOptions();
       }
@@ -796,11 +789,11 @@ namespace KeeAgent
       }
     }
 
-    private void PageantAgent_Locked(object aSender, Agent.LockEventArgs aEventArgs)
+    private void PageantAgent_Locked(object sender, Agent.LockEventArgs e)
     {
       if (Options.ShowBalloon) {
         string notifyText;
-        if (aEventArgs.IsLocked) {
+        if (e.IsLocked) {
           notifyText = Translatable.NotifyLocked;
         } else {
           notifyText = Translatable.NotifyUnlocked;
@@ -825,8 +818,7 @@ namespace KeeAgent
       RemoveKey(e.Key);
     }
 
-    private void PageantAgent_MessageReceived(object aSender,
-      Agent.MessageReceivedEventArgs aEventArgs)
+    private void PageantAgent_MessageReceived(object sender, Agent.MessageReceivedEventArgs e)
     {
       var mainWindow = pluginHost.MainWindow;
 
@@ -953,8 +945,7 @@ namespace KeeAgent
       }
     }
 
-    private void MainForm_FileClosed(object aSender,
-      FileClosedEventArgs aEventArgs)
+    private void MainForm_FileClosed(object sender, FileClosedEventArgs e)
     {
       try {
         foreach (var key in removeKeyList) {
@@ -967,11 +958,10 @@ namespace KeeAgent
       }
     }
 
-    private void MessageService_MessageShowing(object aSender,
-                                               MessageServiceEventArgs aEventArgs)
+    private void MessageService_MessageShowing(object sender, MessageServiceEventArgs e)
     {
-      if (aEventArgs.Title == PwDefs.ShortProductName &&
-        aEventArgs.Text == KPRes.SaveBeforeCloseQuestion) {
+      if (e.Title == PwDefs.ShortProductName &&
+        e.Text == KPRes.SaveBeforeCloseQuestion) {
         saveBeforeCloseQuestionMessageShown = true;
       }
     }

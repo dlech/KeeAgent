@@ -49,8 +49,7 @@ namespace KeeAgent.UI
     {
       base.OnLoad(e);
       if (ParentForm != null) {
-        ParentForm.FormClosing +=
-          delegate(object aSender, FormClosingEventArgs aEventArgs)
+        ParentForm.FormClosing += (s, e2) =>
           {
             if (ParentForm.DialogResult == DialogResult.OK) {
               var settings = mDatabaseSettingsBindingSource.DataSource as DatabaseSettings;
