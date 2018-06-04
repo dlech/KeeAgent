@@ -11,3 +11,4 @@ detailed information.
     quick-start
     options
     keeagent-manager
+    tips-and-tricks

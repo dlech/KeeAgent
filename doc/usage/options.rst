@@ -7,6 +7,7 @@ password entries. The global options are saved in the KeePass configuration file
 so they only affect a single installation. The password entry options are saved
 in the database file.
 
+.. _global-options:
 
 Global Options
 ==============
