@@ -9,3 +9,5 @@ detailed information.
     :maxdepth: 2
 
     quick-start
+    options
+
