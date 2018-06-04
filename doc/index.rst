@@ -14,3 +14,4 @@ Contents:
     installation
     usage/index
     integrations/index
+    troubleshooting
