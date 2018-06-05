@@ -3,6 +3,12 @@ keys stored in your KeePass database for authentication. It can either act as a
 stand-alone agent or it can interface with an external agent.
 
 
+DOWNLOAD
+--------
+
+Get KeeAgent at https://lechnology.com/software/keeagent
+
+
 USAGE
 -----
 
