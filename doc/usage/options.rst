@@ -172,7 +172,34 @@ Entry* or by right-clicking an entry and selecting *Edit/View Entry*.
         temporary file when the key is loaded and delete the file when the
         key is unloaded (if KeePass crashes, the file will not be deleted).
         The name of the temporary file can be retrieved using the
-        ``{KEEAGENT:KEYFILEPATH}`` placeholder.
+        ``{KEEAGENT:KEYFILEPATH}`` placeholder in KeePass.
+
+        If you are not able to use the placeholder (e.g. you are using an
+        external script, the path is determined as follows...
+
+        On Windows, the base directory will be the first path found from the
+        following:
+
+        -   The path specified by the ``TMP`` environment variable.
+        -   The path specified by the ``TEMP`` environment variable.
+        -   The path specified by the ``USERPROFILE`` environment variable.
+        -   The Windows directory.
+
+        ...followed by a ``KeeAgent`` directory, then the file name. Example::
+
+            %USERPROFILE%\AppData\Local\Temp\KeeAgent\my-key.ppk
+
+        On Linux, the base directory will be the first path found from the
+        following:
+
+        -   The path specified by the ``XDG_RUNTIME_DIR`` environment variable.
+        -   The path ``~/.local/share``
+
+        ...followed by a ``KeePass/KeeAgent`` directory, then the file name.
+        Example::
+        
+            $XDG_RUNTIME_DIR/KeePass/KeeAgent/is_rsa
+
 
     -   **External File**: Use an external key file. Click browse to select the
         file or type in the path to the file.
