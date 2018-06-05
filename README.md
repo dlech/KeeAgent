@@ -1,3 +1,5 @@
+<img align="right" src="doc/images/logo.png">
+
 KeeAgent is a plugin for KeePass 2.x. It allows other programs to access SSH
 keys stored in your KeePass database for authentication. It can either act as a
 stand-alone agent or it can interface with an external agent.
@@ -12,7 +14,7 @@ Get KeeAgent at https://lechnology.com/software/keeagent
 USAGE
 -----
 
-See https://keeagent.readthedocs.io/en/stable/
+Documentation is at https://keeagent.readthedocs.io/en/stable/
 
 
 HACKING
