@@ -5,7 +5,9 @@ stand-alone agent or it can interface with an external agent.
 
 USAGE
 -----
-See http://lechnology.com/software/keeagent
+
+See https://keeagent.readthedocs.io/en/stable/
+
 
 HACKING
 -------
