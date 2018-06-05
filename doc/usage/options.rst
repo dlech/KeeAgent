@@ -60,6 +60,10 @@ tab.
         When a client program sends a request, KeePass will display the unlock
         dialog before the client request is answered.
 
+        .. note:: When checked, this overrides the per-entry *Use confirm
+            constraint* setting. Keys must be unloaded and re-loaded for this
+            setting to take effect.
+
     -   **Show selection dialog when a client program requests a list of keys**:
         (default: disabled) When this option is disabled, KeeAgent will send a
         list of all keys to the client program when requested. When enabled,
