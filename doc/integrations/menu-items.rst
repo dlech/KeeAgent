@@ -4,6 +4,7 @@ Menu Items
 
 KeeAgent adds several menu items to KeePass.
 
+
 Main / Application Menu
 =======================
 
@@ -37,7 +38,6 @@ KeeAgent
     Opens the KeeAgent documentation in a web browser.
 
 
-
 Entry Context Menu
 ==================
 
@@ -46,21 +46,37 @@ The Entry Context Menu is accessed by right-clicking on an entry in the entry li
 .. figure:: images/win10-keepass-context-menu-expanded.png
         :alt: Context Menu - Load SSH Key
 
-Load SSH Key
+**Load SSH Key** (Ctrl+M)
     Loads key from the selected entry in to the agent.
-    
-    .. note:: This menu item is only visible if the selected entry has the "Allow
-        KeeAgent to use this entry" option checked.
-        
+
+    .. note:: This menu item is only visible if the selected entry has the *Allow
+        KeeAgent to use this entry* option checked.
+
     .. warning:: If the key is already loaded in the agent, it will be replaced.
         This could potentially change any constraints the key has.
 
-URL(s) > Load SSH Key and Open URL
+**URL(s) > Load SSH Key and Open URL** (Ctrl+Shift+M)
     Loads key from the selected entry in to the agent and then opens the URL
     for the entry.
-    
+
     This item is basically a shortcut for the combination of the *Load SSH Key*
     and *URL(s) > Open* menu items.
+
+
+Group Context Menu
+==================
+
+The Group Context Menu is accessed by right-clicking on an group in the group
+navigation pane on the left side of the main window in KeePass.
+
+.. figure:: images/win10-keepass-group-context-menu.png
+        :alt: Screenshot of KeePass main window group context menu on Windows 10
+
+**Load SSH Keys** (Ctrl+M)
+    Loads keys from the selected group in to the agent.
+
+    .. note:: This menu item is only visible if the selected group contains any
+        SSH keys.
 
 
 Notification Tray Icon Menu
