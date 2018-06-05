@@ -10,6 +10,17 @@ Common issues
 
 **Problem:**
 
+    After upgrading my OS, my 1024-bit RSA key no longer works with KeeAgent in
+    Client mode.
+
+**Solution:**
+
+    OpenSSH dropped support for RSA keys <= 1024-bit in v7.6 because they are
+    no longer considered secure. This version of OpenSSH ships with Ubuntu 18.04
+    and macOS High Sierra. Create a new, larger key.
+
+**Problem:**
+
     Connecting to a server fails when too many keys are loaded in KeeAgent. For
     example, you might get an error message like this::
 
