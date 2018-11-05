@@ -77,3 +77,22 @@ fork the code is based on. So, unless you are using msysGit, try the "Cygwin
 socket file" first and if that does not work, try the "msysGit socket file".
 In some cases, you may need both enabled to support multiple versions of
 Cygwin/MSYS.
+
+Windows Subsystem for Linux (WSL)
+---------------------------------
+
+Applications running inside WSL cannot directly access KeeAgent. However, 
+using `ssh-agent-wsl <https://github.com/rupor-github/ssh-agent-wsl>`_ it is possible to pipe OpenSSH request from inside WSL to
+Windows OpenSSH which KeeAgent can emulate.
+
+To use KeeAgent on WSL:
+
+1. `Download ssh-agent-wsl <https://github.com/belidzs/KeeAgent/releases>`_ and copy the files to any Windows folder (e.g. ``C:\Program Files\ssh-agent-wsl``)
+2. Check *Enable agent for Windows OpenSSH (experimental)* in KeeAgent's :ref:`global-options` dialog
+3. Run ssh-agent-wsl inside WSL
+
+Use this command to run ssh-agent-wsl in Bash:
+::
+    eval $(/mnt/c/Program\ Files/ssh-agent-wsl/ssh-agent-wsl -r)
+
+.. tip:: You can automatically start ssh-agent-wsl each time Bash on Windows is started by inserting the command above in your ``.bashrc`` file
