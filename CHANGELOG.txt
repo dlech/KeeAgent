@@ -1,5 +1,5 @@
-Unreleased
-----------
+Beta v0.11.0 (2019-03-08)
+-------------------------
 * Add support for SHA-256 and SHA-512 RSA key signing
 * Fix deletion of temporary key file when key is unloaded
 * Fix setting unix file permissions when saving temporary key file

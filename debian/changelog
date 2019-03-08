@@ -1,3 +1,12 @@
+keepass2-plugin-keeagent (0.11.0) bionic; urgency=medium
+
+  * Change dependency from mono-dmcs to mono-mcs
+  * Add support for SHA-256 and SHA-512 RSA key signing
+  * Fix deletion of temporary key file when key is unloaded
+  * Fix setting unix file permissions when saving temporary key file
+
+ -- David Lechner <david@lechnology.com>  Fri, 08 Mar 2019 16:32:10 -0600
+
 keepass2-plugin-keeagent (0.10.1) trusty; urgency=medium
 
   * Fix compatibility with KeeAgent v2.39
