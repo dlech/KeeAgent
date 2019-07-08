@@ -313,7 +313,7 @@ namespace KeeAgent
         pagent.StartWindowsOpenSshPipe();
       }
       catch (PageantRunningException) {
-        MessageService.ShowWarning("Windows OpensSSH agent is already running.",
+        MessageService.ShowWarning("Windows OpenSSH agent is already running.",
           "KeeAgent cannot listen for Windows OpenSSH requests.");
       }
       catch (Exception ex) {
