@@ -26,4 +26,4 @@ Pull requests are welcome! See [HACKING.md](./HACKING.md) for more info.
 COPYRIGHT
 ---------
 
-(C) 2012-2018 David Lechner <david@lechnology.com>
+(C) 2012-2019 David Lechner <david@lechnology.com>
