@@ -1,5 +1,5 @@
-Unreleased
-----------
+Beta v0.11.1 (2019-09-10)
+-------------------------
 * Fix compatibility with KeePass 2.43
 
 Beta v0.11.0 (2019-03-08)
