@@ -4,8 +4,8 @@
     <!-- For building .plgx -->
     <PlgxConfiguration>
       <Prerequisites>
-        <KeePassVersion>2.19</KeePassVersion>
-        <DotNetVersion>4.0</DotNetVersion>
+        <KeePassVersion>2.41</KeePassVersion>
+        <DotNetVersion>4.5</DotNetVersion>
       </Prerequisites>
     </PlgxConfiguration>
     <PlgxToolDir>$(MSBuildProjectDirectory)\..\KeePassPluginDevTools\PlgxTools\bin\Release\</PlgxToolDir>

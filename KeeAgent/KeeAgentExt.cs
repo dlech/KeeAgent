@@ -197,6 +197,8 @@ namespace KeeAgent
           MainForm_FileOpened(this, new FileOpenedEventArgs(database.Database));
         }
         AddMenuItems();
+        pluginHost.MainWindow.GroupContextMenu.Opening += GroupContextMenu_Opening;
+        pluginHost.MainWindow.EntryContextMenu.Opening += PwEntry_ContextMenu_Opening;
         GlobalWindowManager.WindowAdded += WindowAddedHandler;
         MessageService.MessageShowing += MessageService_MessageShowing;
         columnProvider = new KeeAgentColumnProvider(this);
@@ -232,7 +234,6 @@ namespace KeeAgent
         // need to shutdown agent or app won't exit
         agentModeAgent.Dispose();
       }
-      RemoveMenuItems();
     }
 
     public override Image SmallIcon
@@ -253,6 +254,63 @@ namespace KeeAgent
     public override string UpdateUrl
     {
       get { return "http://updates.lechnology.com/KeePassPlugins"; }
+    }
+
+    public override ToolStripMenuItem GetMenuItem(PluginMenuType t)
+    {
+      switch (t) {
+        case PluginMenuType.Entry:
+          pwEntryContextMenuLoadKeyMenuItem = new ToolStripMenuItem() {
+            Image = Resources.KeeAgentIcon_png,
+            ShortcutKeys = Keys.Control | Keys.M,
+          };
+          pwEntryContextMenuLoadKeyMenuItem.Click += PwEntryContextMenuLoadKeyItem_Clicked;
+
+          pwEntryContextMenuLoadKeyOpenUrlMenuItem = new ToolStripMenuItem() {
+            Image = Resources.KeeAgentIcon_png,
+            ShortcutKeys = Keys.Control | Keys.Shift | Keys.M,
+          };
+          pwEntryContextMenuLoadKeyOpenUrlMenuItem.Click += PwEntryContextMenuLoadKeyItem_Clicked;
+
+          // Mono does not support searchAllChildren, so we have to recurse
+          // manually instead of setting searchAllChildren to true.
+          var urlSubmenu = pluginHost.MainWindow.EntryContextMenu.Items.Find("m_ctxEntryUrl", false)
+            .SingleOrDefault() as ToolStripMenuItem;
+          if (urlSubmenu != null) {
+            pwEntryContextMenuUrlOpenMenuItem =
+              urlSubmenu.DropDownItems.Find("m_ctxEntryOpenUrl", false).SingleOrDefault() as ToolStripMenuItem;
+            if (pwEntryContextMenuUrlOpenMenuItem != null) {
+              var urlMenu = pwEntryContextMenuUrlOpenMenuItem.GetCurrentParent();
+              var openUrlIndex = urlMenu.Items.IndexOf(pwEntryContextMenuUrlOpenMenuItem);
+              urlMenu.Items.Insert(openUrlIndex + 1, pwEntryContextMenuLoadKeyOpenUrlMenuItem);
+            }
+          }
+
+          return pwEntryContextMenuLoadKeyMenuItem;
+        case PluginMenuType.Group:
+          groupContextMenuLoadKeysMenuItem = new ToolStripMenuItem() {
+            Image = Resources.KeeAgentIcon_png,
+            ShortcutKeys = Keys.Control | Keys.M,
+          };
+          groupContextMenuLoadKeysMenuItem.Click += GroupContextMenuLoadKeysMenuItem_Click;
+          return groupContextMenuLoadKeysMenuItem;
+        case PluginMenuType.Main:
+          keeAgentMenuItem = new ToolStripMenuItem();
+          keeAgentMenuItem.Text = Translatable.KeeAgent;
+          keeAgentMenuItem.ToolTipText = Translatable.KeeAgentMenuItemToolTip;
+          keeAgentMenuItem.Image = Resources.KeeAgentIcon_png;
+          keeAgentMenuItem.Click += manageKeeAgentMenuItem_Click;
+          return keeAgentMenuItem;
+        case PluginMenuType.Tray:
+          notifyIconContextMenuItem = new ToolStripMenuItem();
+          notifyIconContextMenuItem.Text = Translatable.KeeAgent;
+          notifyIconContextMenuItem.ToolTipText = Translatable.KeeAgentMenuItemToolTip;
+          notifyIconContextMenuItem.Image = Resources.KeeAgentIcon_png;
+          notifyIconContextMenuItem.Click += manageKeeAgentMenuItem_Click;
+          return notifyIconContextMenuItem;
+      }
+
+      return null;
     }
 
     public void StartCygwinSocket()
@@ -358,14 +416,6 @@ namespace KeeAgent
 
     private void AddMenuItems()
     {
-      /* add item to Tools menu */
-      keeAgentMenuItem = new ToolStripMenuItem();
-      keeAgentMenuItem.Text = Translatable.KeeAgent;
-      keeAgentMenuItem.ToolTipText = Translatable.KeeAgentMenuItemToolTip;
-      keeAgentMenuItem.Image = Resources.KeeAgentIcon_png;
-      keeAgentMenuItem.Click += manageKeeAgentMenuItem_Click;
-      pluginHost.MainWindow.ToolsMenu.DropDownItems.Add(keeAgentMenuItem);
-
       /* add item to help menu */
       var foundToolstripItem = pluginHost.MainWindow.MainMenuStrip.Items.Find("m_menuHelp", false);
       if (foundToolstripItem.Length > 0) {
@@ -380,83 +430,15 @@ namespace KeeAgent
         var firstSeparatorIndex = helpMenu.DropDownItems.IndexOfKey("m_menuHelpSep0");
         helpMenu.DropDownItems.Insert(firstSeparatorIndex, keeAgentHelpMenuItem);
       }
-
-      /* add item to Group context menu */
-      var foundControl = pluginHost.MainWindow.Controls.Find("m_tvGroups", true);
-      if (foundControl.Length > 0) {
-        var groupTreeView = foundControl[0] as CustomTreeViewEx;
-        if (groupTreeView != null) {
-          var groupContextMenu = groupTreeView.ContextMenuStrip;
-          if (groupContextMenu != null) {
-            groupContextMenuLoadKeysMenuItem = new ToolStripMenuItem() {
-              Image = Resources.KeeAgentIcon_png,
-              ShortcutKeys = Keys.Control | Keys.M,
-            };
-            groupContextMenuLoadKeysMenuItem.Click += GroupContextMenuLoadKeysMenuItem_Click;
-            var ctxGroupSep2Index = groupContextMenu.Items.IndexOfKey("m_ctxGroupSep2");
-            groupContextMenu.Items.Insert(ctxGroupSep2Index, groupContextMenuLoadKeysMenuItem);
-            groupContextMenu.Opening += GroupContextMenu_Opening;
-          }
-        }
-      }
-
-      /* add item to Password Entry context menu */
-      foundControl = pluginHost.MainWindow.Controls.Find("m_lvEntries", true);
-      if (foundControl.Length > 0) {
-        var entryListView = foundControl[0] as CustomListViewEx;
-        if (entryListView != null) {
-          var pwEntryContextMenu = entryListView.ContextMenuStrip;
-          if (pwEntryContextMenu != null) {
-            pwEntryContextMenuLoadKeyMenuItem = new ToolStripMenuItem() {
-              Image = Resources.KeeAgentIcon_png,
-              ShortcutKeys = Keys.Control | Keys.M,
-            };
-            pwEntryContextMenuLoadKeyMenuItem.Click +=
-              PwEntryContextMenuLoadKeyItem_Clicked;
-            pwEntryContextMenuLoadKeyOpenUrlMenuItem = new ToolStripMenuItem()
-            {
-              Image = Resources.KeeAgentIcon_png,
-              ShortcutKeys = Keys.Control | Keys.Shift | Keys.M,
-            };
-            pwEntryContextMenuLoadKeyOpenUrlMenuItem.Click +=
-              PwEntryContextMenuLoadKeyItem_Clicked;
-            var firstSeparatorIndex =
-              pwEntryContextMenu.Items.IndexOfKey("m_ctxEntrySep0");
-            pwEntryContextMenu.Items.Insert(firstSeparatorIndex,
-              pwEntryContextMenuLoadKeyMenuItem);
-            pwEntryContextMenu.Opening += PwEntry_ContextMenu_Opening;
-            // Mono does not support searchAllChildren, so we have to recurse
-            // manually instead of setting searchAllChildren to true.
-            var urlSubmenu = pwEntryContextMenu.Items.Find ("m_ctxEntryUrl", false).SingleOrDefault () as ToolStripMenuItem;
-            if (urlSubmenu != null) {
-              pwEntryContextMenuUrlOpenMenuItem =
-                urlSubmenu.DropDownItems.Find ("m_ctxEntryOpenUrl", false).SingleOrDefault () as ToolStripMenuItem;
-              if (pwEntryContextMenuUrlOpenMenuItem != null) {
-                var urlMenu = pwEntryContextMenuUrlOpenMenuItem.GetCurrentParent ();
-                var openUrlIndex = urlMenu.Items.IndexOf (pwEntryContextMenuUrlOpenMenuItem);
-                urlMenu.Items.Insert (openUrlIndex + 1, pwEntryContextMenuLoadKeyOpenUrlMenuItem);
-              }
-            }
-          }
-        }
-      }
-
-      /* add item to notification icon context menu */
-      notifyIconContextMenuItem = new ToolStripMenuItem();
-      notifyIconContextMenuItem.Text = Translatable.KeeAgent;
-      notifyIconContextMenuItem.ToolTipText = Translatable.KeeAgentMenuItemToolTip;
-      notifyIconContextMenuItem.Image = Resources.KeeAgentIcon_png;
-      notifyIconContextMenuItem.Click += manageKeeAgentMenuItem_Click;
-      var notifyIconContextMenu =
-        pluginHost.MainWindow.TrayContextMenu;
-      var secondSeparatorIndex =
-              notifyIconContextMenu.Items.IndexOfKey("m_ctxTraySep1");
-      notifyIconContextMenu.Items.Insert(secondSeparatorIndex,
-        notifyIconContextMenuItem);
     }
 
     private void GroupContextMenu_Opening(object sender, CancelEventArgs e)
     {
+      if (groupContextMenuLoadKeysMenuItem == null) {
+        Debug.Fail("groupContextMenuLoadKeysMenuItem is null");
+        return;
+      }
+
       groupContextMenuLoadKeysMenuItem.Visible = false;
       var activeDatabase = pluginHost.MainWindow.ActiveDatabase;
       var recycleBin = activeDatabase.RootGroup.FindGroup(activeDatabase.RecycleBinUuid, true);
@@ -497,6 +479,11 @@ namespace KeeAgent
 
     private void PwEntry_ContextMenu_Opening(object sender, CancelEventArgs e)
     {
+      if (pwEntryContextMenuLoadKeyMenuItem == null) {
+        Debug.Fail("pwEntryContextMenuLoadKeyMenuItem is null");
+        return;
+      }
+
       pwEntryContextMenuLoadKeyMenuItem.Visible = false;
       pwEntryContextMenuLoadKeyOpenUrlMenuItem.Visible = false;
       var selectedEntries = pluginHost.MainWindow.GetSelectedEntries();
@@ -543,18 +530,6 @@ namespace KeeAgent
       if (object.ReferenceEquals(sender, pwEntryContextMenuLoadKeyOpenUrlMenuItem)
         && pwEntryContextMenuUrlOpenMenuItem != null) {
         pwEntryContextMenuUrlOpenMenuItem.PerformClick();
-      }
-    }
-
-    private void RemoveMenuItems()
-    {
-      if (pluginHost != null && pluginHost.MainWindow != null &&
-          keeAgentMenuItem != null) {
-
-        /* get Tools menu */
-        ToolStripMenuItem toolsMenu = pluginHost.MainWindow.ToolsMenu;
-        /* remove items from tools menu */
-        toolsMenu.DropDownItems.Remove(keeAgentMenuItem);
       }
     }
 

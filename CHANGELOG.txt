@@ -1,3 +1,7 @@
+Unreleased
+----------
+* Fix compatibility with KeePass 2.43
+
 Beta v0.11.0 (2019-03-08)
 -------------------------
 * Add support for SHA-256 and SHA-512 RSA key signing
