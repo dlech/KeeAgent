@@ -206,9 +206,11 @@
   <ItemGroup>
     <PackageReference Include="KeePass">
       <Version>2.43.0.36971</Version>
+      <ExcludeFromPlgx />
     </PackageReference>
     <PackageReference Include="PlgxTool">
       <Version>1.0.0</Version>
+      <ExcludeFromPlgx />
     </PackageReference>
   </ItemGroup>
   <PropertyGroup>
