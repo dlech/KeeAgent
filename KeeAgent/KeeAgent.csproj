@@ -8,7 +8,6 @@
         <DotNetVersion>4.5</DotNetVersion>
       </Prerequisites>
     </PlgxConfiguration>
-    <PlgxToolDir>$(MSBuildProjectDirectory)\..\KeePassPluginDevTools\PlgxTools\bin\Release\</PlgxToolDir>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
