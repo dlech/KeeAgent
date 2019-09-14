@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Launch",
+            "name": "Debug .dll",
             "type": "mono",
             "request": "launch",
             "program": "${workspaceRoot}/KeeAgent/bin/Debug/KeePass.exe",
@@ -15,6 +15,18 @@
                 "${workspaceRoot}/KeeAgent/bin/Debug/Test.kdbx"
             ],
             "preLaunchTask": "build"
+        },
+        {
+            "name": "Debug .plgx",
+            "type": "mono",
+            "request": "launch",
+            "program": "${workspaceRoot}/KeeAgent/bin/ReleasePlgx/KeePass.exe",
+            "cwd": "${workspaceRoot}",
+            "args": [
+                "--pw=test",
+                "${workspaceRoot}/KeeAgent/bin/ReleasePlgx/Test.kdbx"
+            ],
+            "preLaunchTask": "release"
         },
         {
             "name": "Attach",
