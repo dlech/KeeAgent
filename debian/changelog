@@ -1,3 +1,9 @@
+keepass2-plugin-keeagent (0.10.1+ppa1) trusty; urgency=medium
+
+  * set keepass2 (<< 2.43) version dependency
+
+ -- David Lechner <david@lechnology.com>  Sat, 14 Sep 2019 16:27:27 -0500
+
 keepass2-plugin-keeagent (0.10.1) trusty; urgency=medium
 
   * Fix compatibility with KeeAgent v2.39
