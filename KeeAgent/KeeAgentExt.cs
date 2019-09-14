@@ -1,4 +1,4 @@
-﻿//
+//
 //  KeeAgentExt.cs
 //
 //  Author(s):
@@ -281,8 +281,10 @@ namespace KeeAgent
               urlSubmenu.DropDownItems.Find("m_ctxEntryOpenUrl", false).SingleOrDefault() as ToolStripMenuItem;
             if (pwEntryContextMenuUrlOpenMenuItem != null) {
               var urlMenu = pwEntryContextMenuUrlOpenMenuItem.GetCurrentParent();
-              var openUrlIndex = urlMenu.Items.IndexOf(pwEntryContextMenuUrlOpenMenuItem);
-              urlMenu.Items.Insert(openUrlIndex + 1, pwEntryContextMenuLoadKeyOpenUrlMenuItem);
+              if (urlMenu != null) {
+                var openUrlIndex = urlMenu.Items.IndexOf(pwEntryContextMenuUrlOpenMenuItem);
+                urlMenu.Items.Insert(openUrlIndex + 1, pwEntryContextMenuLoadKeyOpenUrlMenuItem);
+              }
             }
           }
 
