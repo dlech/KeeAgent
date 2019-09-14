@@ -1,4 +1,4 @@
-//
+﻿//
 //  KeeAgentExt.cs
 //
 //  Author(s):
@@ -115,7 +115,7 @@ namespace KeeAgent
       if (debug) Log("Loading KeeAgent...");
 
       var isWindows = Environment.OSVersion.Platform == PlatformID.Win32NT;
-      var domainSocketPath = 
+      var domainSocketPath =
         Environment.GetEnvironmentVariable (UnixClient.SshAuthSockName);
       try {
         if (Options.AgentMode != AgentMode.Client) {
@@ -250,7 +250,7 @@ namespace KeeAgent
 
     /// <summary>
     /// Returns url for automatic updating of plugin
-    /// </summary> 
+    /// </summary>
     public override string UpdateUrl
     {
       get { return "http://updates.lechnology.com/KeePassPlugins"; }
@@ -720,7 +720,7 @@ namespace KeeAgent
               break;
           }
 
-          /* if there was a problem with a KeeAgent settings, activate the 
+          /* if there was a problem with a KeeAgent settings, activate the
            * KeeAgent tab, show error message and cancel the save */
 
           if (errorMessage != null) {
@@ -873,7 +873,7 @@ namespace KeeAgent
                 if (Options.IgnoreMissingExternalKeyFiles && (ex is FileNotFoundException || ex is DirectoryNotFoundException)) {
                     continue;
                 }
-            
+
               if (!MessageService.AskYesNo("Do you want to attempt to load additional keys?")) {
                 exitFor = true;
               }
@@ -1039,7 +1039,7 @@ namespace KeeAgent
            });
         } else if (ex is FileNotFoundException || ex is DirectoryNotFoundException) {
 
-            if (!Options.IgnoreMissingExternalKeyFiles) { 
+            if (!Options.IgnoreMissingExternalKeyFiles) {
                 MessageService.ShowWarning(new string[] {
                   firstLine,
                   "Could not find file",
