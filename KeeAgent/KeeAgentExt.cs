@@ -197,8 +197,6 @@ namespace KeeAgent
           MainForm_FileOpened(this, new FileOpenedEventArgs(database.Database));
         }
         AddMenuItems();
-        pluginHost.MainWindow.GroupContextMenu.Opening += GroupContextMenu_Opening;
-        pluginHost.MainWindow.EntryContextMenu.Opening += PwEntry_ContextMenu_Opening;
         GlobalWindowManager.WindowAdded += WindowAddedHandler;
         MessageService.MessageShowing += MessageService_MessageShowing;
         columnProvider = new KeeAgentColumnProvider(this);
@@ -271,6 +269,7 @@ namespace KeeAgent
             ShortcutKeys = Keys.Control | Keys.Shift | Keys.M,
           };
           pwEntryContextMenuLoadKeyOpenUrlMenuItem.Click += PwEntryContextMenuLoadKeyItem_Clicked;
+          pluginHost.MainWindow.EntryContextMenu.Opening += PwEntry_ContextMenu_Opening;
 
           // Mono does not support searchAllChildren, so we have to recurse
           // manually instead of setting searchAllChildren to true.
@@ -295,6 +294,7 @@ namespace KeeAgent
             ShortcutKeys = Keys.Control | Keys.M,
           };
           groupContextMenuLoadKeysMenuItem.Click += GroupContextMenuLoadKeysMenuItem_Click;
+          pluginHost.MainWindow.GroupContextMenu.Opening += GroupContextMenu_Opening;
           return groupContextMenuLoadKeysMenuItem;
         case PluginMenuType.Main:
           keeAgentMenuItem = new ToolStripMenuItem();
