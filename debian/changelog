@@ -1,3 +1,9 @@
+keepass2-plugin-keeagent (0.10.1+ppa2) trusty; urgency=medium
+
+  * Fix bad SshAgenLib submodule from previous build
+
+ -- David Lechner <david@lechnology.com>  Sat, 14 Sep 2019 16:41:33 -0500
+
 keepass2-plugin-keeagent (0.10.1+ppa1) trusty; urgency=medium
 
   * set keepass2 (<< 2.43) version dependency
