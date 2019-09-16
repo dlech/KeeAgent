@@ -1,3 +1,9 @@
+keepass2-plugin-keeagent (0.11.1) bionic; urgency=medium
+
+  * Fix compatibility with KeePass 2.43
+
+ -- David Lechner <david@lechnology.com>  Mon, 16 Sep 2019 09:20:01 -0500
+
 keepass2-plugin-keeagent (0.11.0) bionic; urgency=medium
 
   * Change dependency from mono-dmcs to mono-mcs
