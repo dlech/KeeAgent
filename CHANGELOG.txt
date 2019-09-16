@@ -1,5 +1,5 @@
-Unreleased
-----------
+Beta v0.11.2 (2019-09-16)
+-------------------------
 * Fix .plgx not loading on mono because of .NET runtime version
 * Fix crash during load on mono
 
