@@ -1,0 +1,42 @@
+From 10f9d412ccaa7e4e29032eb1c8d8f3dde597604c Mon Sep 17 00:00:00 2001
+From: David Lechner <david@lechnology.com>
+Date: Fri, 20 Sep 2019 15:23:21 -0500
+Subject: [PATCH] Reference system packages instead of NuGet packages
+
+In order to build without an Internet connection, we need to reference
+the system-provided packages instead of NuGet packages.
+---
+ KeeAgent/KeeAgent.csproj | 12 +++++-------
+ debian/source/format     |  2 +-
+ 2 files changed, 6 insertions(+), 8 deletions(-)
+
+--- a/KeeAgent/KeeAgent.csproj
++++ b/KeeAgent/KeeAgent.csproj
+@@ -12,7 +12,9 @@
+     </NuGetPackageImportStamp>
+     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+     <TargetFrameworkProfile />
++    <KeePassPluginDevToolsPath>/usr/lib/keepass2-plugin-dev/</KeePassPluginDevToolsPath>
+   </PropertyGroup>
++  <Import Project="/usr/lib/keepass2-plugin-dev/Plgx.targets" />
+   <PropertyGroup>
+     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+@@ -204,14 +206,10 @@
+     <None Include="Resources\help-3.png" />
+   </ItemGroup>
+   <ItemGroup>
+-    <PackageReference Include="KeePass">
+-      <Version>2.43.0.36971</Version>
++    <Reference Include="KeePass">
++      <HintPath>/usr/lib/keepass2/KeePass.exe</HintPath>
+       <ExcludeFromPlgx />
+-    </PackageReference>
+-    <PackageReference Include="PlgxTool">
+-      <Version>1.0.0</Version>
+-      <ExcludeFromPlgx />
+-    </PackageReference>
++    </Reference>
+   </ItemGroup>
+   <PropertyGroup>
+   </PropertyGroup>
