@@ -1,3 +1,9 @@
+keepass2-plugin-keeagent (0.11.2-1) bionic; urgency=medium
+
+  * Fix crash during plugin load on mono
+
+ -- David Lechner <david@lechnology.com>  Fri, 20 Sep 2019 15:33:59 -0500
+
 keepass2-plugin-keeagent (0.11.1) bionic; urgency=medium
 
   * Fix compatibility with KeePass 2.43
