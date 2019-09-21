@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: David Lechner <david@lechnology.com>
 Build-Depends: debhelper (>= 10), cli-common-dev (>= 0.8), keepass2 (>= 2.41),
     keepass2-plugin-dev, libchaos-nacl-cil, libbccrypto-cil
-Standards-Version: 3.9.5
+Standards-Version: 4.1.4
 Homepage: http://lechnology.com/KeeAgent
 Vcs-Git: git://github.com/dlech/KeeAgent.git
 Vcs-Browser: https://github.com/dlech/KeeAgent
