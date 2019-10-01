@@ -267,6 +267,7 @@ namespace KeeAgent
           pwEntryContextMenuLoadKeyOpenUrlMenuItem = new ToolStripMenuItem() {
             Image = Resources.KeeAgentIcon_png,
             ShortcutKeys = Keys.Control | Keys.Shift | Keys.M,
+            Visible = false,
           };
           pwEntryContextMenuLoadKeyOpenUrlMenuItem.Click += PwEntryContextMenuLoadKeyItem_Clicked;
           pluginHost.MainWindow.EntryContextMenu.Opening += PwEntry_ContextMenu_Opening;

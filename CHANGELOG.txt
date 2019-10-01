@@ -1,3 +1,7 @@
+Unreleased
+----------
+* Fix blank URL menu item in context menu for items with SSH key
+
 Beta v0.11.2 (2019-09-16)
 -------------------------
 * Fix .plgx not loading on mono because of .NET runtime version
