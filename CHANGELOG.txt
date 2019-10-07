@@ -1,5 +1,6 @@
 Unreleased
 ----------
+* Fix failing to save private key to file on Windows
 * Show warning message when saving private key to file fails
 * Fix blank URL menu item in context menu for items with SSH key
 
