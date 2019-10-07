@@ -1,5 +1,6 @@
 Unreleased
 ----------
+* Show warning message when saving private key to file fails
 * Fix blank URL menu item in context menu for items with SSH key
 
 Beta v0.11.2 (2019-09-16)

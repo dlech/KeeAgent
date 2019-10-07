@@ -1022,7 +1022,7 @@ namespace KeeAgent
             Util.TryChmod(fileName, Convert.ToInt32("600", 8));
             keyFileMap[key.GetMD5Fingerprint().ToHexString()] = new KeyFileInfo(fileName, true);
           } catch (Exception ex) {
-            Debug.Fail(ex.Message, ex.StackTrace);
+            MessageService.ShowWarning(ex.Message);
           }
         }
         if (settings.Location.SelectedType == EntrySettings.LocationType.File) {
