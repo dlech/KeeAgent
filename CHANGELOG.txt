@@ -1,5 +1,5 @@
-Unreleased
-----------
+Beta v0.11.3 (2019-10-07)
+-------------------------
 * Fix failing to save private key to file on Windows
 * Show warning message when saving private key to file fails
 * Fix blank URL menu item in context menu for items with SSH key
