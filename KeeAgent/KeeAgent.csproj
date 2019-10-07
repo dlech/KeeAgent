@@ -248,7 +248,7 @@
     <CallTarget Targets="BuildPlgx" />
     <Delete Files="$(OutDir)Microsoft.WindowsAPICodePack.dll;$(OutDir)Microsoft.WindowsAPICodePack.Shell.dll" />
     <Delete Files="$(OutDir)SshAgentLib.WinForms.dll;$(OutDir)SshAgentLib.dll;$(OutDir)BouncyCastle.Crypto.dll" />
-    <Delete Files="$(OutDir)Chaos.NaCl.dll;$(OutDir)$(AssemblyName)$(TargetExt)" />
+    <Delete Files="$(OutDir)Chaos.NaCl.dll;$(OutDir)Mono.Posix.dll;$(OutDir)$(AssemblyName)$(TargetExt)" />
   </Target>
   <ProjectExtensions>
     <MonoDevelop>
