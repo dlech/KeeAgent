@@ -55,7 +55,6 @@ namespace KeeAgent
     internal IAgent agent;
 
     ToolStripMenuItem keeAgentMenuItem;
-    ToolStripMenuItem groupContextMenuLoadKeysMenuItem;
     ToolStripMenuItem pwEntryContextMenuLoadKeyMenuItem;
     ToolStripMenuItem pwEntryContextMenuLoadKeyOpenUrlMenuItem;
     ToolStripMenuItem notifyIconContextMenuItem;
@@ -85,6 +84,7 @@ namespace KeeAgent
     const string ignoreMissingExternalKeyFilesName = pluginNamespace + ".IgnoreMissingExternalKeyFilesName";
     const string keyFilePathSprPlaceholder = @"{KEEAGENT:KEYFILEPATH}";
     const string identFileOptSprPlaceholder = @"{KEEAGENT:IDENTFILEOPT}";
+    const string groupMenuItemName = "KeeAgentGroupMenuItem";
 
     class KeyFileInfo
     {
@@ -288,11 +288,17 @@ namespace KeeAgent
 
           return pwEntryContextMenuLoadKeyMenuItem;
         case PluginMenuType.Group:
-          groupContextMenuLoadKeysMenuItem = new ToolStripMenuItem() {
+          var groupContextMenuLoadKeysMenuItem = new ToolStripMenuItem() {
+            Name = groupMenuItemName,
+            Text = Translatable.LoadKeysContextMenuItem,
             Image = Resources.KeeAgentIcon_png,
             ShortcutKeys = Keys.Control | Keys.M,
           };
           groupContextMenuLoadKeysMenuItem.Click += GroupContextMenuLoadKeysMenuItem_Click;
+          var groupMenu = pluginHost.MainWindow.MainMenu.Items.Find("m_menuGroup", false).SingleOrDefault() as ToolStripMenuItem;
+          if (groupMenu != null) {
+            groupMenu.DropDownOpening += GroupMenu_DropDownOpening;
+          }
           pluginHost.MainWindow.GroupContextMenu.Opening += GroupContextMenu_Opening;
           return groupContextMenuLoadKeysMenuItem;
         case PluginMenuType.Main:
@@ -312,6 +318,22 @@ namespace KeeAgent
       }
 
       return null;
+    }
+
+    private void GroupMenu_DropDownOpening(object sender, EventArgs e)
+    {
+      var menu = sender as ToolStripMenuItem;
+      if (menu == null) {
+        Debug.Fail("Group menu is null");
+        return;
+      }
+      var menuItem = menu.DropDownItems.Find(groupMenuItemName, false).SingleOrDefault() as ToolStripMenuItem;
+      if (menuItem == null) {
+        Debug.Fail("groupMenuItemName not found");
+        return;
+      }
+
+      UpdateGroupMenuItem(menuItem);
     }
 
     public void StartCygwinSocket()
@@ -434,12 +456,22 @@ namespace KeeAgent
 
     private void GroupContextMenu_Opening(object sender, CancelEventArgs e)
     {
-      if (groupContextMenuLoadKeysMenuItem == null) {
-        Debug.Fail("groupContextMenuLoadKeysMenuItem is null");
+      var menu = sender as ContextMenuStrip;
+      if (menu == null) {
+        Debug.Fail("failed to get group context menu");
         return;
       }
+      var menuItem = menu.Items.Find(groupMenuItemName, false).SingleOrDefault() as ToolStripMenuItem;
+      if (menuItem == null) {
+        Debug.Fail("could not find group menu item");
+        return;
+      }
+      UpdateGroupMenuItem(menuItem);
+    }
 
-      groupContextMenuLoadKeysMenuItem.Visible = false;
+  private void UpdateGroupMenuItem(ToolStripMenuItem groupMenuItem)
+    {
+      groupMenuItem.Enabled = false;
       var activeDatabase = pluginHost.MainWindow.ActiveDatabase;
       var recycleBin = activeDatabase.RootGroup.FindGroup(activeDatabase.RecycleBinUuid, true);
       var selectedGroup = pluginHost.MainWindow.GetSelectedGroup();
@@ -451,8 +483,7 @@ namespace KeeAgent
         }
         var settings = entry.GetKeeAgentSettings();
         if (settings.AllowUseOfSshKey) {
-          groupContextMenuLoadKeysMenuItem.Visible = true;
-          groupContextMenuLoadKeysMenuItem.Text = Translatable.LoadKeysContextMenuItem;
+          groupMenuItem.Enabled = true;
           break;
         }
       }
@@ -460,7 +491,6 @@ namespace KeeAgent
 
     private void GroupContextMenuLoadKeysMenuItem_Click(object sender, EventArgs e)
     {
-      groupContextMenuLoadKeysMenuItem.Visible = false;
       var activeDatabase = pluginHost.MainWindow.ActiveDatabase;
       var recycleBin = activeDatabase.RootGroup.FindGroup(activeDatabase.RecycleBinUuid, true);
       var selectedGroup = pluginHost.MainWindow.GetSelectedGroup();
