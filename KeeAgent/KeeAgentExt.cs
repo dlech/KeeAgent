@@ -116,7 +116,7 @@ namespace KeeAgent
 
       var isWindows = Environment.OSVersion.Platform == PlatformID.Win32NT;
       var domainSocketPath =
-        Environment.GetEnvironmentVariable (UnixClient.SshAuthSockName);
+        Environment.GetEnvironmentVariable(UnixClient.SshAuthSockName);
       try {
         if (Options.AgentMode != AgentMode.Client) {
           if (isWindows) {
@@ -151,7 +151,7 @@ namespace KeeAgent
           } else {
             // In Unix, we only try to start an agent if Agent mode was explicitly
             // selected or there is no agent running (indicated by environment variable).
-            if (Options.AgentMode == AgentMode.Server || string.IsNullOrWhiteSpace (domainSocketPath)) {
+            if (Options.AgentMode == AgentMode.Server || string.IsNullOrWhiteSpace(domainSocketPath)) {
               var unixAgent = new UnixAgent();
               unixAgent.Locked += PageantAgent_Locked;
               unixAgent.KeyUsed += PageantAgent_KeyUsed;
@@ -168,15 +168,15 @@ namespace KeeAgent
                   ? " to use KeeAgent in Agent mode or enable an external SSH agent in your " +
                   "desktop session manager to use KeeAgent in Client mode."
                   : ".";
-                MessageService.ShowWarning ("KeeAgent: No path specified for Agent socket file.",
+                MessageService.ShowWarning("KeeAgent: No path specified for Agent socket file.",
                    "Please enter a file in the KeeAgent options (Tools > Options... > KeeAgent tab) and restart KeePass" +
                    autoModeMessage);
               } else {
                 try {
-                  var socketPath = Options.UnixSocketPath.ExpandEnvironmentVariables ();
-                  unixAgent.StartUnixSocket (socketPath);
+                  var socketPath = Options.UnixSocketPath.ExpandEnvironmentVariables();
+                  unixAgent.StartUnixSocket(socketPath);
                 } catch (Exception ex) {
-                  MessageService.ShowWarning (ex.Message);
+                  MessageService.ShowWarning(ex.Message);
                 }
               }
             }
@@ -234,8 +234,7 @@ namespace KeeAgent
       }
     }
 
-    public override Image SmallIcon
-    {
+    public override Image SmallIcon {
       get { return Resources.KeeAgentIcon_png; }
     }
 
@@ -249,8 +248,7 @@ namespace KeeAgent
     /// <summary>
     /// Returns url for automatic updating of plugin
     /// </summary>
-    public override string UpdateUrl
-    {
+    public override string UpdateUrl {
       get { return "http://updates.lechnology.com/KeePassPlugins"; }
     }
 
@@ -426,8 +424,7 @@ namespace KeeAgent
         var keeAgentHelpMenuItem = new ToolStripMenuItem();
         keeAgentHelpMenuItem.Text = "KeeAgent Help";
         keeAgentHelpMenuItem.Image = Resources.KeeAgentIcon_png;
-        keeAgentHelpMenuItem.Click += (sender, e) =>
-        {
+        keeAgentHelpMenuItem.Click += (sender, e) => {
           Process.Start("http://lechnology.com/KeeAgent");
         };
         var firstSeparatorIndex = helpMenu.DropDownItems.IndexOfKey("m_menuHelpSep0");
