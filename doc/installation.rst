@@ -21,13 +21,13 @@ Windows
 
 2.  Open the zip file
 
-    .. figure:: /images/win10-keeagent-zip-contents.png
+    .. figure:: /doc/images/win10-keeagent-zip-contents.png
         :alt: screenshot of Windows Explorer showing the contents of the
             downloaded KeeAgent zip file
 
 3.  In another Explorer window, open the KeePass 2.x Plugins folder.
 
-    .. figure:: /images/win10-keepass2-plugins-folder.png
+    .. figure:: /doc/images/win10-keepass2-plugins-folder.png
         :alt: screenshot of Windows Explorer showing KeePass 2.x Plugins directory
 
     .. note:: If you used the Windows installer to install KeePass, then the folder
@@ -41,7 +41,7 @@ Windows
     Plugins folder, replacing the existing file if you have previously installed
     KeeAgent.
 
-    .. figure:: /images/win10-keepass2-plugins-folder-drag-and-drop.png
+    .. figure:: /doc/images/win10-keepass2-plugins-folder-drag-and-drop.png
         :alt: screenshot of Windows Explorer showing dropping a file into the
             KeePass 2.x Plugins directory
 
