@@ -28,4 +28,4 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: KeeAgent.plgx
-        path: bin/ReleasePlgx/KeeAgent.plgx
+        path: KeeAgent/bin/ReleasePlgx/KeeAgent.plgx
