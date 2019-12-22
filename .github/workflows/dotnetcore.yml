@@ -21,5 +21,5 @@ jobs:
       run: dotnet restore
 
     - name: dotnet build
-      run: dotnet build /property:Configuration=ReleasePlgx KeeAgent.sln
+      run: dotnet build --configuration ReleasePlgx KeeAgent.sln
 
