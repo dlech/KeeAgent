@@ -22,7 +22,7 @@ jobs:
       uses: warrenbuckley/Setup-MSBuild@v1
 
     - name: MSBuild
-      run: msbuild /property:Configuration=ReleasePlgx KeeAgent.sln
+      run: msbuild /property:GenerateFullPaths=true /property:Configuration=ReleasePlgx /t:build KeeAgent.sln
 
     - name: Upload artifact
       uses: actions/upload-artifact@v1
