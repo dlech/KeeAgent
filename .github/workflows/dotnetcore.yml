@@ -20,6 +20,6 @@ jobs:
     - name: dotnet restore
       run: dotnet restore
 
-    - name: Build with xbuild
-      run: xbuild /property:Configuration=ReleasePlgx KeeAgent.sln
+    - name: dotnet build
+      run: dotnet build /property:Configuration=ReleasePlgx KeeAgent.sln
 
