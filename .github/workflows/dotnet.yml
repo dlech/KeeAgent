@@ -12,9 +12,10 @@ jobs:
       with:
         submodules: recursive
 
-    - name: Setup Nuget.exe
-      uses: warrenbuckley/Setup-Nuget@v1
-       
+    - uses: nuget/setup-nuget@v1
+      with:
+        nuget-version: 'latest'
+
     - name: Nuget Restore
       run: nuget restore $Env:GITHUB_WORKSPACE\KeeAgent.sln
 
@@ -23,4 +24,8 @@ jobs:
         cd "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\"
         .\MSBuild.exe /property:Configuration=ReleasePlgx $Env:GITHUB_WORKSPACE\KeeAgent.sln
 
-
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: KeeAgent.plgx
+        path: bin/ReleasePlgx/KeeAgent.plgx
