@@ -16,13 +16,13 @@ jobs:
       with:
         nuget-version: 'latest'
 
-    - name: Nuget Restore
-      run: nuget restore $Env:GITHUB_WORKSPACE\KeeAgent.sln
+    - run: nuget restore
 
-    - name: Build
-      run: |
-        cd "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\"
-        .\MSBuild.exe /property:Configuration=ReleasePlgx $Env:GITHUB_WORKSPACE\KeeAgent.sln
+    - name: Setup MSBuild.exe
+      uses: warrenbuckley/Setup-MSBuild@v1
+
+    - name: MSBuild
+      run: msbuild /property:Configuration=ReleasePlgx KeeAgent.sln
 
     - name: Upload artifact
       uses: actions/upload-artifact@v1
