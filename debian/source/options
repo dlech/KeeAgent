@@ -1,6 +1,12 @@
 tar-ignore=.*
 tar-ignore=graphics
-tar-ignore=KeePass2.x
 tar-ignore=KeeAgentTestProject
 tar-ignore=*/bin
 tar-ignore=*/obj
+extend-diff-ignore=_build/
+extend-diff-ignore=packages/
+extend-diff-ignore=bin/
+extend-diff-ignore=obj/
+extend-diff-ignore=test-results/
+extend-diff-ignore=\.vs/
+extend-diff-ignore=\.userprefs

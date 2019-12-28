@@ -22,40 +22,41 @@
 using System;
 using System.Windows.Forms;
 using dlech.SshAgentLib;
-using KeePass.UI;
 
 namespace KeeAgent.UI
 {
   public partial class PasswordDialog : Form
   {
-    SecureEdit mSecureEdit;
+    readonly SecureEdit secureEdit;
 
     public PasswordDialog()
     {
       InitializeComponent();
 
-      if (Type.GetType("Mono.Runtime") == null)
+      if (Type.GetType("Mono.Runtime") == null) {
         Icon = Properties.Resources.KeeAgent_icon;
-      else
+      }
+      else {
         Icon = Properties.Resources.KeeAgent_icon_mono;
+      }
 
-      mSecureEdit = new SecureEdit();
-      mSecureEdit.Attach(passwordTextBox, null, true);
+      secureEdit = new SecureEdit();
+      secureEdit.Attach(passwordTextBox, null, true);
     }
 
-    public PasswordDialog(string aMessage) : this()
+    public PasswordDialog(string message) : this()
     {
-      SetMessage(aMessage);
+      SetMessage(message);
     }
 
-    public void SetMessage(string aMessage)
+    public void SetMessage(string message)
     {
-      messageLabel.Text = aMessage;
+      messageLabel.Text = message;
     }
 
     public PinnedArray<byte> GetPassword()
     {
-      return new PinnedArray<byte>(mSecureEdit.ToUtf8());
+      return new PinnedArray<byte>(secureEdit.ToUtf8());
     }
 
     /// <summary>
@@ -66,7 +67,7 @@ namespace KeeAgent.UI
     /// </param>
     protected override void Dispose(bool disposing)
     {
-      mSecureEdit.Detach();
+      secureEdit.Detach();
       if (disposing && (components != null)) {
         components.Dispose();
       }

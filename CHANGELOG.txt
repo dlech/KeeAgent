@@ -1,3 +1,33 @@
+Beta v0.11.3 (2019-10-07)
+-------------------------
+* Fix failing to save private key to file on Windows
+* Show warning message when saving private key to file fails
+* Fix blank URL menu item in context menu for items with SSH key
+
+Beta v0.11.2 (2019-09-16)
+-------------------------
+* Fix .plgx not loading on mono because of .NET runtime version
+* Fix crash during load on mono
+
+Beta v0.11.1 (2019-09-10)
+-------------------------
+* Fix compatibility with KeePass 2.43
+
+Beta v0.11.0 (2019-03-08)
+-------------------------
+* Add support for SHA-256 and SHA-512 RSA key signing
+* Fix deletion of temporary key file when key is unloaded
+* Fix setting unix file permissions when saving temporary key file
+
+v0.10.1 (2018-04-12)
+--------------------
+* Fix layout of agent lock/unlock passphrase dialog
+* Fix compatibility with KeePass 2.39
+
+v0.10.0 (2018-04-11)
+--------------------
+* No changes since v0.9.3
+
 Beta v0.9.3 (2018-01-25)
 ------------------------
 * Add context menu to Key Manager

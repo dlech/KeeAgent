@@ -72,27 +72,27 @@ namespace KeeAgent.UI
       SetStyle(ControlStyles.SupportsTransparentBackColor, true);
       BackColor = Color.Transparent;
 
-      locationGroupBox.DataBindings["SelectedRadioButton"].Format +=
-        delegate (object aSender, ConvertEventArgs aEventArgs) {
-          if (aEventArgs.DesiredType == typeof(string)) {
-            var type = aEventArgs.Value as EntrySettings.LocationType?;
+      locationGroupBox.DataBindings["SelectedRadioButton"].Format += (s, e) =>
+        {
+          if (e.DesiredType == typeof(string)) {
+            var type = e.Value as EntrySettings.LocationType?;
             switch (type) {
             case EntrySettings.LocationType.Attachment:
-              aEventArgs.Value = attachmentRadioButton.Name;
+              e.Value = attachmentRadioButton.Name;
             break;
             case EntrySettings.LocationType.File:
-              aEventArgs.Value = fileRadioButton.Name;
+              e.Value = fileRadioButton.Name;
             break;
             default:
-              aEventArgs.Value = string.Empty;
+              e.Value = string.Empty;
             break;
             }
           } else {
             Debug.Fail("unexpected");
           }
         };
-      locationGroupBox.DataBindings["SelectedRadioButton"].Parse +=
-        delegate (object sender, ConvertEventArgs e) {
+      locationGroupBox.DataBindings["SelectedRadioButton"].Parse += (s, e) =>
+        {
           if (e.DesiredType == typeof(EntrySettings.LocationType?) &&
               e.Value is string) {
             var valueString = e.Value as string;
@@ -109,14 +109,10 @@ namespace KeeAgent.UI
       };
       // workaround for BindingSource.BindingComplete event not working in Mono
       if (Type.GetType("Mono.Runtime") != null) {
-        locationGroupBox.SelectedRadioButtonChanged +=
-          (sender, e) =>  FireKeyLocationChanged();
-        attachmentComboBox.SelectionChangeCommitted +=
-          (sender, e) =>  FireKeyLocationChanged();
-        saveKeyToTempFileCheckBox.CheckedChanged +=
-          (sender, e) =>  FireKeyLocationChanged();
-        fileNameTextBox.TextChanged +=
-          (sender, e) =>  FireKeyLocationChanged();
+        locationGroupBox.SelectedRadioButtonChanged += (s, e) => FireKeyLocationChanged();
+        attachmentComboBox.SelectionChangeCommitted += (s, e) => FireKeyLocationChanged();
+        saveKeyToTempFileCheckBox.CheckedChanged += (s, e) => FireKeyLocationChanged();
+        fileNameTextBox.TextChanged += (s, e) => FireKeyLocationChanged();
       }
     }
 

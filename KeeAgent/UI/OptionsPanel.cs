@@ -165,7 +165,7 @@ namespace KeeAgent.UI
             if (ext.Options.UseWindowsOpenSshPipe) {
               ext.StartWindowsOpenSshPipe();
             } else {
-              ext.StopWindowsOpenSssh();
+              ext.StopWindowsOpenSsh();
             }
             if (isUnix) {
               ext.StartUnixSocket ();

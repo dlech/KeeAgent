@@ -88,8 +88,7 @@ namespace KeeAgent.UI
       base.OnControlAdded(e);
       var radioButton = e.Control as RadioButton;
       if (radioButton != null) {
-        radioButton.CheckedChanged +=
-          delegate(object aSender, EventArgs aEventArgs)
+        radioButton.CheckedChanged += (s, e2) =>
           {
             if (radioButton.Checked) {
               SelectedRadioButton = radioButton.Name;

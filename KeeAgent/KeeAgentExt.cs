@@ -116,7 +116,7 @@ namespace KeeAgent
       if (debug) Log("Loading KeeAgent...");
 
       var isWindows = Environment.OSVersion.Platform == PlatformID.Win32NT;
-      var domainSocketPath = 
+      var domainSocketPath =
         Environment.GetEnvironmentVariable (UnixClient.SshAuthSockName);
       try {
         if (Options.AgentMode != AgentMode.Client) {
@@ -233,7 +233,6 @@ namespace KeeAgent
         // need to shutdown agent or app won't exit
         agentModeAgent.Dispose();
       }
-      RemoveMenuItems();
     }
 
     public override Image SmallIcon
@@ -250,10 +249,72 @@ namespace KeeAgent
 
     /// <summary>
     /// Returns url for automatic updating of plugin
-    /// </summary> 
+    /// </summary>
     public override string UpdateUrl
     {
       get { return "http://updates.lechnology.com/KeePassPlugins"; }
+    }
+
+    public override ToolStripMenuItem GetMenuItem(PluginMenuType t)
+    {
+      switch (t) {
+        case PluginMenuType.Entry:
+          pwEntryContextMenuLoadKeyMenuItem = new ToolStripMenuItem() {
+            Image = Resources.KeeAgentIcon_png,
+            ShortcutKeys = Keys.Control | Keys.M,
+          };
+          pwEntryContextMenuLoadKeyMenuItem.Click += PwEntryContextMenuLoadKeyItem_Clicked;
+
+          pwEntryContextMenuLoadKeyOpenUrlMenuItem = new ToolStripMenuItem() {
+            Image = Resources.KeeAgentIcon_png,
+            ShortcutKeys = Keys.Control | Keys.Shift | Keys.M,
+            Visible = false,
+          };
+          pwEntryContextMenuLoadKeyOpenUrlMenuItem.Click += PwEntryContextMenuLoadKeyItem_Clicked;
+          pluginHost.MainWindow.EntryContextMenu.Opening += PwEntry_ContextMenu_Opening;
+
+          // Mono does not support searchAllChildren, so we have to recurse
+          // manually instead of setting searchAllChildren to true.
+          var urlSubmenu = pluginHost.MainWindow.EntryContextMenu.Items.Find("m_ctxEntryUrl", false)
+            .SingleOrDefault() as ToolStripMenuItem;
+          if (urlSubmenu != null) {
+            pwEntryContextMenuUrlOpenMenuItem =
+              urlSubmenu.DropDownItems.Find("m_ctxEntryOpenUrl", false).SingleOrDefault() as ToolStripMenuItem;
+            if (pwEntryContextMenuUrlOpenMenuItem != null) {
+              var urlMenu = pwEntryContextMenuUrlOpenMenuItem.GetCurrentParent();
+              if (urlMenu != null) {
+                var openUrlIndex = urlMenu.Items.IndexOf(pwEntryContextMenuUrlOpenMenuItem);
+                urlMenu.Items.Insert(openUrlIndex + 1, pwEntryContextMenuLoadKeyOpenUrlMenuItem);
+              }
+            }
+          }
+
+          return pwEntryContextMenuLoadKeyMenuItem;
+        case PluginMenuType.Group:
+          groupContextMenuLoadKeysMenuItem = new ToolStripMenuItem() {
+            Image = Resources.KeeAgentIcon_png,
+            ShortcutKeys = Keys.Control | Keys.M,
+          };
+          groupContextMenuLoadKeysMenuItem.Click += GroupContextMenuLoadKeysMenuItem_Click;
+          pluginHost.MainWindow.GroupContextMenu.Opening += GroupContextMenu_Opening;
+          return groupContextMenuLoadKeysMenuItem;
+        case PluginMenuType.Main:
+          keeAgentMenuItem = new ToolStripMenuItem();
+          keeAgentMenuItem.Text = Translatable.KeeAgent;
+          keeAgentMenuItem.ToolTipText = Translatable.KeeAgentMenuItemToolTip;
+          keeAgentMenuItem.Image = Resources.KeeAgentIcon_png;
+          keeAgentMenuItem.Click += manageKeeAgentMenuItem_Click;
+          return keeAgentMenuItem;
+        case PluginMenuType.Tray:
+          notifyIconContextMenuItem = new ToolStripMenuItem();
+          notifyIconContextMenuItem.Text = Translatable.KeeAgent;
+          notifyIconContextMenuItem.ToolTipText = Translatable.KeeAgentMenuItemToolTip;
+          notifyIconContextMenuItem.Image = Resources.KeeAgentIcon_png;
+          notifyIconContextMenuItem.Click += manageKeeAgentMenuItem_Click;
+          return notifyIconContextMenuItem;
+      }
+
+      return null;
     }
 
     public void StartCygwinSocket()
@@ -314,7 +375,7 @@ namespace KeeAgent
         pagent.StartWindowsOpenSshPipe();
       }
       catch (PageantRunningException) {
-        MessageService.ShowWarning("Windows OpensSSH agent is already running.",
+        MessageService.ShowWarning("Windows OpenSSH agent is already running.",
           "KeeAgent cannot listen for Windows OpenSSH requests.");
       }
       catch (Exception ex) {
@@ -324,7 +385,7 @@ namespace KeeAgent
       }
     }
 
-    public void StopWindowsOpenSssh()
+    public void StopWindowsOpenSsh()
     {
       var pagent = agent as PageantAgent;
       if (pagent == null)
@@ -359,14 +420,6 @@ namespace KeeAgent
 
     private void AddMenuItems()
     {
-      /* add item to Tools menu */
-      keeAgentMenuItem = new ToolStripMenuItem();
-      keeAgentMenuItem.Text = Translatable.KeeAgent;
-      keeAgentMenuItem.ToolTipText = Translatable.KeeAgentMenuItemToolTip;
-      keeAgentMenuItem.Image = Resources.KeeAgentIcon_png;
-      keeAgentMenuItem.Click += manageKeeAgentMenuItem_Click;
-      pluginHost.MainWindow.ToolsMenu.DropDownItems.Add(keeAgentMenuItem);
-
       /* add item to help menu */
       var foundToolstripItem = pluginHost.MainWindow.MainMenuStrip.Items.Find("m_menuHelp", false);
       if (foundToolstripItem.Length > 0) {
@@ -381,83 +434,15 @@ namespace KeeAgent
         var firstSeparatorIndex = helpMenu.DropDownItems.IndexOfKey("m_menuHelpSep0");
         helpMenu.DropDownItems.Insert(firstSeparatorIndex, keeAgentHelpMenuItem);
       }
-
-      /* add item to Group context menu */
-      var foundControl = pluginHost.MainWindow.Controls.Find("m_tvGroups", true);
-      if (foundControl.Length > 0) {
-        var groupTreeView = foundControl[0] as CustomTreeViewEx;
-        if (groupTreeView != null) {
-          var groupContextMenu = groupTreeView.ContextMenuStrip;
-          if (groupContextMenu != null) {
-            groupContextMenuLoadKeysMenuItem = new ToolStripMenuItem() {
-              Image = Resources.KeeAgentIcon_png,
-              ShortcutKeys = Keys.Control | Keys.M,
-            };
-            groupContextMenuLoadKeysMenuItem.Click += GroupContextMenuLoadKeysMenuItem_Click;
-            var ctxGroupSep2Index = groupContextMenu.Items.IndexOfKey("m_ctxGroupSep2");
-            groupContextMenu.Items.Insert(ctxGroupSep2Index, groupContextMenuLoadKeysMenuItem);
-            groupContextMenu.Opening += GroupContextMenu_Opening;
-          }
-        }
-      }
-
-      /* add item to Password Entry context menu */
-      foundControl = pluginHost.MainWindow.Controls.Find("m_lvEntries", true);
-      if (foundControl.Length > 0) {
-        var entryListView = foundControl[0] as CustomListViewEx;
-        if (entryListView != null) {
-          var pwEntryContextMenu = entryListView.ContextMenuStrip;
-          if (pwEntryContextMenu != null) {
-            pwEntryContextMenuLoadKeyMenuItem = new ToolStripMenuItem() {
-              Image = Resources.KeeAgentIcon_png,
-              ShortcutKeys = Keys.Control | Keys.M,
-            };
-            pwEntryContextMenuLoadKeyMenuItem.Click +=
-              PwEntryContextMenuLoadKeyItem_Clicked;
-            pwEntryContextMenuLoadKeyOpenUrlMenuItem = new ToolStripMenuItem()
-            {
-              Image = Resources.KeeAgentIcon_png,
-              ShortcutKeys = Keys.Control | Keys.Shift | Keys.M,
-            };
-            pwEntryContextMenuLoadKeyOpenUrlMenuItem.Click +=
-              PwEntryContextMenuLoadKeyItem_Clicked;
-            var firstSeparatorIndex =
-              pwEntryContextMenu.Items.IndexOfKey("m_ctxEntrySep0");
-            pwEntryContextMenu.Items.Insert(firstSeparatorIndex,
-              pwEntryContextMenuLoadKeyMenuItem);
-            pwEntryContextMenu.Opening += PwEntry_ContextMenu_Opening;
-            // Mono does not support searchAllChildren, so we have to recurse
-            // manually instead of setting searchAllChildren to true.
-            var urlSubmenu = pwEntryContextMenu.Items.Find ("m_ctxEntryUrl", false).SingleOrDefault () as ToolStripMenuItem;
-            if (urlSubmenu != null) {
-              pwEntryContextMenuUrlOpenMenuItem =
-                urlSubmenu.DropDownItems.Find ("m_ctxEntryOpenUrl", false).SingleOrDefault () as ToolStripMenuItem;
-              if (pwEntryContextMenuUrlOpenMenuItem != null) {
-                var urlMenu = pwEntryContextMenuUrlOpenMenuItem.GetCurrentParent ();
-                var openUrlIndex = urlMenu.Items.IndexOf (pwEntryContextMenuUrlOpenMenuItem);
-                urlMenu.Items.Insert (openUrlIndex + 1, pwEntryContextMenuLoadKeyOpenUrlMenuItem);
-              }
-            }
-          }
-        }
-      }
-
-      /* add item to notification icon context menu */
-      notifyIconContextMenuItem = new ToolStripMenuItem();
-      notifyIconContextMenuItem.Text = Translatable.KeeAgent;
-      notifyIconContextMenuItem.ToolTipText = Translatable.KeeAgentMenuItemToolTip;
-      notifyIconContextMenuItem.Image = Resources.KeeAgentIcon_png;
-      notifyIconContextMenuItem.Click += manageKeeAgentMenuItem_Click;
-      var notifyIconContextMenu =
-        pluginHost.MainWindow.TrayContextMenu;
-      var secondSeparatorIndex =
-              notifyIconContextMenu.Items.IndexOfKey("m_ctxTraySep1");
-      notifyIconContextMenu.Items.Insert(secondSeparatorIndex,
-        notifyIconContextMenuItem);
     }
 
     private void GroupContextMenu_Opening(object sender, CancelEventArgs e)
     {
+      if (groupContextMenuLoadKeysMenuItem == null) {
+        Debug.Fail("groupContextMenuLoadKeysMenuItem is null");
+        return;
+      }
+
       groupContextMenuLoadKeysMenuItem.Visible = false;
       var activeDatabase = pluginHost.MainWindow.ActiveDatabase;
       var recycleBin = activeDatabase.RootGroup.FindGroup(activeDatabase.RecycleBinUuid, true);
@@ -498,6 +483,11 @@ namespace KeeAgent
 
     private void PwEntry_ContextMenu_Opening(object sender, CancelEventArgs e)
     {
+      if (pwEntryContextMenuLoadKeyMenuItem == null) {
+        Debug.Fail("pwEntryContextMenuLoadKeyMenuItem is null");
+        return;
+      }
+
       pwEntryContextMenuLoadKeyMenuItem.Visible = false;
       pwEntryContextMenuLoadKeyOpenUrlMenuItem.Visible = false;
       var selectedEntries = pluginHost.MainWindow.GetSelectedEntries();
@@ -547,19 +537,7 @@ namespace KeeAgent
       }
     }
 
-    private void RemoveMenuItems()
-    {
-      if (pluginHost != null && pluginHost.MainWindow != null &&
-          keeAgentMenuItem != null) {
-
-        /* get Tools menu */
-        ToolStripMenuItem toolsMenu = pluginHost.MainWindow.ToolsMenu;
-        /* remove items from tools menu */
-        toolsMenu.DropDownItems.Remove(keeAgentMenuItem);
-      }
-    }
-
-    private void manageKeeAgentMenuItem_Click(object aSource, EventArgs aEvent)
+    private void manageKeeAgentMenuItem_Click(object sender, EventArgs e)
     {
       ShowManageDialog();
     }
@@ -656,21 +634,19 @@ namespace KeeAgent
     /// Kudos to the luckyrat for figuring out how to to this in KeePassRPC
     /// (KeeFox) and open-sourcing the code so I could copy/learn from it.
     ///</remarks>
-    private void WindowAddedHandler(object aSender,
-                                    GwmWindowEventArgs aEventArgs)
+    private void WindowAddedHandler(object sender, GwmWindowEventArgs e)
     {
       /* Add KeeAgent tab to PwEntryForm dialog */
-      var pwEntryForm = aEventArgs.Form as PwEntryForm;
+      var pwEntryForm = e.Form as PwEntryForm;
       if (pwEntryForm != null) {
         var optionsPanel = new EntryPanel(this);
-        pwEntryForm.Shown +=
-          delegate(object sender, EventArgs args)
+        pwEntryForm.Shown += (s, e2) =>
           {
             pwEntryForm.AddTab(optionsPanel);
           };
         var foundControls = pwEntryForm.Controls.Find("m_btnOK", true);
         var okButton = foundControls[0] as Button;
-        okButton.GotFocus += (sender, args) =>
+        okButton.GotFocus += (s, e2) =>
         {
           if (optionsPanel.CurrentSettings != optionsPanel.IntialSettings) {
             pwEntryForm.EntryBinaries.SetKeeAgentSettings(optionsPanel.CurrentSettings);
@@ -681,10 +657,9 @@ namespace KeeAgent
       }
 
       /* Add KeeAgent tab to Database Settings dialog */
-      var databaseSettingForm = aEventArgs.Form as DatabaseSettingsForm;
+      var databaseSettingForm = e.Form as DatabaseSettingsForm;
       if (databaseSettingForm != null) {
-        databaseSettingForm.Shown +=
-          delegate(object sender, EventArgs args)
+        databaseSettingForm.Shown += (s, e2) =>
           {
             var dbSettingsPanel =
               new DatabaseSettingsPanel(pluginHost.MainWindow.ActiveDatabase);
@@ -693,10 +668,9 @@ namespace KeeAgent
       }
 
       /* Add KeeAgent tab to Options dialog */
-      var optionsForm = aEventArgs.Form as OptionsForm;
+      var optionsForm = e.Form as OptionsForm;
       if (optionsForm != null) {
-        optionsForm.Shown +=
-          delegate(object sender, EventArgs args)
+        optionsForm.Shown += (s, e2) =>
           {
             var optionsPanel = new OptionsPanel(this);
             optionsForm.AddTab(optionsPanel);
@@ -705,12 +679,11 @@ namespace KeeAgent
       }
     }
 
-    private void PwEntryForm_EntrySaving(object aSender,
-      CancellableOperationEventArgs aEventArgs)
+    private void PwEntryForm_EntrySaving(object sender, CancellableOperationEventArgs e)
     {
       /* Get reference to new settings */
 
-      var entryForm = aSender as PwEntryForm;
+      var entryForm = sender as PwEntryForm;
       if (entryForm != null && (entryForm.DialogResult == DialogResult.OK ||
         saveBeforeCloseQuestionMessageShown)) {
         var foundControls = entryForm.Controls.Find("EntryPanel", true);
@@ -751,7 +724,7 @@ namespace KeeAgent
               break;
           }
 
-          /* if there was a problem with a KeeAgent settings, activate the 
+          /* if there was a problem with a KeeAgent settings, activate the
            * KeeAgent tab, show error message and cancel the save */
 
           if (errorMessage != null) {
@@ -767,23 +740,21 @@ namespace KeeAgent
               }
             }
             MessageService.ShowWarning(errorMessage);
-            aEventArgs.Cancel = true;
+            e.Cancel = true;
           }
         }
       }
       saveBeforeCloseQuestionMessageShown = false;
     }
 
-    private void PwEntryForm_FormClosing(object aSender,
-      FormClosingEventArgs aEventArgs)
+    private void PwEntryForm_FormClosing(object sender, FormClosingEventArgs e)
     {
       saveBeforeCloseQuestionMessageShown = false;
     }
 
-    private void OptionsForm_FormClosed(object aSender,
-      FormClosedEventArgs aEventArgs)
+    private void OptionsForm_FormClosed(object sender, FormClosedEventArgs e)
     {
-      var optionsForm = aSender as OptionsForm;
+      var optionsForm = sender as OptionsForm;
       if (optionsForm != null && optionsForm.DialogResult == DialogResult.OK) {
         SaveGlobalOptions();
       }
@@ -799,11 +770,11 @@ namespace KeeAgent
       }
     }
 
-    private void PageantAgent_Locked(object aSender, Agent.LockEventArgs aEventArgs)
+    private void PageantAgent_Locked(object sender, Agent.LockEventArgs e)
     {
       if (Options.ShowBalloon) {
         string notifyText;
-        if (aEventArgs.IsLocked) {
+        if (e.IsLocked) {
           notifyText = Translatable.NotifyLocked;
         } else {
           notifyText = Translatable.NotifyUnlocked;
@@ -823,21 +794,12 @@ namespace KeeAgent
       }
     }
 
-    private void PageantAgent_KeyRemoved(object aSender, SshKeyEventArgs aEventArgs)
+    private void PageantAgent_KeyRemoved(object sender, SshKeyEventArgs e)
     {
-      var fingerprint = aEventArgs.Key.GetMD5Fingerprint().ToHexString();
-      if (keyFileMap.ContainsKey(fingerprint) && keyFileMap[fingerprint].IsTemporary) {
-        try {
-          File.Delete(keyFileMap[fingerprint].Path);
-          keyFileMap.Remove(fingerprint);
-        } catch (Exception ex) {
-          Debug.Fail(ex.Message, ex.StackTrace);
-        }
-      }
+      RemoveKey(e.Key);
     }
 
-    private void PageantAgent_MessageReceived(object aSender,
-      Agent.MessageReceivedEventArgs aEventArgs)
+    private void PageantAgent_MessageReceived(object sender, Agent.MessageReceivedEventArgs e)
     {
       var mainWindow = pluginHost.MainWindow;
 
@@ -898,8 +860,8 @@ namespace KeeAgent
             break;
           }
           if (e.Database.RecycleBinEnabled) {
-            var recylceBin = e.Database.RootGroup.FindGroup(e.Database.RecycleBinUuid, true);
-            if (recylceBin != null && entry.IsContainedIn(recylceBin)) {
+            var recycleBin = e.Database.RootGroup.FindGroup(e.Database.RecycleBinUuid, true);
+            if (recycleBin != null && entry.IsContainedIn(recycleBin)) {
               continue;
             }
           }
@@ -915,7 +877,7 @@ namespace KeeAgent
                 if (Options.IgnoreMissingExternalKeyFiles && (ex is FileNotFoundException || ex is DirectoryNotFoundException)) {
                     continue;
                 }
-            
+
               if (!MessageService.AskYesNo("Do you want to attempt to load additional keys?")) {
                 exitFor = true;
               }
@@ -936,8 +898,8 @@ namespace KeeAgent
         foreach (var entry in e.Database.RootGroup.GetEntries(true)) {
           try {
             if (e.Database.RecycleBinEnabled) {
-              var recylceBin = e.Database.RootGroup.FindGroup(e.Database.RecycleBinUuid, true);
-              if (recylceBin != null && entry.IsContainedIn(recylceBin)) {
+              var recycleBin = e.Database.RootGroup.FindGroup(e.Database.RecycleBinUuid, true);
+              if (recycleBin != null && entry.IsContainedIn(recycleBin)) {
                 continue;
               }
             }
@@ -964,12 +926,11 @@ namespace KeeAgent
       }
     }
 
-    private void MainForm_FileClosed(object aSender,
-      FileClosedEventArgs aEventArgs)
+    private void MainForm_FileClosed(object sender, FileClosedEventArgs e)
     {
       try {
         foreach (var key in removeKeyList) {
-          agent.RemoveKey(key);
+          RemoveKey(key);
         }
         removeKeyList.Clear();
       } catch (Exception ex) {
@@ -978,11 +939,10 @@ namespace KeeAgent
       }
     }
 
-    private void MessageService_MessageShowing(object aSender,
-                                               MessageServiceEventArgs aEventArgs)
+    private void MessageService_MessageShowing(object sender, MessageServiceEventArgs e)
     {
-      if (aEventArgs.Title == PwDefs.ShortProductName &&
-        aEventArgs.Text == KPRes.SaveBeforeCloseQuestion) {
+      if (e.Title == PwDefs.ShortProductName &&
+        e.Text == KPRes.SaveBeforeCloseQuestion) {
         saveBeforeCloseQuestionMessageShown = true;
       }
     }
@@ -1024,7 +984,7 @@ namespace KeeAgent
           // Pageant errors if you try to add a key that is already loaded
           // so try to remove the key first so that it behaves like other agents
           try {
-            agent.RemoveKey(key);
+            RemoveKey(key);
           } catch (Exception) {
             // ignore failure
           }
@@ -1055,13 +1015,17 @@ namespace KeeAgent
           try {
             var data = entry.Binaries.Get(settings.Location.AttachmentName).ReadData();
             var tempPath = Path.Combine(UrlUtil.GetTempPath(), "KeeAgent");
-            if (!Directory.Exists(tempPath))
+            if (!Directory.Exists(tempPath)) {
               Directory.CreateDirectory(tempPath);
+            }
+            Util.TryChmod(tempPath, Convert.ToInt32("700", 8));
             var fileName = Path.Combine(tempPath, settings.Location.AttachmentName);
             File.WriteAllBytes(fileName, data);
+            // try to set unix file permissions required by OpenSSH ssh-agent
+            Util.TryChmod(fileName, Convert.ToInt32("600", 8));
             keyFileMap[key.GetMD5Fingerprint().ToHexString()] = new KeyFileInfo(fileName, true);
           } catch (Exception ex) {
-            Debug.Fail(ex.Message, ex.StackTrace);
+            MessageService.ShowWarning(ex.Message);
           }
         }
         if (settings.Location.SelectedType == EntrySettings.LocationType.File) {
@@ -1079,7 +1043,7 @@ namespace KeeAgent
            });
         } else if (ex is FileNotFoundException || ex is DirectoryNotFoundException) {
 
-            if (!Options.IgnoreMissingExternalKeyFiles) { 
+            if (!Options.IgnoreMissingExternalKeyFiles) {
                 MessageService.ShowWarning(new string[] {
                   firstLine,
                   "Could not find file",
@@ -1126,6 +1090,20 @@ namespace KeeAgent
           Debug.Fail(ex.ToString());
         }
         throw;
+      }
+    }
+
+    public void RemoveKey(ISshKey key) {
+      agent.RemoveKey(key);
+
+      var fingerprint = key.GetMD5Fingerprint().ToHexString();
+      if (keyFileMap.ContainsKey(fingerprint) && keyFileMap[fingerprint].IsTemporary) {
+        try {
+          File.Delete(keyFileMap[fingerprint].Path);
+          keyFileMap.Remove(fingerprint);
+        } catch (Exception ex) {
+          Debug.Fail(ex.Message, ex.StackTrace);
+        }
       }
     }
 

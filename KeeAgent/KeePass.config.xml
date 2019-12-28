@@ -6,7 +6,6 @@
     <OmitItemsWithDefaultValues>true</OmitItemsWithDefaultValues>
   </Meta>
   <!-- Use all defaults with a few exceptions -->
-  <!-- Other options can be configured per test using KeePass.Program.Config object -->
   <Application>
     <Start>
       <!-- Don't try to do anything on startup -->
@@ -44,4 +43,46 @@
   <Integration>
     <LimitToSingleInstance>false</LimitToSingleInstance>
   </Integration>
+	<Custom>
+		<Item>
+			<Key>KeeAgent.AlwaysConfirm</Key>
+			<Value>false</Value>
+		</Item>
+		<Item>
+			<Key>KeeAgent.ShowBalloon</Key>
+			<Value>true</Value>
+		</Item>
+		<Item>
+			<Key>KeeAgent.AgentMode</Key>
+			<Value>Auto</Value>
+		</Item>
+		<Item>
+			<Key>KeeAgent.UnlockOnActivity</Key>
+			<Value>true</Value>
+		</Item>
+		<Item>
+			<Key>KeeAgent.UseCygwinSocket</Key>
+			<Value>false</Value>
+		</Item>
+		<Item>
+			<Key>KeeAgent.UseMsysSocket</Key>
+			<Value>false</Value>
+		</Item>
+		<Item>
+			<Key>KeeAgent.UseWindowsOpenSshPipe</Key>
+			<Value>false</Value>
+		</Item>
+		<Item>
+			<Key>KeeAgent.UnixSocketPath</Key>
+			<Value></Value>
+		</Item>
+		<Item>
+			<Key>KeeAgent.UserPicksKeyOnRequestIdentities</Key>
+			<Value>false</Value>
+		</Item>
+		<Item>
+			<Key>KeeAgent.IgnoreMissingExternalKeyFilesName</Key>
+			<Value>false</Value>
+		</Item>
+	</Custom>
 </Configuration>

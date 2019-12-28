@@ -1,3 +1,43 @@
+keepass2-plugin-keeagent (0.11.2-1) bionic; urgency=medium
+
+  * Fix crash during plugin load on mono
+
+ -- David Lechner <david@lechnology.com>  Fri, 20 Sep 2019 15:33:59 -0500
+
+keepass2-plugin-keeagent (0.11.1) bionic; urgency=medium
+
+  * Fix compatibility with KeePass 2.43
+
+ -- David Lechner <david@lechnology.com>  Mon, 16 Sep 2019 09:20:01 -0500
+
+keepass2-plugin-keeagent (0.11.0) bionic; urgency=medium
+
+  * Change dependency from mono-dmcs to mono-mcs
+  * Add support for SHA-256 and SHA-512 RSA key signing
+  * Fix deletion of temporary key file when key is unloaded
+  * Fix setting unix file permissions when saving temporary key file
+
+ -- David Lechner <david@lechnology.com>  Fri, 08 Mar 2019 16:32:10 -0600
+
+keepass2-plugin-keeagent (0.10.1) trusty; urgency=medium
+
+  * Fix compatibility with KeeAgent v2.39
+  * Fix layout of agent lock/unlock passphrase dialog
+
+ -- David Lechner <david@lechnology.com>  Thu, 12 Apr 2018 15:48:01 -0500
+
+keepass2-plugin-keeagent (0.10.0.2) trusty; urgency=medium
+
+  * KeePass 2.39 will break this plugin
+
+ -- David Lechner <david@lechnology.com>  Thu, 12 Apr 2018 10:46:37 -0500
+
+keepass2-plugin-keeagent (0.10.0.1) trusty; urgency=medium
+
+  * No changes since 0.9.3 (stable release)
+
+ -- David Lechner <david@lechnology.com>  Wed, 11 Apr 2018 17:15:01 -0500
+
 keepass2-plugin-keeagent (0.9.3) trusty; urgency=medium
 
   * Add context menu to Key Manager
@@ -17,7 +57,7 @@ keepass2-plugin-keeagent (0.9.1) trusty; urgency=medium
 
   [ Alan Reyes ]
   * Added logic to expand environment variables in key file path
-  * Added option to ignore missing files (don't show warining) when loading keys
+  * Added option to ignore missing files (don't show warning) when loading keys
 
   [ David Lechner ]
   * Add extension method for moving window to the bottom z order
@@ -35,7 +75,7 @@ keepass2-plugin-keeagent (0.9.1) trusty; urgency=medium
   * Fix Load SSH Key and Open URL menu item not working
   * Only "click" open url once
   * Fix bad error message on *nix when no ssh-agent and no socket
-    path specificed
+    path specified
   * Fix some layouts in Mono
 
  -- David Lechner <david@lechnology.com>  Mon, 06 Mar 2017 13:05:34 -0600
@@ -126,7 +166,7 @@ keepass2-plugin-keeagent (0.6.2) trusty; urgency=medium
 keepass2-plugin-keeagent (0.6.1) trusty; urgency=medium
 
   [ LeoVerto ]
-  * Fix inverted addtional keys prompt. Closes #100
+  * Fix inverted additional keys prompt. Closes #100
 
   [ David Lechner ]
   * Fix issues with agent mode lock.
@@ -172,7 +212,7 @@ keepass2-plugin-keeagent (0.4.1-3) trusty; urgency=medium
 
 keepass2-plugin-keeagent (0.4.1-2) trusty; urgency=medium
 
-  * Fix compatibiltiy with KeebuntuAppIndicator plugin
+  * Fix compatibility with KeebuntuAppIndicator plugin
 
  -- David Lechner <david@lechnology.com>  Sun, 27 Apr 2014 22:31:58 -0500
 
@@ -196,7 +236,7 @@ keepass2-plugin-keeagent (0.3.11-0) raring; urgency=low
 
 keepass2-plugin-keeagent (0.3.9-2) raring; urgency=low
 
-  * Add missing dependancy (libmono-system-data-datasetextensions4.0-cil)
+  * Add missing dependency (libmono-system-data-datasetextensions4.0-cil)
 
  -- David Lechner <david@lechnology.com>  Wed, 29 May 2013 18:51:05 -0500
 

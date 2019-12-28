@@ -43,7 +43,7 @@ namespace KeeAgent
     public bool AlwaysConfirm { get; set; }
 
     /// <summary>
-    /// Replaced by ShowBallon and AlwaysConfirm
+    /// Replaced by ShowBalloon and AlwaysConfirm
     /// </summary>
     [Obsolete()]
     public NotificationOptions Notification { get; set; }
