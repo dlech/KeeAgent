@@ -287,6 +287,7 @@ namespace KeeAgent
           var groupContextMenuLoadKeysMenuItem = new ToolStripMenuItem() {
             Name = groupMenuItemName,
             Text = Translatable.LoadKeysContextMenuItem,
+            Image = Resources.KeeAgentIcon_png,
             ShortcutKeys = Keys.Control | Keys.M,
           };
           groupContextMenuLoadKeysMenuItem.Click += GroupContextMenuLoadKeysMenuItem_Click;
