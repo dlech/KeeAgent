@@ -27,6 +27,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -55,10 +56,7 @@ namespace KeeAgent
     internal IAgent agent;
 
     ToolStripMenuItem keeAgentMenuItem;
-    ToolStripMenuItem pwEntryContextMenuLoadKeyMenuItem;
-    ToolStripMenuItem pwEntryContextMenuLoadKeyOpenUrlMenuItem;
     ToolStripMenuItem notifyIconContextMenuItem;
-    ToolStripMenuItem pwEntryContextMenuUrlOpenMenuItem;
     List<ISshKey> removeKeyList;
     UIHelper uiHelper;
     bool saveBeforeCloseQuestionMessageShown = false;
@@ -85,6 +83,9 @@ namespace KeeAgent
     const string keyFilePathSprPlaceholder = @"{KEEAGENT:KEYFILEPATH}";
     const string identFileOptSprPlaceholder = @"{KEEAGENT:IDENTFILEOPT}";
     const string groupMenuItemName = "KeeAgentGroupMenuItem";
+    const string entryMenuItemName = "KeeAgentEntryMenuItem";
+    const string entryMenuLoadSubmenuItemName = "KeeAgentEntryMenuLoadSubmenuItem";
+    const string entryMenuUrlSubmenuItemName = "KeeAgentEntryMenuUrlSubmenuItem";
 
     class KeyFileInfo
     {
@@ -256,42 +257,36 @@ namespace KeeAgent
     {
       switch (t) {
         case PluginMenuType.Entry:
-          pwEntryContextMenuLoadKeyMenuItem = new ToolStripMenuItem() {
+          var keeagentMenu = new ToolStripMenuItem() {
+            Name = entryMenuItemName,
+            Text = Translatable.KeeAgent,
             Image = Resources.KeeAgentIcon_png,
+          };
+
+          var loadKeyMenuItem = new ToolStripMenuItem() {
+            Name = entryMenuLoadSubmenuItemName,
+            Text = Translatable.LoadKeyContextMenuItem,
             ShortcutKeys = Keys.Control | Keys.M,
           };
-          pwEntryContextMenuLoadKeyMenuItem.Click += PwEntryContextMenuLoadKeyItem_Clicked;
+          loadKeyMenuItem.Click += PwEntryMenuLoadKeyItem_Clicked;
+          keeagentMenu.DropDownItems.Add(loadKeyMenuItem);
 
-          pwEntryContextMenuLoadKeyOpenUrlMenuItem = new ToolStripMenuItem() {
-            Image = Resources.KeeAgentIcon_png,
+          var loadKeyOpenUrlMenuItem = new ToolStripMenuItem() {
+            Name = entryMenuUrlSubmenuItemName,
+            Text = Translatable.LoadKeyOpenUrlContextMenuItem,
             ShortcutKeys = Keys.Control | Keys.Shift | Keys.M,
-            Visible = false,
+            Enabled = false,
           };
-          pwEntryContextMenuLoadKeyOpenUrlMenuItem.Click += PwEntryContextMenuLoadKeyItem_Clicked;
-          pluginHost.MainWindow.EntryContextMenu.Opening += PwEntry_ContextMenu_Opening;
+          loadKeyOpenUrlMenuItem.Click += PwEntryMenuLoadKeyItem_Clicked;
+          keeagentMenu.DropDownItems.Add(loadKeyOpenUrlMenuItem);
 
-          // Mono does not support searchAllChildren, so we have to recurse
-          // manually instead of setting searchAllChildren to true.
-          var urlSubmenu = pluginHost.MainWindow.EntryContextMenu.Items.Find("m_ctxEntryUrl", false)
-            .SingleOrDefault() as ToolStripMenuItem;
-          if (urlSubmenu != null) {
-            pwEntryContextMenuUrlOpenMenuItem =
-              urlSubmenu.DropDownItems.Find("m_ctxEntryOpenUrl", false).SingleOrDefault() as ToolStripMenuItem;
-            if (pwEntryContextMenuUrlOpenMenuItem != null) {
-              var urlMenu = pwEntryContextMenuUrlOpenMenuItem.GetCurrentParent();
-              if (urlMenu != null) {
-                var openUrlIndex = urlMenu.Items.IndexOf(pwEntryContextMenuUrlOpenMenuItem);
-                urlMenu.Items.Insert(openUrlIndex + 1, pwEntryContextMenuLoadKeyOpenUrlMenuItem);
-              }
-            }
-          }
+          keeagentMenu.DropDownOpening += (s, e) => UpdateEntryMenuItems(loadKeyMenuItem, loadKeyOpenUrlMenuItem);
 
-          return pwEntryContextMenuLoadKeyMenuItem;
+          return keeagentMenu;
         case PluginMenuType.Group:
           var groupContextMenuLoadKeysMenuItem = new ToolStripMenuItem() {
             Name = groupMenuItemName,
             Text = Translatable.LoadKeysContextMenuItem,
-            Image = Resources.KeeAgentIcon_png,
             ShortcutKeys = Keys.Control | Keys.M,
           };
           groupContextMenuLoadKeysMenuItem.Click += GroupContextMenuLoadKeysMenuItem_Click;
@@ -507,36 +502,25 @@ namespace KeeAgent
       }
     }
 
-    private void PwEntry_ContextMenu_Opening(object sender, CancelEventArgs e)
+    private void UpdateEntryMenuItems(ToolStripMenuItem entryMenuItem, ToolStripMenuItem urlMenuItem)
     {
-      if (pwEntryContextMenuLoadKeyMenuItem == null) {
-        Debug.Fail("pwEntryContextMenuLoadKeyMenuItem is null");
-        return;
-      }
-
-      pwEntryContextMenuLoadKeyMenuItem.Visible = false;
-      pwEntryContextMenuLoadKeyOpenUrlMenuItem.Visible = false;
+      entryMenuItem.Enabled = false;
+      urlMenuItem.Enabled = false;
       var selectedEntries = pluginHost.MainWindow.GetSelectedEntries();
       if (selectedEntries != null) {
         foreach (var entry in selectedEntries) {
           // if any selected entry contains an SSH key then we show the KeeAgent menu item
           if (entry.GetKeeAgentSettings().AllowUseOfSshKey) {
-            pwEntryContextMenuLoadKeyMenuItem.Visible = true;
-            pwEntryContextMenuLoadKeyOpenUrlMenuItem.Visible = true;
             var agentModeAgent = agent as Agent;
             if (agentModeAgent != null && agentModeAgent.IsLocked)
             {
-              pwEntryContextMenuLoadKeyMenuItem.Enabled = false;
-              pwEntryContextMenuLoadKeyOpenUrlMenuItem.Enabled = false;
-              pwEntryContextMenuLoadKeyMenuItem.Text = Translatable.StatusLocked;
-              pwEntryContextMenuLoadKeyOpenUrlMenuItem.Text = Translatable.StatusLocked;
+              entryMenuItem.Text = Translatable.StatusLocked;
+              urlMenuItem.Text = Translatable.StatusLocked;
             } else {
-              pwEntryContextMenuLoadKeyMenuItem.Enabled = true;
-              if (pwEntryContextMenuUrlOpenMenuItem != null) {
-                pwEntryContextMenuLoadKeyOpenUrlMenuItem.Enabled = pwEntryContextMenuUrlOpenMenuItem.Enabled;
-              }
-              pwEntryContextMenuLoadKeyMenuItem.Text = Translatable.LoadKeyContextMenuItem;
-              pwEntryContextMenuLoadKeyOpenUrlMenuItem.Text = Translatable.LoadKeyOpenUrlContextMenuItem;
+              entryMenuItem.Enabled |= true;
+              entryMenuItem.Text = Translatable.LoadKeyContextMenuItem;
+              urlMenuItem.Enabled |= !entry.Strings.GetSafe(PwDefs.UrlField).IsEmpty;
+              urlMenuItem.Text = Translatable.LoadKeyOpenUrlContextMenuItem;
             }
             return;
           }
@@ -544,7 +528,7 @@ namespace KeeAgent
       }
     }
 
-    private void PwEntryContextMenuLoadKeyItem_Clicked(object sender, EventArgs e)
+    private void PwEntryMenuLoadKeyItem_Clicked(object sender, EventArgs e)
     {
       foreach (var entry in pluginHost.MainWindow.GetSelectedEntries()) {
         // if any selected entry contains an SSH key then we show the KeeAgent menu item
@@ -557,9 +541,10 @@ namespace KeeAgent
           }
         }
       }
-      if (object.ReferenceEquals(sender, pwEntryContextMenuLoadKeyOpenUrlMenuItem)
-        && pwEntryContextMenuUrlOpenMenuItem != null) {
-        pwEntryContextMenuUrlOpenMenuItem.PerformClick();
+      var menuItem = sender as ToolStripMenuItem;
+      if (menuItem != null && menuItem.Name == entryMenuUrlSubmenuItemName) {
+        var performDefaultUrlAction = typeof(MainForm).GetMethod("PerformDefaultUrlAction", BindingFlags.NonPublic | BindingFlags.Instance);
+        performDefaultUrlAction.Invoke(pluginHost.MainWindow, new object[] { null, true });
       }
     }
 

@@ -1,6 +1,7 @@
 Unreleased
 ----------
 * Fix blank menu item in Group menu.
+* Fix blank menu item in Entry menu (URL menu item is moved).
 
 Beta v0.11.3 (2019-10-07)
 -------------------------
