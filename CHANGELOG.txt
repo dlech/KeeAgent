@@ -1,5 +1,5 @@
-Unreleased
-----------
+Beta v0.11.4 (2020-03-27)
+-------------------------
 * Fix blank menu item in Group menu.
 * Fix blank menu item in Entry menu (URL menu item is moved).
 
