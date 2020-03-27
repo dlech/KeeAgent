@@ -13,38 +13,38 @@ This is the KeePass application menu.
 .. figure:: images/win10-keepass-application-menu.png
     :alt: KeePass - Application Menu
 
-Tools Menu
+
+Group Menu
 ----------
 
-KeeAgent adds one item to the Tools menu.
+The *Group Menu* is accessed by clicking on *Group* in the main application menu
+or by right-clicking on an group in the group navigation pane on the left side
+of the main window in KeePass.
 
-.. figure:: images/win10-keepass-tools-menu.png
-    :alt: KeePass - Tools menu - KeeAgent
+.. figure:: images/win10-keepass-group-menu.png
+        :alt: Screenshot of KeePass main window group menu on Windows 10
 
-KeeAgent
-    Opens the KeeAgent Manager dialog.
+.. figure:: images/win10-keepass-group-context-menu.png
+        :alt: Screenshot of KeePass main window group context menu on Windows 10
 
-.. todo:: Add link to page on KeeAgent manager.
+**Load SSH Keys** (Ctrl+M)
+    Loads keys from the selected group in to the agent.
 
-Help Menu
----------
-
-KeeAgent adds one item to the Help menu.
-
-.. figure:: images/win10-keepass-help-menu.png
-    :alt: KeePass - Help menu - KeeAgent
-
-KeeAgent
-    Opens the KeeAgent documentation in a web browser.
+    .. note:: This menu item is only visible if the selected group contains any
+        SSH keys.
 
 
-Entry Context Menu
-==================
+Entry Menu
+----------
 
-The Entry Context Menu is accessed by right-clicking on an entry in the entry list.
+The *Entry Menu* is accessed by clicking *Entry* in the main application menu
+or by right-clicking on an entry in the entry list.
+
+.. figure:: images/win10-keepass-entry-menu-expanded.png
+        :alt: Screenshot of KeePass main window entry menu on Windows 10
 
 .. figure:: images/win10-keepass-context-menu-expanded.png
-        :alt: Context Menu - Load SSH Key
+        :alt: Screenshot of KeePass main window entry context menu on Windows 10
 
 **Load SSH Key** (Ctrl+M)
     Loads key from the selected entry in to the agent.
@@ -63,20 +63,30 @@ The Entry Context Menu is accessed by right-clicking on an entry in the entry li
     and *URL(s) > Open* menu items.
 
 
-Group Context Menu
-==================
+Tools Menu
+----------
 
-The Group Context Menu is accessed by right-clicking on an group in the group
-navigation pane on the left side of the main window in KeePass.
+KeeAgent adds one item to the Tools menu.
 
-.. figure:: images/win10-keepass-group-context-menu.png
-        :alt: Screenshot of KeePass main window group context menu on Windows 10
+.. figure:: images/win10-keepass-tools-menu.png
+    :alt: KeePass - Tools menu - KeeAgent
 
-**Load SSH Keys** (Ctrl+M)
-    Loads keys from the selected group in to the agent.
+KeeAgent
+    Opens the KeeAgent Manager dialog.
 
-    .. note:: This menu item is only visible if the selected group contains any
-        SSH keys.
+.. todo:: Add link to page on KeeAgent manager.
+
+
+Help Menu
+---------
+
+KeeAgent adds one item to the Help menu.
+
+.. figure:: images/win10-keepass-help-menu.png
+    :alt: KeePass - Help menu - KeeAgent
+
+KeeAgent
+    Opens the KeeAgent documentation in a web browser.
 
 
 Notification Tray Icon Menu
