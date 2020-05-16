@@ -10,6 +10,6 @@ version=$(dpkg-parsechangelog -S Version)
 debuild -S
 debuild -- clean
 
-dput ppa:dlech/keepass2-plugins-beta ../${source}_${version}_source.changes
+dput ppa:dlech/keepass2-plugins ../${source}_${version}_source.changes
 
 gbp buildpackage --git-tag-only
