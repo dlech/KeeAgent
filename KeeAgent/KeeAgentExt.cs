@@ -469,6 +469,9 @@ namespace KeeAgent
     {
       groupMenuItem.Enabled = false;
       var activeDatabase = pluginHost.MainWindow.ActiveDatabase;
+      if (activeDatabase == null || activeDatabase.RootGroup == null) {
+        return;
+      }
       var recycleBin = activeDatabase.RootGroup.FindGroup(activeDatabase.RecycleBinUuid, true);
       var selectedGroup = pluginHost.MainWindow.GetSelectedGroup();
       foreach (var entry in selectedGroup.GetEntries(true)) {
@@ -488,6 +491,9 @@ namespace KeeAgent
     private void GroupContextMenuLoadKeysMenuItem_Click(object sender, EventArgs e)
     {
       var activeDatabase = pluginHost.MainWindow.ActiveDatabase;
+      if (activeDatabase == null || activeDatabase.RootGroup == null) {
+        return;
+      }
       var recycleBin = activeDatabase.RootGroup.FindGroup(activeDatabase.RecycleBinUuid, true);
       var selectedGroup = pluginHost.MainWindow.GetSelectedGroup();
       foreach (var entry in selectedGroup.GetEntries(true)) {
