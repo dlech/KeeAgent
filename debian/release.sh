@@ -7,6 +7,8 @@ set -e
 source=$(dpkg-parsechangelog -S Source)
 version=$(dpkg-parsechangelog -S Version)
 
+gbp export-orig --submodules
+
 debuild -S
 debuild -- clean
 
