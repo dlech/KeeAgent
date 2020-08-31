@@ -1,3 +1,10 @@
+keepass2-plugin-keeagent (0.12.1-1) bionic; urgency=medium
+
+  [ TheSpooler ]
+  * Validate that a database is available before updating group menu.
+
+ -- David Lechner <david@lechnology.com>  Mon, 31 Aug 2020 17:00:23 -0500
+
 keepass2-plugin-keeagent (0.12.0-1) bionic; urgency=medium
 
   * Fix blank menu item in Group menu.
