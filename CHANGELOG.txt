@@ -1,3 +1,7 @@
+v0.12.1 (2020-08-31)
+--------------------
+* Fix crash when opening Group menu when no database open (thanks Mike Myers)
+
 v0.12.0 (2020-05-16)
 --------------------
 * No changes since Beta v0.11.4.
