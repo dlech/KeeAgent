@@ -131,24 +131,27 @@
     <value>..\Resources\KeeAgent-icon-mono.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="WebHelpAddFromFile" xml:space="preserve">
-    <value>http://lechnology.com/software/keeagent/usage/keeagent-manager/#from-file</value>
+    <value>https://keeagent.readthedocs.io/en/v0.12.1/usage/keeagent-manager.html</value>
+    <comment>FIXME: page does not have anchor</comment>
   </data>
   <data name="WebHelpDatabaseSettings" xml:space="preserve">
-    <value>http://lechnology.com/software/keeagent/usage/options-and-settings/#database-settings</value>
+    <value>https://keeagent.readthedocs.io/en/v0.12.1/usage/options.html</value>
+    <comment>FIXME: missing documentation</comment>
   </data>
   <data name="WebHelpEntryOptions" xml:space="preserve">
-    <value>http://lechnology.com/software/keeagent/usage/options-and-settings/#entry-settings</value>
+    <value>https://keeagent.readthedocs.io/en/v0.12.1/usage/options.html#entry-settings</value>
   </data>
   <data name="WebHelpEntryPicker" xml:space="preserve">
-    <value>http://lechnology.com/software/keeagent/usage/keeagent-manager/#entry-picker</value>
+    <value>https://keeagent.readthedocs.io/en/v0.12.1/usage/keeagent-manager.html</value>
+    <comment>FIXME: page does not have anchor</comment>
   </data>
   <data name="WebHelpGlobalOptions" xml:space="preserve">
-    <value>http://lechnology.com/software/keeagent/usage/options-and-settings/#global-options</value>
+    <value>https://keeagent.readthedocs.io/en/v0.12.1/usage/options.html#global-options</value>
   </data>
   <data name="WebHelpHome" xml:space="preserve">
-    <value>http://lechnology.com/software/keeagent/</value>
+    <value>https://keeagent.readthedocs.io</value>
   </data>
   <data name="WebHelpKeeAgentManager" xml:space="preserve">
-    <value>http://lechnology.com/software/keeagent/usage/keeagent-manager/</value>
+    <value>https://keeagent.readthedocs.io/en/v0.12.1/usage/keeagent-manager.html</value>
   </data>
 </root>
