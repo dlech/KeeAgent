@@ -101,7 +101,7 @@ namespace KeeAgent.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://lechnology.com/software/keeagent/usage/keeagent-manager/#from-file.
+        ///   Looks up a localized string similar to https://keeagent.readthedocs.io/en/v0.12.1/usage/keeagent-manager.html.
         /// </summary>
         internal static string WebHelpAddFromFile {
             get {
@@ -110,7 +110,7 @@ namespace KeeAgent.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://lechnology.com/software/keeagent/usage/options-and-settings/#database-settings.
+        ///   Looks up a localized string similar to https://keeagent.readthedocs.io/en/v0.12.1/usage/options.html.
         /// </summary>
         internal static string WebHelpDatabaseSettings {
             get {
@@ -119,7 +119,7 @@ namespace KeeAgent.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://lechnology.com/software/keeagent/usage/options-and-settings/#entry-settings.
+        ///   Looks up a localized string similar to https://keeagent.readthedocs.io/en/v0.12.1/usage/options.html#entry-settings.
         /// </summary>
         internal static string WebHelpEntryOptions {
             get {
@@ -128,7 +128,7 @@ namespace KeeAgent.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://lechnology.com/software/keeagent/usage/keeagent-manager/#entry-picker.
+        ///   Looks up a localized string similar to https://keeagent.readthedocs.io/en/v0.12.1/usage/keeagent-manager.html.
         /// </summary>
         internal static string WebHelpEntryPicker {
             get {
@@ -137,7 +137,7 @@ namespace KeeAgent.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://lechnology.com/software/keeagent/usage/options-and-settings/#global-options.
+        ///   Looks up a localized string similar to https://keeagent.readthedocs.io/en/v0.12.1/usage/options.html#global-options.
         /// </summary>
         internal static string WebHelpGlobalOptions {
             get {
@@ -146,7 +146,7 @@ namespace KeeAgent.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://lechnology.com/software/keeagent/.
+        ///   Looks up a localized string similar to https://keeagent.readthedocs.io.
         /// </summary>
         internal static string WebHelpHome {
             get {
@@ -155,7 +155,7 @@ namespace KeeAgent.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://lechnology.com/software/keeagent/usage/keeagent-manager/.
+        ///   Looks up a localized string similar to https://keeagent.readthedocs.io/en/v0.12.1/usage/keeagent-manager.html.
         /// </summary>
         internal static string WebHelpKeeAgentManager {
             get {

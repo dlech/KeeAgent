@@ -1,3 +1,7 @@
+Unreleased
+----------
+* Update help URLs
+
 v0.12.1 (2020-08-31)
 --------------------
 * Fix crash when opening Group menu when no database open (thanks Mike Myers)

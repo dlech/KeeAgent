@@ -250,7 +250,7 @@ namespace KeeAgent
     /// Returns url for automatic updating of plugin
     /// </summary>
     public override string UpdateUrl {
-      get { return "http://updates.lechnology.com/KeePassPlugins"; }
+      get { return "https://updates.lechnology.com/KeePassPlugins"; }
     }
 
     public override ToolStripMenuItem GetMenuItem(PluginMenuType t)
@@ -443,7 +443,7 @@ namespace KeeAgent
         keeAgentHelpMenuItem.Text = "KeeAgent Help";
         keeAgentHelpMenuItem.Image = Resources.KeeAgentIcon_png;
         keeAgentHelpMenuItem.Click += (sender, e) => {
-          Process.Start("http://lechnology.com/KeeAgent");
+          Process.Start("https://keeagent.readthedocs.io");
         };
         var firstSeparatorIndex = helpMenu.DropDownItems.IndexOfKey("m_menuHelpSep0");
         helpMenu.DropDownItems.Insert(firstSeparatorIndex, keeAgentHelpMenuItem);
