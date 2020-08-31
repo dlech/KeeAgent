@@ -9,8 +9,8 @@ version=$(dpkg-parsechangelog -S Version)
 
 gbp export-orig --submodules
 
-debuild -S
-debuild -- clean
+debuild -S --no-check-builddeps
+debuild --no-check-builddeps -- clean
 
 dput ppa:dlech/keepass2-plugins ../${source}_${version}_source.changes
 
