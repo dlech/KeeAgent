@@ -1,0 +1,31 @@
+name: .NET Framework
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v1
+      with:
+        submodules: recursive
+
+    - uses: nuget/setup-nuget@v1
+      with:
+        nuget-version: 'latest'
+
+    - run: nuget restore
+
+    - name: Setup MSBuild.exe
+      uses: warrenbuckley/Setup-MSBuild@v1
+
+    - name: MSBuild
+      run: msbuild /property:GenerateFullPaths=true /property:Configuration=ReleasePlgx /t:build KeeAgent.sln
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: KeeAgent.plgx
+        path: KeeAgent/bin/ReleasePlgx/KeeAgent.plgx
