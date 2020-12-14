@@ -80,6 +80,7 @@ namespace KeeAgent
     const string userPicksKeyOnRequestIdentitiesOptionName =
       pluginNamespace + ".UserPicksKeyOnRequestIdentities";
     const string ignoreMissingExternalKeyFilesName = pluginNamespace + ".IgnoreMissingExternalKeyFilesName";
+    const string allowAccessFromNonElevatedProcess = pluginNamespace + ".AllowAccessFromNonElevatedProcess";
     const string keyFilePathSprPlaceholder = @"{KEEAGENT:KEYFILEPATH}";
     const string identFileOptSprPlaceholder = @"{KEEAGENT:IDENTFILEOPT}";
     const string groupMenuItemName = "KeeAgentGroupMenuItem";
@@ -124,7 +125,7 @@ namespace KeeAgent
             // In windows, try to start an agent. If Pageant is running, we will
             // get an exception.
             try {
-              var pagent = new PageantAgent();
+              var pagent = new PageantAgent(Options.AllowAccessFromNonElevatedProcess);
               pagent.Locked += PageantAgent_Locked;
               pagent.KeyUsed += PageantAgent_KeyUsed;
               pagent.KeyAdded += PageantAgent_KeyAdded;
@@ -585,6 +586,7 @@ namespace KeeAgent
       config.SetBool(userPicksKeyOnRequestIdentitiesOptionName,
         Options.UserPicksKeyOnRequestIdentities);
       config.SetBool(ignoreMissingExternalKeyFilesName, Options.IgnoreMissingExternalKeyFiles);
+      config.SetBool(allowAccessFromNonElevatedProcess, Options.AllowAccessFromNonElevatedProcess);
     }
 
     private void LoadOptions()
@@ -605,6 +607,7 @@ namespace KeeAgent
       Options.UserPicksKeyOnRequestIdentities =
         config.GetBool(userPicksKeyOnRequestIdentitiesOptionName, false);
       Options.IgnoreMissingExternalKeyFiles = config.GetBool(ignoreMissingExternalKeyFilesName, false);
+      Options.AllowAccessFromNonElevatedProcess = config.GetBool(allowAccessFromNonElevatedProcess, false);
 
       string defaultLogFileNameValue = Path.Combine(
           Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),

@@ -114,5 +114,10 @@ namespace KeeAgent
     /// in the filesystem.
     /// </summary>
     public static bool IgnoreMissingExternalKeyFiles { get; set; }
-  }
+
+    /// <summary>
+    /// When <c>true</c>, access from non elevated process (UAC) will have access to agent.
+    /// </summary>
+    public static bool AllowAccessFromNonElevatedProcess { get; set; }
+    }
 }

@@ -218,4 +218,7 @@
   <data name="OptionUseWindowsOpenSshPipe" xml:space="preserve">
     <value>Enable agent for Windows OpenSSH (experimental)</value>
   </data>
+  <data name="OptionAllowAccessFromNonElevatedProcess" xml:space="preserve">
+    <value>Allow access to agent from non-elevated process when Keepass is run as elevated (requires restart)</value>
+  </data>
 </root>

@@ -232,6 +232,15 @@ namespace KeeAgent {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Allow access to agent from non-elevated process when Keepass is run as elevated (requires restart).
+        /// </summary>
+        internal static string OptionAllowAccessFromNonElevatedProcess {
+            get {
+                return ResourceManager.GetString("OptionAllowAccessFromNonElevatedProcess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Always require user confirmation when a client program requests to use a key.
         /// </summary>
         internal static string OptionAlwaysConfirm {
