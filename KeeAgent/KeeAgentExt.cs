@@ -1025,6 +1025,30 @@ namespace KeeAgent
           }
         }
         agent.AddKey(key);
+        if (!(agent is PageantClient)) {
+          var keyCert = entry.GetSshKey(true);
+          if (keyCert.Certificate != null) {
+            if (constraints != null) {
+              foreach (var constraint in constraints) {
+                keyCert.AddConstraint(constraint);
+              }
+            }
+            else {
+              if (settings.UseConfirmConstraintWhenAdding) {
+                keyCert.addConfirmConstraint();
+              }
+              if (settings.UseLifetimeConstraintWhenAdding) {
+                keyCert.addLifetimeConstraint(settings.LifetimeConstraintDuration);
+              }
+            }
+            if (Options.AlwaysConfirm &&
+                !keyCert.HasConstraint(Agent.KeyConstraintType.SSH_AGENT_CONSTRAIN_CONFIRM)) {
+              keyCert.addConfirmConstraint();
+            }
+            keyCert.Source = string.Format("{0}: {1}", db_name, entry.GetFullPath());
+            agent.AddKey(keyCert);
+          }
+        }
         if (settings.Location.SelectedType == EntrySettings.LocationType.Attachment
           && settings.Location.SaveAttachmentToTempFile)
         {

@@ -151,16 +151,16 @@ namespace KeeAgent
       }
     }
 
-    public static ISshKey GetSshKey(this PwEntry entry)
+    public static ISshKey GetSshKey(this PwEntry entry, bool loadCert=false)
     {
       var settings = entry.GetKeeAgentSettings();
       var context = new SprContext(entry, entry.GetDatabase(), SprCompileFlags.Deref);
-      return settings.GetSshKey(entry.Strings, entry.Binaries, context);
+      return settings.GetSshKey(entry.Strings, entry.Binaries, context, loadCert);
     }
 
     public static ISshKey GetSshKey(this EntrySettings settings,
       ProtectedStringDictionary strings, ProtectedBinaryDictionary binaries,
-      SprContext sprContext)
+      SprContext sprContext, bool loadCert = false)
     {      
       if (!settings.AllowUseOfSshKey) {
         return null;
@@ -184,20 +184,25 @@ namespace KeeAgent
             throw new NoAttachmentException();
           }
           var privateKeyData = binaries.Get(settings.Location.AttachmentName);
-          var publicKeyData = binaries.Get(settings.Location.AttachmentName + ".pub");
+          ProtectedBinary publicKeyData = null;
+          if (loadCert) {
+            publicKeyData = binaries.Get(settings.Location.AttachmentName + "-cert.pub");
+          } else {
+            publicKeyData = binaries.Get(settings.Location.AttachmentName + ".pub");
+          }
           getPrivateKeyStream = () => new MemoryStream(privateKeyData.ReadData());
           if (publicKeyData != null)
             getPublicKeyStream = () => new MemoryStream(publicKeyData.ReadData());
-          return GetSshKey(getPrivateKeyStream, getPublicKeyStream,
-                           settings.Location.AttachmentName, getPassphraseCallback);
+          return GetSshKey(getPrivateKeyStream, getPublicKeyStream, 
+                           settings.Location.AttachmentName, getPassphraseCallback, loadCert);
         case EntrySettings.LocationType.File:
           var filename = settings.Location.FileName.ExpandEnvironmentVariables();
           getPrivateKeyStream = () => File.OpenRead(filename);
-          var publicKeyFile = filename + ".pub";
+          var publicKeyFile = filename + (loadCert ? "-cert.pub" : ".pub");
           if (File.Exists(publicKeyFile))
             getPublicKeyStream = () => File.OpenRead(publicKeyFile);
           return GetSshKey(getPrivateKeyStream, getPublicKeyStream,
-                           settings.Location.AttachmentName, getPassphraseCallback);
+                           settings.Location.AttachmentName, getPassphraseCallback, loadCert);
         default:
           return null;
       }
@@ -206,17 +211,27 @@ namespace KeeAgent
     static ISshKey GetSshKey(Func<Stream> getPrivateKeyStream,
                              Func<Stream> getPublicKeyStream,
                              string fallbackComment,
-                             KeyFormatter.GetPassphraseCallback getPassphrase)
+                             KeyFormatter.GetPassphraseCallback getPassphrase,
+                             bool loadCert = false)
     {
       ISshKey key;
       using (var privateKeyStream = getPrivateKeyStream())
         key = privateKeyStream.ReadSshKey(getPassphrase);
-      if (string.IsNullOrWhiteSpace(key.Comment) && getPublicKeyStream != null) {
-        using (var stream = getPublicKeyStream())
-          key.Comment = KeyFormatter.GetComment(stream.ReadAllLines(Encoding.UTF8));
-      }
-      if (string.IsNullOrWhiteSpace(key.Comment)) {
-        key.Comment = fallbackComment;
+      if (loadCert && getPublicKeyStream != null) {
+        var formatter = new OpensshPublicKeyFormatter();
+        using (var certStream = getPublicKeyStream()) {
+          var certKey = formatter.Deserialize(certStream) as SshKey;
+          key.Certificate = certKey.Certificate;
+          key.Comment = certKey.Comment;
+        }
+      } else {
+        if (string.IsNullOrWhiteSpace(key.Comment) && getPublicKeyStream != null) {
+          using (var stream = getPublicKeyStream())
+            key.Comment = KeyFormatter.GetComment(stream.ReadAllLines(Encoding.UTF8));
+        }
+        if (string.IsNullOrWhiteSpace(key.Comment)) {
+          key.Comment = fallbackComment;
+        }
       }
       return key;
     }
@@ -275,7 +290,7 @@ namespace KeeAgent
     public static PwDatabase GetDatabase(this PwEntry entry)
     {
       var rootGroup = entry.ParentGroup;
-      while (rootGroup.ParentGroup != null) {
+      while ((rootGroup != null) && (rootGroup.ParentGroup != null)) {
         rootGroup = rootGroup.ParentGroup;
       }
       var db = KeePass.Program.MainForm.DocumentManager.GetOpenDatabases()
