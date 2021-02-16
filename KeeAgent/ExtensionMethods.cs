@@ -184,18 +184,31 @@ namespace KeeAgent
             throw new NoAttachmentException();
           }
           var privateKeyData = binaries.Get(settings.Location.AttachmentName);
-          var publicKeyData = binaries.Get(settings.Location.AttachmentName + ".pub");
           getPrivateKeyStream = () => new MemoryStream(privateKeyData.ReadData());
+          ProtectedBinary publicKeyData = null;
+          // try to load cert file first
+          publicKeyData = binaries.Get(settings.Location.AttachmentName + "-cert.pub");
+          if (publicKeyData == null) {
+            // if cert not available use public key file
+            publicKeyData = binaries.Get(settings.Location.AttachmentName + ".pub");
+          }
           if (publicKeyData != null)
             getPublicKeyStream = () => new MemoryStream(publicKeyData.ReadData());
-          return GetSshKey(getPrivateKeyStream, getPublicKeyStream,
+          return GetSshKey(getPrivateKeyStream, getPublicKeyStream, 
                            settings.Location.AttachmentName, getPassphraseCallback);
         case EntrySettings.LocationType.File:
           var filename = settings.Location.FileName.ExpandEnvironmentVariables();
           getPrivateKeyStream = () => File.OpenRead(filename);
-          var publicKeyFile = filename + ".pub";
+          // try to load cert file first
+          string publicKeyFile = publicKeyFile = filename + "-cert.pub";
           if (File.Exists(publicKeyFile))
             getPublicKeyStream = () => File.OpenRead(publicKeyFile);
+          else {
+            // if cert not available use public key file
+            publicKeyFile = publicKeyFile = filename + ".pub";
+            if (File.Exists(publicKeyFile))
+              getPublicKeyStream = () => File.OpenRead(publicKeyFile);
+          }
           return GetSshKey(getPrivateKeyStream, getPublicKeyStream,
                            settings.Location.AttachmentName, getPassphraseCallback);
         default:
@@ -206,14 +219,19 @@ namespace KeeAgent
     static ISshKey GetSshKey(Func<Stream> getPrivateKeyStream,
                              Func<Stream> getPublicKeyStream,
                              string fallbackComment,
-                             KeyFormatter.GetPassphraseCallback getPassphrase)
+                             KeyFormatter.GetPassphraseCallback getPassphrase,
+                             bool loadCert = false)
     {
       ISshKey key;
       using (var privateKeyStream = getPrivateKeyStream())
         key = privateKeyStream.ReadSshKey(getPassphrase);
-      if (string.IsNullOrWhiteSpace(key.Comment) && getPublicKeyStream != null) {
-        using (var stream = getPublicKeyStream())
-          key.Comment = KeyFormatter.GetComment(stream.ReadAllLines(Encoding.UTF8));
+      if (getPublicKeyStream != null) {
+        var formatter = new OpensshPublicKeyFormatter();
+        using (var certStream = getPublicKeyStream()) {
+          var certKey = formatter.Deserialize(certStream) as SshKey;
+          key.Certificate = certKey.Certificate;
+          key.Comment = certKey.Comment;
+        }
       }
       if (string.IsNullOrWhiteSpace(key.Comment)) {
         key.Comment = fallbackComment;
@@ -275,7 +293,7 @@ namespace KeeAgent
     public static PwDatabase GetDatabase(this PwEntry entry)
     {
       var rootGroup = entry.ParentGroup;
-      while (rootGroup.ParentGroup != null) {
+      while ((rootGroup != null) && (rootGroup.ParentGroup != null)) {
         rootGroup = rootGroup.ParentGroup;
       }
       var db = KeePass.Program.MainForm.DocumentManager.GetOpenDatabases()

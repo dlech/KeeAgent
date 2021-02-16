@@ -1004,6 +1004,8 @@ namespace KeeAgent
           } catch (Exception) {
             // ignore failure
           }
+          // Pageant does not support opensshcerts for now
+          key.Certificate = null;
         } else {
           // also, Pageant does not support constraints
           if (constraints != null) {
@@ -1025,6 +1027,17 @@ namespace KeeAgent
           }
         }
         agent.AddKey(key);
+        if (!(agent is PageantClient) && (key.Certificate != null)) {
+          // Build a clone of the key without the openssh cert
+          // and insert both versions
+          var keyWoutCert = entry.GetSshKey();
+          keyWoutCert.Certificate = null;
+          keyWoutCert.Source = key.Source;
+          foreach (var constraint in key.Constraints) {
+            keyWoutCert.AddConstraint(constraint);
+          }
+          agent.AddKey(keyWoutCert);
+        }
         if (settings.Location.SelectedType == EntrySettings.LocationType.Attachment
           && settings.Location.SaveAttachmentToTempFile)
         {
@@ -1112,6 +1125,10 @@ namespace KeeAgent
     public void RemoveKey(ISshKey key) {
       agent.RemoveKey(key);
 
+      if (key.Certificate != null) {
+        // Don't remove private key from keyFileMap when removing certificate
+        return;
+      }
       var fingerprint = key.GetMD5Fingerprint().ToHexString();
       if (keyFileMap.ContainsKey(fingerprint) && keyFileMap[fingerprint].IsTemporary) {
         try {
