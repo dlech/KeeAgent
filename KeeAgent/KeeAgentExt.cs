@@ -1,4 +1,4 @@
-//
+﻿//
 //  KeeAgentExt.cs
 //
 //  Author(s):
@@ -1125,6 +1125,10 @@ namespace KeeAgent
     public void RemoveKey(ISshKey key) {
       agent.RemoveKey(key);
 
+      if (key.Certificate != null) {
+        // Don't remove private key from keyFileMap when removing certificate
+        return;
+      }
       var fingerprint = key.GetMD5Fingerprint().ToHexString();
       if (keyFileMap.ContainsKey(fingerprint) && keyFileMap[fingerprint].IsTemporary) {
         try {
