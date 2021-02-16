@@ -151,16 +151,16 @@ namespace KeeAgent
       }
     }
 
-    public static ISshKey GetSshKey(this PwEntry entry, bool loadCert=false)
+    public static ISshKey GetSshKey(this PwEntry entry)
     {
       var settings = entry.GetKeeAgentSettings();
       var context = new SprContext(entry, entry.GetDatabase(), SprCompileFlags.Deref);
-      return settings.GetSshKey(entry.Strings, entry.Binaries, context, loadCert);
+      return settings.GetSshKey(entry.Strings, entry.Binaries, context);
     }
 
     public static ISshKey GetSshKey(this EntrySettings settings,
       ProtectedStringDictionary strings, ProtectedBinaryDictionary binaries,
-      SprContext sprContext, bool loadCert = false)
+      SprContext sprContext)
     {      
       if (!settings.AllowUseOfSshKey) {
         return null;
@@ -184,25 +184,33 @@ namespace KeeAgent
             throw new NoAttachmentException();
           }
           var privateKeyData = binaries.Get(settings.Location.AttachmentName);
+          getPrivateKeyStream = () => new MemoryStream(privateKeyData.ReadData());
           ProtectedBinary publicKeyData = null;
-          if (loadCert) {
-            publicKeyData = binaries.Get(settings.Location.AttachmentName + "-cert.pub");
-          } else {
+          // try to load cert file first
+          publicKeyData = binaries.Get(settings.Location.AttachmentName + "-cert.pub");
+          if (publicKeyData == null) {
+            // if cert not available use public key file
             publicKeyData = binaries.Get(settings.Location.AttachmentName + ".pub");
           }
-          getPrivateKeyStream = () => new MemoryStream(privateKeyData.ReadData());
           if (publicKeyData != null)
             getPublicKeyStream = () => new MemoryStream(publicKeyData.ReadData());
           return GetSshKey(getPrivateKeyStream, getPublicKeyStream, 
-                           settings.Location.AttachmentName, getPassphraseCallback, loadCert);
+                           settings.Location.AttachmentName, getPassphraseCallback);
         case EntrySettings.LocationType.File:
           var filename = settings.Location.FileName.ExpandEnvironmentVariables();
           getPrivateKeyStream = () => File.OpenRead(filename);
-          var publicKeyFile = filename + (loadCert ? "-cert.pub" : ".pub");
+          // try to load cert file first
+          string publicKeyFile = publicKeyFile = filename + "-cert.pub";
           if (File.Exists(publicKeyFile))
             getPublicKeyStream = () => File.OpenRead(publicKeyFile);
+          else {
+            // if cert not available use public key file
+            publicKeyFile = publicKeyFile = filename + ".pub";
+            if (File.Exists(publicKeyFile))
+              getPublicKeyStream = () => File.OpenRead(publicKeyFile);
+          }
           return GetSshKey(getPrivateKeyStream, getPublicKeyStream,
-                           settings.Location.AttachmentName, getPassphraseCallback, loadCert);
+                           settings.Location.AttachmentName, getPassphraseCallback);
         default:
           return null;
       }
@@ -217,21 +225,16 @@ namespace KeeAgent
       ISshKey key;
       using (var privateKeyStream = getPrivateKeyStream())
         key = privateKeyStream.ReadSshKey(getPassphrase);
-      if (loadCert && getPublicKeyStream != null) {
+      if (getPublicKeyStream != null) {
         var formatter = new OpensshPublicKeyFormatter();
         using (var certStream = getPublicKeyStream()) {
           var certKey = formatter.Deserialize(certStream) as SshKey;
           key.Certificate = certKey.Certificate;
           key.Comment = certKey.Comment;
         }
-      } else {
-        if (string.IsNullOrWhiteSpace(key.Comment) && getPublicKeyStream != null) {
-          using (var stream = getPublicKeyStream())
-            key.Comment = KeyFormatter.GetComment(stream.ReadAllLines(Encoding.UTF8));
-        }
-        if (string.IsNullOrWhiteSpace(key.Comment)) {
-          key.Comment = fallbackComment;
-        }
+      }
+      if (string.IsNullOrWhiteSpace(key.Comment)) {
+        key.Comment = fallbackComment;
       }
       return key;
     }

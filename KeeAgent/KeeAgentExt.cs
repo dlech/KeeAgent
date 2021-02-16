@@ -1,4 +1,4 @@
-﻿//
+//
 //  KeeAgentExt.cs
 //
 //  Author(s):
@@ -1004,6 +1004,8 @@ namespace KeeAgent
           } catch (Exception) {
             // ignore failure
           }
+          // Pageant does not support opensshcerts for now
+          key.Certificate = null;
         } else {
           // also, Pageant does not support constraints
           if (constraints != null) {
@@ -1025,29 +1027,16 @@ namespace KeeAgent
           }
         }
         agent.AddKey(key);
-        if (!(agent is PageantClient)) {
-          var keyCert = entry.GetSshKey(true);
-          if (keyCert.Certificate != null) {
-            if (constraints != null) {
-              foreach (var constraint in constraints) {
-                keyCert.AddConstraint(constraint);
-              }
-            }
-            else {
-              if (settings.UseConfirmConstraintWhenAdding) {
-                keyCert.addConfirmConstraint();
-              }
-              if (settings.UseLifetimeConstraintWhenAdding) {
-                keyCert.addLifetimeConstraint(settings.LifetimeConstraintDuration);
-              }
-            }
-            if (Options.AlwaysConfirm &&
-                !keyCert.HasConstraint(Agent.KeyConstraintType.SSH_AGENT_CONSTRAIN_CONFIRM)) {
-              keyCert.addConfirmConstraint();
-            }
-            keyCert.Source = string.Format("{0}: {1}", db_name, entry.GetFullPath());
-            agent.AddKey(keyCert);
+        if (!(agent is PageantClient) && (key.Certificate != null)) {
+          // Build a clone of the key without the openssh cert
+          // and insert both versions
+          var keyWoutCert = entry.GetSshKey();
+          keyWoutCert.Certificate = null;
+          keyWoutCert.Source = key.Source;
+          foreach (var constraint in key.Constraints) {
+            keyWoutCert.AddConstraint(constraint);
           }
+          agent.AddKey(keyWoutCert);
         }
         if (settings.Location.SelectedType == EntrySettings.LocationType.Attachment
           && settings.Location.SaveAttachmentToTempFile)
