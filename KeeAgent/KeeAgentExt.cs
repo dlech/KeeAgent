@@ -45,6 +45,7 @@ using KeePass.Util;
 using KeePass.Util.Spr;
 using KeePassLib;
 using KeePassLib.Utility;
+using System.Net.Sockets;
 
 namespace KeeAgent
 {
@@ -79,6 +80,7 @@ namespace KeeAgent
     const string useMsysSocketOptionName = pluginNamespace + ".UseMsysSocket";
     const string msysSocketPathOptionName = pluginNamespace + ".MsysSocketPath";
     const string useWindowsOpenSshPipeName = pluginNamespace + ".UseWindowsOpenSshPipe";
+    const string useWslSocketOptionName = pluginNamespace + ".UseWslSocket";
     const string unixSocketPathOptionName = pluginNamespace + ".UnixSocketPath";
     const string userPicksKeyOnRequestIdentitiesOptionName =
       pluginNamespace + ".UserPicksKeyOnRequestIdentities";
@@ -139,6 +141,9 @@ namespace KeeAgent
               }
               if (Options.UseMsysSocket) {
                 StartMsysSocket();
+              }
+              if (Options.UseWslSocket) {
+                StartWslSocket();
               }
               if (Options.UseWindowsOpenSshPipe) {
                 StartWindowsOpenSshPipe();
@@ -301,6 +306,37 @@ namespace KeeAgent
       if (pagent == null)
         return;
       pagent.StopMsysSocket();
+    }
+
+    public void StartWslSocket()
+    {
+      var pagent = agent as PageantAgent;
+      if (pagent == null)
+        return;
+      try {
+        pagent.StopWslSocket();
+        try {
+          pagent.StartWslSocket(Environment.ExpandEnvironmentVariables(
+            Options.UnixSocketPath));
+        } catch (SocketException ex) {
+          if (ex.SocketErrorCode != SocketError.AddressFamilyNotSupported) {
+            throw;
+          }
+          // Ignore this error otherwise; UNIX sockets just aren't supported here
+        }
+      } catch (Exception ex) {
+        MessageService.ShowWarning("Failed to start Wsl socket:",
+          ex.Message);
+        // TODO: show better explanation of common errors.
+      }
+    }
+
+    public void StopWslSocket()
+    {
+      var pagent = agent as PageantAgent;
+      if (pagent == null)
+        return;
+      pagent.StopWslSocket();
     }
 
     public void StartWindowsOpenSshPipe()
@@ -585,6 +621,7 @@ namespace KeeAgent
       config.SetString(msysSocketPathOptionName, Options.MsysSocketPath);
       config.SetBool(useWindowsOpenSshPipeName, Options.UseWindowsOpenSshPipe);
       config.SetString(unixSocketPathOptionName, Options.UnixSocketPath);
+      config.SetBool(useWslSocketOptionName, Options.UseWslSocket );
       config.SetBool(userPicksKeyOnRequestIdentitiesOptionName,
         Options.UserPicksKeyOnRequestIdentities);
       config.SetBool(ignoreMissingExternalKeyFilesName, Options.IgnoreMissingExternalKeyFiles);
@@ -604,6 +641,7 @@ namespace KeeAgent
       Options.UseMsysSocket = config.GetBool(useMsysSocketOptionName, false);
       Options.MsysSocketPath = config.GetString(msysSocketPathOptionName);
       Options.UseWindowsOpenSshPipe = config.GetBool(useWindowsOpenSshPipeName, false);
+      Options.UseWslSocket = config.GetBool(useWslSocketOptionName, false);
       Options.UnixSocketPath = config.GetString(unixSocketPathOptionName);
       Options.UserPicksKeyOnRequestIdentities =
         config.GetBool(userPicksKeyOnRequestIdentitiesOptionName, false);

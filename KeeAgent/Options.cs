@@ -97,6 +97,12 @@ namespace KeeAgent
     public bool UseWindowsOpenSshPipe { get; set; }
 
     /// <summary>
+    /// When true and using PagentAgent, a socket file will be created at
+    /// UnixSocketPath that can be used with WSL
+    /// </summary>
+    public bool UseWslSocket { get; set; }
+
+    /// <summary>
     /// The path for creating a unix socket in Agent mode on unix-like platforms
     /// </summary>
     /// <value>The unix socket path.</value>

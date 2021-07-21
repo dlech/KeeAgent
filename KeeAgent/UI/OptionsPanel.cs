@@ -111,11 +111,17 @@ namespace KeeAgent.UI
         label4.Visible = false;
         msysSocketPathTextBox.Visible = false;
         msysPathBrowseButton.Visible = false;
+        useUnixSocketCheckBox.Visible = false;
+        label2.Visible = false;
+        unixSocketPathTextBox.Visible = false;
+        unixPathBrowseButton.Visible = false;
       } else {
         useCygwinSocketCheckBox.Checked = ext.Options.UseCygwinSocket;
         cygwinSocketPathTextBox.Text = ext.Options.CygwinSocketPath;
         useMsysSocketCheckBox.Checked = ext.Options.UseMsysSocket;
         msysSocketPathTextBox.Text = ext.Options.MsysSocketPath;
+        useUnixSocketCheckBox.Checked = ext.Options.UseWslSocket;
+        unixSocketPathTextBox.Text = ext.Options.UnixSocketPath;
       }
       optionsList.UpdateData(false);
     }
@@ -142,6 +148,13 @@ namespace KeeAgent.UI
               e2.Cancel = true;
               return;
             }
+            if (!isUnix && useUnixSocketCheckBox.Checked
+              && string.IsNullOrWhiteSpace(unixSocketPathTextBox.Text))
+            {
+              MessageService.ShowWarning("Must specify path for UNIX socket file.");
+              e2.Cancel = true;
+              return;
+            }
             if (isUnix && modeComboBox.Text != Translatable.OptionAgentModeClient
               && string.IsNullOrWhiteSpace (cygwinSocketPathTextBox.Text))
             {
@@ -159,6 +172,11 @@ namespace KeeAgent.UI
                 ext.StartMsysSocket();
             } else {
                 ext.StopMsysSocket();
+            }
+            if (ext.Options.UseWslSocket) { 
+              ext.StartWslSocket();
+            } else {
+              ext.StopWslSocket();
             }
             if (ext.Options.UseWindowsOpenSshPipe) {
               ext.StartWindowsOpenSshPipe();
@@ -191,6 +209,8 @@ namespace KeeAgent.UI
         ext.Options.CygwinSocketPath = cygwinSocketPathTextBox.Text;
         ext.Options.UseMsysSocket = useMsysSocketCheckBox.Checked;
         ext.Options.MsysSocketPath = msysSocketPathTextBox.Text;
+        ext.Options.UseWslSocket = useUnixSocketCheckBox.Checked;
+        ext.Options.UnixSocketPath = unixSocketPathTextBox.Text;
       }
     }
 
@@ -211,6 +231,13 @@ namespace KeeAgent.UI
       var file = browseForPath();
       if (file != null)
         msysSocketPathTextBox.Text = file;
+    }
+
+    void unixPathBrowseButton_Click(object sender, EventArgs e)
+    {
+      var file = browseForPath();
+      if (file != null)
+        unixSocketPathTextBox.Text = file;
     }
 
     string browseForPath()
@@ -250,6 +277,14 @@ namespace KeeAgent.UI
       if (!isUnix) {
         msysSocketPathTextBox.Enabled = useMsysSocketCheckBox.Checked;
         msysPathBrowseButton.Enabled = useMsysSocketCheckBox.Checked;
+      }
+    }
+
+    void useUnixSocketCheckBox_CheckedChanged(object sender, EventArgs e)
+    {
+      if (!isUnix) {
+        unixSocketPathTextBox.Enabled = useUnixSocketCheckBox.Checked;
+        unixPathBrowseButton.Enabled = useUnixSocketCheckBox.Checked;
       }
     }
   }

@@ -35,11 +35,15 @@
       this.helpButton = new System.Windows.Forms.Button();
       this.groupBox1 = new System.Windows.Forms.GroupBox();
       this.msysPathBrowseButton = new System.Windows.Forms.Button();
+      this.unixPathBrowseButton = new System.Windows.Forms.Button();
       this.cygwinPathBrowseButton = new System.Windows.Forms.Button();
       this.msysSocketPathTextBox = new System.Windows.Forms.TextBox();
       this.label4 = new System.Windows.Forms.Label();
+      this.unixSocketPathTextBox = new System.Windows.Forms.TextBox();
       this.cygwinSocketPathTextBox = new System.Windows.Forms.TextBox();
+      this.label2 = new System.Windows.Forms.Label();
       this.useMsysSocketCheckBox = new System.Windows.Forms.CheckBox();
+      this.useUnixSocketCheckBox = new System.Windows.Forms.CheckBox();
       this.label3 = new System.Windows.Forms.Label();
       this.useCygwinSocketCheckBox = new System.Windows.Forms.CheckBox();
       this.label1 = new System.Windows.Forms.Label();
@@ -54,6 +58,7 @@
             this.columnHeader});
       this.customListViewEx.FullRowSelect = true;
       this.customListViewEx.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+      this.customListViewEx.HideSelection = false;
       this.customListViewEx.Name = "customListViewEx";
       this.customListViewEx.ShowItemToolTips = true;
       this.customListViewEx.UseCompatibleStateImageBehavior = false;
@@ -87,11 +92,15 @@
       // 
       resources.ApplyResources(this.groupBox1, "groupBox1");
       this.groupBox1.Controls.Add(this.msysPathBrowseButton);
+      this.groupBox1.Controls.Add(this.unixPathBrowseButton);
       this.groupBox1.Controls.Add(this.cygwinPathBrowseButton);
       this.groupBox1.Controls.Add(this.msysSocketPathTextBox);
       this.groupBox1.Controls.Add(this.label4);
+      this.groupBox1.Controls.Add(this.unixSocketPathTextBox);
       this.groupBox1.Controls.Add(this.cygwinSocketPathTextBox);
+      this.groupBox1.Controls.Add(this.label2);
       this.groupBox1.Controls.Add(this.useMsysSocketCheckBox);
+      this.groupBox1.Controls.Add(this.useUnixSocketCheckBox);
       this.groupBox1.Controls.Add(this.label3);
       this.groupBox1.Controls.Add(this.useCygwinSocketCheckBox);
       this.groupBox1.Controls.Add(this.label1);
@@ -104,6 +113,13 @@
       this.msysPathBrowseButton.Name = "msysPathBrowseButton";
       this.msysPathBrowseButton.UseVisualStyleBackColor = true;
       this.msysPathBrowseButton.Click += new System.EventHandler(this.msysPathBrowseButton_Click);
+      // 
+      // unixPathBrowseButton
+      // 
+      resources.ApplyResources(this.unixPathBrowseButton, "unixPathBrowseButton");
+      this.unixPathBrowseButton.Name = "unixPathBrowseButton";
+      this.unixPathBrowseButton.UseVisualStyleBackColor = true;
+      this.unixPathBrowseButton.Click += new System.EventHandler(this.cygwinPathBrowseButton_Click);
       // 
       // cygwinPathBrowseButton
       // 
@@ -122,10 +138,20 @@
       resources.ApplyResources(this.label4, "label4");
       this.label4.Name = "label4";
       // 
+      // unixSocketPathTextBox
+      // 
+      resources.ApplyResources(this.unixSocketPathTextBox, "unixSocketPathTextBox");
+      this.unixSocketPathTextBox.Name = "unixSocketPathTextBox";
+      // 
       // cygwinSocketPathTextBox
       // 
       resources.ApplyResources(this.cygwinSocketPathTextBox, "cygwinSocketPathTextBox");
       this.cygwinSocketPathTextBox.Name = "cygwinSocketPathTextBox";
+      // 
+      // label2
+      // 
+      resources.ApplyResources(this.label2, "label2");
+      this.label2.Name = "label2";
       // 
       // useMsysSocketCheckBox
       // 
@@ -133,6 +159,13 @@
       this.useMsysSocketCheckBox.Name = "useMsysSocketCheckBox";
       this.useMsysSocketCheckBox.UseVisualStyleBackColor = true;
       this.useMsysSocketCheckBox.CheckedChanged += new System.EventHandler(this.useMsysSocketCheckBox_CheckedChanged);
+      // 
+      // useUnixSocketCheckBox
+      // 
+      resources.ApplyResources(this.useUnixSocketCheckBox, "useUnixSocketCheckBox");
+      this.useUnixSocketCheckBox.Name = "useUnixSocketCheckBox";
+      this.useUnixSocketCheckBox.UseVisualStyleBackColor = true;
+      this.useUnixSocketCheckBox.CheckedChanged += new System.EventHandler(this.useUnixSocketCheckBox_CheckedChanged);
       // 
       // label3
       // 
@@ -185,5 +218,9 @@
         private System.Windows.Forms.CheckBox useCygwinSocketCheckBox;
         private System.Windows.Forms.Button msysPathBrowseButton;
         private System.Windows.Forms.Button cygwinPathBrowseButton;
+        private System.Windows.Forms.Button unixPathBrowseButton;
+        private System.Windows.Forms.TextBox unixSocketPathTextBox;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.CheckBox useUnixSocketCheckBox;
     }
 }
