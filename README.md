@@ -10,6 +10,18 @@ DOWNLOAD
 
 Get KeeAgent at https://lechnology.com/software/keeagent
 
+#### Chocolatey 📦 
+Or you can [use Chocolatey to install](https://community.chocolatey.org/packages/keepass-plugin-keeagent#install) it in a more automated manner:
+
+```
+choco install keepass-plugin-keeagent
+```
+
+To [upgrade KeePass Plugin KeeAgent](https://community.chocolatey.org/packages/keepass-plugin-keeagent#upgrade) to the [latest release version](https://community.chocolatey.org/packages/keepass-plugin-keeagent#versionhistory) for enjoying the newest features, run the following command from the command line or from PowerShell:
+
+```
+choco upgrade keepass-plugin-keeagent
+```
 
 USAGE
 -----
