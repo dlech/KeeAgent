@@ -34,6 +34,11 @@ _ReSharper*/
 _UpgradeReport*
 *.zip
 .vs/
+#Ignore rider files
+.idea/
+
+#Ignore rider files
+.idea/
 
 *.resources
 *.userprefs
