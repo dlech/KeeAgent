@@ -183,6 +183,8 @@
       <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\SshAgentLib.dll</PlgxReference>
       <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\BouncyCastle.Crypto.dll</PlgxReference>
       <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\Chaos.NaCl.dll</PlgxReference>
+	  <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\Konscious.Security.Cryptography.Argon2.dll</PlgxReference>
+	  <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\Konscious.Security.Cryptography.Blake2.dll</PlgxReference>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
