@@ -185,6 +185,7 @@
       <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\Chaos.NaCl.dll</PlgxReference>
 	  <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\Konscious.Security.Cryptography.Argon2.dll</PlgxReference>
 	  <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\Konscious.Security.Cryptography.Blake2.dll</PlgxReference>
+	  <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\System.Numerics.Vectors.dll</PlgxReference>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
