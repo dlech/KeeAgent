@@ -183,9 +183,9 @@
       <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\SshAgentLib.dll</PlgxReference>
       <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\BouncyCastle.Crypto.dll</PlgxReference>
       <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\Chaos.NaCl.dll</PlgxReference>
-	  <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\Konscious.Security.Cryptography.Argon2.dll</PlgxReference>
-	  <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\Konscious.Security.Cryptography.Blake2.dll</PlgxReference>
-	  <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\System.Numerics.Vectors.dll</PlgxReference>
+      <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\Konscious.Security.Cryptography.Argon2.dll</PlgxReference>
+      <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\Konscious.Security.Cryptography.Blake2.dll</PlgxReference>
+      <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\System.Numerics.Vectors.dll</PlgxReference>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -252,6 +252,8 @@
     <Delete Files="$(OutDir)Microsoft.WindowsAPICodePack.dll;$(OutDir)Microsoft.WindowsAPICodePack.Shell.dll" />
     <Delete Files="$(OutDir)SshAgentLib.WinForms.dll;$(OutDir)SshAgentLib.dll;$(OutDir)BouncyCastle.Crypto.dll" />
     <Delete Files="$(OutDir)Chaos.NaCl.dll;$(OutDir)Mono.Posix.dll;$(OutDir)$(AssemblyName)$(TargetExt)" />
+    <Delete Files="$(OutDir)Konscious.Security.Cryptography.Argon2.dll;$(OutDir)Konscious.Security.Cryptography.Blake2.dll" />
+    <Delete Files="$(OutDir)$(AssemblyName)$(TargetExt)" />
   </Target>
   <ProjectExtensions>
     <MonoDevelop>
