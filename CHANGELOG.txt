@@ -1,6 +1,7 @@
 Unreleased
 ----------
 * Update help URLs
+* Bumped minimum required .NET version to 4.6.2.
 
 v0.12.1 (2020-08-31)
 --------------------
