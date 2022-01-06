@@ -253,7 +253,7 @@
     <Delete Files="$(OutDir)SshAgentLib.WinForms.dll;$(OutDir)SshAgentLib.dll;$(OutDir)BouncyCastle.Crypto.dll" />
     <Delete Files="$(OutDir)Chaos.NaCl.dll;$(OutDir)Mono.Posix.dll;$(OutDir)$(AssemblyName)$(TargetExt)" />
     <Delete Files="$(OutDir)Konscious.Security.Cryptography.Argon2.dll;$(OutDir)Konscious.Security.Cryptography.Blake2.dll" />
-    <Delete Files="$(OutDir)$(AssemblyName)$(TargetExt)" />
+    <Delete Files="$(OutDir)System.Numerics.Vectors.dll" />
   </Target>
   <ProjectExtensions>
     <MonoDevelop>
