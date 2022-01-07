@@ -18,7 +18,7 @@ jobs:
       uses: microsoft/setup-msbuild@v1.1
 
     - name: Build PLGX
-      run: msbuild /property:GenerateFullPaths=true /property:Configuration=ReleasePlgx /t:build KeeAgent.sln
+      run: msbuild /property:Configuration=ReleasePlgx /t:build KeeAgent.sln
 
     - name: List PLGX
       run: ~\.nuget\packages\plgxtool\1.0.0\tools\PlgxTool.exe -l .\KeeAgent\bin\ReleasePlgx\KeeAgent.plgx
