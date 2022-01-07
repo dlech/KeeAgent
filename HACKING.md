@@ -25,7 +25,7 @@ These are not saved in KeeAgent.csproj, so you have to manually set them up.
 
 * Get the code and open it in Visual Studio Code:
 
-        git clone git://github.com/dlech/KeeAgent --recursive
+        git clone git://github.com/dlech/KeeAgent
         cd KeeAgent
         nuget restore
         code .
@@ -41,7 +41,7 @@ If `msbuild` is not present, change `tasks.json` to us `xbuild` instead.
 
 * Get the code:
 
-        git clone git://github.com/dlech/KeeAgent --recursive
+        git clone git://github.com/dlech/KeeAgent
 
 * In monodevelop:
     * In Edit > Preferences... > Projects > Build, check the box that says
@@ -61,7 +61,7 @@ If `msbuild` is not present, change `tasks.json` to us `xbuild` instead.
 
 * Get the code:
 
-        git clone git://github.com/dlech/KeeAgent --recursive
+        git clone git://github.com/dlech/KeeAgent
         cd KeeAgent
 
 * Restore the nuget packages:
