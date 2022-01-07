@@ -37,24 +37,6 @@ These are not saved in KeeAgent.csproj, so you have to manually set them up.
 If `msbuild` is not present, change `tasks.json` to us `xbuild` instead.
 
 
-### Building KeeAgent in Xamarin Studio (Linux/MacOS)
-
-* Get the code:
-
-        git clone git://github.com/dlech/KeeAgent
-
-* In monodevelop:
-    * In Edit > Preferences... > Projects > Build, check the box that says
-      *Compile the project using MSBuild/Xbuild*. In newer versions, this option
-      is not there (it is set per project in the project options). You must
-      restart Monodevelop after making this change.
-    * Open the `KeeAgent.sln` file.
-    * Expand `SshAgentLib` project and right-click on *References*. Select
-      *Restore NuGet Packages*.
-    * Close and re-open the solution if it still says that BouncyCastle is missing.
-    * Should be good to build and run now.
-
-
 ### Building KeeAgent from the Command Line (Linux/MacOS)
 
 * Make sure you have mono (>= v3.2.x)
