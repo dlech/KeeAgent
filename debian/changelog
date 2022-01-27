@@ -1,3 +1,20 @@
+keepass2-plugin-keeagent (0.12.1-1) bionic; urgency=medium
+
+  [ TheSpooler ]
+  * Validate that a database is available before updating group menu.
+
+ -- David Lechner <david@lechnology.com>  Mon, 31 Aug 2020 17:00:23 -0500
+
+keepass2-plugin-keeagent (0.12.0-1) bionic; urgency=medium
+
+  * Fix blank menu item in Group menu.
+  * Fix blank menu item in Entry menu (URL menu item is moved).
+  * Fix failing to save private key to file on Windows
+  * Show warning message when saving private key to file fails
+  * Fix blank URL menu item in context menu for items with SSH key
+
+ -- David Lechner <david@lechnology.com>  Sat, 16 May 2020 15:45:57 -0500
+
 keepass2-plugin-keeagent (0.11.2-1) bionic; urgency=medium
 
   * Fix crash during plugin load on mono

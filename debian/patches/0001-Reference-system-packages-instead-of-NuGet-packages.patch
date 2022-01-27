@@ -22,7 +22,7 @@ the system-provided packages instead of NuGet packages.
    <PropertyGroup>
      <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
      <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-@@ -179,7 +181,7 @@
+@@ -181,7 +183,7 @@
        <Project>{9163B6B6-0603-4C6E-BC67-7111ED8CDDE1}</Project>
        <Name>SshAgentLib</Name>
        <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\SshAgentLib.dll</PlgxReference>
@@ -31,7 +31,7 @@ the system-provided packages instead of NuGet packages.
        <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\Chaos.NaCl.dll</PlgxReference>
      </ProjectReference>
    </ItemGroup>
-@@ -204,14 +206,10 @@
+@@ -206,14 +208,10 @@
      <None Include="Resources\help-3.png" />
    </ItemGroup>
    <ItemGroup>
@@ -49,13 +49,13 @@ the system-provided packages instead of NuGet packages.
    </ItemGroup>
    <PropertyGroup>
    </PropertyGroup>
-@@ -244,7 +242,7 @@
+@@ -247,7 +245,7 @@
    <Target Name="AfterBuild" Condition="'$(Configuration)' == 'ReleasePlgx'">
      <CallTarget Targets="BuildPlgx" />
      <Delete Files="$(OutDir)Microsoft.WindowsAPICodePack.dll;$(OutDir)Microsoft.WindowsAPICodePack.Shell.dll" />
 -    <Delete Files="$(OutDir)SshAgentLib.WinForms.dll;$(OutDir)SshAgentLib.dll;$(OutDir)BouncyCastle.Crypto.dll" />
 +    <Delete Files="$(OutDir)SshAgentLib.WinForms.dll;$(OutDir)SshAgentLib.dll;$(OutDir)BouncyCastle.dll" />
-     <Delete Files="$(OutDir)Chaos.NaCl.dll;$(OutDir)$(AssemblyName)$(TargetExt)" />
+     <Delete Files="$(OutDir)Chaos.NaCl.dll;$(OutDir)Mono.Posix.dll;$(OutDir)$(AssemblyName)$(TargetExt)" />
    </Target>
    <ProjectExtensions>
 --- a/SshAgentLib/SshAgentLib/SshAgentLib.csproj
