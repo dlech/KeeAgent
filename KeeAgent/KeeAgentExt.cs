@@ -815,35 +815,29 @@ namespace KeeAgent
       RemoveKey(e.Key);
     }
 
+    private object unlockOnActivitySyncRoot = new object(); // used in PageantAgent_MessageReceived as a sync root
+
     private void PageantAgent_MessageReceived(object sender, Agent.MessageReceivedEventArgs e)
     {
-      var mainWindow = pluginHost.MainWindow;
+      if (!Options.UnlockOnActivity) {
+        return; // unlock on activity isn't enabled, nothing to do here
+      }
 
-      var thread = new Thread(
-        delegate()
-        {
-          mainWindow.Invoke(
-            (MethodInvoker)delegate()
-          {
-            // don't do anything - we are just seeing if the thread is blocked
-          });
-        });
-      thread.Name = "Check";
-      thread.Start();
-      // only try to unlock databases if main thread is not blocked
-      if (thread.Join(1000)) {
-        mainWindow.Invoke((MethodInvoker)delegate()
-        {
-          if (Options.UnlockOnActivity) {
-            foreach (var document in mainWindow.DocumentManager.Documents) {
+      var mainWindow = pluginHost.MainWindow;
+      if (!mainWindow.DocumentManager.Documents.Any(document => mainWindow.IsFileLocked(document))) {
+        return; // none of the documents are locked, nothing to do here
+      }
+
+      lock (unlockOnActivitySyncRoot) {
+        // ↑ protection from concurrent requests, for example "git fetch" with multiple ssh remotes
+
+        mainWindow.Invoke((MethodInvoker)delegate () {
+          foreach (var document in mainWindow.DocumentManager.Documents) {
             if (mainWindow.IsFileLocked(document)) {
-                mainWindow.OpenDatabase(document.LockedIoc, null, false);
-              }
+              mainWindow.OpenDatabase(document.LockedIoc, null, false);
             }
           }
         });
-      } else {
-        thread.Abort();
       }
     }
 
