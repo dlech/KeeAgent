@@ -111,7 +111,7 @@ namespace KeeAgent.UI
         TreeNode rootNode = null;
         var rootGroup = mActiveDb.RootGroup;
         if (rootGroup != null) {
-          int nIconID = ((!rootGroup.CustomIconUuid.EqualsValue(PwUuid.Zero)) ?
+          int nIconID = ((!rootGroup.CustomIconUuid.Equals(PwUuid.Zero)) ?
             ((int)PwIcon.Count + mActiveDb.GetCustomIconIndex(
             rootGroup.CustomIconUuid)) : (int)rootGroup.IconId);
           if (rootGroup.Expires && (rootGroup.ExpiryTime <= mCachedNow)) {
@@ -185,13 +185,13 @@ namespace KeeAgent.UI
 
       foreach (PwGroup childGroup in parentGroup.Groups) {
         if (mActiveDb.RecycleBinEnabled &&
-            childGroup.Uuid.EqualsValue(mActiveDb.RecycleBinUuid))
+            childGroup.Uuid.Equals(mActiveDb.RecycleBinUuid))
           continue;
 
         bool bExpired = (childGroup.Expires && (childGroup.ExpiryTime <= mCachedNow));
         string strName = childGroup.Name;
 
-        int iconID = ((!childGroup.CustomIconUuid.EqualsValue(PwUuid.Zero)) ?
+        int iconID = ((!childGroup.CustomIconUuid.Equals(PwUuid.Zero)) ?
           ((int)PwIcon.Count + mActiveDb.GetCustomIconIndex(childGroup.CustomIconUuid)) :
           (int)childGroup.IconId);
         if (bExpired) {
@@ -253,7 +253,7 @@ namespace KeeAgent.UI
             entryNode.ImageIndex = (int)PwIcon.Expired;
             if (mExpiredFont != null) entryNode.NodeFont = mExpiredFont;
           } else { // Not expired
-            if (entry.CustomIconUuid.EqualsValue(PwUuid.Zero))
+            if (entry.CustomIconUuid.Equals(PwUuid.Zero))
               entryNode.ImageIndex = (int)entry.IconId;
             else
               entryNode.ImageIndex = (int)PwIcon.Count +
