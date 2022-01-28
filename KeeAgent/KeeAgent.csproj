@@ -228,24 +228,6 @@
     <Prefer32Bit>false</Prefer32Bit>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
-    <StartAction>Program</StartAction>
-    <StartProgram>bin\Debug\KeePass.exe</StartProgram>
-    <StartArguments>--debug --pw:test Test.kdbx</StartArguments>
-    <StartWorkingDirectory>bin\Debug</StartWorkingDirectory>
-    <ConsolePause>false</ConsolePause>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Custom Command' ">
-    <StartAction>Program</StartAction>
-    <StartProgram>bin\Release\KeePass.exe</StartProgram>
-    <ConsolePause>false</ConsolePause>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Custom Command 3' ">
-    <StartAction>Program</StartAction>
-    <StartProgram>bin\ReleasePlgx\KeePass.exe</StartProgram>
-    <StartArguments>--debug --saveplgxcr</StartArguments>
-    <ConsolePause>false</ConsolePause>
-  </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild" Condition="'$(Configuration)' == 'ReleasePlgx'">
     <CallTarget Targets="BuildPlgx" />
