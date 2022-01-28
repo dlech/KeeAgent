@@ -6,7 +6,7 @@
     "configurations": [
         {
             "name": "Debug .dll",
-            "type": "mono",
+            "type": "clr",
             "request": "launch",
             "program": "${workspaceRoot}/KeeAgent/bin/Debug/KeePass.exe",
             "cwd": "${workspaceRoot}",
@@ -18,7 +18,7 @@
         },
         {
             "name": "Debug .plgx",
-            "type": "mono",
+            "type": "clr",
             "request": "launch",
             "program": "${workspaceRoot}/KeeAgent/bin/ReleasePlgx/KeePass.exe",
             "cwd": "${workspaceRoot}",
@@ -30,7 +30,7 @@
         },
         {
             "name": "Attach",
-            "type": "mono",
+            "type": "clr",
             "request": "attach",
             "address": "localhost",
             "port": 55555

@@ -6,7 +6,7 @@
         {
             "label": "build",
             "type": "shell",
-            "command": "msbuild",
+            "command": "${workspaceFolder}/scripts/msbuild.ps1",
             "args": [
                 "/property:GenerateFullPaths=true",
                 "/t:build",
@@ -21,7 +21,7 @@
         {
             "label": "release",
             "type": "shell",
-            "command": "msbuild",
+            "command": "${workspaceFolder}/scripts/msbuild.ps1",
             "args": [
                 "/property:GenerateFullPaths=true",
                 "/property:Configuration=ReleasePlgx",
