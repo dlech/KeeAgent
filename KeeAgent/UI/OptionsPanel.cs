@@ -1,23 +1,5 @@
-﻿//
-//  OptionsPanel.cs
-//
-//  Author(s):
-//      David Lechner <david@lechnology.com>
-//
-//  Copyright (C) 2012-2015  David Lechner
-//
-//  This program is free software; you can redistribute it and/or
-//  modify it under the terms of the GNU General Public License
-//  as published by the Free Software Foundation; either version 2
-//  of the License, or (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU General Public License for more details.
-//
-//  You should have received a copy of the GNU General Public License
-//  along with this program; if not, see <http://www.gnu.org/licenses>
+﻿// SPDX-License-Identifier: GPL-2.0-only
+// Copyright (c) 2012-2017,2022 David Lechner <david@lechnology.com>
 
 using System;
 using System.Diagnostics;
@@ -108,14 +90,20 @@ namespace KeeAgent.UI
         cygwinSocketPathTextBox.Enabled = true;
         cygwinPathBrowseButton.Enabled = true;
         useMsysSocketCheckBox.Visible = false;
-        label4.Visible = false;
+        msysSocketPathLabel.Visible = false;
         msysSocketPathTextBox.Visible = false;
         msysPathBrowseButton.Visible = false;
+        useWslSocketCheckBox.Visible = false;
+        wslSocketPathLabel.Visible = false;
+        wslSocketPathTextBox.Visible = false;
+        wslSocketPathBrowseButton.Visible = false;
       } else {
         useCygwinSocketCheckBox.Checked = ext.Options.UseCygwinSocket;
         cygwinSocketPathTextBox.Text = ext.Options.CygwinSocketPath;
         useMsysSocketCheckBox.Checked = ext.Options.UseMsysSocket;
         msysSocketPathTextBox.Text = ext.Options.MsysSocketPath;
+        useWslSocketCheckBox.Checked = ext.Options.UseWslSocket;
+        wslSocketPathTextBox.Text = ext.Options.WslSocketPath;
       }
       optionsList.UpdateData(false);
     }
@@ -142,6 +130,13 @@ namespace KeeAgent.UI
               e2.Cancel = true;
               return;
             }
+            if (!isUnix && useWslSocketCheckBox.Checked
+              && string.IsNullOrWhiteSpace(wslSocketPathTextBox.Text))
+            {
+              MessageService.ShowWarning("Must specify path for WSL socket file.");
+              e2.Cancel = true;
+              return;
+            }
             if (isUnix && modeComboBox.Text != Translatable.OptionAgentModeClient
               && string.IsNullOrWhiteSpace (cygwinSocketPathTextBox.Text))
             {
@@ -159,6 +154,11 @@ namespace KeeAgent.UI
                 ext.StartMsysSocket();
             } else {
                 ext.StopMsysSocket();
+            }
+            if (ext.Options.UseWslSocket) { 
+              ext.StartWslSocket();
+            } else {
+              ext.StopWslSocket();
             }
             if (ext.Options.UseWindowsOpenSshPipe) {
               ext.StartWindowsOpenSshPipe();
@@ -191,6 +191,8 @@ namespace KeeAgent.UI
         ext.Options.CygwinSocketPath = cygwinSocketPathTextBox.Text;
         ext.Options.UseMsysSocket = useMsysSocketCheckBox.Checked;
         ext.Options.MsysSocketPath = msysSocketPathTextBox.Text;
+        ext.Options.UseWslSocket = useWslSocketCheckBox.Checked;
+        ext.Options.WslSocketPath = wslSocketPathTextBox.Text;
       }
     }
 
@@ -211,6 +213,13 @@ namespace KeeAgent.UI
       var file = browseForPath();
       if (file != null)
         msysSocketPathTextBox.Text = file;
+    }
+
+    void wslSocketPathBrowseButton_Click(object sender, EventArgs e)
+    {
+      var file = browseForPath();
+      if (file != null)
+        wslSocketPathTextBox.Text = file;
     }
 
     string browseForPath()
@@ -250,6 +259,14 @@ namespace KeeAgent.UI
       if (!isUnix) {
         msysSocketPathTextBox.Enabled = useMsysSocketCheckBox.Checked;
         msysPathBrowseButton.Enabled = useMsysSocketCheckBox.Checked;
+      }
+    }
+
+    void useWslSocketCheckBox_CheckedChanged(object sender, EventArgs e)
+    {
+      if (!isUnix) {
+        wslSocketPathTextBox.Enabled = useWslSocketCheckBox.Checked;
+        wslSocketPathBrowseButton.Enabled = useWslSocketCheckBox.Checked;
       }
     }
   }

@@ -126,10 +126,13 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="customListViewEx.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 46</value>
+    <value>12, 88</value>
+  </data>
+  <data name="customListViewEx.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
   </data>
   <data name="customListViewEx.Size" type="System.Drawing.Size, System.Drawing">
-    <value>542, 114</value>
+    <value>1080, 216</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="customListViewEx.TabIndex" type="System.Int32, mscorlib">
@@ -139,7 +142,7 @@
     <value>customListViewEx</value>
   </data>
   <data name="&gt;&gt;customListViewEx.Type" xml:space="preserve">
-    <value>KeePass.UI.CustomListViewEx, KeePass, Version=2.28.0.29696, Culture=neutral, PublicKeyToken=fed2ed7716aecf5c</value>
+    <value>KeePass.UI.CustomListViewEx, KeePass, Version=2.50.0.21065, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;customListViewEx.Parent" xml:space="preserve">
     <value>$this</value>
@@ -148,10 +151,13 @@
     <value>4</value>
   </data>
   <data name="modeComboBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>158, 12</value>
+    <value>316, 23</value>
+  </data>
+  <data name="modeComboBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
   </data>
   <data name="modeComboBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>121, 21</value>
+    <value>238, 33</value>
   </data>
   <data name="modeComboBox.TabIndex" type="System.Int32, mscorlib">
     <value>17</value>
@@ -172,10 +178,13 @@
     <value>True</value>
   </data>
   <data name="modeLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 15</value>
+    <value>12, 29</value>
+  </data>
+  <data name="modeLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 0, 6, 0</value>
   </data>
   <data name="modeLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>146, 13</value>
+    <value>299, 25</value>
   </data>
   <data name="modeLabel.TabIndex" type="System.Int32, mscorlib">
     <value>18</value>
@@ -199,10 +208,13 @@
     <value>Top, Right</value>
   </data>
   <data name="helpButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>523, 9</value>
+    <value>1046, 17</value>
+  </data>
+  <data name="helpButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
   </data>
   <data name="helpButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>25, 25</value>
+    <value>50, 48</value>
   </data>
   <data name="helpButton.TabIndex" type="System.Int32, mscorlib">
     <value>19</value>
@@ -232,10 +244,13 @@
     <value>NoControl</value>
   </data>
   <data name="msysPathBrowseButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>458, 89</value>
+    <value>916, 171</value>
+  </data>
+  <data name="msysPathBrowseButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
   </data>
   <data name="msysPathBrowseButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
+    <value>150, 44</value>
   </data>
   <data name="msysPathBrowseButton.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -255,6 +270,42 @@
   <data name="&gt;&gt;msysPathBrowseButton.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="wslSocketPathBrowseButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="wslSocketPathBrowseButton.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="wslSocketPathBrowseButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="wslSocketPathBrowseButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>916, 265</value>
+  </data>
+  <data name="wslSocketPathBrowseButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
+  </data>
+  <data name="wslSocketPathBrowseButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>150, 44</value>
+  </data>
+  <data name="wslSocketPathBrowseButton.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="wslSocketPathBrowseButton.Text" xml:space="preserve">
+    <value>Browse…</value>
+  </data>
+  <data name="&gt;&gt;wslSocketPathBrowseButton.Name" xml:space="preserve">
+    <value>wslSocketPathBrowseButton</value>
+  </data>
+  <data name="&gt;&gt;wslSocketPathBrowseButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;wslSocketPathBrowseButton.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;wslSocketPathBrowseButton.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="cygwinPathBrowseButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
@@ -265,10 +316,13 @@
     <value>NoControl</value>
   </data>
   <data name="cygwinPathBrowseButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>458, 40</value>
+    <value>916, 77</value>
+  </data>
+  <data name="cygwinPathBrowseButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
   </data>
   <data name="cygwinPathBrowseButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
+    <value>150, 44</value>
   </data>
   <data name="cygwinPathBrowseButton.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -286,7 +340,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;cygwinPathBrowseButton.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="msysSocketPathTextBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -295,10 +349,13 @@
     <value>False</value>
   </data>
   <data name="msysSocketPathTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>67, 91</value>
+    <value>134, 175</value>
+  </data>
+  <data name="msysSocketPathTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
   </data>
   <data name="msysSocketPathTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>385, 20</value>
+    <value>766, 31</value>
   </data>
   <data name="msysSocketPathTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -313,37 +370,70 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;msysSocketPathTextBox.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
-  <data name="label4.AutoSize" type="System.Boolean, mscorlib">
+  <data name="msysSocketPathLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="label4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="msysSocketPathLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>29, 94</value>
+  <data name="msysSocketPathLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>58, 181</value>
   </data>
-  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>32, 13</value>
+  <data name="msysSocketPathLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 0, 6, 0</value>
   </data>
-  <data name="label4.TabIndex" type="System.Int32, mscorlib">
+  <data name="msysSocketPathLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>62, 25</value>
+  </data>
+  <data name="msysSocketPathLabel.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
-  <data name="label4.Text" xml:space="preserve">
+  <data name="msysSocketPathLabel.Text" xml:space="preserve">
     <value>Path:</value>
   </data>
-  <data name="&gt;&gt;label4.Name" xml:space="preserve">
-    <value>label4</value>
+  <data name="&gt;&gt;msysSocketPathLabel.Name" xml:space="preserve">
+    <value>msysSocketPathLabel</value>
   </data>
-  <data name="&gt;&gt;label4.Type" xml:space="preserve">
+  <data name="&gt;&gt;msysSocketPathLabel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
+  <data name="&gt;&gt;msysSocketPathLabel.Parent" xml:space="preserve">
     <value>groupBox1</value>
   </data>
-  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
-    <value>3</value>
+  <data name="&gt;&gt;msysSocketPathLabel.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="wslSocketPathTextBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="wslSocketPathTextBox.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="wslSocketPathTextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>134, 269</value>
+  </data>
+  <data name="wslSocketPathTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
+  </data>
+  <data name="wslSocketPathTextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>766, 31</value>
+  </data>
+  <data name="wslSocketPathTextBox.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;wslSocketPathTextBox.Name" xml:space="preserve">
+    <value>wslSocketPathTextBox</value>
+  </data>
+  <data name="&gt;&gt;wslSocketPathTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;wslSocketPathTextBox.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;wslSocketPathTextBox.ZOrder" xml:space="preserve">
+    <value>5</value>
   </data>
   <data name="cygwinSocketPathTextBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -352,10 +442,13 @@
     <value>False</value>
   </data>
   <data name="cygwinSocketPathTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>67, 42</value>
+    <value>134, 81</value>
+  </data>
+  <data name="cygwinSocketPathTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
   </data>
   <data name="cygwinSocketPathTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>385, 20</value>
+    <value>766, 31</value>
   </data>
   <data name="cygwinSocketPathTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -370,7 +463,40 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;cygwinSocketPathTextBox.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>6</value>
+  </data>
+  <data name="wslSocketPathLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="wslSocketPathLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="wslSocketPathLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>58, 275</value>
+  </data>
+  <data name="wslSocketPathLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 0, 6, 0</value>
+  </data>
+  <data name="wslSocketPathLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>62, 25</value>
+  </data>
+  <data name="wslSocketPathLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="wslSocketPathLabel.Text" xml:space="preserve">
+    <value>Path:</value>
+  </data>
+  <data name="&gt;&gt;wslSocketPathLabel.Name" xml:space="preserve">
+    <value>wslSocketPathLabel</value>
+  </data>
+  <data name="&gt;&gt;wslSocketPathLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;wslSocketPathLabel.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;wslSocketPathLabel.ZOrder" xml:space="preserve">
+    <value>7</value>
   </data>
   <data name="useMsysSocketCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -379,10 +505,13 @@
     <value>NoControl</value>
   </data>
   <data name="useMsysSocketCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 68</value>
+    <value>26, 131</value>
+  </data>
+  <data name="useMsysSocketCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
   </data>
   <data name="useMsysSocketCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>201, 17</value>
+    <value>404, 29</value>
   </data>
   <data name="useMsysSocketCheckBox.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -400,16 +529,52 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;useMsysSocketCheckBox.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>8</value>
+  </data>
+  <data name="useWslSocketCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="useWslSocketCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="useWslSocketCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>26, 225</value>
+  </data>
+  <data name="useWslSocketCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
+  </data>
+  <data name="useWslSocketCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>373, 29</value>
+  </data>
+  <data name="useWslSocketCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="useWslSocketCheckBox.Text" xml:space="preserve">
+    <value>Create WSL compatible socket file</value>
+  </data>
+  <data name="&gt;&gt;useWslSocketCheckBox.Name" xml:space="preserve">
+    <value>useWslSocketCheckBox</value>
+  </data>
+  <data name="&gt;&gt;useWslSocketCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;useWslSocketCheckBox.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;useWslSocketCheckBox.ZOrder" xml:space="preserve">
+    <value>9</value>
   </data>
   <data name="label3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>29, 45</value>
+    <value>58, 87</value>
+  </data>
+  <data name="label3.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 0, 6, 0</value>
   </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>32, 13</value>
+    <value>62, 25</value>
   </data>
   <data name="label3.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -427,16 +592,19 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>10</value>
   </data>
   <data name="useCygwinSocketCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="useCygwinSocketCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 19</value>
+    <value>26, 37</value>
+  </data>
+  <data name="useCygwinSocketCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
   </data>
   <data name="useCygwinSocketCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>373, 17</value>
+    <value>753, 29</value>
   </data>
   <data name="useCygwinSocketCheckBox.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -454,7 +622,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;useCygwinSocketCheckBox.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>11</value>
   </data>
   <data name="label1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
@@ -463,10 +631,13 @@
     <value>True</value>
   </data>
   <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 120</value>
+    <value>12, 325</value>
+  </data>
+  <data name="label1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 0, 6, 0</value>
   </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>379, 13</value>
+    <value>668, 25</value>
   </data>
   <data name="label1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -484,13 +655,19 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>12</value>
   </data>
   <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 166</value>
+    <value>14, 319</value>
+  </data>
+  <data name="groupBox1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
+  </data>
+  <data name="groupBox1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
   </data>
   <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>539, 139</value>
+    <value>1078, 362</value>
   </data>
   <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>20</value>
@@ -514,13 +691,16 @@
     <value>True</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
+    <value>12, 25</value>
+  </data>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
   </data>
   <data name="$this.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
+    <value>6, 6, 6, 6</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>554, 311</value>
+    <value>1108, 692</value>
   </data>
   <data name="&gt;&gt;columnHeader.Name" xml:space="preserve">
     <value>columnHeader</value>
