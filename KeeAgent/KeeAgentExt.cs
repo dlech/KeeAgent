@@ -1,24 +1,5 @@
-﻿//
-//  KeeAgentExt.cs
-//
-//  Author(s):
-//      David Lechner <david@lechnology.com>
-//
-//  Copyright (C) 2012-2017  David Lechner <david@lechnology.com>
-//
-//  This program is free software; you can redistribute it and/or
-//  modify it under the terms of the GNU General Public License
-//  as published by the Free Software Foundation; either version 2
-//  of the License, or (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU General Public License for more details.
-//
-//  You should have received a copy of the GNU General Public License
-//  along with this program; if not, see <http://www.gnu.org/licenses>
-
+﻿// SPDX-License-Identifier: GPL-2.0-only
+// Copyright (c) 2012-2017,2022 David Lechner <david@lechnology.com>
 
 using System;
 using System.Collections.Generic;
@@ -76,8 +57,9 @@ namespace KeeAgent
     const string cygwinSocketPathOptionName = pluginNamespace + ".CygwinSocketPath";
     const string useMsysSocketOptionName = pluginNamespace + ".UseMsysSocket";
     const string msysSocketPathOptionName = pluginNamespace + ".MsysSocketPath";
-    const string useWindowsOpenSshPipeName = pluginNamespace + ".UseWindowsOpenSshPipe";
     const string useWslSocketOptionName = pluginNamespace + ".UseWslSocket";
+    const string wslSocketPathOptionName = pluginNamespace + ".WslSocketPath";
+    const string useWindowsOpenSshPipeName = pluginNamespace + ".UseWindowsOpenSshPipe";
     const string unixSocketPathOptionName = pluginNamespace + ".UnixSocketPath";
     const string userPicksKeyOnRequestIdentitiesOptionName =
       pluginNamespace + ".UserPicksKeyOnRequestIdentities";
@@ -394,7 +376,7 @@ namespace KeeAgent
         pagent.StopWslSocket();
         try {
           pagent.StartWslSocket(Environment.ExpandEnvironmentVariables(
-            Options.UnixSocketPath));
+            Options.WslSocketPath));
         } catch (SocketException ex) {
           if (ex.SocketErrorCode != SocketError.AddressFamilyNotSupported) {
             throw;
@@ -616,9 +598,10 @@ namespace KeeAgent
       config.SetString(cygwinSocketPathOptionName, Options.CygwinSocketPath);
       config.SetBool(useMsysSocketOptionName, Options.UseMsysSocket );
       config.SetString(msysSocketPathOptionName, Options.MsysSocketPath);
+      config.SetBool(useWslSocketOptionName, Options.UseWslSocket );
+      config.SetString(wslSocketPathOptionName, Options.WslSocketPath);
       config.SetBool(useWindowsOpenSshPipeName, Options.UseWindowsOpenSshPipe);
       config.SetString(unixSocketPathOptionName, Options.UnixSocketPath);
-      config.SetBool(useWslSocketOptionName, Options.UseWslSocket );
       config.SetBool(userPicksKeyOnRequestIdentitiesOptionName,
         Options.UserPicksKeyOnRequestIdentities);
       config.SetBool(ignoreMissingExternalKeyFilesName, Options.IgnoreMissingExternalKeyFiles);
@@ -637,8 +620,9 @@ namespace KeeAgent
       Options.CygwinSocketPath = config.GetString(cygwinSocketPathOptionName);
       Options.UseMsysSocket = config.GetBool(useMsysSocketOptionName, false);
       Options.MsysSocketPath = config.GetString(msysSocketPathOptionName);
-      Options.UseWindowsOpenSshPipe = config.GetBool(useWindowsOpenSshPipeName, false);
       Options.UseWslSocket = config.GetBool(useWslSocketOptionName, false);
+      Options.WslSocketPath = config.GetString(wslSocketPathOptionName);
+      Options.UseWindowsOpenSshPipe = config.GetBool(useWindowsOpenSshPipeName, false);
       Options.UnixSocketPath = config.GetString(unixSocketPathOptionName);
       Options.UserPicksKeyOnRequestIdentities =
         config.GetBool(userPicksKeyOnRequestIdentitiesOptionName, false);

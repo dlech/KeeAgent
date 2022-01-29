@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <!-- For building .plgx -->
@@ -167,7 +167,7 @@
   <ItemGroup>
     <None Include="Resources\KeeAgent-icon-mono.ico" />
     <None Include="Test.kdbx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <ExcludeFromPlgx />
     </None>
   </ItemGroup>
@@ -186,6 +186,7 @@
       <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\Konscious.Security.Cryptography.Argon2.dll</PlgxReference>
       <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\Konscious.Security.Cryptography.Blake2.dll</PlgxReference>
       <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\System.Numerics.Vectors.dll</PlgxReference>
+      <PlgxReference>..\SshAgentLib\Ui\WinForms\bin\Release\System.Net.Sockets.dll</PlgxReference>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -195,7 +196,7 @@
     <None Include="Resources\KeeAgent-icon.ico" />
     <None Include="KeePass.config.xml">
       <ExcludeFromPlgx />
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="KeePass.exe.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -235,7 +236,7 @@
     <Delete Files="$(OutDir)SshAgentLib.WinForms.dll;$(OutDir)SshAgentLib.dll;$(OutDir)BouncyCastle.Crypto.dll" />
     <Delete Files="$(OutDir)Chaos.NaCl.dll;$(OutDir)Mono.Posix.dll;$(OutDir)$(AssemblyName)$(TargetExt)" />
     <Delete Files="$(OutDir)Konscious.Security.Cryptography.Argon2.dll;$(OutDir)Konscious.Security.Cryptography.Blake2.dll" />
-    <Delete Files="$(OutDir)System.Numerics.Vectors.dll" />
+    <Delete Files="$(OutDir)System.Numerics.Vectors.dll;$(OutDir)System.Net.Sockets.dll" />
   </Target>
   <ProjectExtensions>
     <MonoDevelop>
