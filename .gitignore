@@ -39,3 +39,6 @@ _UpgradeReport*
 *.userprefs
 test-results*/
 [Pp]ackages/
+
+#ignore jetbrains rider files
+.idea/

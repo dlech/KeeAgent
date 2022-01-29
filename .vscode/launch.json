@@ -5,8 +5,8 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Launch",
-            "type": "mono",
+            "name": "Debug .dll",
+            "type": "clr",
             "request": "launch",
             "program": "${workspaceRoot}/KeeAgent/bin/Debug/KeePass.exe",
             "cwd": "${workspaceRoot}",
@@ -17,8 +17,20 @@
             "preLaunchTask": "build"
         },
         {
+            "name": "Debug .plgx",
+            "type": "clr",
+            "request": "launch",
+            "program": "${workspaceRoot}/KeeAgent/bin/ReleasePlgx/KeePass.exe",
+            "cwd": "${workspaceRoot}",
+            "args": [
+                "--pw=test",
+                "${workspaceRoot}/KeeAgent/bin/ReleasePlgx/Test.kdbx"
+            ],
+            "preLaunchTask": "release"
+        },
+        {
             "name": "Attach",
-            "type": "mono",
+            "type": "clr",
             "request": "attach",
             "address": "localhost",
             "port": 55555

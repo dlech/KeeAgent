@@ -1,3 +1,37 @@
+Unreleased
+----------
+* Update help URLs
+* Bumped minimum required .NET version to 4.6.2.
+* Added support for PuTTY Private Key (.ppk) v3 file format (thanks ezekielnewren).
+
+v0.12.1 (2020-08-31)
+--------------------
+* Fix crash when opening Group menu when no database open (thanks Mike Myers)
+
+v0.12.0 (2020-05-16)
+--------------------
+* No changes since Beta v0.11.4.
+
+Beta v0.11.4 (2020-03-27)
+-------------------------
+* Fix blank menu item in Group menu.
+* Fix blank menu item in Entry menu (URL menu item is moved).
+
+Beta v0.11.3 (2019-10-07)
+-------------------------
+* Fix failing to save private key to file on Windows
+* Show warning message when saving private key to file fails
+* Fix blank URL menu item in context menu for items with SSH key
+
+Beta v0.11.2 (2019-09-16)
+-------------------------
+* Fix .plgx not loading on mono because of .NET runtime version
+* Fix crash during load on mono
+
+Beta v0.11.1 (2019-09-10)
+-------------------------
+* Fix compatibility with KeePass 2.43
+
 Beta v0.11.0 (2019-03-08)
 -------------------------
 * Add support for SHA-256 and SHA-512 RSA key signing

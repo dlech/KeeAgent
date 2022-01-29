@@ -1,4 +1,4 @@
 {
-    "restructuredtext.confPath": "${workspaceRoot}/doc",
+    "restructuredtext.confPath": "${workspaceFolder}/doc",
     "restructuredtext.builtDocumentationPath": "${workspaceRoot}/doc/_build/html"
 }

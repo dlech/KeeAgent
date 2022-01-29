@@ -8,7 +8,31 @@ stand-alone agent or it can interface with an external agent.
 DOWNLOAD
 --------
 
-Get KeeAgent at https://lechnology.com/software/keeagent
+#### Official release
+
+Get the latest stable official release of KeeAgent at <https://lechnology.com/software/keeagent>.
+
+#### Chocolatey 📦
+
+You can [use Chocolatey to install](https://community.chocolatey.org/packages/keepass-plugin-keeagent#install) it in a more automated manner:
+
+```
+choco install keepass-plugin-keeagent
+```
+
+To [upgrade KeePass Plugin KeeAgent](https://community.chocolatey.org/packages/keepass-plugin-keeagent#upgrade) to the [latest release version](https://community.chocolatey.org/packages/keepass-plugin-keeagent#versionhistory) for enjoying the newest features, run the following command from the command line or from PowerShell:
+
+```
+choco upgrade keepass-plugin-keeagent
+```
+
+#### Ubuntu 📦
+
+There is a PPA with a KeeAgent package that can be used to install KeeAgent on
+Ubuntu and its derivatives.
+
+    sudo add-apt-repository ppa:dlech/keepass2-plugins --update
+    sudo apt install keepass2-plugin-keeagent
 
 
 USAGE
@@ -26,4 +50,4 @@ Pull requests are welcome! See [HACKING.md](./HACKING.md) for more info.
 COPYRIGHT
 ---------
 
-(C) 2012-2018 David Lechner <david@lechnology.com>
+(C) 2012-2022 David Lechner <david@lechnology.com>

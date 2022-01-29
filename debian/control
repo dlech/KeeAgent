@@ -2,15 +2,16 @@ Source: keepass2-plugin-keeagent
 Section: utils
 Priority: optional
 Maintainer: David Lechner <david@lechnology.com>
-Build-Depends: debhelper (>= 8.0.0), cli-common-dev (>= 0.8)
-Standards-Version: 3.9.5
+Build-Depends: debhelper (>= 10), cli-common-dev (>= 0.8), keepass2 (>= 2.41),
+    keepass2-plugin-dev, libchaos-nacl-cil, libbccrypto-cil
+Standards-Version: 4.1.4
 Homepage: http://lechnology.com/KeeAgent
 Vcs-Git: git://github.com/dlech/KeeAgent.git
 Vcs-Browser: https://github.com/dlech/KeeAgent
 
 Package: keepass2-plugin-keeagent
 Architecture: all
-Depends: keepass2,
+Depends: keepass2 (>= 2.41),
          mono-mcs,
          libmono-system-data-datasetextensions4.0-cil,
          ssh-askpass,
