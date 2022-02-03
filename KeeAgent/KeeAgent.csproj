@@ -157,6 +157,7 @@
     <EmbeddedResource Include="Translatable.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Translatable.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\InPlaceMessage.resx">
       <DependentUpon>InPlaceMessage.cs</DependentUpon>
