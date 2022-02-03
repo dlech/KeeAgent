@@ -295,7 +295,7 @@ namespace KeeAgent {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enable agent for Windows OpenSSH (experimental).
+        ///   Looks up a localized string similar to Enable agent for Windows OpenSSH.
         /// </summary>
         internal static string OptionUseWindowsOpenSshPipe {
             get {

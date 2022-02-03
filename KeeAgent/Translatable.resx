@@ -216,6 +216,6 @@
     <value>Load SS&amp;H Keys</value>
   </data>
   <data name="OptionUseWindowsOpenSshPipe" xml:space="preserve">
-    <value>Enable agent for Windows OpenSSH (experimental)</value>
+    <value>Enable agent for Windows OpenSSH</value>
   </data>
 </root>
