@@ -1,23 +1,5 @@
-﻿//
-//  EntryPanel.cs
-//
-//  Author(s):
-//      David Lechner <david@lechnology.com>
-//
-//  Copyright (C) 2012-2016 David Lechner
-//
-//  This program is free software; you can redistribute it and/or
-//  modify it under the terms of the GNU General Public License
-//  as published by the Free Software Foundation; either version 2
-//  of the License, or (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU General Public License for more details.
-//
-//  You should have received a copy of the GNU General Public License
-//  along with this program; if not, see <http://www.gnu.org/licenses>
+﻿// SPDX-License-Identifier: GPL-2.0-only
+// Copyright (c) 2012-2016,2022 David Lechner <david@lechnology.com>
 
 using System;
 using System.Diagnostics;
@@ -28,6 +10,8 @@ using System.IO;
 using dlech.SshAgentLib;
 using KeePass.Util;
 using KeePass.Util.Spr;
+using KeePassLib.Security;
+using SshAgentLib.Keys;
 
 namespace KeeAgent.UI
 {
@@ -36,7 +20,7 @@ namespace KeeAgent.UI
     PwEntryForm pwEntryForm;
     KeeAgentExt ext;
 
-    public EntrySettings IntialSettings {
+    public EntrySettings InitialSettings {
       get;
       private set;
     }
@@ -56,11 +40,10 @@ namespace KeeAgent.UI
       BackColor = Color.Transparent;
 
       // fix up layout in Mono
-      if (Type.GetType ("Mono.Runtime") != null) {
+      if (Type.GetType("Mono.Runtime") != null) {
         const int xOffset = -24;
         helpButton.Left += xOffset;
         keyInfoGroupBox.Width += xOffset;
-        keyLocationPanel.Width = keyInfoGroupBox.Width;
         commentTextBox.Width -= 6;
         fingerprintTextBox.Width -= 6;
       }
@@ -70,19 +53,19 @@ namespace KeeAgent.UI
     {
       base.OnLoad(e);
       pwEntryForm = ParentForm as PwEntryForm;
+
       if (pwEntryForm != null) {
-        IntialSettings =
-          pwEntryForm.EntryRef.GetKeeAgentSettings();
-        CurrentSettings = (EntrySettings)IntialSettings.Clone ();
+        InitialSettings = pwEntryForm.EntryRef.GetKeeAgentSettings();
+        CurrentSettings = InitialSettings.DeepCopy();
         entrySettingsBindingSource.DataSource = CurrentSettings;
-        keyLocationPanel.KeyLocationChanged += delegate {
-          UpdateKeyInfoDelayed();
-        };
+
         pwEntryForm.FormClosing += delegate {
-          while (delayedUpdateKeyInfoTimer.Enabled)
+          while (delayedUpdateKeyInfoTimer.Enabled) {
             Application.DoEvents();
+          }
         };
-      } else {
+      }
+      else {
         Debug.Fail("Don't have settings to bind to");
       }
       // replace the confirm constraint checkbox if the global confirm option is enabled
@@ -100,7 +83,7 @@ namespace KeeAgent.UI
       lifetimeConstraintCheckBox.Enabled = addKeyAtOpenCheckBox.Enabled;
       lifetimeConstraintNumericUpDown.Enabled = lifetimeConstraintCheckBox.Enabled
         && lifetimeConstraintCheckBox.Checked;
-      keyLocationPanel.Enabled = hasSshKeyCheckBox.Checked;
+      openManageFilesDialogButton.Enabled = hasSshKeyCheckBox.Checked;
       UpdateKeyInfoDelayed();
     }
 
@@ -108,53 +91,44 @@ namespace KeeAgent.UI
     {
       // Have to delay execution of this to avoid undesirable binding
       // interaction.
-      if (!delayedUpdateKeyInfoTimer.Enabled)
+      if (!delayedUpdateKeyInfoTimer.Enabled) {
         delayedUpdateKeyInfoTimer.Start();
+      }
     }
 
     void UpdateKeyInfo()
     {
       if (hasSshKeyCheckBox.Checked) {
-        switch (keyLocationPanel.KeyLocation.SelectedType) {
-          case EntrySettings.LocationType.Attachment:
-          case EntrySettings.LocationType.File:
-            try {
-              pwEntryForm.UpdateEntryStrings(true, false);
-              var context = new SprContext(pwEntryForm.EntryRef, pwEntryForm.EntryRef.GetDatabase (), SprCompileFlags.Deref);
-              using (var key = CurrentSettings.
-                GetSshKey(pwEntryForm.EntryStrings, pwEntryForm.EntryBinaries, context)) {
-                commentTextBox.Text = key.Comment;
-                fingerprintTextBox.Text = key.GetMD5Fingerprint().ToHexString();
-                publicKeyTextBox.Text = key.GetAuthorizedKeyString();
-                copyPublicKeybutton.Enabled = true;
-              }
-            } catch (Exception) {
-              string file = "attachment";
-              if (keyLocationPanel.KeyLocation.SelectedType == EntrySettings.LocationType.File) {
-                try {
-                  file = Path.GetFullPath(CurrentSettings.Location.FileName.ExpandEnvironmentVariables());
-                } catch (Exception) {
-                  file = "file";
-                }
-              }
-              commentTextBox.Text = string.Format("<Error loading key from {0}>",
-                  file);
-              fingerprintTextBox.Text = string.Empty;
-              publicKeyTextBox.Text = string.Empty;
-              copyPublicKeybutton.Enabled = false;
-            }
-            break;
-          default:
-            commentTextBox.Text = "No key selected";
-            fingerprintTextBox.Text = string.Empty;
-            publicKeyTextBox.Text = string.Empty;
-            copyPublicKeybutton.Enabled = false;
-            break;
-        }
-      } else {
+        var getAttachment = new Func<string, ProtectedBinary>(name => {
+          return pwEntryForm.EntryBinaries.Get(name);
+        });
+
+        var isPublicKeyValid = UI.Validate.Location(
+          CurrentSettings.PublicKeyLocation,
+          getAttachment,
+          isPrivate: false) == null;
+
+        var isPrivateKeyValid = UI.Validate.Location(
+          CurrentSettings.PublicKeyLocation,
+          getAttachment,
+          isPrivate: false) == null;
+
+        invalidKeyWarningIcon.Visible = !isPublicKeyValid || !isPrivateKeyValid;
+      }
+
+      try {
+        var key = CurrentSettings.GetSshPublicKey(pwEntryForm.EntryBinaries);
+
+        commentTextBox.Text = key.Comment;
+        fingerprintTextBox.Text = key.Sha256Hash;
+        publicKeyTextBox.Text = key.AuthorizedKeysString;
+        copyPublicKeybutton.Enabled = true;
+      }
+      catch (Exception) {
         commentTextBox.Text = string.Empty;
         fingerprintTextBox.Text = string.Empty;
         publicKeyTextBox.Text = string.Empty;
+        copyPublicKeybutton.Enabled = false;
       }
     }
 
@@ -182,6 +156,39 @@ namespace KeeAgent.UI
     {
       delayedUpdateKeyInfoTimer.Stop();
       UpdateKeyInfo();
+    }
+
+    private void openManageFilesDialogButton_Click(object sender, EventArgs e)
+    {
+      pwEntryForm.UpdateEntryBinaries(true, false);
+
+      var dialog = new ManageKeyFilesDialog {
+        Attachments = new AttachmentBindingList(pwEntryForm.EntryBinaries),
+        PublicKeyLocation = CurrentSettings.PublicKeyLocation.DeepCopy(),
+        PrivateKeyLocation = CurrentSettings.PrivateKeyLocation.DeepCopy()
+      };
+
+      var result = dialog.ShowDialog();
+
+      if (result != DialogResult.OK) {
+        return;
+      }
+
+      entrySettingsBindingSource.SuspendBinding();
+
+      CurrentSettings.PublicKeyLocation = dialog.PublicKeyLocation;
+      CurrentSettings.PrivateKeyLocation = dialog.PrivateKeyLocation;
+
+      entrySettingsBindingSource.ResumeBinding();
+
+      pwEntryForm.EntryBinaries.Clear();
+
+      foreach (var entry in dialog.Attachments) {
+        pwEntryForm.EntryBinaries.Set(entry.Key, entry.Value);
+      }
+
+      pwEntryForm.UpdateEntryBinaries(false, true);
+      //pwEntryForm.ResizeColumnHeaders();
     }
   }
 }

@@ -1,23 +1,5 @@
-﻿//
-//  EntryPickerDialog.cs
-//
-//  Author(s):
-//      David Lechner <david@lechnology.com>
-//
-//  Copyright (C) 2012-2014,2016 David Lechner
-//
-//  This program is free software; you can redistribute it and/or
-//  modify it under the terms of the GNU General Public License
-//  as published by the Free Software Foundation; either version 2
-//  of the License, or (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU General Public License for more details.
-//
-//  You should have received a copy of the GNU General Public License
-//  along with this program; if not, see <http://www.gnu.org/licenses>
+﻿// SPDX-License-Identifier: GPL-2.0-only
+// Copyright (c) 2012-2014,2016,2022 David Lechner <david@lechnology.com>
 
 using System;
 using System.Collections.Generic;
@@ -62,10 +44,12 @@ namespace KeeAgent.UI
     {
       this.ext = ext;
       InitializeComponent();
+
       if (!aShowConstraintControls) {
         Controls.Remove(mTableLayoutPanel);
         mCustomTreeViewEx.Height += mTableLayoutPanel.Height + 6;
       }
+
       if (Type.GetType("Mono.Runtime") == null) {
         Icon = Properties.Resources.KeeAgent_icon;
       } else {
@@ -163,6 +147,7 @@ namespace KeeAgent.UI
         "No KeePass database entries are enabled for use with KeeAgent." +
         " Would you like to attempt to auto-detect and enable entries with SSH keys?",
         "KeeAgent", true);
+
       if (result) {
         InitalizeList(true);
       } else {
@@ -172,21 +157,18 @@ namespace KeeAgent.UI
 
     bool RecursiveAddGroup(TreeNode parentNode, PwGroup parentGroup, bool autodetect)
     {
-      if (parentGroup == null)
+      if (parentGroup == null) {
         return false;
+      }
 
-      TreeNodeCollection treeNodes;
-      if (parentNode == null)
-        treeNodes = mCustomTreeViewEx.Nodes;
-      else
-        treeNodes = parentNode.Nodes;
-
+      var treeNodes = parentNode == null ? mCustomTreeViewEx.Nodes : parentNode.Nodes;
       bool entriesFound = false;
 
       foreach (PwGroup childGroup in parentGroup.Groups) {
         if (mActiveDb.RecycleBinEnabled &&
-            childGroup.Uuid.Equals(mActiveDb.RecycleBinUuid))
+            childGroup.Uuid.Equals(mActiveDb.RecycleBinUuid)) {
           continue;
+        }
 
         bool bExpired = (childGroup.Expires && (childGroup.ExpiryTime <= mCachedNow));
         string strName = childGroup.Name;
@@ -194,6 +176,7 @@ namespace KeeAgent.UI
         int iconID = ((!childGroup.CustomIconUuid.Equals(PwUuid.Zero)) ?
           ((int)PwIcon.Count + mActiveDb.GetCustomIconIndex(childGroup.CustomIconUuid)) :
           (int)childGroup.IconId);
+
         if (bExpired) {
           iconID = (int)PwIcon.Expired;
         }
@@ -203,8 +186,9 @@ namespace KeeAgent.UI
         newNode.ForeColor = SystemColors.GrayText;
         UIUtil.SetGroupNodeToolTip(newNode, childGroup);
 
-        if (bExpired && (mExpiredFont != null))
+        if (bExpired && (mExpiredFont != null)) {
           newNode.NodeFont = mExpiredFont;
+        }
 
         treeNodes.Add(newNode);
 
@@ -221,16 +205,18 @@ namespace KeeAgent.UI
 
       foreach (var entry in parentGroup.Entries) {
         var settings = entry.GetKeeAgentSettings();
+
         if (autodetect) {
-          var entryClone = entry.CloneDeep();
+          var entryCopy = entry.CloneDeep();
           settings.AllowUseOfSshKey = true;
-          settings.Location.SelectedType = EntrySettings.LocationType.Attachment;
+          settings.PrivateKeyLocation.SelectedType = EntrySettings.LocationType.Attachment;
           var sshKeyFound = false;
+
           foreach (var attachment in entry.Binaries) {
             try {
-              settings.Location.AttachmentName = attachment.Key;
-              entryClone.SetKeeAgentSettings(settings);
-              entryClone.GetSshKey(); // throws
+              settings.PrivateKeyLocation.AttachmentName = attachment.Key;
+              entryCopy.SetKeeAgentSettings(settings);
+              entryCopy.GetSshKey(); // throws
               entry.SetKeeAgentSettings(settings);
               entry.Touch(true);
               mActiveDb.Modified = true;
@@ -241,9 +227,12 @@ namespace KeeAgent.UI
               // ignore all errors
             }
           }
-          if (!sshKeyFound)
+
+          if (!sshKeyFound) {
             continue;
+          }
         }
+
         if (settings.AllowUseOfSshKey) {
           var entryNode = new TreeNode(entry.Strings.Get(PwDefs.TitleField).ReadString(),
                                        (int)entry.IconId, (int)entry.IconId);
@@ -251,14 +240,20 @@ namespace KeeAgent.UI
 
           if (entry.Expires && (entry.ExpiryTime <= mCachedNow)) {
             entryNode.ImageIndex = (int)PwIcon.Expired;
-            if (mExpiredFont != null) entryNode.NodeFont = mExpiredFont;
+
+            if (mExpiredFont != null) {
+              entryNode.NodeFont = mExpiredFont;
+            }
           } else { // Not expired
-            if (entry.CustomIconUuid.Equals(PwUuid.Zero))
+            if (entry.CustomIconUuid.Equals(PwUuid.Zero)) {
               entryNode.ImageIndex = (int)entry.IconId;
-            else
+            }
+            else {
               entryNode.ImageIndex = (int)PwIcon.Count +
                 mActiveDb.GetCustomIconIndex(entry.CustomIconUuid);
+            }
           }
+
           entryNode.ForeColor = entry.ForegroundColor;
           entryNode.BackColor = entryNode.BackColor;
           parentNode.Nodes.Add(entryNode);
@@ -275,24 +270,31 @@ namespace KeeAgent.UI
       imgList.ColorDepth = ColorDepth.Depth32Bit;
 
       List<Image> lStdImages = new List<Image>();
+
       foreach (Image imgStd in ext.pluginHost.MainWindow.ClientIcons.Images) {
         lStdImages.Add(imgStd);
       }
+
       imgList.Images.AddRange(lStdImages.ToArray());
 
       Debug.Assert(imgList.Images.Count >= (int)PwIcon.Count);
 
       List<Image> lCustom = UIUtil.BuildImageListEx(
        mActiveDb.CustomIcons, 16, 16);
-      if ((lCustom != null) && (lCustom.Count > 0))
+
+      if ((lCustom != null) && (lCustom.Count > 0)) {
         imgList.Images.AddRange(lCustom.ToArray());
+      }
 
       if (UIUtil.VistaStyleListsSupported) {
         mCustomTreeViewEx.ImageList = imgList;
       } else {
         List<Image> vAllImages = new List<Image>();
-        foreach (Image imgClient in imgList.Images)
+
+        foreach (Image imgClient in imgList.Images) {
           vAllImages.Add(imgClient);
+        }
+
         vAllImages.AddRange(lCustom);
         Debug.Assert(imgList.Images.Count == vAllImages.Count);
 
@@ -306,7 +308,8 @@ namespace KeeAgent.UI
       TreeNodeMouseClickEventArgs e)
     {
       var entry = e.Node.Tag as PwEntry;
-      if (entry != null)      {
+
+      if (entry != null) {
         AcceptButton.PerformClick();
       }
     }
@@ -323,6 +326,7 @@ namespace KeeAgent.UI
       // lifetime, set the lifetime duration
       mLifetimeConstraintControl.Checked =
         SelectedEntry.GetKeeAgentSettings().UseLifetimeConstraintWhenAdding;
+
       if (mLifetimeConstraintControl.Checked) {
          mLifetimeConstraintControl.Lifetime =
            SelectedEntry.GetKeeAgentSettings().LifetimeConstraintDuration;

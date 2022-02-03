@@ -686,7 +686,7 @@ namespace KeeAgent
         var okButton = foundControls[0] as Button;
         okButton.GotFocus += (s, e2) =>
         {
-          if (optionsPanel.CurrentSettings != optionsPanel.IntialSettings) {
+          if (optionsPanel.CurrentSettings != optionsPanel.InitialSettings) {
             pwEntryForm.EntryBinaries.SetKeeAgentSettings(optionsPanel.CurrentSettings);
           }
         };
@@ -741,19 +741,19 @@ namespace KeeAgent
 
         if (settings.AllowUseOfSshKey) {
           string errorMessage = null;
-          switch (settings.Location.SelectedType) {
+          switch (settings.PrivateKeyLocation.SelectedType) {
             case EntrySettings.LocationType.Attachment:
-              if (string.IsNullOrWhiteSpace(settings.Location.AttachmentName)) {
+              if (string.IsNullOrWhiteSpace(settings.PrivateKeyLocation.AttachmentName)) {
                 errorMessage = "Must specify attachment";
               } else if (entryForm.EntryBinaries
-                         .Get(settings.Location.AttachmentName) == null) {
+                         .Get(settings.PrivateKeyLocation.AttachmentName) == null) {
                 errorMessage = "Attachment does not exist";
               }
               break;
             case EntrySettings.LocationType.File:
-              if (string.IsNullOrWhiteSpace(settings.Location.FileName)) {
+              if (string.IsNullOrWhiteSpace(settings.PrivateKeyLocation.FileName)) {
                 errorMessage = "Must specify file name";
-              } else if (!File.Exists(settings.Location.FileName.ExpandEnvironmentVariables())) {
+              } else if (!File.Exists(settings.PrivateKeyLocation.FileName.ExpandEnvironmentVariables())) {
                 errorMessage = "File does not exist";
               }
               break;
@@ -1047,17 +1047,17 @@ namespace KeeAgent
           }
         }
         agent.AddKey(key);
-        if (settings.Location.SelectedType == EntrySettings.LocationType.Attachment
-          && settings.Location.SaveAttachmentToTempFile)
+        if (settings.PrivateKeyLocation.SelectedType == EntrySettings.LocationType.Attachment
+          && settings.PrivateKeyLocation.SaveAttachmentToTempFile)
         {
           try {
-            var data = entry.Binaries.Get(settings.Location.AttachmentName).ReadData();
+            var data = entry.Binaries.Get(settings.PrivateKeyLocation.AttachmentName).ReadData();
             var tempPath = Path.Combine(UrlUtil.GetTempPath(), "KeeAgent");
             if (!Directory.Exists(tempPath)) {
               Directory.CreateDirectory(tempPath);
             }
             Util.TryChmod(tempPath, Convert.ToInt32("700", 8));
-            var fileName = Path.Combine(tempPath, settings.Location.AttachmentName);
+            var fileName = Path.Combine(tempPath, settings.PrivateKeyLocation.AttachmentName);
             File.WriteAllBytes(fileName, data);
             // try to set unix file permissions required by OpenSSH ssh-agent
             Util.TryChmod(fileName, Convert.ToInt32("600", 8));
@@ -1066,9 +1066,9 @@ namespace KeeAgent
             MessageService.ShowWarning(ex.Message);
           }
         }
-        if (settings.Location.SelectedType == EntrySettings.LocationType.File) {
+        if (settings.PrivateKeyLocation.SelectedType == EntrySettings.LocationType.File) {
           keyFileMap[key.GetMD5Fingerprint().ToHexString()] =
-            new KeyFileInfo(settings.Location.FileName, false);
+            new KeyFileInfo(settings.PrivateKeyLocation.FileName, false);
         }
         return key;
       } catch (Exception ex) {
@@ -1085,7 +1085,7 @@ namespace KeeAgent
                 MessageService.ShowWarning(new string[] {
                   firstLine,
                   "Could not find file",
-                  settings.Location.FileName
+                  settings.PrivateKeyLocation.FileName
                  });
             }
 
@@ -1097,9 +1097,9 @@ namespace KeeAgent
           MessageService.ShowWarning(new string[] {
             firstLine,
             string.Format ("Could not load file {0}",
-              settings.Location.SelectedType == EntrySettings.LocationType.File
-                ? string.Format("'{0}'", settings.Location.FileName)
-                : string.Format("from attachment '{0}'", settings.Location.AttachmentName)),
+              settings.PrivateKeyLocation.SelectedType == EntrySettings.LocationType.File
+                ? string.Format("'{0}'", settings.PrivateKeyLocation.FileName)
+                : string.Format("from attachment '{0}'", settings.PrivateKeyLocation.AttachmentName)),
             message,
             "Possible causes:",
             "- Passphrase was entered incorrectly",

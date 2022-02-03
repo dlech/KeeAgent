@@ -151,7 +151,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;hasSshKeyCheckBox.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="addKeyAtOpenCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -181,7 +181,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;addKeyAtOpenCheckBox.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="removeKeyAtCloseCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -211,7 +211,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;removeKeyAtCloseCheckBox.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="helpButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -238,10 +238,118 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;helpButton.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>7</value>
   </data>
   <data name="keyInfoGroupBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
+  </data>
+  <data name="&gt;&gt;copyPublicKeybutton.Name" xml:space="preserve">
+    <value>copyPublicKeybutton</value>
+  </data>
+  <data name="&gt;&gt;copyPublicKeybutton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;copyPublicKeybutton.Parent" xml:space="preserve">
+    <value>keyInfoGroupBox</value>
+  </data>
+  <data name="&gt;&gt;copyPublicKeybutton.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;publicKeyTextBox.Name" xml:space="preserve">
+    <value>publicKeyTextBox</value>
+  </data>
+  <data name="&gt;&gt;publicKeyTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;publicKeyTextBox.Parent" xml:space="preserve">
+    <value>keyInfoGroupBox</value>
+  </data>
+  <data name="&gt;&gt;publicKeyTextBox.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;commentTextBox.Name" xml:space="preserve">
+    <value>commentTextBox</value>
+  </data>
+  <data name="&gt;&gt;commentTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;commentTextBox.Parent" xml:space="preserve">
+    <value>keyInfoGroupBox</value>
+  </data>
+  <data name="&gt;&gt;commentTextBox.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;fingerprintTextBox.Name" xml:space="preserve">
+    <value>fingerprintTextBox</value>
+  </data>
+  <data name="&gt;&gt;fingerprintTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;fingerprintTextBox.Parent" xml:space="preserve">
+    <value>keyInfoGroupBox</value>
+  </data>
+  <data name="&gt;&gt;fingerprintTextBox.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;label3.Name" xml:space="preserve">
+    <value>label3</value>
+  </data>
+  <data name="&gt;&gt;label3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
+    <value>keyInfoGroupBox</value>
+  </data>
+  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
+  </data>
+  <data name="&gt;&gt;label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+    <value>keyInfoGroupBox</value>
+  </data>
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>keyInfoGroupBox</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="keyInfoGroupBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 216</value>
+  </data>
+  <data name="keyInfoGroupBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>449, 117</value>
+  </data>
+  <data name="keyInfoGroupBox.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="keyInfoGroupBox.Text" xml:space="preserve">
+    <value>Key Info</value>
+  </data>
+  <data name="&gt;&gt;keyInfoGroupBox.Name" xml:space="preserve">
+    <value>keyInfoGroupBox</value>
+  </data>
+  <data name="&gt;&gt;keyInfoGroupBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;keyInfoGroupBox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;keyInfoGroupBox.ZOrder" xml:space="preserve">
+    <value>6</value>
   </data>
   <data name="copyPublicKeybutton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -438,30 +546,6 @@
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
-  <data name="keyInfoGroupBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 216</value>
-  </data>
-  <data name="keyInfoGroupBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>449, 117</value>
-  </data>
-  <data name="keyInfoGroupBox.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="keyInfoGroupBox.Text" xml:space="preserve">
-    <value>Key Info</value>
-  </data>
-  <data name="&gt;&gt;keyInfoGroupBox.Name" xml:space="preserve">
-    <value>keyInfoGroupBox</value>
-  </data>
-  <data name="&gt;&gt;keyInfoGroupBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;keyInfoGroupBox.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;keyInfoGroupBox.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
   <data name="confirmConstraintCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -490,7 +574,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;confirmConstraintCheckBox.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>5</value>
   </data>
   <metadata name="delayedUpdateKeyInfoTimer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
@@ -523,7 +607,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lifetimeConstraintCheckBox.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="lifetimeConstraintNumericUpDown.Location" type="System.Drawing.Point, System.Drawing">
     <value>281, 77</value>
@@ -544,7 +628,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lifetimeConstraintNumericUpDown.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>3</value>
   </data>
   <data name="lifetimeConstraintLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -574,31 +658,85 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lifetimeConstraintLabel.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>2</value>
   </data>
-  <data name="keyLocationPanel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
+  <data name="openManageFilesDialogButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
   </data>
-  <data name="keyLocationPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 102</value>
+  <data name="openManageFilesDialogButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="keyLocationPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>449, 108</value>
+  <data name="openManageFilesDialogButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 186</value>
   </data>
-  <data name="keyLocationPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+  <data name="openManageFilesDialogButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>141, 24</value>
   </data>
-  <data name="&gt;&gt;keyLocationPanel.Name" xml:space="preserve">
-    <value>keyLocationPanel</value>
+  <data name="openManageFilesDialogButton.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
   </data>
-  <data name="&gt;&gt;keyLocationPanel.Type" xml:space="preserve">
-    <value>KeeAgent.UI.KeyLocationPanel, KeeAgent, Version=0.7.11.0, Culture=neutral, PublicKeyToken=null</value>
+  <data name="openManageFilesDialogButton.Text" xml:space="preserve">
+    <value>&amp;Manage Key Files...</value>
   </data>
-  <data name="&gt;&gt;keyLocationPanel.Parent" xml:space="preserve">
+  <data name="&gt;&gt;openManageFilesDialogButton.Name" xml:space="preserve">
+    <value>openManageFilesDialogButton</value>
+  </data>
+  <data name="&gt;&gt;openManageFilesDialogButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;openManageFilesDialogButton.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;keyLocationPanel.ZOrder" xml:space="preserve">
-    <value>6</value>
+  <data name="&gt;&gt;openManageFilesDialogButton.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="invalidKeyWarningIcon.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAANsSURBVEhLzZRvb1RFFMZn7r/4DnzRJsWmbGMrLW2i30Hf
+        8Cngm1y+AQFF8A8hCoYQxWr4J9B2S7d0S1uoWAkBd/cCsq5t3b1SfLfreXzO7G3FEIFSSJjkyZk5997f
+        PGfO7JrXZqTz4e501kvTWb+SXvV3Z+mXM2p5k2vM+MnfJYPWLwb1aT9N82Zr9njzIy168V8LFlI2QNni
+        0bxFveDF2ePNDXVfn6L729ygZERYQeuWwcrES6qiftmLH816kDsWuGOEAm5bWS16WBkLNleFuv8jT/c3
+        CSdU6FyFW0ZaixbLF4M0GdlEFStjXrw67RFohVDs+mAndr0/ALnJjbjpw0kftbPB3uz1jY3aeZNbvuAn
+        rZ949j8TSA0PD2NoaAhC97Jo0GTjl86EL1bF0vkgXqVDBamwaGVwcBADAzvcHDeYp/4c96U6Em2sCnW/
+        dM5Pmtd59loBQbhhpb+/H319fZAFrn9kTxhb81aqp9iLoxuoYul0ED8c9x0EhKwBe3t7kcvlINe5XpeV
+        xg8eql8/542qjZjc79/x7OfofoEbECLX2urp6UF3dzcwTzB/bIyCOfZi2uLBSfbieaqojQRxeoH3nhAV
+        rvEoCFHQtm1d6Orq4pzwOcJnnSAzBo3TAe4de0YvaidM7rdvwqRZVHd078CcK+SqQWdnJzo6OhwQM9y4
+        yJipWbC4/2X09CpqPMf0LO89YSqZIdzBOCfkvcE38e7AFgKZn2aekitr4v/Tt74kR/6nCnVfPUH3dEKg
+        tJ2xiiLnGQgqBa/NVVMqVlNgFXmL5HPtxdYnq6h+FcSN74M2KHOHK9yAzpymVMwRtK5J5go0MEkDl1UW
+        Kyd9JJ9F/71RPLfcg+NR0ppwIOfGAab4MddgVULIju0R3ukJCWaeQJVCMcH1BNd5VnHJSuVQ2FjY91gv
+        fv0iiOuneO8LhBFEZ6KONEIBGayvO8Dbb/E9ghx0nJESF/neON8fM1g+FiA5+FgV94/y7Mf4gpasTihx
+        kR9QDpBfBzIyr3PCoN9pHKUutdU8Z1E6EKUZ3ph7bExTH7JJbYhz8y/MQSiFrIFGmR9ljkeCi1w7ubk0
+        z1iU90eVDM8efPrGnrufhElyOERyOGrrUCjJxxEqB0MqQvmjtiofhlI+EKlDlPY/IWnHMC3tC/dk+Fc5
+        jPkHdiorz5NizJMAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="invalidKeyWarningIcon.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="invalidKeyWarningIcon.Location" type="System.Drawing.Point, System.Drawing">
+    <value>156, 186</value>
+  </data>
+  <data name="invalidKeyWarningIcon.Size" type="System.Drawing.Size, System.Drawing">
+    <value>24, 24</value>
+  </data>
+  <data name="invalidKeyWarningIcon.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>CenterImage</value>
+  </data>
+  <data name="invalidKeyWarningIcon.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;invalidKeyWarningIcon.Name" xml:space="preserve">
+    <value>invalidKeyWarningIcon</value>
+  </data>
+  <data name="&gt;&gt;invalidKeyWarningIcon.Type" xml:space="preserve">
+    <value>KeeAgent.UI.SystemIcon, KeeAgent, Version=0.12.1.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;invalidKeyWarningIcon.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;invalidKeyWarningIcon.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -612,17 +750,17 @@
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
     <value>467, 342</value>
   </data>
-  <data name="&gt;&gt;entrySettingsBindingSource.Name" xml:space="preserve">
-    <value>entrySettingsBindingSource</value>
-  </data>
-  <data name="&gt;&gt;entrySettingsBindingSource.Type" xml:space="preserve">
-    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;delayedUpdateKeyInfoTimer.Name" xml:space="preserve">
     <value>delayedUpdateKeyInfoTimer</value>
   </data>
   <data name="&gt;&gt;delayedUpdateKeyInfoTimer.Type" xml:space="preserve">
     <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;entrySettingsBindingSource.Name" xml:space="preserve">
+    <value>entrySettingsBindingSource</value>
+  </data>
+  <data name="&gt;&gt;entrySettingsBindingSource.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>EntryPanel</value>

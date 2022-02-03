@@ -1,30 +1,12 @@
-﻿//
-//  EntrySettings.cs
-//
-//  Author(s):
-//      David Lechner <david@lechnology.com>
-//
-//  Copyright (C) 2012-2013  David Lechner
-//
-//  This program is free software; you can redistribute it and/or
-//  modify it under the terms of the GNU General Public License
-//  as published by the Free Software Foundation; either version 2
-//  of the License, or (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU General Public License for more details.
-//
-//  You should have received a copy of the GNU General Public License
-//  along with this program; if not, see <http://www.gnu.org/licenses>
+﻿// SPDX-License-Identifier: GPL-2.0-only
+// Copyright (c) 2012-2013,2022 David Lechner <david@lechnology.com>
 
 using System;
 using System.Xml.Serialization;
 
 namespace KeeAgent
 {
-  public class EntrySettings : ICloneable, IEquatable<EntrySettings>
+  public class EntrySettings : IEquatable<EntrySettings>
   {
     public enum LocationType
     {
@@ -34,7 +16,7 @@ namespace KeeAgent
       File
     }
 
-    public class LocationData : ICloneable, IEquatable<LocationData>
+    public class LocationData : IEquatable<LocationData>
     {
       public LocationType? SelectedType { get; set; }
       public string AttachmentName { get; set; }
@@ -49,19 +31,15 @@ namespace KeeAgent
         FileName = string.Empty;
       }
 
-      #region ICloneable implementation
-
-      public object Clone()
+      public LocationData DeepCopy()
       {
-        var clone = new LocationData();
-        clone.SelectedType = SelectedType;
-        clone.AttachmentName = AttachmentName;
-        clone.SaveAttachmentToTempFile = SaveAttachmentToTempFile;
-        clone.FileName = FileName;
-        return clone;
+        var copy = new LocationData();
+        copy.SelectedType = SelectedType;
+        copy.AttachmentName = AttachmentName;
+        copy.SaveAttachmentToTempFile = SaveAttachmentToTempFile;
+        copy.FileName = FileName;
+        return copy;
       }
-
-      #endregion
 
       #region IEquatable implementation
 
@@ -110,7 +88,8 @@ namespace KeeAgent
     public bool UseConfirmConstraintWhenAdding { get; set; }
     public bool UseLifetimeConstraintWhenAdding { get; set; }
     public uint LifetimeConstraintDuration { get; set; }
-    public LocationData Location { get; set; }
+    public LocationData PublicKeyLocation { get; set; }
+    public LocationData PrivateKeyLocation { get; set; }
 
     public EntrySettings()
     {
@@ -120,26 +99,23 @@ namespace KeeAgent
       UseConfirmConstraintWhenAdding = false;
       UseLifetimeConstraintWhenAdding = false;
       LifetimeConstraintDuration = 600;
-      Location = new LocationData();
+      PublicKeyLocation = new LocationData();
+      PrivateKeyLocation = new LocationData();
     }
 
-    #region ICloneable implementation
-
-
-    public object Clone()
+    public EntrySettings DeepCopy()
     {
-      var clone = new EntrySettings();
-      clone.AllowUseOfSshKey = AllowUseOfSshKey;
-      clone.AddAtDatabaseOpen = AddAtDatabaseOpen;
-      clone.RemoveAtDatabaseClose = RemoveAtDatabaseClose;
-      clone.UseConfirmConstraintWhenAdding = UseConfirmConstraintWhenAdding;
-      clone.UseLifetimeConstraintWhenAdding = UseLifetimeConstraintWhenAdding;
-      clone.LifetimeConstraintDuration = LifetimeConstraintDuration;
-      clone.Location = (LocationData)Location.Clone();
-      return clone;
+      return new EntrySettings {
+        AllowUseOfSshKey = AllowUseOfSshKey,
+        AddAtDatabaseOpen = AddAtDatabaseOpen,
+        RemoveAtDatabaseClose = RemoveAtDatabaseClose,
+        UseConfirmConstraintWhenAdding = UseConfirmConstraintWhenAdding,
+        UseLifetimeConstraintWhenAdding = UseLifetimeConstraintWhenAdding,
+        LifetimeConstraintDuration = LifetimeConstraintDuration,
+        PublicKeyLocation = PublicKeyLocation.DeepCopy(),
+        PrivateKeyLocation = PrivateKeyLocation.DeepCopy()
+      };
     }
-
-    #endregion
 
     #region IEquatable implementation
     public bool Equals (EntrySettings other)
@@ -150,7 +126,8 @@ namespace KeeAgent
         UseConfirmConstraintWhenAdding == other.UseConfirmConstraintWhenAdding &&
         UseLifetimeConstraintWhenAdding == other.UseLifetimeConstraintWhenAdding &&
         LifetimeConstraintDuration == other.LifetimeConstraintDuration &&
-        Location == other.Location;
+        PublicKeyLocation == other.PublicKeyLocation &&
+        PrivateKeyLocation == other.PrivateKeyLocation;
     }
     #endregion
 
@@ -164,7 +141,7 @@ namespace KeeAgent
 
     public override int GetHashCode ()
     {
-      return Location.GetHashCode () ^ (AllowUseOfSshKey ? 0x0 : 0x1) ^
+      return  PublicKeyLocation.GetHashCode() ^ PrivateKeyLocation.GetHashCode () ^ (AllowUseOfSshKey ? 0x0 : 0x1) ^
         (AddAtDatabaseOpen ? 0x0 : 0x2) ^ (RemoveAtDatabaseClose ? 0x0 : 0x4);
     }
 

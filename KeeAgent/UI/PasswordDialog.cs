@@ -54,9 +54,9 @@ namespace KeeAgent.UI
       messageLabel.Text = message;
     }
 
-    public PinnedArray<byte> GetPassword()
+    public byte[] GetPassword()
     {
-      return new PinnedArray<byte>(secureEdit.ToUtf8());
+      return secureEdit.ToUtf8();
     }
 
     /// <summary>

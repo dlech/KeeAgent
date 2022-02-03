@@ -1,23 +1,5 @@
-﻿//
-//  ExtensionMethods.cs
-//
-//  Author(s):
-//      David Lechner <david@lechnology.com>
-//
-//  Copyright (C) 2012-2016 David Lechner
-//
-//  This program is free software; you can redistribute it and/or
-//  modify it under the terms of the GNU General Public License
-//  as published by the Free Software Foundation; either version 2
-//  of the License, or (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU General Public License for more details.
-//
-//  You should have received a copy of the GNU General Public License
-//  along with this program; if not, see <http://www.gnu.org/licenses>
+﻿// SPDX-License-Identifier: GPL-2.0-only
+// Copyright (c) 2012-2016,2022 David Lechner <david@lechnology.com>
 
 using System;
 using System.Collections.Generic;
@@ -39,6 +21,7 @@ using KeePassLib.Collections;
 using KeePassLib.Security;
 using System.Runtime.InteropServices;
 using KeePass.UI;
+using SshAgentLib.Keys;
 
 namespace KeeAgent
 {
@@ -53,34 +36,91 @@ namespace KeeAgent
     /// </summary>
     const string settingsBinaryId = "KeeAgent.settings";
 
-    private static XmlSerializer mEntrySettingsSerializer;
-    private static XmlSerializer mDatabaseSettingsSerializer;
+    private static XmlSerializer entrySettingsSerializer;
+    private static XmlSerializer databaseSettingsSerializer;
 
-    private static XmlSerializer EntrySettingsSerializer
+    private static string AddOrReplaceFileExtension(string fileName)
     {
-      get
-      {
-        if (mEntrySettingsSerializer == null) {
-          mEntrySettingsSerializer = new XmlSerializer(typeof(EntrySettings));
+      if (string.IsNullOrWhiteSpace(fileName)) {
+        return fileName;
+      }
+
+      if (fileName.EndsWith(".ppk")) {
+        fileName = fileName.Remove(fileName.Length - 4);
+      }
+
+      return fileName + ".pub";
+    }
+
+    private static XmlSerializer EntrySettingsSerializer {
+      get {
+        if (entrySettingsSerializer == null) {
+          entrySettingsSerializer = new XmlSerializer(typeof(EntrySettings));
+
+          // handle migration of old settings
+          entrySettingsSerializer.UnknownElement += (s, e) => {
+            if (e.Element.Name == "Location") {
+              // Location was renamed to PrivateKeyLocation, so we handle the conversion here
+              Debug.WriteLine("moving Location to PrivateKeyLocation");
+
+              // create a new document so that we can use the existing serializer
+              var doc = new XmlDocument();
+
+              // the root element has to match the name of the type we are deserializing
+              var element = doc.CreateElement("LocationData");
+
+              // copy the old element contents to the new document
+              foreach (XmlNode node in e.Element.ChildNodes) {
+                element.AppendChild(doc.ImportNode(node, true));
+              }
+
+              doc.AppendChild(element);
+
+              // write the document to a string
+              var docStr = new Func<string>(() => {
+                using (var writer = new StringWriter())
+                using (var xmlWriter = new XmlTextWriter(writer)) {
+                  doc.WriteTo(xmlWriter);
+                  return writer.ToString();
+                }
+              }).Invoke();
+
+              // use serializer to convert to .NET object
+              var serializer = new XmlSerializer(typeof(EntrySettings.LocationData));
+              var location = (EntrySettings.LocationData)serializer.Deserialize(new StringReader(docStr));
+
+              // put old data in new location
+              var obj = (EntrySettings)e.ObjectBeingDeserialized;
+              obj.PrivateKeyLocation = location;
+
+              // make new public key location with same info plus .pub file extension
+              obj.PublicKeyLocation = location.DeepCopy();
+              obj.PublicKeyLocation.AttachmentName = AddOrReplaceFileExtension(
+                obj.PublicKeyLocation.AttachmentName);
+              obj.PublicKeyLocation.FileName = AddOrReplaceFileExtension(
+                obj.PublicKeyLocation.FileName);
+            }
+          };
         }
-        return mEntrySettingsSerializer;
+
+        return entrySettingsSerializer;
       }
     }
 
-    private static XmlSerializer DatabaseSettingsSerializer
-    {
-      get
-      {
-        if (mDatabaseSettingsSerializer == null) {
-          mDatabaseSettingsSerializer = new XmlSerializer(typeof(DatabaseSettings));
+    private static XmlSerializer DatabaseSettingsSerializer {
+      get {
+        if (databaseSettingsSerializer == null) {
+          databaseSettingsSerializer = new XmlSerializer(typeof(DatabaseSettings));
         }
-        return mDatabaseSettingsSerializer;
+
+        return databaseSettingsSerializer;
       }
     }
 
     public static DatabaseSettings GetKeeAgentSettings(this PwDatabase aDatabase)
     {
       var settingsString = aDatabase.CustomData.Get(settingsStringId);
+
       if (!string.IsNullOrWhiteSpace(settingsString)) {
         using (var reader = XmlReader.Create(new StringReader(settingsString))) {
           if (DatabaseSettingsSerializer.CanDeserialize(reader)) {
@@ -88,6 +128,7 @@ namespace KeeAgent
           }
         }
       }
+
       return new DatabaseSettings();
     }
 
@@ -103,6 +144,7 @@ namespace KeeAgent
     public static EntrySettings GetKeeAgentSettings(this PwEntry entry)
     {
       var settingsString = entry.Strings.ReadSafe(settingsStringId);
+
       // move settings from string to binary attachment
       if (settingsString != string.Empty) {
         entry.Binaries.Set(settingsBinaryId,
@@ -110,9 +152,12 @@ namespace KeeAgent
         entry.Strings.Remove(settingsStringId);
         entry.Touch(true);
       }
+
       var settingsBinary = entry.Binaries.Get(settingsBinaryId);
+
       if (settingsBinary != null) {
         settingsString = Encoding.Unicode.GetString(settingsBinary.ReadData());
+
         if (!string.IsNullOrWhiteSpace(settingsString)) {
           using (var reader = XmlReader.Create(new StringReader(settingsString))) {
             if (EntrySettingsSerializer.CanDeserialize(reader)) {
@@ -121,6 +166,7 @@ namespace KeeAgent
           }
         }
       }
+
       return new EntrySettings();
     }
 
@@ -128,6 +174,7 @@ namespace KeeAgent
       EntrySettings settings)
     {
       entry.Binaries.SetKeeAgentSettings(settings);
+
       // remove old settings string
       if (entry.Strings.GetKeys().Contains(settingsStringId)) {
         entry.Strings.Remove(settingsStringId);
@@ -140,14 +187,50 @@ namespace KeeAgent
       // only save if there is an existing entry or AllowUseOfSshKey is checked
       // this way we don't pollute entries that don't have SSH keys
       if (binaries.Get(settingsBinaryId) != null ||
-        settings.AllowUseOfSshKey)
-      {
+        settings.AllowUseOfSshKey) {
         using (var writer = new StringWriter()) {
           EntrySettingsSerializer.Serialize(writer, settings);
           // string is protected just to make UI look cleaner
           binaries.Set(settingsBinaryId,
             new ProtectedBinary(false, Encoding.Unicode.GetBytes(writer.ToString())));
         }
+      }
+    }
+
+    public static SshPublicKey GetSshPublicKey(this PwEntry entry)
+    {
+      var settings = entry.GetKeeAgentSettings();
+      return settings.GetSshPublicKey(entry.Binaries);
+    }
+
+    public static SshPublicKey GetSshPublicKey(
+      this EntrySettings settings,
+      ProtectedBinaryDictionary binaries)
+    {
+      if (!settings.AllowUseOfSshKey) {
+        throw new InvalidOperationException("SSH keys not enabled for this entry");
+      }
+
+      switch (settings.PublicKeyLocation.SelectedType) {
+        case EntrySettings.LocationType.Attachment:
+          if (string.IsNullOrWhiteSpace(settings.PublicKeyLocation.AttachmentName)) {
+            throw new NoAttachmentException();
+          }
+
+          var attachment = binaries.Get(settings.PublicKeyLocation.AttachmentName);
+
+          if (attachment == null) {
+            throw new NoAttachmentException();
+          };
+
+          return SshPublicKey.Read(new MemoryStream(attachment.ReadData()));
+
+        case EntrySettings.LocationType.File:
+          var filename = settings.PublicKeyLocation.FileName.ExpandEnvironmentVariables();
+          return SshPublicKey.Read(File.OpenRead(filename));
+
+        default:
+          throw new ArgumentException("settings has invalid public key location", "settings");
       }
     }
 
@@ -161,43 +244,58 @@ namespace KeeAgent
     public static ISshKey GetSshKey(this EntrySettings settings,
       ProtectedStringDictionary strings, ProtectedBinaryDictionary binaries,
       SprContext sprContext)
-    {      
+    {
       if (!settings.AllowUseOfSshKey) {
         return null;
       }
-      KeyFormatter.GetPassphraseCallback getPassphraseCallback =
-        delegate(string comment)
-        {
-          var securePassphrase = new SecureString();
-            var passphrase = SprEngine.Compile(strings.ReadSafe(
-                          PwDefs.PasswordField), sprContext);
-          foreach (var c in passphrase) {
-            securePassphrase.AppendChar(c);
-          }
-          return securePassphrase;
-        };
+
+      KeyFormatter.GetPassphraseCallback getPassphraseCallback = (comment) => {
+        var securePassphrase = new SecureString();
+        var passphrase = SprEngine.Compile(strings.ReadSafe(
+                      PwDefs.PasswordField), sprContext);
+        foreach (var c in passphrase) {
+          securePassphrase.AppendChar(c);
+        }
+        return securePassphrase;
+      };
+
       Func<Stream> getPrivateKeyStream;
       Func<Stream> getPublicKeyStream = null;
-      switch (settings.Location.SelectedType) {
+
+      switch (settings.PrivateKeyLocation.SelectedType) {
         case EntrySettings.LocationType.Attachment:
-          if (string.IsNullOrWhiteSpace(settings.Location.AttachmentName)) {
+          if (string.IsNullOrWhiteSpace(settings.PrivateKeyLocation.AttachmentName)) {
             throw new NoAttachmentException();
           }
-          var privateKeyData = binaries.Get(settings.Location.AttachmentName);
-          var publicKeyData = binaries.Get(settings.Location.AttachmentName + ".pub");
+
+          var privateKeyData = binaries.Get(settings.PrivateKeyLocation.AttachmentName);
+
+          if (privateKeyData == null) {
+            throw new NoAttachmentException();
+          }
+
           getPrivateKeyStream = () => new MemoryStream(privateKeyData.ReadData());
-          if (publicKeyData != null)
+
+          var publicKeyData = binaries.Get(settings.PrivateKeyLocation.AttachmentName + ".pub");
+
+          if (publicKeyData != null) {
             getPublicKeyStream = () => new MemoryStream(publicKeyData.ReadData());
+          }
+
           return GetSshKey(getPrivateKeyStream, getPublicKeyStream,
-                           settings.Location.AttachmentName, getPassphraseCallback);
+                           settings.PrivateKeyLocation.AttachmentName, getPassphraseCallback);
+
         case EntrySettings.LocationType.File:
-          var filename = settings.Location.FileName.ExpandEnvironmentVariables();
+          var filename = settings.PrivateKeyLocation.FileName.ExpandEnvironmentVariables();
           getPrivateKeyStream = () => File.OpenRead(filename);
           var publicKeyFile = filename + ".pub";
-          if (File.Exists(publicKeyFile))
+
+          if (File.Exists(publicKeyFile)) {
             getPublicKeyStream = () => File.OpenRead(publicKeyFile);
+          }
+
           return GetSshKey(getPrivateKeyStream, getPublicKeyStream,
-                           settings.Location.AttachmentName, getPassphraseCallback);
+                           settings.PrivateKeyLocation.AttachmentName, getPassphraseCallback);
         default:
           return null;
       }
@@ -245,7 +343,8 @@ namespace KeeAgent
         aPanel.Dock = DockStyle.Fill;
         tabControl.Controls.Add(newTab);
 
-      } catch (Exception ex) {
+      }
+      catch (Exception ex) {
         // Can't have exception here or KeePass freezes.
         Debug.Fail(ex.ToString());
       }
@@ -262,14 +361,16 @@ namespace KeeAgent
 
     public static string GetFullPath(this PwEntry entry)
     {
-      var builder = new StringBuilder(entry.Strings.Get(PwDefs.TitleField).ReadString ());
+      var builder = new StringBuilder(entry.Strings.Get(PwDefs.TitleField).ReadString());
       var parent = entry.ParentGroup;
+
       while (parent != null) {
         builder.Insert(0, Path.DirectorySeparatorChar);
         builder.Insert(0, parent.Name);
         parent = parent.ParentGroup;
       }
-      return builder.ToString ();
+
+      return builder.ToString();
     }
 
     public static PwDatabase GetDatabase(this PwEntry entry)
@@ -299,18 +400,17 @@ namespace KeeAgent
       });
     }
 
-      /// <summary>
-      /// Expand environment variables in a filename. Also expandes ~/ to %HOME% environment variable.
-      /// </summary>
-      /// <param name="path"></param>
+    /// <summary>
+    /// Expand environment variables in a filename. Also expandes ~/ to %HOME% environment variable.
+    /// </summary>
+    /// <param name="path"></param>
     public static String ExpandEnvironmentVariables(this String filename)
-    {      
-        if (filename.StartsWith("~/", StringComparison.Ordinal))
-        {
-            filename = Path.Combine("%HOME%", filename.Substring(2));
-        }
+    {
+      if (filename.StartsWith("~/", StringComparison.Ordinal)) {
+        filename = Path.Combine("%HOME%", filename.Substring(2));
+      }
 
-        return Environment.ExpandEnvironmentVariables(filename);
+      return Environment.ExpandEnvironmentVariables(filename);
     }
 
     /// <summary>
@@ -322,7 +422,8 @@ namespace KeeAgent
       if (Type.GetType("Mono.Runtime") == null) {
         SetWindowPos(form.Handle, (IntPtr)HWND.BOTTOM, 0, 0, 0, 0,
           SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOACTIVATE);
-      } else {
+      }
+      else {
         // TODO: handle mono
       }
     }

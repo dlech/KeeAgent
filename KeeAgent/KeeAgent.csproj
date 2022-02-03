@@ -70,6 +70,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Translatable.resx</DependentUpon>
     </Compile>
+    <Compile Include="UI\AttachmentBindingList.cs" />
+    <Compile Include="UI\InPlaceMessage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\InPlaceMessage.Designer.cs">
+      <DependentUpon>InPlaceMessage.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\KeyLocationPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -97,6 +104,15 @@
     <Compile Include="UI\GroupBoxEx.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\ManageKeyFilesDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ManageKeyFilesDialog.Designer.cs">
+      <DependentUpon>ManageKeyFilesDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SystemIcon.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UI\PasswordDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -122,6 +138,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\UIHelper.cs" />
+    <Compile Include="UI\Validate.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -141,6 +158,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Translatable.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\InPlaceMessage.resx">
+      <DependentUpon>InPlaceMessage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\KeyLocationPanel.resx">
       <DependentUpon>KeyLocationPanel.cs</DependentUpon>
     </EmbeddedResource>
@@ -156,6 +176,9 @@
     <EmbeddedResource Include="UI\ManageDialog.resx">
       <DependentUpon>ManageDialog.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ManageKeyFilesDialog.resx">
+      <DependentUpon>ManageKeyFilesDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\OptionsPanel.resx">
       <DependentUpon>OptionsPanel.cs</DependentUpon>
