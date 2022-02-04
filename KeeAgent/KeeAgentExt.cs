@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using dlech.SshAgentLib;
@@ -837,35 +838,37 @@ namespace KeeAgent
       RemoveKey(e.Key);
     }
 
+    private readonly object unlockOnActivitySyncRoot = new object(); // used in PageantAgent_MessageReceived as a sync root
+
     private void PageantAgent_MessageReceived(object sender, Agent.MessageReceivedEventArgs e)
     {
-      var mainWindow = pluginHost.MainWindow;
+      if (!Options.UnlockOnActivity) {
+        return; // unlock on activity isn't enabled, nothing to do here
+      }
 
-      var thread = new Thread(
-        delegate()
-        {
-          mainWindow.Invoke(
-            (MethodInvoker)delegate()
-          {
-            // don't do anything - we are just seeing if the thread is blocked
-          });
-        });
-      thread.Name = "Check";
-      thread.Start();
-      // only try to unlock databases if main thread is not blocked
-      if (thread.Join(1000)) {
-        mainWindow.Invoke((MethodInvoker)delegate()
-        {
-          if (Options.UnlockOnActivity) {
-            foreach (var document in mainWindow.DocumentManager.Documents) {
+      var mainWindow = pluginHost.MainWindow;
+      if (!mainWindow.DocumentManager.Documents.Any(document => mainWindow.IsFileLocked(document))) {
+        return; // none of the documents are locked, nothing to do here
+      }
+
+      var checkMainThreadAvailabilityTask = Task.Run(() =>
+        mainWindow.Invoke((Action)(() => { /* don't do anything - we are just seeing if the thread is blocked */ })));
+
+      if (!checkMainThreadAvailabilityTask.Wait(1000)) {
+        return; // the main thread seems to be locked, it would be safe not to try unlocking databases
+        // ↑ For more details, see #19 "KeePass Locks Up in combination of IOProtocolExt and KeyAgent when trying to Synchronise a database"
+      }
+
+      lock (unlockOnActivitySyncRoot) {
+        // ↑ protection from concurrent requests, for example "git fetch" with multiple ssh remotes
+
+        mainWindow.Invoke((Action)(() => {
+          foreach (var document in mainWindow.DocumentManager.Documents) {
             if (mainWindow.IsFileLocked(document)) {
-                mainWindow.OpenDatabase(document.LockedIoc, null, false);
-              }
+              mainWindow.OpenDatabase(document.LockedIoc, null, false);
             }
           }
-        });
-      } else {
-        thread.Abort();
+        }));
       }
     }
 
