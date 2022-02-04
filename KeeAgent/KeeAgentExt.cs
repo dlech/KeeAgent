@@ -29,6 +29,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using dlech.SshAgentLib;
@@ -815,7 +816,7 @@ namespace KeeAgent
       RemoveKey(e.Key);
     }
 
-    private object unlockOnActivitySyncRoot = new object(); // used in PageantAgent_MessageReceived as a sync root
+    private readonly object unlockOnActivitySyncRoot = new object(); // used in PageantAgent_MessageReceived as a sync root
 
     private void PageantAgent_MessageReceived(object sender, Agent.MessageReceivedEventArgs e)
     {
@@ -828,16 +829,24 @@ namespace KeeAgent
         return; // none of the documents are locked, nothing to do here
       }
 
+      var checkMainThreadAvailabilityTask = Task.Run(() =>
+        mainWindow.Invoke((Action)(() => { /* don't do anything - we are just seeing if the thread is blocked */ })));
+
+      if (!checkMainThreadAvailabilityTask.Wait(1000)) {
+        return; // the main thread seems to be locked, it would be safe not to try unlocking databases
+        // ↑ For more details, see #19 "KeePass Locks Up in combination of IOProtocolExt and KeyAgent when trying to Synchronise a database"
+      }
+
       lock (unlockOnActivitySyncRoot) {
         // ↑ protection from concurrent requests, for example "git fetch" with multiple ssh remotes
 
-        mainWindow.Invoke((MethodInvoker)delegate () {
+        mainWindow.Invoke((Action)(() => {
           foreach (var document in mainWindow.DocumentManager.Documents) {
             if (mainWindow.IsFileLocked(document)) {
               mainWindow.OpenDatabase(document.LockedIoc, null, false);
             }
           }
-        });
+        }));
       }
     }
 
