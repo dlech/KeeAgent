@@ -5,6 +5,7 @@ Unreleased
 * Added support for PuTTY Private Key (.ppk) v3 file format (thanks ezekielnewren).
 * Added support for WSL compatible ssh-agent socket (thanks mehrdadn).
 * Improved user interface for managing key files.
+* Fix multiple requests received when database is locked (thanks archimed7592).
 
 v0.12.1 (2020-08-31)
 --------------------
