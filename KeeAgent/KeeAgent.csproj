@@ -104,11 +104,11 @@
     <Compile Include="UI\GroupBoxEx.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UI\ManageKeyFilesDialog.cs">
+    <Compile Include="UI\ManageKeyFileDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\ManageKeyFilesDialog.Designer.cs">
-      <DependentUpon>ManageKeyFilesDialog.cs</DependentUpon>
+    <Compile Include="UI\ManageKeyFileDialog.Designer.cs">
+      <DependentUpon>ManageKeyFileDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\SystemIcon.cs">
       <SubType>Component</SubType>
@@ -178,8 +178,8 @@
       <DependentUpon>ManageDialog.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\ManageKeyFilesDialog.resx">
-      <DependentUpon>ManageKeyFilesDialog.cs</DependentUpon>
+    <EmbeddedResource Include="UI\ManageKeyFileDialog.resx">
+      <DependentUpon>ManageKeyFileDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\OptionsPanel.resx">
       <DependentUpon>OptionsPanel.cs</DependentUpon>

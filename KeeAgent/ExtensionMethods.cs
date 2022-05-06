@@ -56,51 +56,6 @@ namespace KeeAgent
       get {
         if (entrySettingsSerializer == null) {
           entrySettingsSerializer = new XmlSerializer(typeof(EntrySettings));
-
-          // handle migration of old settings
-          entrySettingsSerializer.UnknownElement += (s, e) => {
-            if (e.Element.Name == "Location") {
-              // Location was renamed to PrivateKeyLocation, so we handle the conversion here
-              Debug.WriteLine("moving Location to PrivateKeyLocation");
-
-              // create a new document so that we can use the existing serializer
-              var doc = new XmlDocument();
-
-              // the root element has to match the name of the type we are deserializing
-              var element = doc.CreateElement("LocationData");
-
-              // copy the old element contents to the new document
-              foreach (XmlNode node in e.Element.ChildNodes) {
-                element.AppendChild(doc.ImportNode(node, true));
-              }
-
-              doc.AppendChild(element);
-
-              // write the document to a string
-              var docStr = new Func<string>(() => {
-                using (var writer = new StringWriter())
-                using (var xmlWriter = new XmlTextWriter(writer)) {
-                  doc.WriteTo(xmlWriter);
-                  return writer.ToString();
-                }
-              }).Invoke();
-
-              // use serializer to convert to .NET object
-              var serializer = new XmlSerializer(typeof(EntrySettings.LocationData));
-              var location = (EntrySettings.LocationData)serializer.Deserialize(new StringReader(docStr));
-
-              // put old data in new location
-              var obj = (EntrySettings)e.ObjectBeingDeserialized;
-              obj.PrivateKeyLocation = location;
-
-              // make new public key location with same info plus .pub file extension
-              obj.PublicKeyLocation = location.DeepCopy();
-              obj.PublicKeyLocation.AttachmentName = AddOrReplaceFileExtension(
-                obj.PublicKeyLocation.AttachmentName);
-              obj.PublicKeyLocation.FileName = AddOrReplaceFileExtension(
-                obj.PublicKeyLocation.FileName);
-            }
-          };
         }
 
         return entrySettingsSerializer;
@@ -197,13 +152,29 @@ namespace KeeAgent
       }
     }
 
-    public static SshPublicKey GetSshPublicKey(this PwEntry entry)
+    /// <summary>
+    /// Gets the (possibly encrypted) SSH private key from a database entry.
+    /// </summary>
+    /// <param name="entry">The KeePass database entry.</param>
+    /// <returns>The SSH key.</returns>
+    /// <reamrks>
+    /// Do not call this on entries that are currently being editied. It will
+    /// return stale data. Use <see cref="GetSshPrivateKey(EntrySettings, ProtectedBinaryDictionary)"/>
+    /// instead.
+    /// </reamrks>
+    public static SshPrivateKey GetSshPrivateKey(this PwEntry entry)
     {
       var settings = entry.GetKeeAgentSettings();
-      return settings.GetSshPublicKey(entry.Binaries);
+      return settings.GetSshPrivateKey(entry.Binaries);
     }
 
-    public static SshPublicKey GetSshPublicKey(
+    /// <summary>
+    /// Gets the (possibly encrypted) SSH private key from a database entry.
+    /// </summary>
+    /// <param name="settings">The KeePass database entry settings.</param>
+    /// <param name="binaries">The KeePass database entry binaries.</param>
+    /// <returns>The SSH key.</returns>
+    public static SshPrivateKey GetSshPrivateKey(
       this EntrySettings settings,
       ProtectedBinaryDictionary binaries)
     {
@@ -211,23 +182,23 @@ namespace KeeAgent
         throw new InvalidOperationException("SSH keys not enabled for this entry");
       }
 
-      switch (settings.PublicKeyLocation.SelectedType) {
+      switch (settings.Location.SelectedType) {
         case EntrySettings.LocationType.Attachment:
-          if (string.IsNullOrWhiteSpace(settings.PublicKeyLocation.AttachmentName)) {
+          if (string.IsNullOrWhiteSpace(settings.Location.AttachmentName)) {
             throw new NoAttachmentException();
           }
 
-          var attachment = binaries.Get(settings.PublicKeyLocation.AttachmentName);
+          var attachment = binaries.Get(settings.Location.AttachmentName);
 
           if (attachment == null) {
             throw new NoAttachmentException();
           };
 
-          return SshPublicKey.Read(new MemoryStream(attachment.ReadData()));
+          return SshPrivateKey.Read(new MemoryStream(attachment.ReadData()));
 
         case EntrySettings.LocationType.File:
-          var filename = settings.PublicKeyLocation.FileName.ExpandEnvironmentVariables();
-          return SshPublicKey.Read(File.OpenRead(filename));
+          var filename = settings.Location.FileName.ExpandEnvironmentVariables();
+          return SshPrivateKey.Read(File.OpenRead(filename));
 
         default:
           throw new ArgumentException("settings has invalid public key location", "settings");
@@ -262,13 +233,13 @@ namespace KeeAgent
       Func<Stream> getPrivateKeyStream;
       Func<Stream> getPublicKeyStream = null;
 
-      switch (settings.PrivateKeyLocation.SelectedType) {
+      switch (settings.Location.SelectedType) {
         case EntrySettings.LocationType.Attachment:
-          if (string.IsNullOrWhiteSpace(settings.PrivateKeyLocation.AttachmentName)) {
+          if (string.IsNullOrWhiteSpace(settings.Location.AttachmentName)) {
             throw new NoAttachmentException();
           }
 
-          var privateKeyData = binaries.Get(settings.PrivateKeyLocation.AttachmentName);
+          var privateKeyData = binaries.Get(settings.Location.AttachmentName);
 
           if (privateKeyData == null) {
             throw new NoAttachmentException();
@@ -276,17 +247,17 @@ namespace KeeAgent
 
           getPrivateKeyStream = () => new MemoryStream(privateKeyData.ReadData());
 
-          var publicKeyData = binaries.Get(settings.PrivateKeyLocation.AttachmentName + ".pub");
+          var publicKeyData = binaries.Get(settings.Location.AttachmentName + ".pub");
 
           if (publicKeyData != null) {
             getPublicKeyStream = () => new MemoryStream(publicKeyData.ReadData());
           }
 
           return GetSshKey(getPrivateKeyStream, getPublicKeyStream,
-                           settings.PrivateKeyLocation.AttachmentName, getPassphraseCallback);
+                           settings.Location.AttachmentName, getPassphraseCallback);
 
         case EntrySettings.LocationType.File:
-          var filename = settings.PrivateKeyLocation.FileName.ExpandEnvironmentVariables();
+          var filename = settings.Location.FileName.ExpandEnvironmentVariables();
           getPrivateKeyStream = () => File.OpenRead(filename);
           var publicKeyFile = filename + ".pub";
 
@@ -295,7 +266,7 @@ namespace KeeAgent
           }
 
           return GetSshKey(getPrivateKeyStream, getPublicKeyStream,
-                           settings.PrivateKeyLocation.AttachmentName, getPassphraseCallback);
+                           settings.Location.AttachmentName, getPassphraseCallback);
         default:
           return null;
       }

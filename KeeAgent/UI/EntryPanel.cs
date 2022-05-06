@@ -103,25 +103,19 @@ namespace KeeAgent.UI
           return pwEntryForm.EntryBinaries.Get(name);
         });
 
-        var isPublicKeyValid = UI.Validate.Location(
-          CurrentSettings.PublicKeyLocation,
-          getAttachment,
-          isPrivate: false) == null;
+        var isLocationValid = UI.Validate.Location(
+          CurrentSettings.Location,
+          getAttachment) == null;
 
-        var isPrivateKeyValid = UI.Validate.Location(
-          CurrentSettings.PublicKeyLocation,
-          getAttachment,
-          isPrivate: false) == null;
-
-        invalidKeyWarningIcon.Visible = !isPublicKeyValid || !isPrivateKeyValid;
+        invalidKeyWarningIcon.Visible = !isLocationValid;
       }
 
       try {
-        var key = CurrentSettings.GetSshPublicKey(pwEntryForm.EntryBinaries);
+        var key = CurrentSettings.GetSshPrivateKey(pwEntryForm.EntryBinaries);
 
-        commentTextBox.Text = key.Comment;
-        fingerprintTextBox.Text = key.Sha256Hash;
-        publicKeyTextBox.Text = key.AuthorizedKeysString;
+        commentTextBox.Text = key.PublicKey.Comment;
+        fingerprintTextBox.Text = key.PublicKey.Sha256Hash;
+        publicKeyTextBox.Text = key.PublicKey.AuthorizedKeysString;
         copyPublicKeybutton.Enabled = true;
       }
       catch (Exception) {
@@ -162,10 +156,9 @@ namespace KeeAgent.UI
     {
       pwEntryForm.UpdateEntryBinaries(true, false);
 
-      var dialog = new ManageKeyFilesDialog {
+      var dialog = new ManageKeyFileDialog {
         Attachments = new AttachmentBindingList(pwEntryForm.EntryBinaries),
-        PublicKeyLocation = CurrentSettings.PublicKeyLocation.DeepCopy(),
-        PrivateKeyLocation = CurrentSettings.PrivateKeyLocation.DeepCopy()
+        KeyLocation = CurrentSettings.Location.DeepCopy(),
       };
 
       var result = dialog.ShowDialog();
@@ -176,8 +169,7 @@ namespace KeeAgent.UI
 
       entrySettingsBindingSource.SuspendBinding();
 
-      CurrentSettings.PublicKeyLocation = dialog.PublicKeyLocation;
-      CurrentSettings.PrivateKeyLocation = dialog.PrivateKeyLocation;
+      CurrentSettings.Location = dialog.KeyLocation;
 
       entrySettingsBindingSource.ResumeBinding();
 

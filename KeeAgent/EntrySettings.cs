@@ -88,8 +88,7 @@ namespace KeeAgent
     public bool UseConfirmConstraintWhenAdding { get; set; }
     public bool UseLifetimeConstraintWhenAdding { get; set; }
     public uint LifetimeConstraintDuration { get; set; }
-    public LocationData PublicKeyLocation { get; set; }
-    public LocationData PrivateKeyLocation { get; set; }
+    public LocationData Location { get; set; }
 
     public EntrySettings()
     {
@@ -99,8 +98,7 @@ namespace KeeAgent
       UseConfirmConstraintWhenAdding = false;
       UseLifetimeConstraintWhenAdding = false;
       LifetimeConstraintDuration = 600;
-      PublicKeyLocation = new LocationData();
-      PrivateKeyLocation = new LocationData();
+      Location = new LocationData();
     }
 
     public EntrySettings DeepCopy()
@@ -112,8 +110,7 @@ namespace KeeAgent
         UseConfirmConstraintWhenAdding = UseConfirmConstraintWhenAdding,
         UseLifetimeConstraintWhenAdding = UseLifetimeConstraintWhenAdding,
         LifetimeConstraintDuration = LifetimeConstraintDuration,
-        PublicKeyLocation = PublicKeyLocation.DeepCopy(),
-        PrivateKeyLocation = PrivateKeyLocation.DeepCopy()
+        Location = Location.DeepCopy(),
       };
     }
 
@@ -126,8 +123,7 @@ namespace KeeAgent
         UseConfirmConstraintWhenAdding == other.UseConfirmConstraintWhenAdding &&
         UseLifetimeConstraintWhenAdding == other.UseLifetimeConstraintWhenAdding &&
         LifetimeConstraintDuration == other.LifetimeConstraintDuration &&
-        PublicKeyLocation == other.PublicKeyLocation &&
-        PrivateKeyLocation == other.PrivateKeyLocation;
+        Location == other.Location;
     }
     #endregion
 
@@ -141,7 +137,7 @@ namespace KeeAgent
 
     public override int GetHashCode ()
     {
-      return  PublicKeyLocation.GetHashCode() ^ PrivateKeyLocation.GetHashCode () ^ (AllowUseOfSshKey ? 0x0 : 0x1) ^
+      return  Location.GetHashCode() ^ (AllowUseOfSshKey ? 0x0 : 0x1) ^
         (AddAtDatabaseOpen ? 0x0 : 0x2) ^ (RemoveAtDatabaseClose ? 0x0 : 0x4);
     }
 

@@ -209,12 +209,12 @@ namespace KeeAgent.UI
         if (autodetect) {
           var entryCopy = entry.CloneDeep();
           settings.AllowUseOfSshKey = true;
-          settings.PrivateKeyLocation.SelectedType = EntrySettings.LocationType.Attachment;
+          settings.Location.SelectedType = EntrySettings.LocationType.Attachment;
           var sshKeyFound = false;
 
           foreach (var attachment in entry.Binaries) {
             try {
-              settings.PrivateKeyLocation.AttachmentName = attachment.Key;
+              settings.Location.AttachmentName = attachment.Key;
               entryCopy.SetKeeAgentSettings(settings);
               entryCopy.GetSshKey(); // throws
               entry.SetKeeAgentSettings(settings);

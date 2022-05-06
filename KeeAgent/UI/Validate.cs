@@ -33,10 +33,8 @@ namespace KeeAgent.UI
     public static bool SshPrivateKeyFile(Stream stream)
     {
       try {
-        using (var reader = new StreamReader(stream)) {
-          KeyFormatter.GetFormatter(reader.ReadLine());
-          return true;
-        }
+        SshPrivateKey.Read(stream);
+        return true;
       }
       catch {
         return false;
@@ -52,28 +50,20 @@ namespace KeeAgent.UI
     /// <param name="getAttachment">
     /// Callback function to get the attachment by name.
     /// </param>
-    /// <param name="isPrivate">
-    /// If <c>true</c>, this is the private key data, otherwise it is the public key data.
-    /// </param>
     /// <returns>
     /// <c>null</c> if the data is valid, otherwise an error message suitable for display to the user.
     /// </returns>
     public static string Location(
       EntrySettings.LocationData location,
-      Func<string, ProtectedBinary> getAttachment,
-      bool isPrivate)
+      Func<string, ProtectedBinary> getAttachment)
     {
       // we don't actually expect this to happen
       if (location == null) {
         return null;
       }
 
-      var type = isPrivate ? "private" : "public";
-
       if (!location.SelectedType.HasValue) {
-        return string.Format(
-          "No {0} key file type is selected. Select an option and try again.",
-          type);
+        return "No private key file type is selected. Select an option and try again.";
       }
 
       if (location.SelectedType.Value == EntrySettings.LocationType.Attachment) {
@@ -86,17 +76,9 @@ namespace KeeAgent.UI
 
         var stream = new MemoryStream(attachment.ReadData());
 
-        if (isPrivate) {
-          if (!SshPrivateKeyFile(stream)) {
-            return string.Format(
-              "attachment '{0}' is not a supported private key file.", location.AttachmentName);
-          }
-        }
-        else {
-          if (!SshPublicKeyFile(stream)) {
-            return string.Format(
-              "attachment '{0}' is not a supported public key file.", location.AttachmentName);
-          }
+        if (!SshPrivateKeyFile(stream)) {
+          return string.Format(
+            "attachment '{0}' is not a supported private key file.", location.AttachmentName);
         }
       }
 
@@ -104,23 +86,15 @@ namespace KeeAgent.UI
         var file = location.FileName.ExpandEnvironmentVariables();
 
         if (File.Exists(file)) {
-          if (isPrivate) {
-            if (!SshPrivateKeyFile(File.OpenRead(file))) {
-              return string.Format(
-                "'{0}' is not a supported private key file.", file);
-            }
-          }
-          else {
-            if (!SshPublicKeyFile(File.OpenRead(file))) {
-              return string.Format(
-                "'{0}' is not a supported public key file.", file);
-            }
+          if (!SshPrivateKeyFile(File.OpenRead(file))) {
+            return string.Format(
+              "'{0}' is not a supported private key file.", file);
           }
         }
         else {
           return string.Format(
-            "The {0} key file '{1}' does not exist.",
-            type, file);
+            "The private key file '{0}' does not exist.",
+            file);
         }
       }
 
