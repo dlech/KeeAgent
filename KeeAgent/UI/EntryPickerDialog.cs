@@ -216,7 +216,7 @@ namespace KeeAgent.UI
             try {
               settings.Location.AttachmentName = attachment.Key;
               entryCopy.SetKeeAgentSettings(settings);
-              entryCopy.GetSshKey(); // throws
+              entryCopy.GetSshPrivateKey(); // throws if there is a problem
               entry.SetKeeAgentSettings(settings);
               entry.Touch(true);
               mActiveDb.Modified = true;
