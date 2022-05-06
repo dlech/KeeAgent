@@ -73,11 +73,11 @@ namespace KeeAgent
             return "Agent Locked";
           }
           try {
-            var key = entry.GetSshKey();
-            if (key == null)
-              return "N/A";
-            if (ext.agent.GetAllKeys().Get(key.Version, key.GetPublicKeyBlob()) != null)
+            var key = entry.GetSshPrivateKey();
+
+            if (ext.agent.Contains(key.PublicKey)) {
               return "Loaded";
+            }
           } catch (PpkFormatterException) {
             return "Error";
           } catch (Exception ex) {
@@ -129,7 +129,7 @@ namespace KeeAgent
     {
       UpdateUI();
     }
-      
+
     private void Agent_Locked(object sender, Agent.LockEventArgs e)
     {
         UpdateUI();
