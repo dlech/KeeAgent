@@ -5,7 +5,6 @@ using System;
 using System.IO;
 using KeePassLib.Security;
 using SshAgentLib.Keys;
-using dlech.SshAgentLib;
 
 namespace KeeAgent.UI
 {
@@ -17,7 +16,7 @@ namespace KeeAgent.UI
     /// <summary>
     /// Validates that <paramref name="stream"/> is a supported SSH public key file.
     /// </summary>
-    /// <param name="stream">The stream containg the file data.</param>
+    /// <param name="stream">The stream containing the file data.</param>
     /// <returns><c>true</c> if the file is valid, otherwise <c>false</c>.</returns>
     public static bool SshPublicKeyFile(Stream stream)
     {
