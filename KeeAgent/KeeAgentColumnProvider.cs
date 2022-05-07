@@ -105,10 +105,10 @@ namespace KeeAgent
       switch (columnName) {
         case sshKeyStatusColumnName:
           try {
-            var key = entry.GetSshKey();
-            if (key == null)
-              break;
-            var agentKey = ext.agent.GetAllKeys().Get(key.Version, key.GetPublicKeyBlob());
+            var key = entry.GetSshPrivateKey();
+
+            var agentKey = ext.agent.GetAllKeys().SingleOrDefault(k => key.PublicKey.Matches(k.GetPublicKeyBlob()));
+
             if (agentKey == null) {
               ext.AddEntry(entry, null);
             }
