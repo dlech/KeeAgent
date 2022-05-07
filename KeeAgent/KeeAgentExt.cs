@@ -990,20 +990,25 @@ namespace KeeAgent
 
     private void SprEngine_FilterCompile(object sender, SprEventArgs e)
     {
-      if (!e.Context.Flags.HasFlag(SprCompileFlags.ExtNonActive))
+      if (!e.Context.Flags.HasFlag(SprCompileFlags.ExtNonActive)) {
         return;
-      var path = string.Empty;
-      try {
-        using (var key = e.Context.Entry.GetSshKey()) {
-          var fingerprint = key.GetMD5Fingerprint().ToHexString();
-          if (keyFileMap.ContainsKey(fingerprint))
-            path = keyFileMap[fingerprint].Path;
+      }
+
+      if (e.Text.Contains(keyFilePathSprPlaceholder) || e.Text.Contains(identFileOptSprPlaceholder)) {
+        var path = string.Empty;
+
+        try {
+          var key = e.Context.Entry.GetSshPrivateKey();
+          path = keyFileMap[key.PublicKey.Sha256Hash].Path;
+        } catch (Exception ex) {
+          Debug.Fail(ex.Message);
         }
-      } catch (Exception) { }
-      e.Text = StrUtil.ReplaceCaseInsensitive(e.Text,
-        keyFilePathSprPlaceholder, path);
-      e.Text = StrUtil.ReplaceCaseInsensitive(e.Text,
-        identFileOptSprPlaceholder, string.Format("-i \"{0}\"", path));
+
+        e.Text = StrUtil.ReplaceCaseInsensitive(e.Text,
+          keyFilePathSprPlaceholder, path);
+        e.Text = StrUtil.ReplaceCaseInsensitive(e.Text,
+          identFileOptSprPlaceholder, string.Format("-i \"{0}\"", path));
+      }
     }
 
     public ISshKey AddEntry(PwEntry entry,
@@ -1064,13 +1069,13 @@ namespace KeeAgent
             File.WriteAllBytes(fileName, data);
             // try to set unix file permissions required by OpenSSH ssh-agent
             Util.TryChmod(fileName, Convert.ToInt32("600", 8));
-            keyFileMap[key.GetMD5Fingerprint().ToHexString()] = new KeyFileInfo(fileName, true);
+            keyFileMap[key.GetSha256Fingerprint()] = new KeyFileInfo(fileName, true);
           } catch (Exception ex) {
             MessageService.ShowWarning(ex.Message);
           }
         }
         if (settings.Location.SelectedType == EntrySettings.LocationType.File) {
-          keyFileMap[key.GetMD5Fingerprint().ToHexString()] =
+          keyFileMap[key.GetSha256Fingerprint()] =
             new KeyFileInfo(settings.Location.FileName, false);
         }
         return key;
@@ -1137,7 +1142,8 @@ namespace KeeAgent
     public void RemoveKey(ISshKey key) {
       agent.RemoveKey(key);
 
-      var fingerprint = key.GetMD5Fingerprint().ToHexString();
+      var fingerprint = key.GetSha256Fingerprint();
+
       if (keyFileMap.ContainsKey(fingerprint) && keyFileMap[fingerprint].IsTemporary) {
         try {
           File.Delete(keyFileMap[fingerprint].Path);
