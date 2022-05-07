@@ -944,16 +944,22 @@ namespace KeeAgent
                 continue;
               }
             }
+
             var settings = entry.GetKeeAgentSettings();
+
             if (settings.AllowUseOfSshKey && settings.RemoveAtDatabaseClose) {
-              var matchKey = entry.GetSshKey();
+              var matchKey = entry.GetSshPrivateKey();
+
               if (matchKey == null) {
                 continue;
               }
-              var removeKey = allKeys.Get(matchKey.Version, matchKey.GetPublicKeyBlob());
+
+              var removeKey = allKeys.FirstOrDefault(k => matchKey.PublicKey.Matches(k.GetPublicKeyBlob()));
+
               if (removeKey == null) {
                 continue;
               }
+
               removeKeyList.Add(removeKey);
             }
           } catch (Exception ex) {
