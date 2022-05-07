@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
 using System.Windows.Forms;
@@ -15,11 +16,11 @@ using System.Xml.Serialization;
 
 using dlech.SshAgentLib;
 using KeeAgent.Properties;
+using KeeAgent.UI;
 using KeePass.Util.Spr;
 using KeePassLib;
 using KeePassLib.Collections;
 using KeePassLib.Security;
-using System.Runtime.InteropServices;
 using KeePass.UI;
 using SshAgentLib.Keys;
 
@@ -278,15 +279,29 @@ namespace KeeAgent
                              KeyFormatter.GetPassphraseCallback getPassphrase)
     {
       ISshKey key;
-      using (var privateKeyStream = getPrivateKeyStream())
-        key = privateKeyStream.ReadSshKey(getPassphrase);
+      using (var privateKeyStream = getPrivateKeyStream()) {
+        // REVISIT: consider only showing dialog for keys with key derivation
+        // function - these are the only ones that should be slow to decrypt.
+        var dialog = new DecryptProgressDialog();
+        dialog.Start((p) => privateKeyStream.ReadSshKey(getPassphrase, p));
+        dialog.ShowDialog();
+
+        if (dialog.DialogResult == DialogResult.Abort) {
+          throw dialog.Error;
+        }
+
+        key = (ISshKey)dialog.Result;
+      }
+
       if (string.IsNullOrWhiteSpace(key.Comment) && getPublicKeyStream != null) {
         using (var stream = getPublicKeyStream())
           key.Comment = KeyFormatter.GetComment(stream.ReadAllLines(Encoding.UTF8));
       }
+
       if (string.IsNullOrWhiteSpace(key.Comment)) {
         key.Comment = fallbackComment;
       }
+
       return key;
     }
 

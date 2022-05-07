@@ -71,6 +71,12 @@
       <DependentUpon>Translatable.resx</DependentUpon>
     </Compile>
     <Compile Include="UI\AttachmentBindingList.cs" />
+    <Compile Include="UI\DecryptProgressDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\DecryptProgressDialog.Designer.cs">
+      <DependentUpon>DecryptProgressDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\InPlaceMessage.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -158,6 +164,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Translatable.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\DecryptProgressDialog.resx">
+      <DependentUpon>DecryptProgressDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\InPlaceMessage.resx">
       <DependentUpon>InPlaceMessage.cs</DependentUpon>
