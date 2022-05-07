@@ -278,19 +278,26 @@ namespace KeeAgent
                              string fallbackComment,
                              KeyFormatter.GetPassphraseCallback getPassphrase)
     {
+      var privKey = SshPrivateKey.Read(getPrivateKeyStream());
+
       ISshKey key;
       using (var privateKeyStream = getPrivateKeyStream()) {
-        // REVISIT: consider only showing dialog for keys with key derivation
-        // function - these are the only ones that should be slow to decrypt.
-        var dialog = new DecryptProgressDialog();
-        dialog.Start((p) => privateKeyStream.ReadSshKey(getPassphrase, p));
-        dialog.ShowDialog();
+        if (privKey.HasKdf) {
+          // if there is a key derivation function, decrypting could be slow,
+          // so show a progress dialog
+          var dialog = new DecryptProgressDialog();
+          dialog.Start((p) => privateKeyStream.ReadSshKey(getPassphrase, p));
+          dialog.ShowDialog();
 
-        if (dialog.DialogResult == DialogResult.Abort) {
-          throw dialog.Error;
+          if (dialog.DialogResult == DialogResult.Abort) {
+            throw dialog.Error;
+          }
+
+          key = (ISshKey)dialog.Result;
         }
-
-        key = (ISshKey)dialog.Result;
+        else {
+          key = privateKeyStream.ReadSshKey(getPassphrase);
+        }
       }
 
       if (string.IsNullOrWhiteSpace(key.Comment) && getPublicKeyStream != null) {
