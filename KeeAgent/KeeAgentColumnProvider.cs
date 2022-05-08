@@ -79,7 +79,7 @@ namespace KeeAgent
           catch (SshPrivateKey.PublicKeyRequiredException) {
             return "Missing .pub file";
           }
-          catch (PpkFormatterException) {
+          catch (FormatException) {
             return "Error";
           }
           catch (Exception ex) {

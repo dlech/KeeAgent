@@ -8,7 +8,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Security;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
@@ -23,6 +22,7 @@ using KeePassLib.Collections;
 using KeePassLib.Security;
 using KeePass.UI;
 using SshAgentLib.Keys;
+using Org.BouncyCastle.Crypto;
 
 namespace KeeAgent
 {
@@ -289,101 +289,37 @@ namespace KeeAgent
     public static ISshKey GetSshKey(this PwEntry entry)
     {
       var settings = entry.GetKeeAgentSettings();
-      var context = new SprContext(entry, entry.GetDatabase(), SprCompileFlags.Deref);
-      return settings.GetSshKey(entry.Strings, entry.Binaries, context);
-    }
 
-    public static ISshKey GetSshKey(this EntrySettings settings,
-      ProtectedStringDictionary strings, ProtectedBinaryDictionary binaries,
-      SprContext sprContext)
-    {
       if (!settings.AllowUseOfSshKey) {
         return null;
       }
 
-      KeyFormatter.GetPassphraseCallback getPassphraseCallback = (comment) => {
-        var securePassphrase = new SecureString();
-        var passphrase = SprEngine.Compile(strings.ReadSafe(
-                      PwDefs.PasswordField), sprContext);
-        foreach (var c in passphrase) {
-          securePassphrase.AppendChar(c);
+      var privateKey = settings.GetSshPrivateKey(entry.Binaries);
+
+      AsymmetricKeyParameter parameter;
+
+      if (privateKey.HasKdf) {
+        // if there is a key derivation function, decrypting could be slow,
+        // so show a progress dialog
+        var dialog = new DecryptProgressDialog();
+        dialog.Start((p) => privateKey.Decrypt(() => entry.GetPassphrase(), p));
+        dialog.ShowDialog();
+
+        if (dialog.DialogResult == DialogResult.Abort) {
+          throw dialog.Error;
         }
-        return securePassphrase;
-      };
 
-      var privateKey = settings.GetSshPrivateKey(binaries);
-
-      Func<Stream> getPrivateKeyStream;
-
-      switch (settings.Location.SelectedType) {
-        case EntrySettings.LocationType.Attachment:
-          if (string.IsNullOrWhiteSpace(settings.Location.AttachmentName)) {
-            throw new NoAttachmentException();
-          }
-
-          var privateKeyData = binaries.Get(settings.Location.AttachmentName);
-
-          if (privateKeyData == null) {
-            throw new NoAttachmentException();
-          }
-
-          getPrivateKeyStream = () => new MemoryStream(privateKeyData.ReadData());
-
-          return GetSshKey(privateKey, getPrivateKeyStream,
-                           settings.Location.AttachmentName, getPassphraseCallback);
-
-        case EntrySettings.LocationType.File:
-          var filename = settings.Location.FileName.ExpandEnvironmentVariables();
-          getPrivateKeyStream = () => File.OpenRead(filename);
-
-          return GetSshKey(privateKey, getPrivateKeyStream,
-                           settings.Location.AttachmentName, getPassphraseCallback);
-        default:
-          return null;
+        parameter = (AsymmetricKeyParameter)dialog.Result;
       }
-    }
-
-    static ISshKey GetSshKey(SshPrivateKey privateKey,
-        Func<Stream> getPrivateKeyStream,
-        string fallbackComment,
-        KeyFormatter.GetPassphraseCallback getPassphrase)
-    {
-      if (privateKey == null) {
-        throw new ArgumentNullException("privateKey");
+      else {
+        parameter = privateKey.Decrypt(() => entry.GetPassphrase());
       }
 
-      if (getPrivateKeyStream == null) {
-        throw new ArgumentNullException("getPrivateKeyStream");
-      }
-
-      ISshKey key;
-
-      using (var privateKeyStream = getPrivateKeyStream()) {
-        if (privateKey.HasKdf) {
-          // if there is a key derivation function, decrypting could be slow,
-          // so show a progress dialog
-          var dialog = new DecryptProgressDialog();
-          dialog.Start((p) => privateKeyStream.ReadSshKey(getPassphrase, p));
-          dialog.ShowDialog();
-
-          if (dialog.DialogResult == DialogResult.Abort) {
-            throw dialog.Error;
-          }
-
-          key = (ISshKey)dialog.Result;
-        }
-        else {
-          key = privateKeyStream.ReadSshKey(getPassphrase);
-        }
-      }
-
-      if (string.IsNullOrWhiteSpace(key.Comment)) {
-        key.Comment = privateKey.PublicKey.Comment;
-      }
-
-      if (string.IsNullOrWhiteSpace(key.Comment)) {
-        key.Comment = fallbackComment;
-      }
+      var key = new SshKey(
+        privateKey.PublicKey.Version,
+        privateKey.PublicKey.Parameter,
+        parameter,
+        privateKey.PublicKey.Comment);
 
       return key;
     }

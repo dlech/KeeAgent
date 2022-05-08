@@ -1134,7 +1134,7 @@ namespace KeeAgent
           }
 
         }
-        else if (ex is KeyFormatterException || ex is PpkFormatterException) {
+        else if (ex is FormatException) {
           var message = ex.Message;
           if (ex.InnerException != null) {
             message = ex.InnerException.Message;
