@@ -241,22 +241,30 @@ namespace KeeAgent
       }
       catch (SshPrivateKey.PublicKeyRequiredException) {
         try {
-          var key = entry.GetSshKey();
           var settings = entry.GetKeeAgentSettings();
 
           if (settings.Location.SelectedType == EntrySettings.LocationType.Attachment) {
+            var privateKey = new MemoryStream(
+              entry.Binaries.Get(settings.Location.AttachmentName).ReadData());
+            var publicKey = new MemoryStream();
+
+            SshPrivateKey.CreatePublicKeyFromPrivateKey(
+              privateKey, publicKey, () => entry.GetPassphrase(), settings.Location.AttachmentName);
+
             var name = settings.Location.AttachmentName + ".pub";
-            entry.Binaries.Set(name, new ProtectedBinary(false, Encoding.UTF8.GetBytes(key.GetAuthorizedKeyString())));
+            entry.Binaries.Set(name, new ProtectedBinary(false, publicKey.ToArray()));
           }
           else if (settings.Location.SelectedType == EntrySettings.LocationType.File) {
-            var fileName = settings.Location.FileName.ExpandEnvironmentVariables() + ".pub";
+            var fileName = settings.Location.FileName.ExpandEnvironmentVariables();
 
-            if (File.Exists(fileName)) {
+            if (File.Exists(fileName + ".pub")) {
               // file was created since we called GetSshPrivateKey()?
               throw new InvalidOperationException();
             }
 
-            File.WriteAllText(fileName, key.GetAuthorizedKeyString());
+            SshPrivateKey.CreatePublicKeyFromPrivateKey(
+              File.OpenRead(fileName), File.OpenWrite(fileName + ".pub"),
+              () => entry.GetPassphrase(), settings.Location.AttachmentName);
           }
         }
         catch (Exception ex) {
@@ -269,6 +277,13 @@ namespace KeeAgent
         Debug.Fail(ex.ToString());
         // all other errors ignored
       }
+    }
+
+    static byte[] GetPassphrase(this PwEntry entry)
+    {
+      var context = new SprContext(entry, entry.GetDatabase(), SprCompileFlags.Deref);
+      var passphrase = SprEngine.Compile(entry.Strings.ReadSafe(PwDefs.PasswordField), context);
+      return Encoding.UTF8.GetBytes(passphrase);
     }
 
     public static ISshKey GetSshKey(this PwEntry entry)
@@ -296,14 +311,7 @@ namespace KeeAgent
         return securePassphrase;
       };
 
-      var privateKey = default(SshPrivateKey);
-
-      try {
-        privateKey = settings.GetSshPrivateKey(binaries);
-      }
-      catch (SshPrivateKey.PublicKeyRequiredException) {
-        // we can live without this
-      }
+      var privateKey = settings.GetSshPrivateKey(binaries);
 
       Func<Stream> getPrivateKeyStream;
 
@@ -340,9 +348,18 @@ namespace KeeAgent
         string fallbackComment,
         KeyFormatter.GetPassphraseCallback getPassphrase)
     {
+      if (privateKey == null) {
+        throw new ArgumentNullException("privateKey");
+      }
+
+      if (getPrivateKeyStream == null) {
+        throw new ArgumentNullException("getPrivateKeyStream");
+      }
+
       ISshKey key;
+
       using (var privateKeyStream = getPrivateKeyStream()) {
-        if (privateKey != null && privateKey.HasKdf) {
+        if (privateKey.HasKdf) {
           // if there is a key derivation function, decrypting could be slow,
           // so show a progress dialog
           var dialog = new DecryptProgressDialog();
@@ -360,7 +377,7 @@ namespace KeeAgent
         }
       }
 
-      if (string.IsNullOrWhiteSpace(key.Comment) && privateKey != null) {
+      if (string.IsNullOrWhiteSpace(key.Comment)) {
         key.Comment = privateKey.PublicKey.Comment;
       }
 
