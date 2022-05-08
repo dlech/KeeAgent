@@ -18,7 +18,8 @@ namespace KeeAgent.UI
     /// Creates a new list.
     /// </summary>
     /// <param name="binaries">The binary dictionary.</param>
-    public AttachmentBindingList(ProtectedBinaryDictionary binaries) : base(binaries.ToList()) {
+    public AttachmentBindingList(ProtectedBinaryDictionary binaries) : base(binaries.ToList())
+    {
       AllowEdit = false;
       AllowNew = false;
       AllowRemove = false;

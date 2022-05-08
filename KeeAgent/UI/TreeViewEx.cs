@@ -33,16 +33,16 @@ namespace KeeAgent.UI
     protected override void WndProc(ref Message m)
     {
       const int WM_LBUTTONDOWN = 0x0201;
-      const int WM_LBUTTONUP = 0x0202; 
+      const int WM_LBUTTONUP = 0x0202;
       const int WM_LBUTTONDBLCLK = 0x0203;
       const int WM_RBUTTONDOWN = 0x0204;
-      const int WM_RBUTTONUP = 0x0205; 
+      const int WM_RBUTTONUP = 0x0205;
       const int WM_RBUTTONDBLCLK = 0x0206;
-           
+
 
       if (m.Msg == WM_LBUTTONDOWN || m.Msg == WM_LBUTTONUP ||
-          m.Msg == WM_LBUTTONDBLCLK ||  m.Msg == WM_RBUTTONDOWN ||
-          m.Msg == WM_RBUTTONUP ||  m.Msg == WM_RBUTTONDBLCLK) {
+          m.Msg == WM_LBUTTONDBLCLK || m.Msg == WM_RBUTTONDOWN ||
+          m.Msg == WM_RBUTTONUP || m.Msg == WM_RBUTTONDBLCLK) {
 
         var posData = m.LParam.ToInt32();
         var xPos = posData & 0xFF;

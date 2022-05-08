@@ -38,8 +38,9 @@ namespace KeeAgent.UI
     /// Currently, this is only via the notification icon.
     /// </summary>
     /// <param name="aMessage">The message to display</param>
-    public void ShowBalloonNotification(string aMessage) {
-      MethodInvoker invoker = delegate() {
+    public void ShowBalloonNotification(string aMessage)
+    {
+      MethodInvoker invoker = delegate () {
         if (mPluginHost.MainWindow.MainNotifyIcon != null) {
           mPluginHost.MainWindow.MainNotifyIcon.ShowBalloonTip(
             5000, Translatable.KeeAgent,
@@ -54,14 +55,17 @@ namespace KeeAgent.UI
     /// </summary>
     /// <param name="aInvoker">the method to invoke</param>
     /// <param name="aAsync">set to true to invoke asynchronously</param>
-    private void InvokeMainWindow(MethodInvoker aInvoker, bool aAsync) {
+    private void InvokeMainWindow(MethodInvoker aInvoker, bool aAsync)
+    {
       if (this.mPluginHost.MainWindow.InvokeRequired) {
         if (aAsync) {
           mPluginHost.MainWindow.BeginInvoke(aInvoker);
-        } else {
+        }
+        else {
           mPluginHost.MainWindow.Invoke(aInvoker);
         }
-      } else {
+      }
+      else {
         aInvoker.Invoke();
       }
     }

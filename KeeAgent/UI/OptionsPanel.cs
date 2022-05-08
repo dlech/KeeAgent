@@ -20,8 +20,8 @@ namespace KeeAgent.UI
 
     public OptionsPanel(KeeAgentExt ext)
     {
-      InitializeComponent ();
-      if (Type.GetType ("Mono.Runtime") != null) {
+      InitializeComponent();
+      if (Type.GetType("Mono.Runtime") != null) {
         const int xOffset = -30;
         const int yOffset = -30;
         helpButton.Left += xOffset;
@@ -72,7 +72,7 @@ namespace KeeAgent.UI
         Translatable.OptionShowBalloon);
       //mOptionsList.CreateItem(aExt.Options, "LoggingEnabled", optionsGroup,
       //  Translatable.optionLoggingEnabled);
-      optionsList.CreateItem (ext.Options, "UnlockOnActivity", agentModeOptionsGroup,
+      optionsList.CreateItem(ext.Options, "UnlockOnActivity", agentModeOptionsGroup,
        Translatable.OptionUnlockOnActivity);
       optionsList.CreateItem(ext.Options, "UserPicksKeyOnRequestIdentities",
         agentModeOptionsGroup, Translatable.OptionUserPicksKeyOnRequestIdentities);
@@ -97,7 +97,8 @@ namespace KeeAgent.UI
         wslSocketPathLabel.Visible = false;
         wslSocketPathTextBox.Visible = false;
         wslSocketPathBrowseButton.Visible = false;
-      } else {
+      }
+      else {
         useCygwinSocketCheckBox.Checked = ext.Options.UseCygwinSocket;
         cygwinSocketPathTextBox.Text = ext.Options.CygwinSocketPath;
         useMsysSocketCheckBox.Checked = ext.Options.UseMsysSocket;
@@ -112,61 +113,59 @@ namespace KeeAgent.UI
     {
       base.OnLoad(e);
       if (ParentForm != null) {
-        ParentForm.FormClosing +=
-          delegate(object sender, FormClosingEventArgs e2)
-        {
+        ParentForm.FormClosing += (sender, e2) => {
           if (ParentForm.DialogResult == DialogResult.OK) {
             if (!isUnix && useCygwinSocketCheckBox.Checked
-              && string.IsNullOrWhiteSpace(cygwinSocketPathTextBox.Text))
-            {
+              && string.IsNullOrWhiteSpace(cygwinSocketPathTextBox.Text)) {
               MessageService.ShowWarning("Must specify path for Cygwin socket file.");
               e2.Cancel = true;
               return;
             }
             if (!isUnix && useMsysSocketCheckBox.Checked
-              && string.IsNullOrWhiteSpace(msysSocketPathTextBox.Text))
-            {
+              && string.IsNullOrWhiteSpace(msysSocketPathTextBox.Text)) {
               MessageService.ShowWarning("Must specify path for MSYS socket file.");
               e2.Cancel = true;
               return;
             }
             if (!isUnix && useWslSocketCheckBox.Checked
-              && string.IsNullOrWhiteSpace(wslSocketPathTextBox.Text))
-            {
+              && string.IsNullOrWhiteSpace(wslSocketPathTextBox.Text)) {
               MessageService.ShowWarning("Must specify path for WSL socket file.");
               e2.Cancel = true;
               return;
             }
             if (isUnix && modeComboBox.Text != Translatable.OptionAgentModeClient
-              && string.IsNullOrWhiteSpace (cygwinSocketPathTextBox.Text))
-            {
+              && string.IsNullOrWhiteSpace(cygwinSocketPathTextBox.Text)) {
               MessageService.ShowWarning("Must specify path for Agent socket file.");
               e2.Cancel = true;
               return;
             }
             SaveChanges();
             if (ext.Options.UseCygwinSocket) {
-                ext.StartCygwinSocket();
-            } else {
-                ext.StopCygwinSocket();
+              ext.StartCygwinSocket();
+            }
+            else {
+              ext.StopCygwinSocket();
             }
             if (ext.Options.UseMsysSocket) {
-                ext.StartMsysSocket();
-            } else {
-                ext.StopMsysSocket();
+              ext.StartMsysSocket();
             }
-            if (ext.Options.UseWslSocket) { 
+            else {
+              ext.StopMsysSocket();
+            }
+            if (ext.Options.UseWslSocket) {
               ext.StartWslSocket();
-            } else {
+            }
+            else {
               ext.StopWslSocket();
             }
             if (ext.Options.UseWindowsOpenSshPipe) {
               ext.StartWindowsOpenSshPipe();
-            } else {
+            }
+            else {
               ext.StopWindowsOpenSsh();
             }
             if (isUnix) {
-              ext.StartUnixSocket ();
+              ext.StartUnixSocket();
             }
           }
           optionsList.Release();
@@ -179,14 +178,17 @@ namespace KeeAgent.UI
       optionsList.UpdateData(true);
       if (modeComboBox.Text == Translatable.OptionAgentModeAgent) {
         ext.Options.AgentMode = AgentMode.Server;
-      } else if (modeComboBox.Text == Translatable.OptionAgentModeClient) {
+      }
+      else if (modeComboBox.Text == Translatable.OptionAgentModeClient) {
         ext.Options.AgentMode = AgentMode.Client;
-      } else {
+      }
+      else {
         ext.Options.AgentMode = AgentMode.Auto;
       }
       if (isUnix) {
         ext.Options.UnixSocketPath = cygwinSocketPathTextBox.Text;
-      } else {
+      }
+      else {
         ext.Options.UseCygwinSocket = useCygwinSocketCheckBox.Checked;
         ext.Options.CygwinSocketPath = cygwinSocketPathTextBox.Text;
         ext.Options.UseMsysSocket = useMsysSocketCheckBox.Checked;
@@ -226,21 +228,19 @@ namespace KeeAgent.UI
     {
       // TODO: Would be nice if we could change the name of the "OK" button from
       // "Save" to "Select".
-      var dialog = new SaveFileDialog()
-      {
+      var dialog = new SaveFileDialog() {
         Title = "Enter Socket File Name",
         Filter = "All files (*.*)|*.*",
         CheckFileExists = false,
         OverwritePrompt = false,
       };
-      dialog.FileOk += (s, e) =>
-      {
+      dialog.FileOk += (s, e) => {
         if (File.Exists(dialog.FileName)) {
           MessageService.ShowWarning("File exists.", "Enter a new file name.");
           e.Cancel = true;
         }
       };
-      if (dialog.ShowDialog () == DialogResult.Cancel) {
+      if (dialog.ShowDialog() == DialogResult.Cancel) {
         return null;
       }
       return dialog.FileName;

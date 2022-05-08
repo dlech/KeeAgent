@@ -49,13 +49,12 @@ namespace KeeAgent.UI
     {
       base.OnLoad(e);
       if (ParentForm != null) {
-        ParentForm.FormClosing += (s, e2) =>
-          {
-            if (ParentForm.DialogResult == DialogResult.OK) {
-              var settings = mDatabaseSettingsBindingSource.DataSource as DatabaseSettings;
-              mDatabase.SetKeeAgentSettings(settings);
-            }
-          };
+        ParentForm.FormClosing += (s, e2) => {
+          if (ParentForm.DialogResult == DialogResult.OK) {
+            var settings = mDatabaseSettingsBindingSource.DataSource as DatabaseSettings;
+            mDatabase.SetKeeAgentSettings(settings);
+          }
+        };
       }
     }
 

@@ -130,12 +130,14 @@ namespace KeeAgent
               if (Options.UseWindowsOpenSshPipe) {
                 StartWindowsOpenSshPipe();
               }
-            } catch (PageantRunningException) {
+            }
+            catch (PageantRunningException) {
               if (Options.AgentMode != AgentMode.Auto) {
                 throw;
               }
             }
-          } else {
+          }
+          else {
             // In Unix, we only try to start an agent if Agent mode was explicitly
             // selected or there is no agent running (indicated by environment variable).
             if (Options.AgentMode == AgentMode.Server || string.IsNullOrWhiteSpace(domainSocketPath)) {
@@ -158,11 +160,13 @@ namespace KeeAgent
                 MessageService.ShowWarning("KeeAgent: No path specified for Agent socket file.",
                    "Please enter a file in the KeeAgent options (Tools > Options... > KeeAgent tab) and restart KeePass" +
                    autoModeMessage);
-              } else {
+              }
+              else {
                 try {
                   var socketPath = Options.UnixSocketPath.ExpandEnvironmentVariables();
                   unixAgent.StartUnixSocket(socketPath);
-                } catch (Exception ex) {
+                }
+                catch (Exception ex) {
                   MessageService.ShowWarning(ex.Message);
                 }
               }
@@ -172,7 +176,8 @@ namespace KeeAgent
         if (agent == null) {
           if (isWindows) {
             agent = new PageantClient();
-          } else {
+          }
+          else {
             agent = new UnixClient();
           }
         }
@@ -192,9 +197,11 @@ namespace KeeAgent
         SprEngine.FilterPlaceholderHints.Add(keyFilePathSprPlaceholder);
         SprEngine.FilterPlaceholderHints.Add(identFileOptSprPlaceholder);
         return true;
-      } catch (PageantRunningException) {
+      }
+      catch (PageantRunningException) {
         ShowPageantRunningErrorMessage();
-      } catch (Exception ex) {
+      }
+      catch (Exception ex) {
         MessageService.ShowWarning("KeeAgent failed to load:", ex.Message);
       }
       Terminate();
@@ -327,7 +334,8 @@ namespace KeeAgent
         pagent.StopCygwinSocket();
         pagent.StartCygwinSocket(Environment.ExpandEnvironmentVariables(
           Options.CygwinSocketPath));
-      } catch (Exception ex) {
+      }
+      catch (Exception ex) {
         MessageService.ShowWarning("Failed to start Cygwin socket:",
           ex.Message);
         // TODO: show better explanation of common errors.
@@ -351,7 +359,8 @@ namespace KeeAgent
         pagent.StopMsysSocket();
         pagent.StartMsysSocket(Environment.ExpandEnvironmentVariables(
           Options.MsysSocketPath));
-      } catch (Exception ex) {
+      }
+      catch (Exception ex) {
         MessageService.ShowWarning("Failed to start MSYS socket:",
           ex.Message);
         // TODO: show better explanation of common errors.
@@ -376,13 +385,15 @@ namespace KeeAgent
         try {
           pagent.StartWslSocket(Environment.ExpandEnvironmentVariables(
             Options.WslSocketPath));
-        } catch (SocketException ex) {
+        }
+        catch (SocketException ex) {
           if (ex.SocketErrorCode != SocketError.AddressFamilyNotSupported) {
             throw;
           }
           // Ignore this error otherwise; UNIX sockets just aren't supported here
         }
-      } catch (Exception ex) {
+      }
+      catch (Exception ex) {
         MessageService.ShowWarning("Failed to start Wsl socket:",
           ex.Message);
         // TODO: show better explanation of common errors.
@@ -435,7 +446,8 @@ namespace KeeAgent
         var socketPath = Options.UnixSocketPath.ExpandEnvironmentVariables();
         unixAgent.StartUnixSocket(Environment.ExpandEnvironmentVariables(
           socketPath));
-      } catch (Exception ex) {
+      }
+      catch (Exception ex) {
         MessageService.ShowWarning("Failed to start Unix socket:",
           ex.Message);
         // TODO: show better explanation of common errors.
@@ -482,7 +494,7 @@ namespace KeeAgent
       UpdateGroupMenuItem(menuItem);
     }
 
-  private void UpdateGroupMenuItem(ToolStripMenuItem groupMenuItem)
+    private void UpdateGroupMenuItem(ToolStripMenuItem groupMenuItem)
     {
       groupMenuItem.Enabled = false;
       var activeDatabase = pluginHost.MainWindow.ActiveDatabase;
@@ -536,11 +548,11 @@ namespace KeeAgent
           // if any selected entry contains an SSH key then we show the KeeAgent menu item
           if (entry.GetKeeAgentSettings().AllowUseOfSshKey) {
             var agentModeAgent = agent as Agent;
-            if (agentModeAgent != null && agentModeAgent.IsLocked)
-            {
+            if (agentModeAgent != null && agentModeAgent.IsLocked) {
               entryMenuItem.Text = Translatable.StatusLocked;
               urlMenuItem.Text = Translatable.StatusLocked;
-            } else {
+            }
+            else {
               entryMenuItem.Enabled |= true;
               entryMenuItem.Text = Translatable.LoadKeyContextMenuItem;
               urlMenuItem.Enabled |= !entry.Strings.GetSafe(PwDefs.UrlField).IsEmpty;
@@ -560,7 +572,8 @@ namespace KeeAgent
         if (settings.AllowUseOfSshKey) {
           try {
             AddEntry(entry, null);
-          } catch (Exception) {
+          }
+          catch (Exception) {
             // AddEntry should have already shown error message
           }
         }
@@ -595,9 +608,9 @@ namespace KeeAgent
       config.SetBool(unlockOnActivityOptionName, Options.UnlockOnActivity);
       config.SetBool(useCygwinSocketOptionName, Options.UseCygwinSocket);
       config.SetString(cygwinSocketPathOptionName, Options.CygwinSocketPath);
-      config.SetBool(useMsysSocketOptionName, Options.UseMsysSocket );
+      config.SetBool(useMsysSocketOptionName, Options.UseMsysSocket);
       config.SetString(msysSocketPathOptionName, Options.MsysSocketPath);
-      config.SetBool(useWslSocketOptionName, Options.UseWslSocket );
+      config.SetBool(useWslSocketOptionName, Options.UseWslSocket);
       config.SetString(wslSocketPathOptionName, Options.WslSocketPath);
       config.SetBool(useWindowsOpenSshPipeName, Options.UseWindowsOpenSshPipe);
       config.SetString(unixSocketPathOptionName, Options.UnixSocketPath);
@@ -634,7 +647,8 @@ namespace KeeAgent
           config.GetString(logFileNameOptionName);
       if (string.IsNullOrEmpty(configFileLogFileNameValue)) {
         Options.LogFileName = defaultLogFileNameValue;
-      } else {
+      }
+      else {
         Options.LogFileName = configFileLogFileNameValue;
       }
 
@@ -642,7 +656,8 @@ namespace KeeAgent
       if (Enum.TryParse<AgentMode>(config.GetString(agentModeOptionName),
         out configAgentMode)) {
         Options.AgentMode = configAgentMode;
-      } else {
+      }
+      else {
         Options.AgentMode = AgentMode.Auto;
       }
 
@@ -677,14 +692,12 @@ namespace KeeAgent
       var pwEntryForm = e.Form as PwEntryForm;
       if (pwEntryForm != null) {
         var optionsPanel = new EntryPanel(this);
-        pwEntryForm.Shown += (s, e2) =>
-          {
-            pwEntryForm.AddTab(optionsPanel);
-          };
+        pwEntryForm.Shown += (s, e2) => {
+          pwEntryForm.AddTab(optionsPanel);
+        };
         var foundControls = pwEntryForm.Controls.Find("m_btnOK", true);
         var okButton = foundControls[0] as Button;
-        okButton.GotFocus += (s, e2) =>
-        {
+        okButton.GotFocus += (s, e2) => {
           if (optionsPanel.CurrentSettings != optionsPanel.InitialSettings) {
             pwEntryForm.EntryBinaries.SetKeeAgentSettings(optionsPanel.CurrentSettings);
           }
@@ -696,22 +709,20 @@ namespace KeeAgent
       /* Add KeeAgent tab to Database Settings dialog */
       var databaseSettingForm = e.Form as DatabaseSettingsForm;
       if (databaseSettingForm != null) {
-        databaseSettingForm.Shown += (s, e2) =>
-          {
-            var dbSettingsPanel =
-              new DatabaseSettingsPanel(pluginHost.MainWindow.ActiveDatabase);
-            databaseSettingForm.AddTab(dbSettingsPanel);
-          };
+        databaseSettingForm.Shown += (s, e2) => {
+          var dbSettingsPanel =
+            new DatabaseSettingsPanel(pluginHost.MainWindow.ActiveDatabase);
+          databaseSettingForm.AddTab(dbSettingsPanel);
+        };
       }
 
       /* Add KeeAgent tab to Options dialog */
       var optionsForm = e.Form as OptionsForm;
       if (optionsForm != null) {
-        optionsForm.Shown += (s, e2) =>
-          {
-            var optionsPanel = new OptionsPanel(this);
-            optionsForm.AddTab(optionsPanel);
-          };
+        optionsForm.Shown += (s, e2) => {
+          var optionsPanel = new OptionsPanel(this);
+          optionsForm.AddTab(optionsPanel);
+        };
         optionsForm.FormClosed += OptionsForm_FormClosed;
       }
     }
@@ -744,15 +755,17 @@ namespace KeeAgent
             case EntrySettings.LocationType.Attachment:
               if (string.IsNullOrWhiteSpace(settings.Location.AttachmentName)) {
                 errorMessage = "Must specify attachment";
-              } else if (entryForm.EntryBinaries
-                         .Get(settings.Location.AttachmentName) == null) {
+              }
+              else if (entryForm.EntryBinaries
+                       .Get(settings.Location.AttachmentName) == null) {
                 errorMessage = "Attachment does not exist";
               }
               break;
             case EntrySettings.LocationType.File:
               if (string.IsNullOrWhiteSpace(settings.Location.FileName)) {
                 errorMessage = "Must specify file name";
-              } else if (!File.Exists(settings.Location.FileName.ExpandEnvironmentVariables())) {
+              }
+              else if (!File.Exists(settings.Location.FileName.ExpandEnvironmentVariables())) {
                 errorMessage = "File does not exist";
               }
               break;
@@ -803,7 +816,8 @@ namespace KeeAgent
         try {
           File.AppendAllText(Options.LogFileName,
               DateTime.Now + ": " + aMessage + "\r\n");
-        } catch { }
+        }
+        catch { }
       }
     }
 
@@ -813,18 +827,18 @@ namespace KeeAgent
         string notifyText;
         if (e.IsLocked) {
           notifyText = Translatable.NotifyLocked;
-        } else {
+        }
+        else {
           notifyText = Translatable.NotifyUnlocked;
         }
         uiHelper.ShowBalloonNotification(notifyText);
       }
     }
 
-    private void PageantAgent_KeyAdded(object sender,SshKeyEventArgs e)
+    private void PageantAgent_KeyAdded(object sender, SshKeyEventArgs e)
     {
       if (Options.AlwaysConfirm && !e.Key.HasConstraint(
-            Agent.KeyConstraintType.SSH_AGENT_CONSTRAIN_CONFIRM))
-      {
+            Agent.KeyConstraintType.SSH_AGENT_CONSTRAIN_CONFIRM)) {
         var constraint = new Agent.KeyConstraint();
         constraint.Type = Agent.KeyConstraintType.SSH_AGENT_CONSTRAIN_CONFIRM;
         e.Key.AddConstraint(constraint);
@@ -873,9 +887,9 @@ namespace KeeAgent
     private void PageantAgent_KeyUsed(object sender, Agent.KeyUsedEventArgs e)
     {
       if (Options.ShowBalloon) {
-          var appText = e.OtherProcess == null
-              ? Translatable.NotifyKeyFetchedUnknownApplication
-              : string.Format("{0} ({1})", e.OtherProcess.MainWindowTitle, e.OtherProcess.ProcessName);
+        var appText = e.OtherProcess == null
+            ? Translatable.NotifyKeyFetchedUnknownApplication
+            : string.Format("{0} ({1})", e.OtherProcess.MainWindowTitle, e.OtherProcess.ProcessName);
         string notifyText = string.Format(Translatable.NotifyKeyFetched,
           e.Key.Comment, appText);
         uiHelper.ShowBalloonNotification(notifyText);
@@ -887,8 +901,8 @@ namespace KeeAgent
       try {
         var agentModeAgent = agent as Agent;
         if (agentModeAgent != null && agentModeAgent.IsLocked) {
-            // don't do anything if agent is locked
-            return;
+          // don't do anything if agent is locked
+          return;
         }
         if (e.Database.RootGroup == null) {
           return;
@@ -931,7 +945,8 @@ namespace KeeAgent
             }
           }
         }
-      } catch (Exception ex) {
+      }
+      catch (Exception ex) {
         // can't be crashing KeePass
         Debug.Fail(ex.ToString());
       }
@@ -968,12 +983,14 @@ namespace KeeAgent
 
               removeKeyList.Add(removeKey);
             }
-          } catch (Exception ex) {
+          }
+          catch (Exception ex) {
             // keep trying the rest of the keys
             Debug.Fail(ex.ToString());
           }
         }
-      } catch (Exception ex) {
+      }
+      catch (Exception ex) {
         // can't be crashing KeePass
         Debug.Fail(ex.ToString());
       }
@@ -986,7 +1003,8 @@ namespace KeeAgent
           RemoveKey(key);
         }
         removeKeyList.Clear();
-      } catch (Exception ex) {
+      }
+      catch (Exception ex) {
         // can't be crashing KeePass
         Debug.Fail(ex.ToString());
       }
@@ -1012,7 +1030,8 @@ namespace KeeAgent
         try {
           var key = e.Context.Entry.GetSshPrivateKey();
           path = keyFileMap[key.PublicKey.Sha256Hash].Path;
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) {
           Debug.Fail(ex.Message);
         }
 
@@ -1034,7 +1053,8 @@ namespace KeeAgent
           var database = pluginHost.MainWindow.DocumentManager.GetOpenDatabases()
             .Where((db) => db.RootGroup.FindEntry(entry.Uuid, true) != null).Single();
           db_name = database.Name;
-        } catch (Exception) {
+        }
+        catch (Exception) {
           Debug.Fail("Duplicate UUIDs?");
         }
         key.Source = string.Format("{0}: {1}", db_name, entry.GetFullPath());
@@ -1043,16 +1063,19 @@ namespace KeeAgent
           // so try to remove the key first so that it behaves like other agents
           try {
             RemoveKey(key);
-          } catch (Exception) {
+          }
+          catch (Exception) {
             // ignore failure
           }
-        } else {
+        }
+        else {
           // also, Pageant does not support constraints
           if (constraints != null) {
             foreach (var constraint in constraints) {
               key.AddConstraint(constraint);
             }
-          } else {
+          }
+          else {
             if (settings.UseConfirmConstraintWhenAdding) {
               key.addConfirmConstraint();
             }
@@ -1061,15 +1084,13 @@ namespace KeeAgent
             }
           }
           if (Options.AlwaysConfirm &&
-              !key.HasConstraint(Agent.KeyConstraintType.SSH_AGENT_CONSTRAIN_CONFIRM))
-          {
+              !key.HasConstraint(Agent.KeyConstraintType.SSH_AGENT_CONSTRAIN_CONFIRM)) {
             key.addConfirmConstraint();
           }
         }
         agent.AddKey(key);
         if (settings.Location.SelectedType == EntrySettings.LocationType.Attachment
-          && settings.Location.SaveAttachmentToTempFile)
-        {
+          && settings.Location.SaveAttachmentToTempFile) {
           try {
             var data = entry.Binaries.Get(settings.Location.AttachmentName).ReadData();
             var tempPath = Path.Combine(UrlUtil.GetTempPath(), "KeeAgent");
@@ -1082,7 +1103,8 @@ namespace KeeAgent
             // try to set unix file permissions required by OpenSSH ssh-agent
             Util.TryChmod(fileName, Convert.ToInt32("600", 8));
             keyFileMap[key.GetSha256Fingerprint()] = new KeyFileInfo(fileName, true);
-          } catch (Exception ex) {
+          }
+          catch (Exception ex) {
             MessageService.ShowWarning(ex.Message);
           }
         }
@@ -1091,7 +1113,8 @@ namespace KeeAgent
             new KeyFileInfo(settings.Location.FileName, false);
         }
         return key;
-      } catch (Exception ex) {
+      }
+      catch (Exception ex) {
         var firstLine = string.Format("KeeAgent: Error while loading key from entry '{0}'",
           entry.GetFullPath());
         if (ex is NoAttachmentException) {
@@ -1099,17 +1122,19 @@ namespace KeeAgent
             firstLine,
              "No attachment specified in KeePass entry"
            });
-        } else if (ex is FileNotFoundException || ex is DirectoryNotFoundException) {
+        }
+        else if (ex is FileNotFoundException || ex is DirectoryNotFoundException) {
 
-            if (!Options.IgnoreMissingExternalKeyFiles) {
-                MessageService.ShowWarning(new string[] {
+          if (!Options.IgnoreMissingExternalKeyFiles) {
+            MessageService.ShowWarning(new string[] {
                   firstLine,
                   "Could not find file",
                   settings.Location.FileName
                  });
-            }
+          }
 
-        } else if (ex is KeyFormatterException || ex is PpkFormatterException) {
+        }
+        else if (ex is KeyFormatterException || ex is PpkFormatterException) {
           var message = ex.Message;
           if (ex.InnerException != null) {
             message = ex.InnerException.Message;
@@ -1125,7 +1150,8 @@ namespace KeeAgent
             "- Passphrase was entered incorrectly",
             "- File is corrupt or has been tampered"
            });
-        } else if (ex is AgentFailureException) {
+        }
+        else if (ex is AgentFailureException) {
           MessageService.ShowWarning(new string[] {
             firstLine,
             "Agent Failure",
@@ -1133,7 +1159,8 @@ namespace KeeAgent
             "- Key is already loaded in agent",
             "- Agent is locked"
           });
-        } else if (ex is AgentNotRunningException) {
+        }
+        else if (ex is AgentNotRunningException) {
           MessageService.ShowWarning(new string[] {
             firstLine,
             "Could not add key because no SSH agent was found.",
@@ -1145,7 +1172,8 @@ namespace KeeAgent
             firstLine,
             "This key uses a legacy file format and requires a matching `.pub` public key file in the same location as the private key file."
           });
-        } else {
+        }
+        else {
           MessageService.ShowWarning(new string[] {
             firstLine,
             "Unexpected error",
@@ -1157,7 +1185,8 @@ namespace KeeAgent
       }
     }
 
-    public void RemoveKey(ISshKey key) {
+    public void RemoveKey(ISshKey key)
+    {
       agent.RemoveKey(key);
 
       var fingerprint = key.GetSha256Fingerprint();
@@ -1166,7 +1195,8 @@ namespace KeeAgent
         try {
           File.Delete(keyFileMap[fingerprint].Path);
           keyFileMap.Remove(fingerprint);
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) {
           Debug.Fail(ex.Message, ex.StackTrace);
         }
       }
@@ -1179,8 +1209,7 @@ namespace KeeAgent
       }
 
       // TODO: Using the main thread here will cause a lockup with IOProtocolExt
-      pluginHost.MainWindow.Invoke((MethodInvoker)delegate
-      {
+      pluginHost.MainWindow.Invoke((MethodInvoker)delegate {
         //var zIndex = pluginHost.MainWindow.GetZIndex();
         var dialog = new KeyPicker(list);
         dialog.Shown += (sender, e) => dialog.Activate();
@@ -1188,7 +1217,8 @@ namespace KeeAgent
         dialog.ShowDialog(pluginHost.MainWindow);
         if (dialog.DialogResult == DialogResult.OK) {
           list = dialog.SelectedKeys.ToList();
-        } else {
+        }
+        else {
           list.Clear();
         }
         pluginHost.MainWindow.SetWindowPosBottom();

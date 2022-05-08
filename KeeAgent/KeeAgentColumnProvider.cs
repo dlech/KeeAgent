@@ -39,8 +39,7 @@ namespace KeeAgent
 
     KeeAgentExt ext;
 
-    public override string[] ColumnNames
-    {
+    public override string[] ColumnNames {
       get { return columnNames.ToArray(); }
     }
 
@@ -53,7 +52,7 @@ namespace KeeAgent
       ext.agent.KeyRemoved += Agent_KeyAddedOrRemoved;
       var agentModeAgent = ext.agent as Agent;
       if (agentModeAgent != null) {
-          agentModeAgent.Locked += Agent_Locked;
+        agentModeAgent.Locked += Agent_Locked;
       }
     }
 
@@ -79,9 +78,11 @@ namespace KeeAgent
           }
           catch (SshPrivateKey.PublicKeyRequiredException) {
             return "Missing .pub file";
-          } catch (PpkFormatterException) {
+          }
+          catch (PpkFormatterException) {
             return "Error";
-          } catch (Exception ex) {
+          }
+          catch (Exception ex) {
             Debug.Fail(ex.Message);
             return "*Error";
           }
@@ -116,7 +117,8 @@ namespace KeeAgent
             else {
               ext.RemoveKey(agentKey);
             }
-          } catch (Exception ex) {
+          }
+          catch (Exception ex) {
             Debug.Fail(ex.Message);
           }
           break;
@@ -133,12 +135,12 @@ namespace KeeAgent
 
     private void Agent_Locked(object sender, Agent.LockEventArgs e)
     {
-        UpdateUI();
+      UpdateUI();
     }
 
-    void UpdateUI ()
+    void UpdateUI()
     {
-      ext.pluginHost.MainWindow.Invoke((MethodInvoker)delegate() {
+      ext.pluginHost.MainWindow.Invoke((MethodInvoker)delegate () {
         // only update the entry list
         ext.pluginHost.MainWindow.UpdateUI(false, null, false, null, true, null, false);
       });

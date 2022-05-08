@@ -26,7 +26,7 @@ namespace KeeAgent
   public class DatabaseSettings
   {
     public DatabaseSettings()
-    {      
+    {
     }
 
     public bool AllowAutoLoadExpiredEntryKey { get; set; }

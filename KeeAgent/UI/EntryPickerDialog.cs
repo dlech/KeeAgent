@@ -25,10 +25,8 @@ namespace KeeAgent.UI
 
     public PwEntry SelectedEntry { get; private set; }
 
-    public ICollection<Agent.KeyConstraint> Constraints
-    {
-      get
-      {
+    public ICollection<Agent.KeyConstraint> Constraints {
+      get {
         var constraints = new List<Agent.KeyConstraint>();
         if (mConfirmConstraintControl.Checked) {
           constraints.AddConfirmConstraint();
@@ -52,7 +50,8 @@ namespace KeeAgent.UI
 
       if (Type.GetType("Mono.Runtime") == null) {
         Icon = Properties.Resources.KeeAgent_icon;
-      } else {
+      }
+      else {
         Icon = Properties.Resources.KeeAgent_icon_mono;
 
         mTableLayoutPanel.AutoSize = false;
@@ -126,13 +125,13 @@ namespace KeeAgent.UI
         if (autodetect) {
           MessageService.ShowWarning("No entries with SSH keys were found.");
           Close();
-        } else {
+        }
+        else {
           // Use timer so that this dialog finishes displaying before attempting
           // the auto-detect routine.
           var autodetectDialogDelayTimer = new Timer();
           autodetectDialogDelayTimer.Interval = 100;
-          autodetectDialogDelayTimer.Tick += (sender, e) =>
-          {
+          autodetectDialogDelayTimer.Tick += (sender, e) => {
             autodetectDialogDelayTimer.Stop();
             AskShouldAutodetect();
           };
@@ -150,7 +149,8 @@ namespace KeeAgent.UI
 
       if (result) {
         InitalizeList(true);
-      } else {
+      }
+      else {
         Close();
       }
     }
@@ -197,7 +197,8 @@ namespace KeeAgent.UI
         if (newNode.Nodes.Count > 0) {
           if ((newNode.IsExpanded) && (!childGroup.IsExpanded)) {
             newNode.Collapse();
-          } else if ((!newNode.IsExpanded) && (childGroup.IsExpanded)) {
+          }
+          else if ((!newNode.IsExpanded) && (childGroup.IsExpanded)) {
             newNode.Expand();
           }
         }
@@ -223,7 +224,8 @@ namespace KeeAgent.UI
               ext.pluginHost.MainWindow.UpdateUI(false, null, false, null, false, null, false);
               sshKeyFound = true;
               break;
-            } catch (Exception) {
+            }
+            catch (Exception) {
               // ignore all errors
             }
           }
@@ -244,7 +246,8 @@ namespace KeeAgent.UI
             if (mExpiredFont != null) {
               entryNode.NodeFont = mExpiredFont;
             }
-          } else { // Not expired
+          }
+          else { // Not expired
             if (entry.CustomIconUuid.Equals(PwUuid.Zero)) {
               entryNode.ImageIndex = (int)entry.IconId;
             }
@@ -288,7 +291,8 @@ namespace KeeAgent.UI
 
       if (UIUtil.VistaStyleListsSupported) {
         mCustomTreeViewEx.ImageList = imgList;
-      } else {
+      }
+      else {
         List<Image> vAllImages = new List<Image>();
 
         foreach (Image imgClient in imgList.Images) {
@@ -328,8 +332,8 @@ namespace KeeAgent.UI
         SelectedEntry.GetKeeAgentSettings().UseLifetimeConstraintWhenAdding;
 
       if (mLifetimeConstraintControl.Checked) {
-         mLifetimeConstraintControl.Lifetime =
-           SelectedEntry.GetKeeAgentSettings().LifetimeConstraintDuration;
+        mLifetimeConstraintControl.Lifetime =
+          SelectedEntry.GetKeeAgentSettings().LifetimeConstraintDuration;
       }
     }
 
@@ -343,8 +347,7 @@ namespace KeeAgent.UI
           e.Cancel = true;
         }
         if (mLifetimeConstraintControl.Checked &&
-          mLifetimeConstraintControl.Lifetime == 0)
-        {
+          mLifetimeConstraintControl.Lifetime == 0) {
           MessageBox.Show("Invalid lifetime", Util.AssemblyTitle,
              MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
           e.Cancel = true;

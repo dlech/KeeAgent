@@ -39,7 +39,8 @@ namespace KeeAgent.UI
 
       if (Type.GetType("Mono.Runtime") == null) {
         Icon = Properties.Resources.KeeAgent_icon;
-      } else {
+      }
+      else {
         Icon = Properties.Resources.KeeAgent_icon_mono;
 
         // on windows, help button is displayed in the title bar
@@ -48,7 +49,7 @@ namespace KeeAgent.UI
         helpButton.Size = new Size(25, 25);
         helpButton.Image = Properties.Resources.Help_png;
         helpButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-        helpButton.Location = new Point(10, Height -10);
+        helpButton.Location = new Point(10, Height - 10);
         helpButton.Click += (sender, e) => OnHelpRequested();
         var foundControls =
           keyInfoView.Controls.Find("buttonTableLayoutPanel", true);
@@ -73,15 +74,16 @@ namespace KeeAgent.UI
       mExt = aExt;
       if (mExt.agent is Agent) {
         Text += Translatable.TitleSuffixAgentMode;
-      } else {
+      }
+      else {
         Text += Translatable.TitleSuffixClientMode;
       }
       keyInfoView.SetAgent(mExt.agent);
     }
 
-    protected override void OnShown (EventArgs e)
+    protected override void OnShown(EventArgs e)
     {
-      base.OnShown (e);
+      base.OnShown(e);
       keyInfoView.dataGridView.ClearSelection();
     }
 
@@ -107,7 +109,8 @@ namespace KeeAgent.UI
       if (result == DialogResult.OK) {
         try {
           mExt.AddEntry(entryPicker.SelectedEntry, entryPicker.Constraints);
-        } catch (Exception) {
+        }
+        catch (Exception) {
           // error message already shown
         }
       }

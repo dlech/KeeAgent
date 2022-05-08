@@ -35,14 +35,11 @@ namespace KeeAgent.UI
     /// 
     /// </summary>
     [Category("Appearance")]
-    public string SelectedRadioButton
-    {
-      get
-      {
+    public string SelectedRadioButton {
+      get {
         return pSelectedRadioButton;
       }
-      set
-      {
+      set {
         if (value == null) {
           value = string.Empty;
         }
@@ -56,7 +53,8 @@ namespace KeeAgent.UI
               radioButton.Checked = false;
             }
           }
-        } else {
+        }
+        else {
           var selectedRadioButton = Controls[value] as RadioButton;
           if (selectedRadioButton == null) {
             throw new ArgumentException("unknown radio button");
@@ -88,12 +86,11 @@ namespace KeeAgent.UI
       base.OnControlAdded(e);
       var radioButton = e.Control as RadioButton;
       if (radioButton != null) {
-        radioButton.CheckedChanged += (s, e2) =>
-          {
-            if (radioButton.Checked) {
-              SelectedRadioButton = radioButton.Name;
-            }
-          };
+        radioButton.CheckedChanged += (s, e2) => {
+          if (radioButton.Checked) {
+            SelectedRadioButton = radioButton.Name;
+          }
+        };
       }
     }
   }

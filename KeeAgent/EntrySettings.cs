@@ -10,7 +10,7 @@ namespace KeeAgent
   {
     public enum LocationType
     {
-      [XmlEnum(Name="attachment")]
+      [XmlEnum(Name = "attachment")]
       Attachment,
       [XmlEnum(Name = "file")]
       File
@@ -43,7 +43,7 @@ namespace KeeAgent
 
       #region IEquatable implementation
 
-      public bool Equals (LocationData other)
+      public bool Equals(LocationData other)
       {
         return SelectedType == other.SelectedType &&
           AttachmentName == other.AttachmentName &&
@@ -53,22 +53,23 @@ namespace KeeAgent
 
       #endregion
 
-      public override bool Equals (object obj)
+      public override bool Equals(object obj)
       {
         if (obj is LocationData) {
           return this == (LocationData)obj;
         }
-        return base.Equals (obj);
+        return base.Equals(obj);
       }
 
-      public override int GetHashCode ()
+      public override int GetHashCode()
       {
-        return AttachmentName.GetHashCode () ^ FileName.GetHashCode () ^
+        return AttachmentName.GetHashCode() ^ FileName.GetHashCode() ^
           (SelectedType == null ? -1 : (int)SelectedType);
       }
 
-      public static bool operator ==(LocationData data1, LocationData data2) {
-        if (ReferenceEquals (data1, data2)) {
+      public static bool operator ==(LocationData data1, LocationData data2)
+      {
+        if (ReferenceEquals(data1, data2)) {
           return true;
         }
         if ((object)data1 == null || (object)data2 == null) {
@@ -77,7 +78,8 @@ namespace KeeAgent
         return data1.Equals(data2);
       }
 
-      public static bool operator !=(LocationData data1, LocationData data2) {
+      public static bool operator !=(LocationData data1, LocationData data2)
+      {
         return !(data1 == data2);
       }
     }
@@ -115,7 +117,7 @@ namespace KeeAgent
     }
 
     #region IEquatable implementation
-    public bool Equals (EntrySettings other)
+    public bool Equals(EntrySettings other)
     {
       return AllowUseOfSshKey == other.AllowUseOfSshKey &&
         AddAtDatabaseOpen == other.AddAtDatabaseOpen &&
@@ -127,22 +129,23 @@ namespace KeeAgent
     }
     #endregion
 
-    public override bool Equals (object obj)
+    public override bool Equals(object obj)
     {
       if (obj is EntrySettings) {
         return this == (EntrySettings)obj;
       }
-      return base.Equals (obj);
+      return base.Equals(obj);
     }
 
-    public override int GetHashCode ()
+    public override int GetHashCode()
     {
-      return  Location.GetHashCode() ^ (AllowUseOfSshKey ? 0x0 : 0x1) ^
+      return Location.GetHashCode() ^ (AllowUseOfSshKey ? 0x0 : 0x1) ^
         (AddAtDatabaseOpen ? 0x0 : 0x2) ^ (RemoveAtDatabaseClose ? 0x0 : 0x4);
     }
 
-    public static bool operator ==(EntrySettings settings1, EntrySettings settings2) {
-      if (ReferenceEquals (settings1, settings2)) {
+    public static bool operator ==(EntrySettings settings1, EntrySettings settings2)
+    {
+      if (ReferenceEquals(settings1, settings2)) {
         return true;
       }
       if ((object)settings1 == null || (object)settings2 == null) {
@@ -151,7 +154,8 @@ namespace KeeAgent
       return settings1.Equals(settings2);
     }
 
-    public static bool operator !=(EntrySettings settings1, EntrySettings settings2) {
+    public static bool operator !=(EntrySettings settings1, EntrySettings settings2)
+    {
       return !(settings1 == settings2);
     }
   }
