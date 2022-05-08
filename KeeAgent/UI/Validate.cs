@@ -14,33 +14,6 @@ namespace KeeAgent.UI
   public static class Validate
   {
     /// <summary>
-    /// Validates that <paramref name="stream"/> is a supported SSH public key file.
-    /// </summary>
-    /// <param name="stream">The stream containing the file data.</param>
-    /// <returns><c>true</c> if the file is valid, otherwise <c>false</c>.</returns>
-    public static bool SshPublicKeyFile(Stream stream)
-    {
-      try {
-        SshPublicKey.Read(stream);
-        return true;
-      }
-      catch {
-        return false;
-      }
-    }
-
-    public static bool SshPrivateKeyFile(Stream stream)
-    {
-      try {
-        SshPrivateKey.Read(stream);
-        return true;
-      }
-      catch {
-        return false;
-      }
-    }
-
-    /// <summary>
     /// Validates the location data.
     /// </summary>
     /// <param name="location">
@@ -73,9 +46,15 @@ namespace KeeAgent.UI
             "Attachment '{0}' is missing.", location.AttachmentName);
         }
 
-        var stream = new MemoryStream(attachment.ReadData());
-
-        if (!SshPrivateKeyFile(stream)) {
+        try {
+          SshPrivateKey.Read(new MemoryStream(attachment.ReadData()));
+        }
+        catch (SshPrivateKey.PublicKeyRequiredException) {
+          return string.Format(
+            "This file uses a legacy format that requires a '{0}.pub' file in the same location.",
+            location.AttachmentName);
+        }
+        catch {
           return string.Format(
             "attachment '{0}' is not a supported private key file.", location.AttachmentName);
         }
@@ -84,16 +63,20 @@ namespace KeeAgent.UI
       if (location.SelectedType.Value == EntrySettings.LocationType.File) {
         var file = location.FileName.ExpandEnvironmentVariables();
 
-        if (File.Exists(file)) {
-          if (!SshPrivateKeyFile(File.OpenRead(file))) {
-            return string.Format(
-              "'{0}' is not a supported private key file.", file);
-          }
+        if (!File.Exists(file)) {
+          return string.Format("The private key file '{0}' does not exist.", file);
         }
-        else {
+
+        try {
+          SshPrivateKey.Read(File.OpenRead(file));
+        }
+        catch (SshPrivateKey.PublicKeyRequiredException) {
           return string.Format(
-            "The private key file '{0}' does not exist.",
+            "This file uses a legacy format that requires a '{0}.pub' file in the same location.",
             file);
+        }
+        catch {
+          return string.Format("'{0}' is not a supported private key file.", file);
         }
       }
 

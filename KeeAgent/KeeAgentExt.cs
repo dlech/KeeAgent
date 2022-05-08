@@ -9,16 +9,14 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Threading;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using dlech.SshAgentLib;
 using dlech.SshAgentLib.WinForms;
-
 using KeeAgent.Properties;
 using KeeAgent.UI;
-
 using KeePass.App;
 using KeePass.Forms;
 using KeePass.Plugins;
@@ -28,7 +26,7 @@ using KeePass.Util;
 using KeePass.Util.Spr;
 using KeePassLib;
 using KeePassLib.Utility;
-using System.Net.Sockets;
+using SshAgentLib.Keys;
 
 namespace KeeAgent
 {
@@ -895,32 +893,40 @@ namespace KeeAgent
         if (e.Database.RootGroup == null) {
           return;
         }
-        var exitFor = false;
+
         foreach (var entry in e.Database.RootGroup.GetEntries(true)) {
-          if (exitFor) {
-            break;
-          }
           if (e.Database.RecycleBinEnabled) {
             var recycleBin = e.Database.RootGroup.FindGroup(e.Database.RecycleBinUuid, true);
             if (recycleBin != null && entry.IsContainedIn(recycleBin)) {
               continue;
             }
           }
+
           if (entry.Expires && entry.ExpiryTime <= DateTime.Now
             && !e.Database.GetKeeAgentSettings().AllowAutoLoadExpiredEntryKey) {
             continue;
           }
+
           var settings = entry.GetKeeAgentSettings();
-          if (settings.AllowUseOfSshKey && settings.AddAtDatabaseOpen) {
-            try {
-              AddEntry(entry, null);
-            } catch (Exception ex) {
-                if (Options.IgnoreMissingExternalKeyFiles && (ex is FileNotFoundException || ex is DirectoryNotFoundException)) {
-                    continue;
+
+          if (settings.AllowUseOfSshKey) {
+            // automatically create a .pub file for legacy keys to avoid errors later
+            entry.TryAddPubFileForLegacyFileFormat();
+
+            if (settings.AddAtDatabaseOpen) {
+              try {
+                AddEntry(entry, null);
+              }
+              catch (Exception ex) {
+                if (Options.IgnoreMissingExternalKeyFiles && (
+                  ex is FileNotFoundException || ex is DirectoryNotFoundException || ex is SshPrivateKey.PublicKeyRequiredException
+                 )) {
+                  continue;
                 }
 
-              if (!MessageService.AskYesNo("Do you want to attempt to load additional keys?")) {
-                exitFor = true;
+                if (!MessageService.AskYesNo("Do you want to attempt to load additional keys?")) {
+                  break;
+                }
               }
             }
           }
@@ -1132,6 +1138,12 @@ namespace KeeAgent
             firstLine,
             "Could not add key because no SSH agent was found.",
             "Please make sure your SSH agent program is running (e.g. Pageant)."
+          });
+        }
+        else if (ex is SshPrivateKey.PublicKeyRequiredException) {
+          MessageService.ShowWarning(new string[] {
+            firstLine,
+            "This key uses a legacy file format and requires a matching `.pub` public key file in the same location as the private key file."
           });
         } else {
           MessageService.ShowWarning(new string[] {

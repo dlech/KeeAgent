@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: GPL-2.0-only
+﻿// SPDX-License-Identifier: GPL-2.0-only
 // Copyright (c) 2012-2016,2022 David Lechner <david@lechnology.com>
 
 using System;
@@ -195,14 +195,79 @@ namespace KeeAgent
             throw new NoAttachmentException();
           };
 
-          return SshPrivateKey.Read(new MemoryStream(attachment.ReadData()));
+          try {
+            return SshPrivateKey.Read(new MemoryStream(attachment.ReadData()));
+          }
+          catch (SshPrivateKey.PublicKeyRequiredException) {
+            // if this is a file that uses legacy format without public key,
+            // then try to find a matching .pub file to get the public key info.
+            var attachment2 = binaries.Get(settings.Location.AttachmentName + ".pub");
+
+            if (attachment2 == null) {
+              throw;
+            }
+
+            var publicKey = SshPublicKey.Read(new MemoryStream(attachment2.ReadData()));
+
+            return SshPrivateKey.Read(new MemoryStream(attachment.ReadData()), publicKey);
+          }
 
         case EntrySettings.LocationType.File:
           var filename = settings.Location.FileName.ExpandEnvironmentVariables();
-          return SshPrivateKey.Read(File.OpenRead(filename));
+
+          try {
+            return SshPrivateKey.Read(File.OpenRead(filename));
+          }
+          catch (SshPrivateKey.PublicKeyRequiredException) {
+            // if this is a file that uses legacy format without public key,
+            // then try to find a matching .pub file to get the public key info.
+            var publicKey = SshPublicKey.Read(File.OpenRead(filename + ".pub"));
+            return SshPrivateKey.Read(File.OpenRead(filename), publicKey);
+          }
 
         default:
-          throw new ArgumentException("settings has invalid public key location", "settings");
+          throw new ArgumentException("settings has invalid private key location", "settings");
+      }
+    }
+
+    public static void TryAddPubFileForLegacyFileFormat(this PwEntry entry)
+    {
+      if (entry == null) {
+        throw new ArgumentNullException("entry");
+      }
+
+      try {
+        entry.GetSshPrivateKey();
+      }
+      catch (SshPrivateKey.PublicKeyRequiredException) {
+        try {
+          var key = entry.GetSshKey();
+          var settings = entry.GetKeeAgentSettings();
+
+          if (settings.Location.SelectedType == EntrySettings.LocationType.Attachment) {
+            var name = settings.Location.AttachmentName + ".pub";
+            entry.Binaries.Set(name, new ProtectedBinary(false, Encoding.UTF8.GetBytes(key.GetAuthorizedKeyString())));
+          }
+          else if (settings.Location.SelectedType == EntrySettings.LocationType.File) {
+            var fileName = settings.Location.FileName.ExpandEnvironmentVariables() + ".pub";
+
+            if (File.Exists(fileName)) {
+              // file was created since we called GetSshPrivateKey()?
+              throw new InvalidOperationException();
+            }
+
+            File.WriteAllText(fileName, key.GetAuthorizedKeyString());
+          }
+        }
+        catch (Exception ex) {
+          Debug.Fail(ex.ToString());
+          // ignoring all errors since this the same error will be
+          // thrown and handled later
+        }
+      }
+      catch (Exception ex) {
+        Debug.Fail(ex.ToString());
+        // all other errors ignored
       }
     }
 
@@ -231,8 +296,16 @@ namespace KeeAgent
         return securePassphrase;
       };
 
+      var privateKey = default(SshPrivateKey);
+
+      try {
+        privateKey = settings.GetSshPrivateKey(binaries);
+      }
+      catch (SshPrivateKey.PublicKeyRequiredException) {
+        // we can live without this
+      }
+
       Func<Stream> getPrivateKeyStream;
-      Func<Stream> getPublicKeyStream = null;
 
       switch (settings.Location.SelectedType) {
         case EntrySettings.LocationType.Attachment:
@@ -248,41 +321,28 @@ namespace KeeAgent
 
           getPrivateKeyStream = () => new MemoryStream(privateKeyData.ReadData());
 
-          var publicKeyData = binaries.Get(settings.Location.AttachmentName + ".pub");
-
-          if (publicKeyData != null) {
-            getPublicKeyStream = () => new MemoryStream(publicKeyData.ReadData());
-          }
-
-          return GetSshKey(getPrivateKeyStream, getPublicKeyStream,
+          return GetSshKey(privateKey, getPrivateKeyStream,
                            settings.Location.AttachmentName, getPassphraseCallback);
 
         case EntrySettings.LocationType.File:
           var filename = settings.Location.FileName.ExpandEnvironmentVariables();
           getPrivateKeyStream = () => File.OpenRead(filename);
-          var publicKeyFile = filename + ".pub";
 
-          if (File.Exists(publicKeyFile)) {
-            getPublicKeyStream = () => File.OpenRead(publicKeyFile);
-          }
-
-          return GetSshKey(getPrivateKeyStream, getPublicKeyStream,
+          return GetSshKey(privateKey, getPrivateKeyStream,
                            settings.Location.AttachmentName, getPassphraseCallback);
         default:
           return null;
       }
     }
 
-    static ISshKey GetSshKey(Func<Stream> getPrivateKeyStream,
-                             Func<Stream> getPublicKeyStream,
-                             string fallbackComment,
-                             KeyFormatter.GetPassphraseCallback getPassphrase)
+    static ISshKey GetSshKey(SshPrivateKey privateKey,
+        Func<Stream> getPrivateKeyStream,
+        string fallbackComment,
+        KeyFormatter.GetPassphraseCallback getPassphrase)
     {
-      var privKey = SshPrivateKey.Read(getPrivateKeyStream());
-
       ISshKey key;
       using (var privateKeyStream = getPrivateKeyStream()) {
-        if (privKey.HasKdf) {
+        if (privateKey != null && privateKey.HasKdf) {
           // if there is a key derivation function, decrypting could be slow,
           // so show a progress dialog
           var dialog = new DecryptProgressDialog();
@@ -300,9 +360,8 @@ namespace KeeAgent
         }
       }
 
-      if (string.IsNullOrWhiteSpace(key.Comment) && getPublicKeyStream != null) {
-        using (var stream = getPublicKeyStream())
-          key.Comment = KeyFormatter.GetComment(stream.ReadAllLines(Encoding.UTF8));
+      if (string.IsNullOrWhiteSpace(key.Comment) && privateKey != null) {
+        key.Comment = privateKey.PublicKey.Comment;
       }
 
       if (string.IsNullOrWhiteSpace(key.Comment)) {

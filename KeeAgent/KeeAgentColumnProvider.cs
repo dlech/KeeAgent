@@ -20,15 +20,13 @@
 //  along with this program; if not, see <http://www.gnu.org/licenses>
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
+using System.Windows.Forms;
 
 using dlech.SshAgentLib;
 using KeePass.UI;
-using KeePassLib;
-using System.Windows.Forms;
+using SshAgentLib.Keys;
 
 namespace KeeAgent
 {
@@ -78,6 +76,9 @@ namespace KeeAgent
             if (ext.agent.Contains(key.PublicKey)) {
               return "Loaded";
             }
+          }
+          catch (SshPrivateKey.PublicKeyRequiredException) {
+            return "Missing .pub file";
           } catch (PpkFormatterException) {
             return "Error";
           } catch (Exception ex) {
