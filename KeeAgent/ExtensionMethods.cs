@@ -1,4 +1,4 @@
-﻿// SPDX-License-Identifier: GPL-2.0-only
+// SPDX-License-Identifier: GPL-2.0-only
 // Copyright (c) 2012-2016,2022 David Lechner <david@lechnology.com>
 
 using System;
@@ -158,11 +158,11 @@ namespace KeeAgent
     /// </summary>
     /// <param name="entry">The KeePass database entry.</param>
     /// <returns>The SSH key.</returns>
-    /// <reamrks>
+    /// <remarks>
     /// Do not call this on entries that are currently being editied. It will
     /// return stale data. Use <see cref="GetSshPrivateKey(EntrySettings, ProtectedBinaryDictionary)"/>
     /// instead.
-    /// </reamrks>
+    /// </remarks>
     public static SshPrivateKey GetSshPrivateKey(this PwEntry entry)
     {
       var settings = entry.GetKeeAgentSettings();
