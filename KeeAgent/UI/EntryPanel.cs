@@ -181,6 +181,9 @@ namespace KeeAgent.UI
 
       pwEntryForm.UpdateEntryBinaries(false, true);
       //pwEntryForm.ResizeColumnHeaders();
+
+      // probably only needed for mono, but doesn't hurt to call it unconditionally
+      UpdateControlStates();
     }
   }
 }
