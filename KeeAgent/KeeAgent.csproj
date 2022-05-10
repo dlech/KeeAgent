@@ -241,7 +241,7 @@
   <ItemGroup>
     <None Include="Resources\help-3.png" />
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup Condition=" '$(OS)' != 'Unix' ">
     <PackageReference Include="KeePass">
       <Version>2.50.0.21065</Version>
       <ExcludeFromPlgx />
@@ -250,6 +250,16 @@
       <Version>1.0.0</Version>
       <ExcludeFromPlgx />
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup Condition=" '$(OS)' == 'Unix' ">
+    <Reference Include="KeePass">
+      <HintPath>/usr/lib/keepass2/KeePass.exe</HintPath>
+      <ExcludeFromPlgx />
+    </Reference>
+    <Reference Include="BouncyCastle">
+      <HintPath>/usr/lib/cli/bccrypto-csharp/BouncyCastle.dll</HintPath>
+      <ExcludeFromPlgx />
+    </Reference>
   </ItemGroup>
   <PropertyGroup>
   </PropertyGroup>

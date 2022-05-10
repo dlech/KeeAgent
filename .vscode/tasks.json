@@ -33,6 +33,37 @@
                 "reveal": "silent"
             },
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build-mono",
+            "type": "shell",
+            "command": "xbuild",
+            "args": [
+                "/property:GenerateFullPaths=true",
+                "/t:build",
+                "KeeAgent.sln"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "silent"
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "release-mono",
+            "type": "shell",
+            "command": "xbuild",
+            "args": [
+                "/property:GenerateFullPaths=true",
+                "/property:Configuration=ReleasePlgx",
+                "/t:build",
+                "KeeAgent.sln"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "silent"
+            },
+            "problemMatcher": "$msCompile"
         }
     ]
 }
