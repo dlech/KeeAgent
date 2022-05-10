@@ -54,39 +54,39 @@
             ((System.ComponentModel.ISupportInitialize)(this.invalidKeyWarningIcon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.entrySettingsBindingSource)).BeginInit();
             this.SuspendLayout();
-            // 
+            //
             // hasSshKeyCheckBox
-            // 
+            //
             resources.ApplyResources(this.hasSshKeyCheckBox, "hasSshKeyCheckBox");
             this.hasSshKeyCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.entrySettingsBindingSource, "AllowUseOfSshKey", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.hasSshKeyCheckBox.Name = "hasSshKeyCheckBox";
             this.hasSshKeyCheckBox.UseVisualStyleBackColor = true;
             this.hasSshKeyCheckBox.CheckedChanged += new System.EventHandler(this.hasSshKeyCheckBox_CheckedChanged);
-            // 
+            //
             // addKeyAtOpenCheckBox
-            // 
+            //
             resources.ApplyResources(this.addKeyAtOpenCheckBox, "addKeyAtOpenCheckBox");
             this.addKeyAtOpenCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.entrySettingsBindingSource, "AddAtDatabaseOpen", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.addKeyAtOpenCheckBox.Name = "addKeyAtOpenCheckBox";
             this.addKeyAtOpenCheckBox.UseVisualStyleBackColor = true;
-            // 
+            //
             // removeKeyAtCloseCheckBox
-            // 
+            //
             resources.ApplyResources(this.removeKeyAtCloseCheckBox, "removeKeyAtCloseCheckBox");
             this.removeKeyAtCloseCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.entrySettingsBindingSource, "RemoveAtDatabaseClose", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.removeKeyAtCloseCheckBox.Name = "removeKeyAtCloseCheckBox";
             this.removeKeyAtCloseCheckBox.UseVisualStyleBackColor = true;
-            // 
+            //
             // helpButton
-            // 
+            //
             resources.ApplyResources(this.helpButton, "helpButton");
             this.helpButton.Image = global::KeeAgent.Properties.Resources.Help_png;
             this.helpButton.Name = "helpButton";
             this.helpButton.UseVisualStyleBackColor = true;
             this.helpButton.Click += new System.EventHandler(this.helpButton_Click);
-            // 
+            //
             // keyInfoGroupBox
-            // 
+            //
             resources.ApplyResources(this.keyInfoGroupBox, "keyInfoGroupBox");
             this.keyInfoGroupBox.Controls.Add(this.copyPublicKeybutton);
             this.keyInfoGroupBox.Controls.Add(this.publicKeyTextBox);
@@ -97,68 +97,68 @@
             this.keyInfoGroupBox.Controls.Add(this.label1);
             this.keyInfoGroupBox.Name = "keyInfoGroupBox";
             this.keyInfoGroupBox.TabStop = false;
-            // 
+            //
             // copyPublicKeybutton
-            // 
+            //
             resources.ApplyResources(this.copyPublicKeybutton, "copyPublicKeybutton");
             this.copyPublicKeybutton.Name = "copyPublicKeybutton";
             this.copyPublicKeybutton.UseVisualStyleBackColor = true;
             this.copyPublicKeybutton.Click += new System.EventHandler(this.copyPublicKeybutton_Click);
-            // 
+            //
             // publicKeyTextBox
-            // 
+            //
             resources.ApplyResources(this.publicKeyTextBox, "publicKeyTextBox");
             this.publicKeyTextBox.Name = "publicKeyTextBox";
             this.publicKeyTextBox.ReadOnly = true;
-            // 
+            //
             // commentTextBox
-            // 
+            //
             resources.ApplyResources(this.commentTextBox, "commentTextBox");
             this.commentTextBox.Name = "commentTextBox";
             this.commentTextBox.ReadOnly = true;
-            // 
+            //
             // fingerprintTextBox
-            // 
+            //
             resources.ApplyResources(this.fingerprintTextBox, "fingerprintTextBox");
             this.fingerprintTextBox.Name = "fingerprintTextBox";
             this.fingerprintTextBox.ReadOnly = true;
-            // 
+            //
             // label3
-            // 
+            //
             resources.ApplyResources(this.label3, "label3");
             this.label3.Name = "label3";
-            // 
+            //
             // label2
-            // 
+            //
             resources.ApplyResources(this.label2, "label2");
             this.label2.Name = "label2";
-            // 
+            //
             // label1
-            // 
+            //
             resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
-            // 
+            //
             // confirmConstraintCheckBox
-            // 
+            //
             resources.ApplyResources(this.confirmConstraintCheckBox, "confirmConstraintCheckBox");
             this.confirmConstraintCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.entrySettingsBindingSource, "UseConfirmConstraintWhenAdding", true));
             this.confirmConstraintCheckBox.Name = "confirmConstraintCheckBox";
             this.confirmConstraintCheckBox.UseVisualStyleBackColor = true;
-            // 
+            //
             // delayedUpdateKeyInfoTimer
-            // 
-            this.delayedUpdateKeyInfoTimer.Tick += new System.EventHandler(this.delayedUpdateKeyIndoTimer_Tick);
-            // 
+            //
+            this.delayedUpdateKeyInfoTimer.Tick += new System.EventHandler(this.delayedUpdateKeyInfoTimer_Tick);
+            //
             // lifetimeConstraintCheckBox
-            // 
+            //
             resources.ApplyResources(this.lifetimeConstraintCheckBox, "lifetimeConstraintCheckBox");
             this.lifetimeConstraintCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.entrySettingsBindingSource, "UseLifetimeConstraintWhenAdding", true));
             this.lifetimeConstraintCheckBox.Name = "lifetimeConstraintCheckBox";
             this.lifetimeConstraintCheckBox.UseVisualStyleBackColor = true;
             this.lifetimeConstraintCheckBox.CheckedChanged += new System.EventHandler(this.lifetimeConstraintCheckBox_CheckedChanged);
-            // 
+            //
             // lifetimeConstraintNumericUpDown
-            // 
+            //
             this.lifetimeConstraintNumericUpDown.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.entrySettingsBindingSource, "LifetimeConstraintDuration", true));
             resources.ApplyResources(this.lifetimeConstraintNumericUpDown, "lifetimeConstraintNumericUpDown");
             this.lifetimeConstraintNumericUpDown.Maximum = new decimal(new int[] {
@@ -172,33 +172,33 @@
             0,
             0,
             0});
-            // 
+            //
             // lifetimeConstraintLabel
-            // 
+            //
             resources.ApplyResources(this.lifetimeConstraintLabel, "lifetimeConstraintLabel");
             this.lifetimeConstraintLabel.Name = "lifetimeConstraintLabel";
-            // 
+            //
             // openManageFilesDialogButton
-            // 
+            //
             resources.ApplyResources(this.openManageFilesDialogButton, "openManageFilesDialogButton");
             this.openManageFilesDialogButton.Name = "openManageFilesDialogButton";
             this.openManageFilesDialogButton.UseVisualStyleBackColor = true;
             this.openManageFilesDialogButton.Click += new System.EventHandler(this.openManageFilesDialogButton_Click);
-            // 
+            //
             // invalidKeyWarningIcon
-            // 
+            //
             this.invalidKeyWarningIcon.BackColor = System.Drawing.Color.Transparent;
             resources.ApplyResources(this.invalidKeyWarningIcon, "invalidKeyWarningIcon");
             this.invalidKeyWarningIcon.Name = "invalidKeyWarningIcon";
             this.invalidKeyWarningIcon.StockIcon = KeeAgent.UI.SystemIcon.StockIconId.Warning;
             this.invalidKeyWarningIcon.TabStop = false;
-            // 
+            //
             // entrySettingsBindingSource
-            // 
+            //
             this.entrySettingsBindingSource.DataSource = typeof(KeeAgent.EntrySettings);
-            // 
+            //
             // EntryPanel
-            // 
+            //
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.invalidKeyWarningIcon);

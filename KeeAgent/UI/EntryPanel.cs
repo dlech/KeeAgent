@@ -146,7 +146,7 @@ namespace KeeAgent.UI
       ClipboardUtil.Copy(publicKeyTextBox.Text, false, false, null, null, pwEntryForm.Handle);
     }
 
-    private void delayedUpdateKeyIndoTimer_Tick(object sender, EventArgs e)
+    private void delayedUpdateKeyInfoTimer_Tick(object sender, EventArgs e)
     {
       delayedUpdateKeyInfoTimer.Stop();
       UpdateKeyInfo();
