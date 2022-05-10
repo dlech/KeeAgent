@@ -64,6 +64,32 @@ namespace KeeAgent.UI
 
     private void UpdateImage()
     {
+      // Use ugly icons on mono - it's the best we can do
+      if (Type.GetType("Mono.Runtime") != null) {
+        Icon icon;
+
+        switch (stockIconId)  {
+          case StockIconId.Info:
+            icon = SystemIcons.Information;
+            break;
+          case StockIconId.Warning:
+            icon = SystemIcons.Warning;
+            break;
+          case StockIconId.Error:
+            icon = SystemIcons.Error;
+            break;
+          case StockIconId.Help:
+            icon = SystemIcons.Question;
+            break;
+          default:
+            throw new NotSupportedException("unsupported icon id");
+        }
+
+        Image = new Icon(icon, Size.Width, Size.Height).ToBitmap();
+
+        return;
+      }
+
       IntPtr handle;
 
       Marshal.ThrowExceptionForHR(
