@@ -21,7 +21,7 @@ jobs:
       run: msbuild /property:Configuration=ReleasePlgx /t:build KeeAgent.sln
 
     - name: List PLGX
-      run: ~\.nuget\packages\plgxtool\1.0.0\tools\PlgxTool.exe -l .\KeeAgent\bin\ReleasePlgx\KeeAgent.plgx
+      run: ~\.nuget\packages\plgxtool\1.0.3\tools\PlgxTool.exe -l .\KeeAgent\bin\ReleasePlgx\KeeAgent.plgx
 
     - name: Upload artifact
       uses: actions/upload-artifact@v1
