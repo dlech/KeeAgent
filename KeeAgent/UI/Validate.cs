@@ -46,8 +46,16 @@ namespace KeeAgent.UI
             "Attachment '{0}' is missing.", location.AttachmentName);
         }
 
+        SshPublicKey publicKey = null;
+
+        var pubAttachment = getAttachment(location.AttachmentName + ".pub");
+
+        if (pubAttachment != null) {
+          publicKey = SshPublicKey.Read(new MemoryStream(pubAttachment.ReadData()));
+        }
+
         try {
-          SshPrivateKey.Read(new MemoryStream(attachment.ReadData()));
+          SshPrivateKey.Read(new MemoryStream(attachment.ReadData()), publicKey);
         }
         catch (SshPrivateKey.PublicKeyRequiredException) {
           return string.Format(
@@ -67,8 +75,14 @@ namespace KeeAgent.UI
           return string.Format("The private key file '{0}' does not exist.", file);
         }
 
+        SshPublicKey publicKey = null;
+
+        if (File.Exists(file + ".pub")) {
+          publicKey = SshPublicKey.Read(File.OpenRead(file + ".pub"));
+        }
+
         try {
-          SshPrivateKey.Read(File.OpenRead(file));
+          SshPrivateKey.Read(File.OpenRead(file), publicKey);
         }
         catch (SshPrivateKey.PublicKeyRequiredException) {
           return string.Format(
