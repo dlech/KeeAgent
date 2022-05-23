@@ -1029,7 +1029,7 @@ namespace KeeAgent
 
         try {
           var key = e.Context.Entry.GetSshPrivateKey();
-          path = keyFileMap[key.PublicKey.Sha256Hash].Path;
+          path = keyFileMap[key.PublicKey.Sha256Fingerprint].Path;
         }
         catch (Exception ex) {
           Debug.Fail(ex.Message);
