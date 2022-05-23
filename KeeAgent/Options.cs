@@ -51,7 +51,7 @@ namespace KeeAgent
     public bool UnlockOnActivity { get; set; }
 
     /// <summary>
-    /// When true and using PagentAgent, a socket file will be created at
+    /// When true and using PageantAgent, a socket file will be created at
     /// CygwinSocketPath that can be used with cygwin
     /// </summary>
     public bool UseCygwinSocket { get; set; }
@@ -62,7 +62,7 @@ namespace KeeAgent
     public string CygwinSocketPath { get; set; }
 
     /// <summary>
-    /// When true and using PagentAgent, a socket file will be created at
+    /// When true and using PageantAgent, a socket file will be created at
     /// MsysSocketPath that can be used with msys
     /// </summary>
     public bool UseMsysSocket { get; set; }
@@ -73,7 +73,7 @@ namespace KeeAgent
     public string MsysSocketPath { get; set; }
 
     /// <summary>
-    /// When true and using PagentAgent, a socket file will be created at
+    /// When true and using PageantAgent, a socket file will be created at
     /// UnixSocketPath that can be used with WSL
     /// </summary>
     public bool UseWslSocket { get; set; }
@@ -84,7 +84,7 @@ namespace KeeAgent
     public string WslSocketPath { get; set; }
 
     /// <summary>
-    /// When <c>true</c> and using PagentAgent, a named pipe will be created
+    /// When <c>true</c> and using PageantAgent, a named pipe will be created
     /// at //./pipe/openssh-ssh-agent that can be used with Windows OpenSSH
     /// </summary>
     public bool UseWindowsOpenSshPipe { get; set; }

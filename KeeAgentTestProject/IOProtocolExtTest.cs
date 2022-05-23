@@ -142,7 +142,7 @@ namespace KeeAgentTestProject
                 return securePassphrase;
               };
             var constraints = new List<Agent.KeyConstraint>();
-            constraints.addConfirmConstraint();            
+            constraints.addConfirmConstraint();
             agent.AddKeyFromFile(keyFilePath, getPassphraseCallback, constraints);
 
             /* run test */
@@ -153,7 +153,7 @@ namespace KeeAgentTestProject
             Assert.IsTrue(fileExists, "Is satest VM running?");
 
             /* the problem we are checking for is that IOConnection.FileExists
-             * does not lock up. Originally, in KeeAgent, WinPagent ran on main
+             * does not lock up. Originally, in KeeAgent, WinPageant ran on main
              * thread and caused lock-up here. So, we are looking to see if the
              * test times out or not. */
           });
