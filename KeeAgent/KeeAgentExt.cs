@@ -627,7 +627,7 @@ namespace KeeAgent
       Options.AlwaysConfirm = config.GetBool(alwaysConfirmOptionName, false);
       Options.ShowBalloon = config.GetBool(showBalloonOptionName, true);
       Options.LoggingEnabled = config.GetBool(logginEnabledOptionName, false);
-      Options.UnlockOnActivity = config.GetBool(unlockOnActivityOptionName, true);
+      Options.UnlockOnActivity = config.GetBool(unlockOnActivityOptionName, false);
       Options.UseCygwinSocket = config.GetBool(useCygwinSocketOptionName, false);
       Options.CygwinSocketPath = config.GetString(cygwinSocketPathOptionName);
       Options.UseMsysSocket = config.GetBool(useMsysSocketOptionName, false);
