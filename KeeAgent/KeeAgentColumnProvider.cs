@@ -109,7 +109,7 @@ namespace KeeAgent
           try {
             var key = entry.GetSshPrivateKey();
 
-            var agentKey = ext.agent.GetAllKeys().SingleOrDefault(k => key.PublicKey.Matches(k.GetPublicKeyBlob()));
+            var agentKey = ext.agent.ListKeys().SingleOrDefault(k => key.PublicKey.Matches(k.GetPublicKeyBlob()));
 
             if (agentKey == null) {
               ext.AddEntry(entry, null);

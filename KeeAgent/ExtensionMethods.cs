@@ -343,7 +343,6 @@ namespace KeeAgent
       }
 
       var key = new SshKey(
-        privateKey.PublicKey.Version,
         privateKey.PublicKey.Parameter,
         parameter,
         privateKey.PublicKey.Comment,

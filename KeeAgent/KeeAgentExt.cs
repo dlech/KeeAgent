@@ -956,7 +956,7 @@ namespace KeeAgent
     {
       try {
         removeKeyList.Clear();
-        var allKeys = agent.GetAllKeys();
+        var allKeys = agent.ListKeys();
         foreach (var entry in e.Database.RootGroup.GetEntries(true)) {
           try {
             if (e.Database.RecycleBinEnabled) {
