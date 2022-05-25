@@ -1202,9 +1202,9 @@ namespace KeeAgent
       }
     }
 
-    ICollection<ISshKey> FilterKeyList(ICollection<ISshKey> list)
+    IEnumerable<ISshKey> FilterKeyList(IEnumerable<ISshKey> list)
     {
-      if (!Options.UserPicksKeyOnRequestIdentities || list.Count <= 1) {
+      if (!Options.UserPicksKeyOnRequestIdentities || !list.Any()) {
         return list;
       }
 
@@ -1215,14 +1215,17 @@ namespace KeeAgent
         dialog.Shown += (sender, e) => dialog.Activate();
         dialog.TopMost = true;
         dialog.ShowDialog(pluginHost.MainWindow);
+
         if (dialog.DialogResult == DialogResult.OK) {
           list = dialog.SelectedKeys.ToList();
         }
         else {
-          list.Clear();
+          list = Enumerable.Empty<ISshKey>();
         }
+
         pluginHost.MainWindow.SetWindowPosBottom();
       });
+
       return list;
     }
   } // class
