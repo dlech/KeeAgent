@@ -1,5 +1,5 @@
 {
     "restructuredtext.confPath": "${workspaceFolder}/doc",
     "restructuredtext.builtDocumentationPath": "${workspaceRoot}/doc/_build/html",
-    "omnisharp.useGlobalMono": "always"
+    "omnisharp.useModernNet": false
 }
