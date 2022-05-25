@@ -41,6 +41,19 @@
             "preLaunchTask": "build-mono"
         },
         {
+            "name": "Mono: Debug .dll - Agent mode",
+            "type": "mono",
+            "request": "launch",
+            "program": "${workspaceRoot}/KeeAgent/bin/Debug/KeePass.exe",
+            "cwd": "${workspaceRoot}",
+            "env": { "SSH_AUTH_SOCK": null },
+            "args": [
+                "--pw=test",
+                "${workspaceRoot}/KeeAgent/bin/Debug/Test.kdbx"
+            ],
+            "preLaunchTask": "build-mono"
+        },
+        {
             "name": "Mono: Debug .plgx",
             "type": "mono",
             "request": "launch",
