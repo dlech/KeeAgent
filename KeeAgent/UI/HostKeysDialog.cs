@@ -1,4 +1,4 @@
-﻿// SPDX-License-Identifier: GPL-2.0-only
+// SPDX-License-Identifier: GPL-2.0-only
 // Copyright (c) 2022 David Lechner <david@lechnology.com>
 
 using System;
@@ -68,7 +68,7 @@ namespace KeeAgent.UI
         grid.CurrentCell = clickedRow.Cells[0];
 
         if (grid.CurrentRow.IsNewRow) {
-          // can't remove uncommited new row
+          // can't remove uncommitted new row
           deleteToolStripMenuItem.Enabled = false;
         }
         else {
@@ -81,7 +81,7 @@ namespace KeeAgent.UI
         grid.CurrentCell = clickedCell;
 
         if (grid.CurrentRow.IsNewRow) {
-          // can't remove uncommited new row
+          // can't remove uncommitted new row
           deleteToolStripMenuItem.Enabled = false;
         }
         else {

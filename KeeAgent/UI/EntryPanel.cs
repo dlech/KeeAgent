@@ -46,7 +46,7 @@ namespace KeeAgent.UI
         keyInfoGroupBox.Width += xOffset;
         commentTextBox.Width -= 6;
         fingerprintTextBox.Width -= 6;
-        destinationConstraintDdataGridView.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+        destinationConstraintDataGridView.Anchor = AnchorStyles.Top | AnchorStyles.Left;
       }
     }
 
@@ -91,7 +91,7 @@ namespace KeeAgent.UI
       lifetimeConstraintNumericUpDown.Enabled = lifetimeConstraintCheckBox.Enabled
         && lifetimeConstraintCheckBox.Checked;
       destinationConstraintCheckBox.Enabled = addKeyAtOpenCheckBox.Enabled;
-      destinationConstraintDdataGridView.Enabled = destinationConstraintCheckBox.Enabled
+      destinationConstraintDataGridView.Enabled = destinationConstraintCheckBox.Enabled
         && destinationConstraintCheckBox.Checked;
       openManageFilesDialogButton.Enabled = hasSshKeyCheckBox.Checked;
       UpdateKeyInfoDelayed();
@@ -126,13 +126,13 @@ namespace KeeAgent.UI
         commentTextBox.Text = key.PublicKey.Comment;
         fingerprintTextBox.Text = key.PublicKey.Sha256Fingerprint;
         publicKeyTextBox.Text = key.PublicKey.AuthorizedKeysString;
-        copyPublicKeybutton.Enabled = true;
+        copyPublicKeyButton.Enabled = true;
       }
       catch (Exception) {
         commentTextBox.Text = string.Empty;
         fingerprintTextBox.Text = string.Empty;
         publicKeyTextBox.Text = string.Empty;
-        copyPublicKeybutton.Enabled = false;
+        copyPublicKeyButton.Enabled = false;
       }
     }
 
@@ -151,7 +151,7 @@ namespace KeeAgent.UI
       Process.Start(Properties.Resources.WebHelpEntryOptions);
     }
 
-    private void copyPublicKeybutton_Click(object sender, EventArgs e)
+    private void copyPublicKeyButton_Click(object sender, EventArgs e)
     {
       ClipboardUtil.Copy(publicKeyTextBox.Text, false, false, null, null, pwEntryForm.Handle);
     }
@@ -196,7 +196,7 @@ namespace KeeAgent.UI
       UpdateControlStates();
     }
 
-    private void destinationConstraintDdataGridView_EnabledChanged(object sender, EventArgs e)
+    private void destinationConstraintDataGridView_EnabledChanged(object sender, EventArgs e)
     {
       // update styles to make it look disabled
       var dgv = sender as DataGridView;
@@ -220,17 +220,17 @@ namespace KeeAgent.UI
       }
     }
 
-    private void destinationConstraintDdataGridView_MouseUp(object sender, MouseEventArgs e)
+    private void destinationConstraintDataGridView_MouseUp(object sender, MouseEventArgs e)
     {
-      var hitTest = destinationConstraintDdataGridView.HitTest(e.X, e.Y);
+      var hitTest = destinationConstraintDataGridView.HitTest(e.X, e.Y);
 
       if (hitTest.Type == DataGridViewHitTestType.RowHeader) {
-        var clickedRow = destinationConstraintDdataGridView.Rows[hitTest.RowIndex];
+        var clickedRow = destinationConstraintDataGridView.Rows[hitTest.RowIndex];
 
-        destinationConstraintDdataGridView.CurrentCell = clickedRow.Cells[0];
+        destinationConstraintDataGridView.CurrentCell = clickedRow.Cells[0];
 
-        if (destinationConstraintDdataGridView.CurrentRow.IsNewRow) {
-          // can't remove uncommited new row
+        if (destinationConstraintDataGridView.CurrentRow.IsNewRow) {
+          // can't remove uncommitted new row
           deleteCurrentRowMenuItem.Enabled = false;
         }
         else {
@@ -238,12 +238,12 @@ namespace KeeAgent.UI
         }
       }
       else if (hitTest.Type == DataGridViewHitTestType.Cell) {
-        var clickedCell = destinationConstraintDdataGridView.Rows[hitTest.RowIndex].Cells[hitTest.ColumnIndex];
+        var clickedCell = destinationConstraintDataGridView.Rows[hitTest.RowIndex].Cells[hitTest.ColumnIndex];
 
-        destinationConstraintDdataGridView.CurrentCell = clickedCell;
+        destinationConstraintDataGridView.CurrentCell = clickedCell;
 
-        if (destinationConstraintDdataGridView.CurrentRow.IsNewRow) {
-          // can't remove uncommited new row
+        if (destinationConstraintDataGridView.CurrentRow.IsNewRow) {
+          // can't remove uncommitted new row
           deleteCurrentRowMenuItem.Enabled = false;
         }
         else {
@@ -258,14 +258,14 @@ namespace KeeAgent.UI
     private void deleteCurrentRowMenuItem_Click(object sender, EventArgs e)
     {
       try {
-        destinationConstraintDdataGridView.Rows.Remove(destinationConstraintDdataGridView.CurrentRow);
+        destinationConstraintDataGridView.Rows.Remove(destinationConstraintDataGridView.CurrentRow);
       }
       catch {
         // don't crash the program
       }
     }
 
-    private void destinationConstraintDdataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+    private void destinationConstraintDataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
     {
       if (CurrentSettings == null) {
         // this is before the form load event
@@ -275,7 +275,7 @@ namespace KeeAgent.UI
       var list = new List<EntrySettings.DestinationConstraint>();
 
       try {
-        foreach (DataGridViewRow row in destinationConstraintDdataGridView.Rows) {
+        foreach (DataGridViewRow row in destinationConstraintDataGridView.Rows) {
           if (row.IsNewRow) {
             continue;
           }
@@ -304,7 +304,7 @@ namespace KeeAgent.UI
       }
     }
 
-    private void destinationConstraintDdataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+    private void destinationConstraintDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
     {
       if (e.RowIndex < 0) {
         // clicked the header
@@ -342,7 +342,7 @@ namespace KeeAgent.UI
       }
     }
 
-    private void destinationConstraintDdataGridView_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+    private void destinationConstraintDataGridView_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
     {
       var grid = sender as DataGridView;
 

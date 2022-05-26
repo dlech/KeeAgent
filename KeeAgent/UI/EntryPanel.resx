@@ -255,40 +255,40 @@
   <data name="keyInfoGroupBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
-  <data name="copyPublicKeybutton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="copyPublicKeyButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
-  <data name="copyPublicKeybutton.Enabled" type="System.Boolean, mscorlib">
+  <data name="copyPublicKeyButton.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="copyPublicKeybutton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="copyPublicKeyButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="copyPublicKeybutton.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="copyPublicKeyButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>736, 169</value>
   </data>
-  <data name="copyPublicKeybutton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="copyPublicKeyButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>6, 6, 6, 6</value>
   </data>
-  <data name="copyPublicKeybutton.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="copyPublicKeyButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>150, 44</value>
   </data>
-  <data name="copyPublicKeybutton.TabIndex" type="System.Int32, mscorlib">
+  <data name="copyPublicKeyButton.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
   </data>
-  <data name="copyPublicKeybutton.Text" xml:space="preserve">
+  <data name="copyPublicKeyButton.Text" xml:space="preserve">
     <value>Cop&amp;y</value>
   </data>
-  <data name="&gt;&gt;copyPublicKeybutton.Name" xml:space="preserve">
-    <value>copyPublicKeybutton</value>
+  <data name="&gt;&gt;copyPublicKeyButton.Name" xml:space="preserve">
+    <value>copyPublicKeyButton</value>
   </data>
-  <data name="&gt;&gt;copyPublicKeybutton.Type" xml:space="preserve">
+  <data name="&gt;&gt;copyPublicKeyButton.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;copyPublicKeybutton.Parent" xml:space="preserve">
+  <data name="&gt;&gt;copyPublicKeyButton.Parent" xml:space="preserve">
     <value>keyInfoGroupBox</value>
   </data>
-  <data name="&gt;&gt;copyPublicKeybutton.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;copyPublicKeyButton.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="publicKeyTextBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
@@ -693,7 +693,7 @@
   <data name="&gt;&gt;destinationConstraintCheckBox.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="destinationConstraintDdataGridView.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="destinationConstraintDataGridView.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="fromHostDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
@@ -702,19 +702,19 @@
   <data name="fromHostDataGridViewTextBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
     <value>10</value>
   </data>
-  <metadata name="FroimHostKeysColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="FromHostKeysColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <data name="FroimHostKeysColumn.HeaderText" xml:space="preserve">
+  <data name="FromHostKeysColumn.HeaderText" xml:space="preserve">
     <value>Keys</value>
   </data>
-  <data name="FroimHostKeysColumn.MinimumWidth" type="System.Int32, mscorlib">
+  <data name="FromHostKeysColumn.MinimumWidth" type="System.Int32, mscorlib">
     <value>10</value>
   </data>
-  <data name="FroimHostKeysColumn.ToolTipText" xml:space="preserve">
+  <data name="FromHostKeysColumn.ToolTipText" xml:space="preserve">
     <value>Click button to edit from host keys</value>
   </data>
-  <data name="FroimHostKeysColumn.Width" type="System.Int32, mscorlib">
+  <data name="FromHostKeysColumn.Width" type="System.Int32, mscorlib">
     <value>66</value>
   </data>
   <data name="toUserDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
@@ -765,28 +765,28 @@
   <metadata name="destinationConstraintBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>768, 15</value>
   </metadata>
-  <data name="destinationConstraintDdataGridView.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="destinationConstraintDataGridView.Location" type="System.Drawing.Point, System.Drawing">
     <value>18, 229</value>
   </data>
-  <data name="destinationConstraintDdataGridView.RowHeadersWidth" type="System.Int32, mscorlib">
+  <data name="destinationConstraintDataGridView.RowHeadersWidth" type="System.Int32, mscorlib">
     <value>82</value>
   </data>
-  <data name="destinationConstraintDdataGridView.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="destinationConstraintDataGridView.Size" type="System.Drawing.Size, System.Drawing">
     <value>895, 120</value>
   </data>
-  <data name="destinationConstraintDdataGridView.TabIndex" type="System.Int32, mscorlib">
+  <data name="destinationConstraintDataGridView.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
   </data>
-  <data name="&gt;&gt;destinationConstraintDdataGridView.Name" xml:space="preserve">
-    <value>destinationConstraintDdataGridView</value>
+  <data name="&gt;&gt;destinationConstraintDataGridView.Name" xml:space="preserve">
+    <value>destinationConstraintDataGridView</value>
   </data>
-  <data name="&gt;&gt;destinationConstraintDdataGridView.Type" xml:space="preserve">
+  <data name="&gt;&gt;destinationConstraintDataGridView.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;destinationConstraintDdataGridView.Parent" xml:space="preserve">
+  <data name="&gt;&gt;destinationConstraintDataGridView.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;destinationConstraintDdataGridView.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;destinationConstraintDataGridView.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="invalidKeyWarningIcon.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -897,10 +897,10 @@
   <data name="&gt;&gt;fromHostDataGridViewTextBoxColumn.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;FroimHostKeysColumn.Name" xml:space="preserve">
-    <value>FroimHostKeysColumn</value>
+  <data name="&gt;&gt;FromHostKeysColumn.Name" xml:space="preserve">
+    <value>FromHostKeysColumn</value>
   </data>
-  <data name="&gt;&gt;FroimHostKeysColumn.Type" xml:space="preserve">
+  <data name="&gt;&gt;FromHostKeysColumn.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewButtonColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toUserDataGridViewTextBoxColumn.Name" xml:space="preserve">
