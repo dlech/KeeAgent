@@ -23,6 +23,7 @@ using KeePassLib.Security;
 using KeePass.UI;
 using SshAgentLib.Keys;
 using Org.BouncyCastle.Crypto;
+using SshAgentLib.Extension;
 
 namespace KeeAgent
 {
@@ -40,17 +41,14 @@ namespace KeeAgent
     private static XmlSerializer entrySettingsSerializer;
     private static XmlSerializer databaseSettingsSerializer;
 
-    private static string AddOrReplaceFileExtension(string fileName)
+    public static DestinationConstraint ToDestinationConstraint(this EntrySettings.DestinationConstraint[] constraints)
     {
-      if (string.IsNullOrWhiteSpace(fileName)) {
-        return fileName;
-      }
-
-      if (fileName.EndsWith(".ppk")) {
-        fileName = fileName.Remove(fileName.Length - 4);
-      }
-
-      return fileName + ".pub";
+      return new DestinationConstraint(constraints.Select(x => new DestinationConstraint.Constraint(
+        new DestinationConstraint.Hop(null, x.FromHost, x.FromHostKeys.Select(
+          f => new DestinationConstraint.KeySpec(SshPublicKey.Parse(f.HostKey), f.IsCA)).ToList()),
+        new DestinationConstraint.Hop(x.ToUser, x.ToHost, x.ToHostKeys.Select(
+          t => new DestinationConstraint.KeySpec(SshPublicKey.Parse(t.HostKey), t.IsCA)).ToList())))
+        .ToList());
     }
 
     private static XmlSerializer EntrySettingsSerializer {

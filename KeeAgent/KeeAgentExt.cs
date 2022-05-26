@@ -1046,9 +1046,11 @@ namespace KeeAgent
                             ICollection<Agent.KeyConstraint> constraints)
     {
       var settings = entry.GetKeeAgentSettings();
+
       try {
         var key = entry.GetSshKey();
         string db_name = "<Unknown database>";
+
         try {
           var database = pluginHost.MainWindow.DocumentManager.GetOpenDatabases()
             .Where((db) => db.RootGroup.FindEntry(entry.Uuid, true) != null).Single();
@@ -1057,7 +1059,9 @@ namespace KeeAgent
         catch (Exception) {
           Debug.Fail("Duplicate UUIDs?");
         }
+
         key.Source = string.Format("{0}: {1}", db_name, entry.GetFullPath());
+
         if (agent is PageantClient) {
           // Pageant errors if you try to add a key that is already loaded
           // so try to remove the key first so that it behaves like other agents
@@ -1082,13 +1086,19 @@ namespace KeeAgent
             if (settings.UseLifetimeConstraintWhenAdding) {
               key.addLifetimeConstraint(settings.LifetimeConstraintDuration);
             }
+            if (settings.UseDestinationConstraintWhenAdding) {
+              key.DestinationConstraint = settings.DestinationConstraints.ToDestinationConstraint();
+            }
           }
+
           if (Options.AlwaysConfirm &&
               !key.HasConstraint(Agent.KeyConstraintType.SSH_AGENT_CONSTRAIN_CONFIRM)) {
             key.addConfirmConstraint();
           }
         }
+
         agent.AddKey(key);
+
         if (settings.Location.SelectedType == EntrySettings.LocationType.Attachment
           && settings.Location.SaveAttachmentToTempFile) {
           try {
@@ -1108,10 +1118,12 @@ namespace KeeAgent
             MessageService.ShowWarning(ex.Message);
           }
         }
+
         if (settings.Location.SelectedType == EntrySettings.LocationType.File) {
           keyFileMap[key.GetSha256Fingerprint()] =
             new KeyFileInfo(settings.Location.FileName, false);
         }
+
         return key;
       }
       catch (Exception ex) {

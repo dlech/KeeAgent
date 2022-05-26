@@ -77,6 +77,12 @@
     <Compile Include="UI\DecryptProgressDialog.Designer.cs">
       <DependentUpon>DecryptProgressDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\HostKeysDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\HostKeysDialog.Designer.cs">
+      <DependentUpon>HostKeysDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\InPlaceMessage.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -168,6 +174,9 @@
     <EmbeddedResource Include="UI\DecryptProgressDialog.resx">
       <DependentUpon>DecryptProgressDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\HostKeysDialog.resx">
+      <DependentUpon>HostKeysDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\InPlaceMessage.resx">
       <DependentUpon>InPlaceMessage.cs</DependentUpon>
     </EmbeddedResource>
@@ -198,6 +207,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\DataSources\EntrySettings.DestinationConstraint.datasource" />
+    <None Include="Properties\DataSources\EntrySettings.DestinationConstraint.KeySpec.datasource" />
     <None Include="Resources\KeeAgent-icon-mono.ico" />
     <None Include="Test.kdbx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

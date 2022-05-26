@@ -122,7 +122,7 @@
     <value>True</value>
   </data>
   <metadata name="entrySettingsBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>223, 17</value>
+    <value>399, 11</value>
   </metadata>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="hasSshKeyCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
@@ -130,10 +130,13 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="hasSshKeyCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 9</value>
+    <value>18, 17</value>
+  </data>
+  <data name="hasSshKeyCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
   </data>
   <data name="hasSshKeyCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 17</value>
+    <value>354, 29</value>
   </data>
   <data name="hasSshKeyCheckBox.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -151,7 +154,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;hasSshKeyCheckBox.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>13</value>
   </data>
   <data name="addKeyAtOpenCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -160,10 +163,13 @@
     <value>NoControl</value>
   </data>
   <data name="addKeyAtOpenCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 32</value>
+    <value>18, 62</value>
+  </data>
+  <data name="addKeyAtOpenCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
   </data>
   <data name="addKeyAtOpenCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>281, 17</value>
+    <value>551, 29</value>
   </data>
   <data name="addKeyAtOpenCheckBox.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -181,7 +187,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;addKeyAtOpenCheckBox.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>12</value>
   </data>
   <data name="removeKeyAtCloseCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -190,10 +196,13 @@
     <value>NoControl</value>
   </data>
   <data name="removeKeyAtCloseCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 55</value>
+    <value>18, 106</value>
+  </data>
+  <data name="removeKeyAtCloseCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
   </data>
   <data name="removeKeyAtCloseCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>296, 17</value>
+    <value>583, 29</value>
   </data>
   <data name="removeKeyAtCloseCheckBox.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -211,7 +220,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;removeKeyAtCloseCheckBox.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>11</value>
   </data>
   <data name="helpButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -220,10 +229,13 @@
     <value>NoControl</value>
   </data>
   <data name="helpButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>433, 9</value>
+    <value>866, 17</value>
+  </data>
+  <data name="helpButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
   </data>
   <data name="helpButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>25, 25</value>
+    <value>50, 48</value>
   </data>
   <data name="helpButton.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -238,118 +250,10 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;helpButton.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>10</value>
   </data>
   <data name="keyInfoGroupBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
-  </data>
-  <data name="&gt;&gt;copyPublicKeybutton.Name" xml:space="preserve">
-    <value>copyPublicKeybutton</value>
-  </data>
-  <data name="&gt;&gt;copyPublicKeybutton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;copyPublicKeybutton.Parent" xml:space="preserve">
-    <value>keyInfoGroupBox</value>
-  </data>
-  <data name="&gt;&gt;copyPublicKeybutton.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;publicKeyTextBox.Name" xml:space="preserve">
-    <value>publicKeyTextBox</value>
-  </data>
-  <data name="&gt;&gt;publicKeyTextBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;publicKeyTextBox.Parent" xml:space="preserve">
-    <value>keyInfoGroupBox</value>
-  </data>
-  <data name="&gt;&gt;publicKeyTextBox.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;commentTextBox.Name" xml:space="preserve">
-    <value>commentTextBox</value>
-  </data>
-  <data name="&gt;&gt;commentTextBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;commentTextBox.Parent" xml:space="preserve">
-    <value>keyInfoGroupBox</value>
-  </data>
-  <data name="&gt;&gt;commentTextBox.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;fingerprintTextBox.Name" xml:space="preserve">
-    <value>fingerprintTextBox</value>
-  </data>
-  <data name="&gt;&gt;fingerprintTextBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;fingerprintTextBox.Parent" xml:space="preserve">
-    <value>keyInfoGroupBox</value>
-  </data>
-  <data name="&gt;&gt;fingerprintTextBox.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;label3.Name" xml:space="preserve">
-    <value>label3</value>
-  </data>
-  <data name="&gt;&gt;label3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
-    <value>keyInfoGroupBox</value>
-  </data>
-  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;label2.Name" xml:space="preserve">
-    <value>label2</value>
-  </data>
-  <data name="&gt;&gt;label2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
-    <value>keyInfoGroupBox</value>
-  </data>
-  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;label1.Name" xml:space="preserve">
-    <value>label1</value>
-  </data>
-  <data name="&gt;&gt;label1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
-    <value>keyInfoGroupBox</value>
-  </data>
-  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="keyInfoGroupBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 216</value>
-  </data>
-  <data name="keyInfoGroupBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>449, 117</value>
-  </data>
-  <data name="keyInfoGroupBox.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="keyInfoGroupBox.Text" xml:space="preserve">
-    <value>Key Info</value>
-  </data>
-  <data name="&gt;&gt;keyInfoGroupBox.Name" xml:space="preserve">
-    <value>keyInfoGroupBox</value>
-  </data>
-  <data name="&gt;&gt;keyInfoGroupBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;keyInfoGroupBox.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;keyInfoGroupBox.ZOrder" xml:space="preserve">
-    <value>6</value>
   </data>
   <data name="copyPublicKeybutton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -361,10 +265,13 @@
     <value>NoControl</value>
   </data>
   <data name="copyPublicKeybutton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>368, 88</value>
+    <value>736, 169</value>
+  </data>
+  <data name="copyPublicKeybutton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
   </data>
   <data name="copyPublicKeybutton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
+    <value>150, 44</value>
   </data>
   <data name="copyPublicKeybutton.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -388,10 +295,13 @@
     <value>Top, Left, Right</value>
   </data>
   <data name="publicKeyTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 90</value>
+    <value>18, 173</value>
+  </data>
+  <data name="publicKeyTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
   </data>
   <data name="publicKeyTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>353, 20</value>
+    <value>702, 31</value>
   </data>
   <data name="publicKeyTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -412,10 +322,13 @@
     <value>Top, Left, Right</value>
   </data>
   <data name="commentTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>71, 19</value>
+    <value>142, 37</value>
+  </data>
+  <data name="commentTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
   </data>
   <data name="commentTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>372, 20</value>
+    <value>740, 31</value>
   </data>
   <data name="commentTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -436,10 +349,13 @@
     <value>Top, Left, Right</value>
   </data>
   <data name="fingerprintTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>71, 45</value>
+    <value>142, 87</value>
+  </data>
+  <data name="fingerprintTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
   </data>
   <data name="fingerprintTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>372, 20</value>
+    <value>740, 31</value>
   </data>
   <data name="fingerprintTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -463,10 +379,13 @@
     <value>NoControl</value>
   </data>
   <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>11, 74</value>
+    <value>22, 142</value>
+  </data>
+  <data name="label3.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 0, 6, 0</value>
   </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>211, 13</value>
+    <value>429, 25</value>
   </data>
   <data name="label3.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -493,10 +412,13 @@
     <value>NoControl</value>
   </data>
   <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>11, 22</value>
+    <value>22, 42</value>
+  </data>
+  <data name="label2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 0, 6, 0</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>54, 13</value>
+    <value>109, 25</value>
   </data>
   <data name="label2.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -523,10 +445,13 @@
     <value>NoControl</value>
   </data>
   <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>11, 48</value>
+    <value>22, 92</value>
+  </data>
+  <data name="label1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 0, 6, 0</value>
   </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 13</value>
+    <value>121, 25</value>
   </data>
   <data name="label1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -546,6 +471,36 @@
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
+  <data name="keyInfoGroupBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>18, 415</value>
+  </data>
+  <data name="keyInfoGroupBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
+  </data>
+  <data name="keyInfoGroupBox.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
+  </data>
+  <data name="keyInfoGroupBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>898, 225</value>
+  </data>
+  <data name="keyInfoGroupBox.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="keyInfoGroupBox.Text" xml:space="preserve">
+    <value>Key Info</value>
+  </data>
+  <data name="&gt;&gt;keyInfoGroupBox.Name" xml:space="preserve">
+    <value>keyInfoGroupBox</value>
+  </data>
+  <data name="&gt;&gt;keyInfoGroupBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;keyInfoGroupBox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;keyInfoGroupBox.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
   <data name="confirmConstraintCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -553,10 +508,13 @@
     <value>NoControl</value>
   </data>
   <data name="confirmConstraintCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 78</value>
+    <value>18, 150</value>
+  </data>
+  <data name="confirmConstraintCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
   </data>
   <data name="confirmConstraintCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>131, 17</value>
+    <value>258, 29</value>
   </data>
   <data name="confirmConstraintCheckBox.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -574,7 +532,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;confirmConstraintCheckBox.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>8</value>
   </data>
   <metadata name="delayedUpdateKeyInfoTimer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
@@ -586,10 +544,13 @@
     <value>NoControl</value>
   </data>
   <data name="lifetimeConstraintCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>146, 78</value>
+    <value>292, 150</value>
+  </data>
+  <data name="lifetimeConstraintCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
   </data>
   <data name="lifetimeConstraintCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>129, 17</value>
+    <value>256, 29</value>
   </data>
   <data name="lifetimeConstraintCheckBox.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -607,13 +568,16 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lifetimeConstraintCheckBox.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>7</value>
   </data>
   <data name="lifetimeConstraintNumericUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>281, 77</value>
+    <value>562, 148</value>
+  </data>
+  <data name="lifetimeConstraintNumericUpDown.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
   </data>
   <data name="lifetimeConstraintNumericUpDown.Size" type="System.Drawing.Size, System.Drawing">
-    <value>56, 20</value>
+    <value>112, 31</value>
   </data>
   <data name="lifetimeConstraintNumericUpDown.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -628,7 +592,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lifetimeConstraintNumericUpDown.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>6</value>
   </data>
   <data name="lifetimeConstraintLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -637,10 +601,13 @@
     <value>NoControl</value>
   </data>
   <data name="lifetimeConstraintLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>343, 79</value>
+    <value>686, 152</value>
+  </data>
+  <data name="lifetimeConstraintLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 0, 6, 0</value>
   </data>
   <data name="lifetimeConstraintLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>47, 13</value>
+    <value>93, 25</value>
   </data>
   <data name="lifetimeConstraintLabel.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -658,7 +625,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lifetimeConstraintLabel.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>5</value>
   </data>
   <data name="openManageFilesDialogButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
@@ -667,10 +634,13 @@
     <value>NoControl</value>
   </data>
   <data name="openManageFilesDialogButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 186</value>
+    <value>18, 358</value>
+  </data>
+  <data name="openManageFilesDialogButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
   </data>
   <data name="openManageFilesDialogButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>141, 24</value>
+    <value>282, 46</value>
   </data>
   <data name="openManageFilesDialogButton.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -688,37 +658,199 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;openManageFilesDialogButton.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="destinationConstraintCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="destinationConstraintCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="destinationConstraintCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>18, 191</value>
+  </data>
+  <data name="destinationConstraintCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
+  </data>
+  <data name="destinationConstraintCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>723, 29</value>
+  </data>
+  <data name="destinationConstraintCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="destinationConstraintCheckBox.Text" xml:space="preserve">
+    <value>Use destination constraint (requires OpenSSH &gt;= 8.9 client and server)</value>
+  </data>
+  <data name="&gt;&gt;destinationConstraintCheckBox.Name" xml:space="preserve">
+    <value>destinationConstraintCheckBox</value>
+  </data>
+  <data name="&gt;&gt;destinationConstraintCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;destinationConstraintCheckBox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;destinationConstraintCheckBox.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="destinationConstraintDdataGridView.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="fromHostDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
+    <value>From Host</value>
+  </data>
+  <data name="fromHostDataGridViewTextBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <metadata name="FroimHostKeysColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="FroimHostKeysColumn.HeaderText" xml:space="preserve">
+    <value>Keys</value>
+  </data>
+  <data name="FroimHostKeysColumn.MinimumWidth" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="FroimHostKeysColumn.ToolTipText" xml:space="preserve">
+    <value>Click button to edit from host keys</value>
+  </data>
+  <data name="FroimHostKeysColumn.Width" type="System.Int32, mscorlib">
+    <value>66</value>
+  </data>
+  <data name="toUserDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
+    <value>To User</value>
+  </data>
+  <data name="toUserDataGridViewTextBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="toHostDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
+    <value>To Host</value>
+  </data>
+  <data name="toHostDataGridViewTextBoxColumn.MinimumWidth" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <metadata name="ToHostKeysColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="ToHostKeysColumn.HeaderText" xml:space="preserve">
+    <value>Keys</value>
+  </data>
+  <data name="ToHostKeysColumn.MinimumWidth" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="ToHostKeysColumn.ToolTipText" xml:space="preserve">
+    <value>Click button to edit to host keys</value>
+  </data>
+  <data name="ToHostKeysColumn.Width" type="System.Int32, mscorlib">
+    <value>66</value>
+  </data>
+  <metadata name="destinationConstraintContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1231, 15</value>
+  </metadata>
+  <data name="deleteCurrentRowMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>158, 38</value>
+  </data>
+  <data name="deleteCurrentRowMenuItem.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="destinationConstraintContextMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>159, 42</value>
+  </data>
+  <data name="&gt;&gt;destinationConstraintContextMenuStrip.Name" xml:space="preserve">
+    <value>destinationConstraintContextMenuStrip</value>
+  </data>
+  <data name="&gt;&gt;destinationConstraintContextMenuStrip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <metadata name="destinationConstraintBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>768, 15</value>
+  </metadata>
+  <data name="destinationConstraintDdataGridView.Location" type="System.Drawing.Point, System.Drawing">
+    <value>18, 229</value>
+  </data>
+  <data name="destinationConstraintDdataGridView.RowHeadersWidth" type="System.Int32, mscorlib">
+    <value>82</value>
+  </data>
+  <data name="destinationConstraintDdataGridView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>895, 120</value>
+  </data>
+  <data name="destinationConstraintDdataGridView.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;destinationConstraintDdataGridView.Name" xml:space="preserve">
+    <value>destinationConstraintDdataGridView</value>
+  </data>
+  <data name="&gt;&gt;destinationConstraintDdataGridView.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;destinationConstraintDdataGridView.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;destinationConstraintDdataGridView.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="invalidKeyWarningIcon.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAANsSURBVEhLzZRvb1RFFMZn7r/4DnzRJsWmbGMrLW2i30Hf
-        8Cngm1y+AQFF8A8hCoYQxWr4J9B2S7d0S1uoWAkBd/cCsq5t3b1SfLfreXzO7G3FEIFSSJjkyZk5997f
-        PGfO7JrXZqTz4e501kvTWb+SXvV3Z+mXM2p5k2vM+MnfJYPWLwb1aT9N82Zr9njzIy168V8LFlI2QNni
-        0bxFveDF2ePNDXVfn6L729ygZERYQeuWwcrES6qiftmLH816kDsWuGOEAm5bWS16WBkLNleFuv8jT/c3
-        CSdU6FyFW0ZaixbLF4M0GdlEFStjXrw67RFohVDs+mAndr0/ALnJjbjpw0kftbPB3uz1jY3aeZNbvuAn
-        rZ949j8TSA0PD2NoaAhC97Jo0GTjl86EL1bF0vkgXqVDBamwaGVwcBADAzvcHDeYp/4c96U6Em2sCnW/
-        dM5Pmtd59loBQbhhpb+/H319fZAFrn9kTxhb81aqp9iLoxuoYul0ED8c9x0EhKwBe3t7kcvlINe5XpeV
-        xg8eql8/542qjZjc79/x7OfofoEbECLX2urp6UF3dzcwTzB/bIyCOfZi2uLBSfbieaqojQRxeoH3nhAV
-        rvEoCFHQtm1d6Orq4pzwOcJnnSAzBo3TAe4de0YvaidM7rdvwqRZVHd078CcK+SqQWdnJzo6OhwQM9y4
-        yJipWbC4/2X09CpqPMf0LO89YSqZIdzBOCfkvcE38e7AFgKZn2aekitr4v/Tt74kR/6nCnVfPUH3dEKg
-        tJ2xiiLnGQgqBa/NVVMqVlNgFXmL5HPtxdYnq6h+FcSN74M2KHOHK9yAzpymVMwRtK5J5go0MEkDl1UW
-        Kyd9JJ9F/71RPLfcg+NR0ppwIOfGAab4MddgVULIju0R3ukJCWaeQJVCMcH1BNd5VnHJSuVQ2FjY91gv
-        fv0iiOuneO8LhBFEZ6KONEIBGayvO8Dbb/E9ghx0nJESF/neON8fM1g+FiA5+FgV94/y7Mf4gpasTihx
-        kR9QDpBfBzIyr3PCoN9pHKUutdU8Z1E6EKUZ3ph7bExTH7JJbYhz8y/MQSiFrIFGmR9ljkeCi1w7ubk0
-        z1iU90eVDM8efPrGnrufhElyOERyOGrrUCjJxxEqB0MqQvmjtiofhlI+EKlDlPY/IWnHMC3tC/dk+Fc5
-        jPkHdiorz5NizJMAAAAASUVORK5CYII=
+        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
+        AAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="invalidKeyWarningIcon.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="invalidKeyWarningIcon.Location" type="System.Drawing.Point, System.Drawing">
-    <value>156, 186</value>
+    <value>312, 358</value>
+  </data>
+  <data name="invalidKeyWarningIcon.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
   </data>
   <data name="invalidKeyWarningIcon.Size" type="System.Drawing.Size, System.Drawing">
-    <value>24, 24</value>
+    <value>48, 46</value>
   </data>
   <data name="invalidKeyWarningIcon.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>CenterImage</value>
@@ -730,31 +862,76 @@
     <value>invalidKeyWarningIcon</value>
   </data>
   <data name="&gt;&gt;invalidKeyWarningIcon.Type" xml:space="preserve">
-    <value>KeeAgent.UI.SystemIcon, KeeAgent, Version=0.12.1.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>KeeAgent.UI.SystemIcon, KeeAgent, Version=0.13.0.25315, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;invalidKeyWarningIcon.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;invalidKeyWarningIcon.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>3</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
+    <value>12, 25</value>
   </data>
-  <data name="$this.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>6, 6, 6, 6</value>
   </data>
+  <data name="$this.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>12, 12, 12, 12</value>
+  </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>467, 342</value>
+    <value>934, 658</value>
   </data>
   <data name="&gt;&gt;delayedUpdateKeyInfoTimer.Name" xml:space="preserve">
     <value>delayedUpdateKeyInfoTimer</value>
   </data>
   <data name="&gt;&gt;delayedUpdateKeyInfoTimer.Type" xml:space="preserve">
     <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;fromHostDataGridViewTextBoxColumn.Name" xml:space="preserve">
+    <value>fromHostDataGridViewTextBoxColumn</value>
+  </data>
+  <data name="&gt;&gt;fromHostDataGridViewTextBoxColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;FroimHostKeysColumn.Name" xml:space="preserve">
+    <value>FroimHostKeysColumn</value>
+  </data>
+  <data name="&gt;&gt;FroimHostKeysColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewButtonColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toUserDataGridViewTextBoxColumn.Name" xml:space="preserve">
+    <value>toUserDataGridViewTextBoxColumn</value>
+  </data>
+  <data name="&gt;&gt;toUserDataGridViewTextBoxColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toHostDataGridViewTextBoxColumn.Name" xml:space="preserve">
+    <value>toHostDataGridViewTextBoxColumn</value>
+  </data>
+  <data name="&gt;&gt;toHostDataGridViewTextBoxColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ToHostKeysColumn.Name" xml:space="preserve">
+    <value>ToHostKeysColumn</value>
+  </data>
+  <data name="&gt;&gt;ToHostKeysColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewButtonColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;deleteCurrentRowMenuItem.Name" xml:space="preserve">
+    <value>deleteCurrentRowMenuItem</value>
+  </data>
+  <data name="&gt;&gt;deleteCurrentRowMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;destinationConstraintBindingSource.Name" xml:space="preserve">
+    <value>destinationConstraintBindingSource</value>
+  </data>
+  <data name="&gt;&gt;destinationConstraintBindingSource.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;entrySettingsBindingSource.Name" xml:space="preserve">
     <value>entrySettingsBindingSource</value>

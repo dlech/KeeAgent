@@ -2,23 +2,23 @@
 // Copyright (c) 2012-2016,2022 David Lechner <david@lechnology.com>
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using KeePass.Forms;
-using System.IO;
-using dlech.SshAgentLib;
 using KeePass.Util;
-using KeePass.Util.Spr;
 using KeePassLib.Security;
+using SshAgentLib.Extension;
 using SshAgentLib.Keys;
 
 namespace KeeAgent.UI
 {
   public partial class EntryPanel : UserControl
   {
-    PwEntryForm pwEntryForm;
-    KeeAgentExt ext;
+    private PwEntryForm pwEntryForm;
+    private readonly KeeAgentExt ext;
 
     public EntrySettings InitialSettings {
       get;
@@ -59,6 +59,12 @@ namespace KeeAgent.UI
         CurrentSettings = InitialSettings.DeepCopy();
         entrySettingsBindingSource.DataSource = CurrentSettings;
 
+        if (CurrentSettings.DestinationConstraints != null) {
+          foreach (var c in CurrentSettings.DestinationConstraints) {
+            destinationConstraintBindingSource.Add(c);
+          }
+        }
+
         pwEntryForm.FormClosing += delegate {
           while (delayedUpdateKeyInfoTimer.Enabled) {
             Application.DoEvents();
@@ -83,6 +89,9 @@ namespace KeeAgent.UI
       lifetimeConstraintCheckBox.Enabled = addKeyAtOpenCheckBox.Enabled;
       lifetimeConstraintNumericUpDown.Enabled = lifetimeConstraintCheckBox.Enabled
         && lifetimeConstraintCheckBox.Checked;
+      destinationConstraintCheckBox.Enabled = addKeyAtOpenCheckBox.Enabled;
+      destinationConstraintDdataGridView.Enabled = destinationConstraintCheckBox.Enabled
+        && destinationConstraintCheckBox.Checked;
       openManageFilesDialogButton.Enabled = hasSshKeyCheckBox.Checked;
       UpdateKeyInfoDelayed();
     }
@@ -183,6 +192,169 @@ namespace KeeAgent.UI
       //pwEntryForm.ResizeColumnHeaders();
 
       // probably only needed for mono, but doesn't hurt to call it unconditionally
+      UpdateControlStates();
+    }
+
+    private void destinationConstraintDdataGridView_EnabledChanged(object sender, EventArgs e)
+    {
+      // update styles to make it look disabled
+      var dgv = sender as DataGridView;
+
+      if (dgv.Enabled) {
+        dgv.DefaultCellStyle.BackColor = SystemColors.Window;
+        dgv.DefaultCellStyle.ForeColor = SystemColors.ControlText;
+        dgv.ColumnHeadersDefaultCellStyle.BackColor = SystemColors.Window;
+        dgv.ColumnHeadersDefaultCellStyle.ForeColor = SystemColors.ControlText;
+        dgv.ReadOnly = false;
+        dgv.EnableHeadersVisualStyles = true;
+      }
+      else {
+        dgv.DefaultCellStyle.BackColor = SystemColors.Control;
+        dgv.DefaultCellStyle.ForeColor = SystemColors.GrayText;
+        dgv.ColumnHeadersDefaultCellStyle.BackColor = SystemColors.Control;
+        dgv.ColumnHeadersDefaultCellStyle.ForeColor = SystemColors.GrayText;
+        dgv.CurrentCell = null;
+        dgv.ReadOnly = true;
+        dgv.EnableHeadersVisualStyles = false;
+      }
+    }
+
+    private void destinationConstraintDdataGridView_MouseUp(object sender, MouseEventArgs e)
+    {
+      var hitTest = destinationConstraintDdataGridView.HitTest(e.X, e.Y);
+
+      if (hitTest.Type == DataGridViewHitTestType.RowHeader) {
+        var clickedRow = destinationConstraintDdataGridView.Rows[hitTest.RowIndex];
+
+        destinationConstraintDdataGridView.CurrentCell = clickedRow.Cells[0];
+
+        if (destinationConstraintDdataGridView.CurrentRow.IsNewRow) {
+          // can't remove uncommited new row
+          deleteCurrentRowMenuItem.Enabled = false;
+        }
+        else {
+          deleteCurrentRowMenuItem.Enabled = true;
+        }
+      }
+      else if (hitTest.Type == DataGridViewHitTestType.Cell) {
+        var clickedCell = destinationConstraintDdataGridView.Rows[hitTest.RowIndex].Cells[hitTest.ColumnIndex];
+
+        destinationConstraintDdataGridView.CurrentCell = clickedCell;
+
+        if (destinationConstraintDdataGridView.CurrentRow.IsNewRow) {
+          // can't remove uncommited new row
+          deleteCurrentRowMenuItem.Enabled = false;
+        }
+        else {
+          deleteCurrentRowMenuItem.Enabled = true;
+        }
+      }
+      else {
+        deleteCurrentRowMenuItem.Enabled = false;
+      }
+    }
+
+    private void deleteCurrentRowMenuItem_Click(object sender, EventArgs e)
+    {
+      try {
+        destinationConstraintDdataGridView.Rows.Remove(destinationConstraintDdataGridView.CurrentRow);
+      }
+      catch {
+        // don't crash the program
+      }
+    }
+
+    private void destinationConstraintDdataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+    {
+      if (CurrentSettings == null) {
+        // this is before the form load event
+        return;
+      }
+
+      var list = new List<EntrySettings.DestinationConstraint>();
+
+      try {
+        foreach (DataGridViewRow row in destinationConstraintDdataGridView.Rows) {
+          if (row.IsNewRow) {
+            continue;
+          }
+
+          var c = row.DataBoundItem as EntrySettings.DestinationConstraint;
+          list.Add(c);
+
+          try {
+            new DestinationConstraint.Constraint(
+              new DestinationConstraint.Hop(null, c.FromHost, c.FromHostKeys.Select(
+                f => new DestinationConstraint.KeySpec(SshPublicKey.Parse(f.HostKey), f.IsCA)).ToList()),
+              new DestinationConstraint.Hop(c.ToUser, c.ToHost, c.ToHostKeys.Select(
+                t => new DestinationConstraint.KeySpec(SshPublicKey.Parse(t.HostKey), t.IsCA)).ToList()));
+
+            row.ErrorText = string.Empty;
+          }
+          catch (Exception ex) {
+            row.ErrorText = ex.Message;
+          }
+        }
+
+        CurrentSettings.DestinationConstraints = list.ToArray();
+      }
+      catch {
+        // data is invalid
+      }
+    }
+
+    private void destinationConstraintDdataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+    {
+      if (e.RowIndex < 0) {
+        // clicked the header
+        return;
+      }
+
+      var grid = sender as DataGridView;
+
+      if (grid.Rows[e.RowIndex].IsNewRow) {
+        // don't allow on new rows
+        return;
+      }
+
+      if (grid.Columns[e.ColumnIndex] is DataGridViewButtonColumn) {
+        var dialog = new HostKeysDialog();
+
+        var hostName = grid.Rows[e.RowIndex].Cells[e.ColumnIndex - 1].Value;
+        dialog.Text = string.Format("Host keys for '{0}'", hostName);
+
+        var constraint = grid.Rows[e.RowIndex].DataBoundItem as EntrySettings.DestinationConstraint;
+        var property = constraint.GetType().GetProperty(grid.Columns[e.ColumnIndex].DataPropertyName);
+        var keySpecs = property.GetValue(constraint) as EntrySettings.DestinationConstraint.KeySpec[];
+
+        if (keySpecs != null) {
+          foreach (var k in keySpecs) {
+            dialog.AddKeySpec(k);
+          }
+        }
+
+        var result = dialog.ShowDialog(this);
+
+        if (result == DialogResult.OK) {
+          property.SetValue(constraint, dialog.GetKeySpecs());
+        }
+      }
+    }
+
+    private void destinationConstraintDdataGridView_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+    {
+      var grid = sender as DataGridView;
+
+      // don't draw buttons on new rows
+      if (e.ColumnIndex >= 0 && grid.Columns[e.ColumnIndex] is DataGridViewButtonColumn
+        && e.RowIndex >= 0 && grid.Rows[e.RowIndex].IsNewRow) {
+        e.PaintBackground(e.ClipBounds, true);
+        e.Handled = true;
+      }
+    }
+
+    private void destinationConstraintCheckBox_CheckedChanged(object sender, EventArgs e)
+    {
       UpdateControlStates();
     }
   }
