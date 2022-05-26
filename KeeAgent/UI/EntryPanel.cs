@@ -46,6 +46,7 @@ namespace KeeAgent.UI
         keyInfoGroupBox.Width += xOffset;
         commentTextBox.Width -= 6;
         fingerprintTextBox.Width -= 6;
+        destinationConstraintDdataGridView.Anchor = AnchorStyles.Top | AnchorStyles.Left;
       }
     }
 
