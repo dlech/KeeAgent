@@ -60,10 +60,24 @@ namespace KeeAgent.UI
         CurrentSettings = InitialSettings.DeepCopy();
         entrySettingsBindingSource.DataSource = CurrentSettings;
 
+        if (Type.GetType("Mono.Runtime") != null) {
+          // prevent crash
+          destinationConstraintDataGridView.DataSource = null;
+        }
+
         if (CurrentSettings.DestinationConstraints != null) {
           foreach (var c in CurrentSettings.DestinationConstraints) {
             destinationConstraintBindingSource.Add(c);
           }
+        }
+
+        if (Type.GetType("Mono.Runtime") != null) {
+          destinationConstraintDataGridView.DataSource = destinationConstraintBindingSource;
+          // binding complete event doesn't fire on mono
+          destinationConstraintDataGridView.CellEndEdit += (s2, e2) => {
+            destinationConstraintDataGridView_DataBindingComplete(
+              s2, new DataGridViewBindingCompleteEventArgs(System.ComponentModel.ListChangedType.ItemChanged));
+          };
         }
 
         pwEntryForm.FormClosing += delegate {
@@ -218,6 +232,12 @@ namespace KeeAgent.UI
         dgv.ReadOnly = true;
         dgv.EnableHeadersVisualStyles = false;
       }
+
+      if (Type.GetType("Mono.Runtime") != null) {
+        // Mono bug: this doesn't happen automatically when changing the
+        // properties above like on Windows.
+        dgv.Refresh();
+      }
     }
 
     private void destinationConstraintDataGridView_MouseUp(object sender, MouseEventArgs e)
@@ -281,7 +301,7 @@ namespace KeeAgent.UI
           }
 
           var c = row.DataBoundItem as EntrySettings.DestinationConstraint;
-          list.Add(c);
+          list.Add(c.DeepCopy());
 
           try {
             new DestinationConstraint.Constraint(
@@ -338,6 +358,10 @@ namespace KeeAgent.UI
 
         if (result == DialogResult.OK) {
           property.SetValue(constraint, dialog.GetKeySpecs());
+
+          // binding complete event doesn't fire on mono
+          destinationConstraintDataGridView_DataBindingComplete(
+            sender, new DataGridViewBindingCompleteEventArgs(System.ComponentModel.ListChangedType.ItemChanged));
         }
       }
     }

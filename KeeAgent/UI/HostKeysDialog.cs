@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: GPL-2.0-only
+﻿// SPDX-License-Identifier: GPL-2.0-only
 // Copyright (c) 2022 David Lechner <david@lechnology.com>
 
 using System;
@@ -14,6 +14,14 @@ namespace KeeAgent.UI
     public HostKeysDialog()
     {
       InitializeComponent();
+
+      // fix up layout in Mono
+      if (Type.GetType("Mono.Runtime") != null) {
+        dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+        dataGridView1.Height -= 20;
+        okButton.Top -= 20;
+        cancelButton.Top -= 20;
+      }
     }
 
     public void AddKeySpec(EntrySettings.DestinationConstraint.KeySpec spec)
@@ -24,7 +32,7 @@ namespace KeeAgent.UI
     public EntrySettings.DestinationConstraint.KeySpec[] GetKeySpecs()
     {
       return keySpecBindingSource.Cast<EntrySettings.DestinationConstraint.KeySpec>()
-        .Where(x => x.HostKey != null).Select(x => x.DeepCopy()).ToArray();
+        .Where(x => !string.IsNullOrWhiteSpace(x.HostKey)).Select(x => x.DeepCopy()).ToArray();
     }
 
     private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
