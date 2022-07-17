@@ -7,6 +7,7 @@ v0.13.1 (2022-07-17)
 * Improve user interface for managing key files.
 * Fix multiple requests received when database is locked (thanks archimed7592).
 * Fix blocking UI when decrypting keys with CPU intensive KDF.
+* Add support for OpenSSH destination constraints.
 
 v0.12.1 (2020-08-31)
 --------------------
