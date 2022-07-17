@@ -1,11 +1,12 @@
-Unreleased
-----------
+v0.13.1 (2022-07-17)
+--------------------
 * Update help URLs
-* Bumped minimum required .NET version to 4.6.2.
-* Added support for PuTTY Private Key (.ppk) v3 file format (thanks ezekielnewren).
-* Added support for WSL compatible ssh-agent socket (thanks mehrdadn).
-* Improved user interface for managing key files.
+* Bump minimum required .NET version to 4.6.2.
+* Add support for PuTTY Private Key (.ppk) v3 file format (thanks ezekielnewren).
+* Add support for WSL compatible ssh-agent socket (thanks mehrdadn).
+* Improve user interface for managing key files.
 * Fix multiple requests received when database is locked (thanks archimed7592).
+* Fix blocking UI when decrypting keys with CPU intensive KDF.
 
 v0.12.1 (2020-08-31)
 --------------------
