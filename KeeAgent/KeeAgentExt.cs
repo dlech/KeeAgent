@@ -1057,6 +1057,11 @@ namespace KeeAgent
 
       try {
         var key = entry.GetSshKey(this.Options.DisableKeyDecryptionProgressBar);
+
+        if (String.IsNullOrEmpty(key.Comment)) {
+          key.Comment = entry.Strings.GetSafe("Title").ReadString();
+        }
+
         string db_name = "<Unknown database>";
 
         try {
