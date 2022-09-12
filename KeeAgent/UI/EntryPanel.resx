@@ -694,7 +694,7 @@
     <value>2</value>
   </data>
   <data name="destinationConstraintDataGridView.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
+    <value>Top, Left</value>
   </data>
   <data name="fromHostDataGridViewTextBoxColumn.HeaderText" xml:space="preserve">
     <value>From Host</value>
