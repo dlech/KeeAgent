@@ -182,69 +182,57 @@ namespace KeeAgent
       }
 
       switch (settings.Location.SelectedType) {
-        case EntrySettings.LocationType.Attachment:
-          if (string.IsNullOrWhiteSpace(settings.Location.AttachmentName)) {
-            throw new NoAttachmentException();
-          }
-
-          var attachment = binaries.Get(settings.Location.AttachmentName);
-
-          if (attachment == null) {
-            throw new NoAttachmentException();
-          };
-
-          var certificateAttachment = binaries.Get(settings.Location.AttachmentName + "-cert.pub");
-
-          try {
-            var privateKey = SshPrivateKey.Read(new MemoryStream(attachment.ReadData()));
-
-            if (certificateAttachment != null) {
-              privateKey = privateKey.WithPublicKey(SshPublicKey.Read(new MemoryStream(certificateAttachment.ReadData())));
+        case EntrySettings.LocationType.Attachment: {
+            if (string.IsNullOrWhiteSpace(settings.Location.AttachmentName)) {
+              throw new NoAttachmentException();
             }
 
-            return privateKey;
-          }
-          catch (SshPrivateKey.PublicKeyRequiredException) {
-            // if this is a file that uses legacy format without public key,
-            // then try to find a matching .pub file to get the public key info.
-            var attachment2 = binaries.Get(settings.Location.AttachmentName + ".pub");
+            var attachment = binaries.Get(settings.Location.AttachmentName);
 
-            if (attachment2 == null) {
-              throw;
+            if (attachment == null) {
+              throw new NoAttachmentException();
+            };
+
+            SshPublicKey publicKey = null;
+
+            var publicKeyAttachment = binaries.Get(settings.Location.AttachmentName + ".pub");
+
+            if (publicKeyAttachment != null) {
+              publicKey = SshPublicKey.Read(new MemoryStream(publicKeyAttachment.ReadData()));
             }
-
-            var publicKey = SshPublicKey.Read(new MemoryStream(attachment2.ReadData()));
 
             var privateKey = SshPrivateKey.Read(new MemoryStream(attachment.ReadData()), publicKey);
 
+            var certificateAttachment = binaries.Get(settings.Location.AttachmentName + "-cert.pub");
+
             if (certificateAttachment != null) {
               privateKey = privateKey.WithPublicKey(SshPublicKey.Read(new MemoryStream(certificateAttachment.ReadData())));
             }
 
             return privateKey;
           }
+        case EntrySettings.LocationType.File: {
+            var fileName = settings.Location.FileName.ExpandEnvironmentVariables();
 
-        case EntrySettings.LocationType.File:
-          var filename = settings.Location.FileName.ExpandEnvironmentVariables();
-          var certificateFilename = filename + "-cert.pub";
+            SshPublicKey publicKey = null;
+            var publicKeyFileName = fileName + ".pub";
 
-          try {
-            var privateKey = SshPrivateKey.Read(File.OpenRead(filename));
-
-            if (File.Exists(certificateFilename)) {
-              privateKey = privateKey.WithPublicKey(SshPublicKey.Read(File.OpenRead(certificateFilename)));
+            try {
+              publicKey = SshPublicKey.Read(File.OpenRead(publicKeyFileName));
+            }
+            catch (FileNotFoundException) {
+              // this is optional in most cases, if not, we will get an exception
+              // from SshPrivateKey.Read().
             }
 
-            return privateKey;
-          }
-          catch (SshPrivateKey.PublicKeyRequiredException) {
-            // if this is a file that uses legacy format without public key,
-            // then try to find a matching .pub file to get the public key info.
-            var publicKey = SshPublicKey.Read(File.OpenRead(filename + ".pub"));
-            var privateKey = SshPrivateKey.Read(File.OpenRead(filename), publicKey);
+            var privateKey = SshPrivateKey.Read(File.OpenRead(fileName), publicKey);
 
-            if (File.Exists(certificateFilename)) {
-              privateKey = privateKey.WithPublicKey(SshPublicKey.Read(File.OpenRead(certificateFilename)));
+            var certificateFileName = fileName + "-cert.pub";
+
+            try  {
+              privateKey = privateKey.WithPublicKey(SshPublicKey.Read(File.OpenRead(certificateFileName)));
+            } catch (FileNotFoundException) {
+              // the cert key file is optional
             }
 
             return privateKey;
