@@ -550,7 +550,7 @@
     <value>2</value>
   </data>
   <data name="useWslSocketCheckBox.Text" xml:space="preserve">
-    <value>Create WSL compatible socket file</value>
+    <value>Create WSL1 compatible socket file</value>
   </data>
   <data name="&gt;&gt;useWslSocketCheckBox.Name" xml:space="preserve">
     <value>useWslSocketCheckBox</value>
