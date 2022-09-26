@@ -1,3 +1,10 @@
+v0.13.2 (2022-09-25)
+--------------------
+* Clarify WSL1-only support.
+* Fix Add Key > From File... in Manage KeeAgent dialog.
+* Fix comment not loaded from .pub file in some cases.
+* Fix crash when process disappears before connecting to Windows OpenSSH agent (thanks Samuel D. Leslie).
+
 v0.13.1 (2022-07-17)
 --------------------
 * Update help URLs
