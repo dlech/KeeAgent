@@ -193,15 +193,15 @@ namespace KeeAgent
               throw new NoAttachmentException();
             };
 
-            var privateKey = SshPrivateKey.Read(new MemoryStream(attachment.ReadData()));
+            SshPublicKey publicKey = null;
 
             var publicKeyAttachment = binaries.Get(settings.Location.AttachmentName + ".pub");
 
-            // if a separate public key attachment exists, prefer it over the public key that may be included in the private key
-            // this enables display of public key comments if the private key is encrypted
             if (publicKeyAttachment != null) {
-              privateKey = privateKey.WithPublicKey(SshPublicKey.Read(new MemoryStream(publicKeyAttachment.ReadData())));
+              publicKey = SshPublicKey.Read(new MemoryStream(publicKeyAttachment.ReadData()));
             }
+
+            var privateKey = SshPrivateKey.Read(new MemoryStream(attachment.ReadData()), publicKey);
 
             var certificateAttachment = binaries.Get(settings.Location.AttachmentName + "-cert.pub");
 
