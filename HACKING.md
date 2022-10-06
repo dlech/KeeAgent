@@ -25,7 +25,7 @@ These are not saved in KeeAgent.csproj, so you have to manually set them up.
 
 * Get the code and open it in Visual Studio Code:
 
-        git clone git://github.com/dlech/KeeAgent
+        git clone git@github.com:dlech/KeeAgent.git
         cd KeeAgent
         nuget restore
         code .
@@ -43,7 +43,7 @@ If `msbuild` is not present, change `tasks.json` to us `xbuild` instead.
 
 * Get the code:
 
-        git clone git://github.com/dlech/KeeAgent
+        git clone git@github.com:dlech/KeeAgent.git
         cd KeeAgent
 
 * Restore the nuget packages:
