@@ -152,12 +152,109 @@ namespace KeeAgent
     }
 
     /// <summary>
+    /// Gets the public key from a database entry.
+    ///
+    /// In order of preference, this will use <c>&lt;private&gt;-cert.pub</c>,
+    /// <c>&lt;private&gt;.pub</c>, or the public key included in the private
+    /// key.
+    /// </summary>
+    /// <param name="entry">The KeePass database entry.</param>
+    /// <returns>The SSH key or <c>null</c> if none found.</returns>
+    /// <remarks>
+    /// Do not call this on entries that are currently being edited. It will
+    /// return stale data. Use <see cref="TryGetSshPublicKey(EntrySettings, ProtectedBinaryDictionary)"/>
+    /// instead.
+    /// </remarks>
+    public static SshPublicKey TryGetSshPublicKey(this PwEntry entry)
+    {
+      var settings = entry.GetKeeAgentSettings();
+      return settings.TryGetSshPublicKey(entry.Binaries);
+    }
+
+    /// <summary>
+    /// Gets the public key from a database entry.
+    ///
+    /// In order of preference, this will use <c>&lt;private&gt;-cert.pub</c>,
+    /// <c>&lt;private&gt;.pub</c>, or the public key included in the private
+    /// key.
+    /// </summary>
+    /// <param name="settings">The KeePass database entry settings.</param>
+    /// <param name="binaries">The KeePass database entry binaries.</param>
+    /// <returns>The SSH key or <c>null</c> if none found.</returns>
+    public static SshPublicKey TryGetSshPublicKey(
+      this EntrySettings settings,
+      ProtectedBinaryDictionary binaries)
+    {
+      if (!settings.AllowUseOfSshKey) {
+        throw new InvalidOperationException("SSH keys not enabled for this entry");
+      }
+
+      switch (settings.Location.SelectedType) {
+        case EntrySettings.LocationType.Attachment: {
+            var certificateAttachment = binaries.Get(settings.Location.AttachmentName + "-cert.pub");
+
+            if (certificateAttachment != null) {
+              return SshPublicKey.Read(new MemoryStream(certificateAttachment.ReadData()));
+            }
+
+            var publicKeyAttachment = binaries.Get(settings.Location.AttachmentName + ".pub");
+
+            if (publicKeyAttachment != null) {
+              return SshPublicKey.Read(new MemoryStream(publicKeyAttachment.ReadData()));
+            }
+
+            if (string.IsNullOrWhiteSpace(settings.Location.AttachmentName)) {
+              throw new NoAttachmentException();
+            }
+
+            var privateKeyAttachment = binaries.Get(settings.Location.AttachmentName);
+
+            if (privateKeyAttachment == null) {
+              throw new NoAttachmentException();
+            };
+
+            var privateKey = SshPrivateKey.Read(new MemoryStream(privateKeyAttachment.ReadData()));
+
+            return privateKey.PublicKey;
+          }
+        case EntrySettings.LocationType.File: {
+            var fileName = settings.Location.FileName.ExpandEnvironmentVariables();
+
+            var certificateFileName = fileName + "-cert.pub";
+
+            try {
+              return SshPublicKey.Read(File.OpenRead(certificateFileName));
+            }
+            catch (FileNotFoundException) {
+              // the cert key file is optional
+            }
+
+            var publicKeyFileName = fileName + ".pub";
+
+            try {
+              return SshPublicKey.Read(File.OpenRead(publicKeyFileName));
+            }
+            catch (FileNotFoundException) {
+              // this is optional in most cases
+            }
+
+            var privateKey = SshPrivateKey.Read(File.OpenRead(fileName));
+
+            return privateKey.PublicKey;
+          }
+
+        default:
+          throw new ArgumentException("settings has invalid private key location", "settings");
+      }
+    }
+
+    /// <summary>
     /// Gets the (possibly encrypted) SSH private key from a database entry.
     /// </summary>
     /// <param name="entry">The KeePass database entry.</param>
     /// <returns>The SSH key.</returns>
     /// <remarks>
-    /// Do not call this on entries that are currently being editied. It will
+    /// Do not call this on entries that are currently being edited. It will
     /// return stale data. Use <see cref="GetSshPrivateKey(EntrySettings, ProtectedBinaryDictionary)"/>
     /// instead.
     /// </remarks>
@@ -193,47 +290,14 @@ namespace KeeAgent
               throw new NoAttachmentException();
             };
 
-            SshPublicKey publicKey = null;
-
-            var publicKeyAttachment = binaries.Get(settings.Location.AttachmentName + ".pub");
-
-            if (publicKeyAttachment != null) {
-              publicKey = SshPublicKey.Read(new MemoryStream(publicKeyAttachment.ReadData()));
-            }
-
-            var privateKey = SshPrivateKey.Read(new MemoryStream(attachment.ReadData()), publicKey);
-
-            var certificateAttachment = binaries.Get(settings.Location.AttachmentName + "-cert.pub");
-
-            if (certificateAttachment != null) {
-              privateKey = privateKey.WithPublicKey(SshPublicKey.Read(new MemoryStream(certificateAttachment.ReadData())));
-            }
+            var privateKey = SshPrivateKey.Read(new MemoryStream(attachment.ReadData()));
 
             return privateKey;
           }
         case EntrySettings.LocationType.File: {
             var fileName = settings.Location.FileName.ExpandEnvironmentVariables();
 
-            SshPublicKey publicKey = null;
-            var publicKeyFileName = fileName + ".pub";
-
-            try {
-              publicKey = SshPublicKey.Read(File.OpenRead(publicKeyFileName));
-            }
-            catch (FileNotFoundException) {
-              // this is optional in most cases, if not, we will get an exception
-              // from SshPrivateKey.Read().
-            }
-
-            var privateKey = SshPrivateKey.Read(File.OpenRead(fileName), publicKey);
-
-            var certificateFileName = fileName + "-cert.pub";
-
-            try  {
-              privateKey = privateKey.WithPublicKey(SshPublicKey.Read(File.OpenRead(certificateFileName)));
-            } catch (FileNotFoundException) {
-              // the cert key file is optional
-            }
+            var privateKey = SshPrivateKey.Read(File.OpenRead(fileName));
 
             return privateKey;
           }
@@ -250,40 +314,39 @@ namespace KeeAgent
       }
 
       try {
-        entry.GetSshPrivateKey();
-      }
-      catch (SshPrivateKey.PublicKeyRequiredException) {
-        try {
-          var settings = entry.GetKeeAgentSettings();
+        if (entry.TryGetSshPublicKey() == null) {
+          try {
+            var settings = entry.GetKeeAgentSettings();
 
-          if (settings.Location.SelectedType == EntrySettings.LocationType.Attachment) {
-            var privateKey = new MemoryStream(
-              entry.Binaries.Get(settings.Location.AttachmentName).ReadData());
-            var publicKey = new MemoryStream();
+            if (settings.Location.SelectedType == EntrySettings.LocationType.Attachment) {
+              var privateKey = new MemoryStream(
+                entry.Binaries.Get(settings.Location.AttachmentName).ReadData());
+              var publicKey = new MemoryStream();
 
-            SshPrivateKey.CreatePublicKeyFromPrivateKey(
-              privateKey, publicKey, () => entry.GetPassphrase(), settings.Location.AttachmentName);
+              SshPrivateKey.CreatePublicKeyFromPrivateKey(
+                privateKey, publicKey, () => entry.GetPassphrase(), settings.Location.AttachmentName);
 
-            var name = settings.Location.AttachmentName + ".pub";
-            entry.Binaries.Set(name, new ProtectedBinary(false, publicKey.ToArray()));
-          }
-          else if (settings.Location.SelectedType == EntrySettings.LocationType.File) {
-            var fileName = settings.Location.FileName.ExpandEnvironmentVariables();
-
-            if (File.Exists(fileName + ".pub")) {
-              // file was created since we called GetSshPrivateKey()?
-              throw new InvalidOperationException();
+              var name = settings.Location.AttachmentName + ".pub";
+              entry.Binaries.Set(name, new ProtectedBinary(false, publicKey.ToArray()));
             }
+            else if (settings.Location.SelectedType == EntrySettings.LocationType.File) {
+              var fileName = settings.Location.FileName.ExpandEnvironmentVariables();
 
-            SshPrivateKey.CreatePublicKeyFromPrivateKey(
-              File.OpenRead(fileName), File.OpenWrite(fileName + ".pub"),
-              () => entry.GetPassphrase(), settings.Location.AttachmentName);
+              if (File.Exists(fileName + ".pub")) {
+                // file was created since we called TryGetSshPublicKey()?
+                throw new InvalidOperationException();
+              }
+
+              SshPrivateKey.CreatePublicKeyFromPrivateKey(
+                File.OpenRead(fileName), File.OpenWrite(fileName + ".pub"),
+                () => entry.GetPassphrase(), settings.Location.AttachmentName);
+            }
           }
-        }
-        catch (Exception ex) {
-          Debug.Fail(ex.ToString());
-          // ignoring all errors since this the same error will be
-          // thrown and handled later
+          catch (Exception ex) {
+            Debug.Fail(ex.ToString());
+            // ignoring all errors since this the same error will be
+            // thrown and handled later
+          }
         }
       }
       catch (Exception ex) {
@@ -305,6 +368,12 @@ namespace KeeAgent
 
       if (!settings.AllowUseOfSshKey) {
         return null;
+      }
+
+      var publicKey = settings.TryGetSshPublicKey(entry.Binaries);
+
+      if (publicKey == null) {
+        throw new PublicKeyRequiredException();
       }
 
       var privateKey = settings.GetSshPrivateKey(entry.Binaries);
@@ -329,11 +398,11 @@ namespace KeeAgent
       }
 
       var key = new SshKey(
-        privateKey.PublicKey.Parameter,
+        publicKey.Parameter,
         parameter,
-        privateKey.PublicKey.Comment,
-        privateKey.PublicKey.Nonce,
-        privateKey.PublicKey.Certificate);
+        publicKey.Comment,
+        publicKey.Nonce,
+        publicKey.Certificate);
 
       return key;
     }

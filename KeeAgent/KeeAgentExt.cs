@@ -933,7 +933,7 @@ namespace KeeAgent
               }
               catch (Exception ex) {
                 if (Options.IgnoreMissingExternalKeyFiles && (
-                  ex is FileNotFoundException || ex is DirectoryNotFoundException || ex is SshPrivateKey.PublicKeyRequiredException
+                  ex is FileNotFoundException || ex is DirectoryNotFoundException
                  )) {
                   continue;
                 }
@@ -969,13 +969,13 @@ namespace KeeAgent
             var settings = entry.GetKeeAgentSettings();
 
             if (settings.AllowUseOfSshKey && settings.RemoveAtDatabaseClose) {
-              var matchKey = entry.GetSshPrivateKey();
+              var matchKey = entry.TryGetSshPublicKey();
 
               if (matchKey == null) {
                 continue;
               }
 
-              var removeKey = allKeys.FirstOrDefault(k => matchKey.PublicKey.Matches(k.GetPublicKeyBlob()));
+              var removeKey = allKeys.FirstOrDefault(k => matchKey.Matches(k.GetPublicKeyBlob()));
 
               if (removeKey == null) {
                 continue;
@@ -1028,8 +1028,8 @@ namespace KeeAgent
         var path = string.Empty;
 
         try {
-          var key = e.Context.Entry.GetSshPrivateKey();
-          path = keyFileMap[key.PublicKey.Sha256Fingerprint].Path;
+          var key = e.Context.Entry.TryGetSshPublicKey();
+          path = keyFileMap[key.Sha256Fingerprint].Path;
         }
         catch (Exception ex) {
           Debug.Fail(ex.Message);
@@ -1179,7 +1179,7 @@ namespace KeeAgent
             "Please make sure your SSH agent program is running (e.g. Pageant)."
           });
         }
-        else if (ex is SshPrivateKey.PublicKeyRequiredException) {
+        else if (ex is PublicKeyRequiredException) {
           MessageService.ShowWarning(new string[] {
             firstLine,
             "This key uses a legacy file format and requires a matching `.pub` public key file in the same location as the private key file."

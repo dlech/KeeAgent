@@ -1,3 +1,7 @@
+Unreleased
+----------
+* Fix addition cases where comment not loaded from .pub files.
+
 v0.13.2 (2022-09-25)
 --------------------
 * Clarify WSL1-only support.

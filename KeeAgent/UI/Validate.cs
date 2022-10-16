@@ -46,7 +46,23 @@ namespace KeeAgent.UI
             "Attachment '{0}' is missing.", location.AttachmentName);
         }
 
-        SshPublicKey publicKey = null;
+        SshPrivateKey privateKey;
+
+        try {
+          privateKey = SshPrivateKey.Read(new MemoryStream(attachment.ReadData()));
+        }
+        catch {
+          return string.Format(
+            "attachment '{0}' is not a supported private key file.", location.AttachmentName);
+        }
+
+        SshPublicKey publicKey = privateKey.PublicKey;
+
+        var certAttachment = getAttachment(location.AttachmentName + "-cert.pub");
+
+        if (certAttachment != null) {
+          publicKey = SshPublicKey.Read(new MemoryStream(certAttachment.ReadData()));
+        }
 
         var pubAttachment = getAttachment(location.AttachmentName + ".pub");
 
@@ -54,17 +70,10 @@ namespace KeeAgent.UI
           publicKey = SshPublicKey.Read(new MemoryStream(pubAttachment.ReadData()));
         }
 
-        try {
-          SshPrivateKey.Read(new MemoryStream(attachment.ReadData()), publicKey);
-        }
-        catch (SshPrivateKey.PublicKeyRequiredException) {
+        if (publicKey == null) {
           return string.Format(
             "This file uses a legacy format that requires a '{0}.pub' file in the same location.",
             location.AttachmentName);
-        }
-        catch {
-          return string.Format(
-            "attachment '{0}' is not a supported private key file.", location.AttachmentName);
         }
       }
 
@@ -75,22 +84,28 @@ namespace KeeAgent.UI
           return string.Format("The private key file '{0}' does not exist.", file);
         }
 
-        SshPublicKey publicKey = null;
-
-        if (File.Exists(file + ".pub")) {
-          publicKey = SshPublicKey.Read(File.OpenRead(file + ".pub"));
-        }
+        SshPrivateKey privateKey;
 
         try {
-          SshPrivateKey.Read(File.OpenRead(file), publicKey);
-        }
-        catch (SshPrivateKey.PublicKeyRequiredException) {
-          return string.Format(
-            "This file uses a legacy format that requires a '{0}.pub' file in the same location.",
-            file);
+          privateKey = SshPrivateKey.Read(File.OpenRead(file));
         }
         catch {
           return string.Format("'{0}' is not a supported private key file.", file);
+        }
+
+        SshPublicKey publicKey = privateKey.PublicKey;
+
+        if (File.Exists(file + "-cert.pub")) {
+          publicKey = SshPublicKey.Read(File.OpenRead(file + "-cert.pub"));
+        }
+        else if (File.Exists(file + ".pub")) {
+          publicKey = SshPublicKey.Read(File.OpenRead(file + ".pub"));
+        }
+
+        if (publicKey == null) {
+          return string.Format(
+            "This file uses a legacy format that requires a '{0}.pub' file in the same location.",
+            file);
         }
       }
 

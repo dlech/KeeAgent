@@ -70,14 +70,15 @@ namespace KeeAgent
             return "Agent Locked";
           }
           try {
-            var key = entry.GetSshPrivateKey();
+            var key = entry.TryGetSshPublicKey();
 
-            if (ext.agent.Contains(key.PublicKey)) {
+            if (key == null) {
+              return "Missing .pub file";
+            }
+
+            if (ext.agent.Contains(key)) {
               return "Loaded";
             }
-          }
-          catch (SshPrivateKey.PublicKeyRequiredException) {
-            return "Missing .pub file";
           }
           catch (FormatException) {
             return "Error";
@@ -107,9 +108,9 @@ namespace KeeAgent
       switch (columnName) {
         case sshKeyStatusColumnName:
           try {
-            var key = entry.GetSshPrivateKey();
+            var key = entry.TryGetSshPublicKey();
 
-            var agentKey = ext.agent.ListKeys().SingleOrDefault(k => key.PublicKey.Matches(k.GetPublicKeyBlob()));
+            var agentKey = ext.agent.ListKeys().SingleOrDefault(k => key.Matches(k.GetPublicKeyBlob()));
 
             if (agentKey == null) {
               ext.AddEntry(entry, null);

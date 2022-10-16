@@ -134,11 +134,11 @@ namespace KeeAgent.UI
       }
 
       try {
-        var key = CurrentSettings.GetSshPrivateKey(pwEntryForm.EntryBinaries);
+        var key = CurrentSettings.TryGetSshPublicKey(pwEntryForm.EntryBinaries);
 
-        commentTextBox.Text = key.PublicKey.Comment;
-        fingerprintTextBox.Text = key.PublicKey.Sha256Fingerprint;
-        publicKeyTextBox.Text = key.PublicKey.AuthorizedKeysString;
+        commentTextBox.Text = key.Comment;
+        fingerprintTextBox.Text = key.Sha256Fingerprint;
+        publicKeyTextBox.Text = key.AuthorizedKeysString;
         copyPublicKeyButton.Enabled = true;
       }
       catch (Exception) {
