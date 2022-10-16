@@ -240,7 +240,7 @@ namespace KeeAgent.UI
           e.Cancel = true;
         }
       };
-      if (dialog.ShowDialog() == DialogResult.Cancel) {
+      if (dialog.ShowDialog(ParentForm) == DialogResult.Cancel) {
         return null;
       }
       return dialog.FileName;

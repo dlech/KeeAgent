@@ -184,7 +184,7 @@ namespace KeeAgent.UI
         KeyLocation = CurrentSettings.Location.DeepCopy(),
       };
 
-      var result = dialog.ShowDialog();
+      var result = dialog.ShowDialog(ParentForm);
 
       if (result != DialogResult.OK) {
         return;

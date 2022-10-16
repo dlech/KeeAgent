@@ -105,7 +105,7 @@ namespace KeeAgent.UI
       var showConstraintControls = !(mExt.agent is PageantClient);
       var entryPicker =
         new EntryPickerDialog(mExt, showConstraintControls);
-      var result = entryPicker.ShowDialog();
+      var result = entryPicker.ShowDialog(ParentForm);
       if (result == DialogResult.OK) {
         try {
           mExt.AddEntry(entryPicker.SelectedEntry, entryPicker.Constraints);

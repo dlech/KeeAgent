@@ -202,7 +202,7 @@ namespace KeeAgent.UI
         UIUtil.CreateFileTypeFilter(null, null, true), 1, null, true,
         AppDefs.FileDialogContext.Attachments);
 
-      var result = ofd.ShowDialog();
+      var result = ofd.ShowDialog(ParentForm);
 
       if (result == DialogResult.OK) {
         var name = AttachFile(ofd.FileName);
@@ -221,7 +221,7 @@ namespace KeeAgent.UI
       }
       catch (Exception) { }
 
-      var result = openFileDialog.ShowDialog();
+      var result = openFileDialog.ShowDialog(ParentForm);
 
       if (result == DialogResult.OK) {
         fileNameTextBox.Text = openFileDialog.FileName;
