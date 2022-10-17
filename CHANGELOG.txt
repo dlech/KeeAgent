@@ -2,6 +2,7 @@ Unreleased
 ----------
 * Fix addition cases where comment not loaded from .pub files.
 * Fix some dialogs hidden when *View > Always on top* enabled in KeePass.
+* Fix compatibility with PuTTY private keys with non-ASCII passphrases.
 
 v0.13.2 (2022-09-25)
 --------------------
