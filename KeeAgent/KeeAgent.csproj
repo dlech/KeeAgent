@@ -255,7 +255,7 @@
   </ItemGroup>
   <ItemGroup Condition=" '$(OS)' != 'Unix' ">
     <PackageReference Include="KeePass">
-      <Version>2.50.0.21065</Version>
+      <Version>2.52.0.34133</Version>
       <ExcludeFromPlgx />
     </PackageReference>
     <PackageReference Include="PlgxTool">
