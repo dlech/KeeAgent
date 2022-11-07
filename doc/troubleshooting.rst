@@ -61,6 +61,15 @@ constraints will not work. Pageant does not support constraints.
 On Linux, if you are using a GNOME based desktop (includes Cinnamon, MATE, Unity,
 others), follow the instructions for disabling the SSH agent in GNOME keyring.
 
+**Problem:**
+
+"The plugin cannot be loaded A newer .NET framework is required." error on Linux
+and KeePass version is less than 2.52.
+
+**Solution:*
+
+Use workaround described in `issue #343 <https://github.com/dlech/KeeAgent/issues/343>`.
+
 
 Other issues
 ============
