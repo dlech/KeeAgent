@@ -66,9 +66,9 @@ others), follow the instructions for disabling the SSH agent in GNOME keyring.
 "The plugin cannot be loaded A newer .NET framework is required." error on Linux
 and KeePass version is less than 2.52.
 
-**Solution:*
+**Solution:**
 
-Use workaround described in `issue #343 <https://github.com/dlech/KeeAgent/issues/343>`.
+Use workaround described in `issue #343 <https://github.com/dlech/KeeAgent/issues/343>`_.
 
 
 Other issues
