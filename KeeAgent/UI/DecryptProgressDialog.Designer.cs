@@ -63,7 +63,7 @@
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Decryping SSH Private Key";
+            this.Text = "Decrypting SSH Private Key";
             this.ResumeLayout(false);
 
     }
