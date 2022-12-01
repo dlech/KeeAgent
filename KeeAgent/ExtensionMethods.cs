@@ -365,26 +365,37 @@ namespace KeeAgent
     public static ISshKey GetSshKey(this PwEntry entry)
     {
       var settings = entry.GetKeeAgentSettings();
+      return settings.GetSshKey(entry.Binaries, entry.GetPassphrase);
+    }
+
+    public static ISshKey GetSshKey(this EntrySettings settings, ProtectedBinaryDictionary binaries, PwEntry entry)
+    {
+      return settings.GetSshKey(binaries, entry.GetPassphrase);
+    }
+
+    static ISshKey GetSshKey(this EntrySettings settings, ProtectedBinaryDictionary binaries, SshPrivateKey.GetPassphraseFunc getPassphrase)
+    {
 
       if (!settings.AllowUseOfSshKey) {
         return null;
       }
 
-      var publicKey = settings.TryGetSshPublicKey(entry.Binaries);
+      var publicKey = settings.TryGetSshPublicKey(binaries);
 
       if (publicKey == null) {
         throw new PublicKeyRequiredException();
       }
 
-      var privateKey = settings.GetSshPrivateKey(entry.Binaries);
+      var privateKey = settings.GetSshPrivateKey(binaries);
 
       AsymmetricKeyParameter parameter;
+      var comment = publicKey.Comment;
 
       if (privateKey.HasKdf) {
         // if there is a key derivation function, decrypting could be slow,
         // so show a progress dialog
         var dialog = new DecryptProgressDialog();
-        dialog.Start((p) => privateKey.Decrypt(() => entry.GetPassphrase(), p));
+        dialog.Start((p) => privateKey.Decrypt(getPassphrase, p, newComment => comment = newComment));
         dialog.ShowDialog();
 
         if (dialog.DialogResult == DialogResult.Abort) {
@@ -394,13 +405,13 @@ namespace KeeAgent
         parameter = (AsymmetricKeyParameter)dialog.Result;
       }
       else {
-        parameter = privateKey.Decrypt(() => entry.GetPassphrase());
+        parameter = privateKey.Decrypt(getPassphrase, null, newComment => comment = newComment);
       }
 
       var key = new SshKey(
         publicKey.Parameter,
         parameter,
-        publicKey.Comment,
+        comment,
         publicKey.Nonce,
         publicKey.Certificate);
 

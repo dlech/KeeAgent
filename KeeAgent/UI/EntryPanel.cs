@@ -135,8 +135,13 @@ namespace KeeAgent.UI
 
       try {
         var key = CurrentSettings.TryGetSshPublicKey(pwEntryForm.EntryBinaries);
+        var comment = key.Comment;
+        if (string.IsNullOrEmpty(comment)) {
+          var privateKey = CurrentSettings.GetSshKey(pwEntryForm.EntryBinaries, pwEntryForm.EntryRef);
+          comment = privateKey.Comment;
+        }
 
-        commentTextBox.Text = key.Comment;
+        commentTextBox.Text = comment;
         fingerprintTextBox.Text = key.Sha256Fingerprint;
         publicKeyTextBox.Text = key.AuthorizedKeysString;
         copyPublicKeyButton.Enabled = true;
