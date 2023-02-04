@@ -1,3 +1,7 @@
+v0.13.4 (2022-02-04)
+--------------------
+* Use encrypted private key file comment when possible (thanks Tatsuya Noda).
+
 v0.13.3 (2022-11-06)
 --------------------
 * Fix addition cases where comment not loaded from .pub files.
