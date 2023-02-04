@@ -26,14 +26,6 @@ To [upgrade KeePass Plugin KeeAgent](https://community.chocolatey.org/packages/k
 choco upgrade keepass-plugin-keeagent
 ```
 
-#### Ubuntu 📦
-
-There is a PPA with a KeeAgent package that can be used to install KeeAgent on
-Ubuntu and its derivatives.
-
-    sudo add-apt-repository ppa:dlech/keepass2-plugins --update
-    sudo apt install keepass2-plugin-keeagent
-
 
 USAGE
 -----
