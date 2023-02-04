@@ -379,12 +379,13 @@ namespace KeeAgent
       var privateKey = settings.GetSshPrivateKey(entry.Binaries);
 
       AsymmetricKeyParameter parameter;
+      var comment = string.Empty;
 
       if (privateKey.HasKdf) {
         // if there is a key derivation function, decrypting could be slow,
         // so show a progress dialog
         var dialog = new DecryptProgressDialog();
-        dialog.Start((p) => privateKey.Decrypt(() => entry.GetPassphrase(), p));
+        dialog.Start((p) => privateKey.Decrypt(() => entry.GetPassphrase(), p, out comment));
         dialog.ShowDialog();
 
         if (dialog.DialogResult == DialogResult.Abort) {
@@ -394,13 +395,19 @@ namespace KeeAgent
         parameter = (AsymmetricKeyParameter)dialog.Result;
       }
       else {
-        parameter = privateKey.Decrypt(() => entry.GetPassphrase());
+        parameter = privateKey.Decrypt(() => entry.GetPassphrase(), null, out comment);
+      }
+
+      // prefer public key comment if there is one, otherwise fall back to
+      // private key comment
+      if (!string.IsNullOrWhiteSpace(publicKey.Comment)) {
+        comment = publicKey.Comment;
       }
 
       var key = new SshKey(
         publicKey.Parameter,
         parameter,
-        publicKey.Comment,
+        comment,
         publicKey.Nonce,
         publicKey.Certificate);
 
