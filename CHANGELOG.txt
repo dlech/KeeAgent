@@ -1,4 +1,4 @@
-v0.13.4 (2022-02-04)
+v0.13.4 (2023-02-04)
 --------------------
 * Use encrypted private key file comment when possible (thanks Tatsuya Noda).
 
