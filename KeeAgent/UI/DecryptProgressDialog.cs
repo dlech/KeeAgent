@@ -6,6 +6,22 @@ namespace KeeAgent.UI
 {
   public partial class DecryptProgressDialog : Form
   {
+    private class BackgroundProgress : IProgress<double>
+    {
+      private BackgroundWorker worker;
+
+      public BackgroundProgress(BackgroundWorker worker)
+      {
+        this.worker = worker;
+      }
+
+      public void Report(double value)
+      {
+        var percent = (int)(100 * value);
+        worker.ReportProgress(percent);
+      }
+    }
+
     public delegate object DecryptFunc(IProgress<double> progress);
 
     public DecryptProgressDialog()
@@ -31,10 +47,7 @@ namespace KeeAgent.UI
     private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
     {
       var decrypt = (DecryptFunc)e.Argument;
-      var progress = new Progress<double>(p => {
-        var percent = (int)(100 * p);
-        backgroundWorker.ReportProgress(percent);
-      });
+      var progress = new BackgroundProgress(backgroundWorker);
       e.Result = decrypt(progress);
     }
 
