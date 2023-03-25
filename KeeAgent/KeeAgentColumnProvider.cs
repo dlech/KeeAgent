@@ -83,6 +83,9 @@ namespace KeeAgent
           catch (FormatException) {
             return "Error";
           }
+          catch (InvalidOperationException) {
+            return "";
+          }
           catch (Exception ex) {
             Debug.Fail(ex.Message);
             return "*Error";
