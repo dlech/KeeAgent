@@ -1,3 +1,11 @@
+v0.13.5 (2023-03-26)
+--------------------
+* Fix issues with Windows OpenSSH named pipe locking up.
+* Fix multple connections to WSL1 socket.
+* Fix validation of DSA and ECDSA keys in OpenSSH destination contraint extension.
+* Fix crash when decrypting keys.
+* Fix "*Error" showing for password entries not selected for use with KeeAgent.
+
 v0.13.4 (2023-02-04)
 --------------------
 * Use encrypted private key file comment when possible (thanks Tatsuya Noda).
