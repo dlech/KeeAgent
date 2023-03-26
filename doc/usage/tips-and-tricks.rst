@@ -77,3 +77,37 @@ fork the code is based on. So, unless you are using msysGit, try the "Cygwin
 socket file" first and if that does not work, try the "msysGit socket file".
 In some cases, you may need both enabled to support multiple versions of
 Cygwin/MSYS.
+
+
+Windows OpenSSH
+---------------
+
+Although recent versions of Windows ship with OpenSSH out of the box, the
+included version is quite out of date. Consider installing the latest version
+with ``winget`` or ``choco`` instead or get them straight from the source from the
+`GitHub releases <https://github.com/PowerShell/Win32-OpenSSH/releases>`_ page.
+
+These tools are compatible with KeeAgent when **Enable agent for Windows OpenSSH**
+is selected in the :ref:`global-options`.
+
+
+Windows Subsystem for Linux (WSL)
+---------------------------------
+
+KeeAgent can be used with `WSL <https://learn.microsoft.com/en-us/windows/wsl/>`_.
+
+For WSL1, simply select **Create WSL1 compatible socket file** in the
+:ref:`global-options` and set the ``SSH_AUTH_SOCK`` environment variable
+in your WSL1 shell to match.
+
+For WSL2, the environment is more isolated from Windows, so it is not possible
+to use the WSL1 socket. Instead, you can use the Windows OpenSSH programs
+from inside a WSL2 shell by running ``ssh.exe`` instead of ``ssh``.
+
+.. tip:: You can make a bash alias or symlink to make ``ssh`` an alias for
+    ``ssh.exe``. For example::
+
+        sudo ln -s $(which ssh.exe) /usr/local/bin/
+
+Alternately, there are a number of 3rd party solutions for providing a socket
+bridge to connect programs inside of WSL2 to an external SSH agent.

@@ -52,6 +52,10 @@ tab.
         (default: disabled) Prompts the user for permission every time a client
         application requests a key regardless of any other settings.
 
+        .. note:: When checked, this overrides the per-entry *Use confirm
+            constraint* setting. Keys must be unloaded and re-loaded for this
+            setting to take effect.
+
     -   **Show notification whenever key is used by a client program**: (default:
         enabled) Shows notification in the taskbar when a client application
         requests a key. Notifications only work in Windows.
@@ -59,10 +63,6 @@ tab.
     -   **Unlock all databases when a client sends a request**: (default: enabled)
         When a client program sends a request, KeePass will display the unlock
         dialog before the client request is answered.
-
-        .. note:: When checked, this overrides the per-entry *Use confirm
-            constraint* setting. Keys must be unloaded and re-loaded for this
-            setting to take effect.
 
     -   **Show selection dialog when a client program requests a list of keys**:
         (default: disabled) When this option is disabled, KeeAgent will send a
@@ -73,36 +73,49 @@ tab.
         .. tip:: Many SSH servers will refuse to connect if there are more than
             6 keys loaded. This option can be used to work around that limitation.
 
-    -   **Enable agent for Windows OpenSSH (experimental)**: (default: disabled)
+    -   **Enable agent for Windows OpenSSH**: (default: disabled)
         Enable an SSH agent socket compatible with the built-in Windows 10 SSH
         client.
 
-**Cygwin/MSYS Integration** (Windows only, no effect in *Client* mode)
+**Cygwin/MSYS/WSL Integration** (Windows only, no effect in *Client* mode)
 
     -   **Create Cygwin compatible socket file (may work with some versions of
         MSYS)**: (default: disabled) Creates a file that can be used by Cygwin
         programs to access KeeAgent.
 
-    -   **Path**: The path of the file in the option above.
+        -   **Path**: The path of the file in the option above.
 
-    -   **Browse...**: Opens a file browser to select the path above.
+        -   **Browse...**: Opens a file browser to select the path above.
 
 
     -   **Create msysGit compatible socket file**: (default: disabled) Creates a
         file that can be used by MSYS programs to access KeeAgent.
 
-    -   **Path**: The path of the file in the option above.
+        -   **Path**: The path of the file in the option above.
 
-    -   **Browse...**: Opens a file browser to select the path above.
+        -   **Browse...**: Opens a file browser to select the path above.
 
-    .. tip:: In order to use the socket file with ssh in Cygwin/MSYS, you need to
+    -   **Create WSL1 compatible socket file**: (default: disabled) Creates a
+        file that can be used by Windows Susbsystem for Linux V1 programs to access KeeAgent.
+
+        -   **Path**: The path of the file in the option above.
+
+        -   **Browse...**: Opens a file browser to select the path above.
+
+    Also see the :doc:`tips-and-tricks` page for more info.
+
+    .. tip:: In order to use the socket file with ssh in Cygwin/MSYS/WSL1, you need to
         set the ``SSH_AUTH_SOCK`` environment variable to the same path::
 
             export SSH_AUTH_SOCK="C:\path\to\socket\file"
 
+        For WSL1, the path will look like::
+
+            export SSH_AUTH_SOCK="/mnt/c/path/to/socket/file"
+
         You can make this permanent/automatic either by setting this environment
         variable in the *Advanced* tab of *System Properties* or in your ``.bashrc``
-        in Cygwin/MSYS.
+        in Cygwin/MSYS/WSL.
 
 
     .. tip:: If KeePass crashes, you will need to manually delete the socket
@@ -113,11 +126,9 @@ tab.
         file path options, you will also get an error that the file already
         exists.
 
-    Also see Cygwin and MSYS on the Tips and Tricks page.
-
     .. danger:: In addition to creating a file, KeeAgent also listens on the
         loopback network interface (127.0.0.1) for connections when either of
-        these options are enabled. The network sockets have no authentication
+        the Cygwin or MSYS options are enabled. The network sockets have no authentication
         mechanism. This is a limitation of the implementation in Cygwin/MSYS.
         This means that other users of the same computer can use any keys
         loaded in KeeAgent. Therefore, it is not recommended to use this
