@@ -168,7 +168,7 @@ Entry* or by right-clicking an entry and selecting *Edit/View Entry*.
     option is enabled. This option will not have an effect in client mode
     if the SSH agent does not support confirm constraints.
 
--   **Use lifetime constraint**: (default: disabled) When enabled, they key
+-   **Use lifetime constraint**: (default: disabled) When enabled, the key
     will only remain loaded for the amount of time specified. This option
     will not have an effect in client mode if the SSH agent does not support
     confirm constraints.
