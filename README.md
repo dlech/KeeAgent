@@ -30,7 +30,7 @@ choco upgrade keepass-plugin-keeagent
 USAGE
 -----
 
-Documentation is at https://keeagent.readthedocs.io/en/stable/
+Documentation is at https://keeagent.readthedocs.io/en/latest/
 
 
 HACKING
