@@ -117,7 +117,7 @@ namespace KeeAgent
               // IMPORTANT: if you change either of these callbacks, you need
               // to make sure that they do not block the main event loop.
               pagent.FilterKeyListCallback = FilterKeyList;
-              pagent.ConfirmUserPermissionCallback = Default.ConfirmCallback;
+              pagent.ConfirmUserPermissionCallback = ConfirmUserPermissionCallback;
               agent = pagent;
               if (Options.UseCygwinSocket) {
                 StartCygwinSocket();
@@ -151,7 +151,7 @@ namespace KeeAgent
               // IMPORTANT: if you change either of these callbacks, you need
               // to make sure that they do not block the main event loop.
               unixAgent.FilterKeyListCallback = FilterKeyList;
-              unixAgent.ConfirmUserPermissionCallback = Default.ConfirmCallback;
+              unixAgent.ConfirmUserPermissionCallback = ConfirmUserPermissionCallback;
               agent = unixAgent;
               if (Options.UnixSocketPath == null) {
                 var autoModeMessage = Options.AgentMode == AgentMode.Auto
@@ -207,6 +207,16 @@ namespace KeeAgent
       }
       Terminate();
       return false;
+    }
+
+    private bool ConfirmUserPermissionCallback(ISshKey key, Process process, string user, string fromHost,
+      string toHost)
+    {
+      var result = false;
+      pluginHost.MainWindow.Invoke(new Action(() =>
+        result = Default.ConfirmCallback(key, process, user, fromHost, toHost)
+      ));
+      return result;
     }
 
     public override void Terminate()
