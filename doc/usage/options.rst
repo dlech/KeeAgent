@@ -44,6 +44,13 @@ tab.
         external key files linked to password entries are missing. This option
         is useful when you use the same KeePass database on multiple computers.
 
+
+    -   **Disable SSH key decryption progress bar**: (default: disabled) Do not
+        show a progress bar during SSH key decryption process.
+
+        .. note:: When the progress bar is disabled, the UI will be unresponsive
+            during SSH key decryption process.
+
 **Agent Mode Options** (no effect in *Client* mode)
 
     These options only affect KeeAgent when running in *Agent* mode.

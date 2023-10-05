@@ -63,6 +63,7 @@ namespace KeeAgent
     const string userPicksKeyOnRequestIdentitiesOptionName =
       pluginNamespace + ".UserPicksKeyOnRequestIdentities";
     const string ignoreMissingExternalKeyFilesName = pluginNamespace + ".IgnoreMissingExternalKeyFilesName";
+    const string disableKeyDecryptionProgressBarName = pluginNamespace + ".DisableKeyDecryptionProgressBar";
     const string keyFilePathSprPlaceholder = @"{KEEAGENT:KEYFILEPATH}";
     const string identFileOptSprPlaceholder = @"{KEEAGENT:IDENTFILEOPT}";
     const string groupMenuItemName = "KeeAgentGroupMenuItem";
@@ -621,6 +622,7 @@ namespace KeeAgent
       config.SetBool(userPicksKeyOnRequestIdentitiesOptionName,
         Options.UserPicksKeyOnRequestIdentities);
       config.SetBool(ignoreMissingExternalKeyFilesName, Options.IgnoreMissingExternalKeyFiles);
+      config.SetBool(disableKeyDecryptionProgressBarName, Options.DisableKeyDecryptionProgressBar);
     }
 
     private void LoadOptions()
@@ -643,6 +645,7 @@ namespace KeeAgent
       Options.UserPicksKeyOnRequestIdentities =
         config.GetBool(userPicksKeyOnRequestIdentitiesOptionName, false);
       Options.IgnoreMissingExternalKeyFiles = config.GetBool(ignoreMissingExternalKeyFilesName, false);
+      Options.DisableKeyDecryptionProgressBar = config.GetBool(disableKeyDecryptionProgressBarName, false);
 
       string defaultLogFileNameValue = Path.Combine(
           Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
@@ -1053,7 +1056,7 @@ namespace KeeAgent
       var settings = entry.GetKeeAgentSettings();
 
       try {
-        var key = entry.GetSshKey();
+        var key = entry.GetSshKey(this.Options.DisableKeyDecryptionProgressBar);
         string db_name = "<Unknown database>";
 
         try {

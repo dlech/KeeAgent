@@ -62,6 +62,8 @@ namespace KeeAgent.UI
       customListViewEx.Groups.Add(optionsGroup);
       optionsList.CreateItem(ext.Options, "IgnoreMissingExternalKeyFiles",
         optionsGroup, Translatable.OptionIgnoreMissingExternalKeyFiles);
+      optionsList.CreateItem(ext.Options, "DisableKeyDecryptionProgressBar",
+        optionsGroup, Translatable.OptionDisableKeyDecryptionProgressBar);
 
       var agentModeOptionsGroup = new ListViewGroup("agentMode",
                           "Agent Mode Options (no effect in Client Mode)");

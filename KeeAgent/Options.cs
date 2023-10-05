@@ -107,5 +107,10 @@ namespace KeeAgent
     /// in the filesystem.
     /// </summary>
     public static bool IgnoreMissingExternalKeyFiles { get; set; }
+
+    /// <summary>
+    /// When <c>true</c>, we will not display a progress bar during SSH key decryption.
+    /// </summary>
+    public bool DisableKeyDecryptionProgressBar { get; set; }
   }
 }
