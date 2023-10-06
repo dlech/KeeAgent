@@ -362,7 +362,7 @@ namespace KeeAgent
       return Encoding.UTF8.GetBytes(passphrase);
     }
 
-    public static ISshKey GetSshKey(this PwEntry entry, KeeAgentExt ext)
+    public static ISshKey GetSshKey(this PwEntry entry, bool disableKeyDecryptionProgressBar)
     {
       var settings = entry.GetKeeAgentSettings();
 
@@ -381,7 +381,7 @@ namespace KeeAgent
       AsymmetricKeyParameter parameter;
       var comment = string.Empty;
 
-      if (privateKey.HasKdf && !ext.Options.DisableKeyDecryptionProgressBar) {
+      if (privateKey.HasKdf && !disableKeyDecryptionProgressBar) {
         // if there is a key derivation function, decrypting could be slow,
         // so show a progress dialog
         var dialog = new DecryptProgressDialog();

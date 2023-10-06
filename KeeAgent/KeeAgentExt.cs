@@ -1051,7 +1051,7 @@ namespace KeeAgent
       var settings = entry.GetKeeAgentSettings();
 
       try {
-        var key = entry.GetSshKey(this);
+        var key = entry.GetSshKey(this.Options.DisableKeyDecryptionProgressBar);
         string db_name = "<Unknown database>";
 
         try {
