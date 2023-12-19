@@ -525,11 +525,15 @@ namespace KeeAgent
       }
       var recycleBin = activeDatabase.RootGroup.FindGroup(activeDatabase.RecycleBinUuid, true);
       var selectedGroup = pluginHost.MainWindow.GetSelectedGroup();
+      var dtNow = DateTime.UtcNow;
       foreach (var entry in selectedGroup.GetEntries(true)) {
         if (activeDatabase.RecycleBinEnabled) {
           if (entry.IsContainedIn(recycleBin)) {
             continue;
           }
+        }
+        if (entry.Expires && entry.ExpiryTime <= dtNow) {
+          continue;
         }
         var settings = entry.GetKeeAgentSettings();
         if (settings.AllowUseOfSshKey) {
