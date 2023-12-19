@@ -84,7 +84,7 @@ namespace KeeAgent.UI
     {
       mCustomTreeViewEx.BeginUpdate();
       mCustomTreeViewEx.Nodes.Clear();
-      mCachedNow = DateTime.Now;
+      mCachedNow = DateTime.UtcNow;
       bool entriesFound = false;
 
       foreach (var db in ext.pluginHost.MainWindow.DocumentManager.GetOpenDatabases()) {

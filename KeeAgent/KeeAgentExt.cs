@@ -908,6 +908,7 @@ namespace KeeAgent
           return;
         }
 
+        var dtNow = DateTime.UtcNow;
         foreach (var entry in e.Database.RootGroup.GetEntries(true)) {
           if (e.Database.RecycleBinEnabled) {
             var recycleBin = e.Database.RootGroup.FindGroup(e.Database.RecycleBinUuid, true);
@@ -916,7 +917,7 @@ namespace KeeAgent
             }
           }
 
-          if (entry.Expires && entry.ExpiryTime <= DateTime.Now
+          if (entry.Expires && entry.ExpiryTime <= dtNow
             && !e.Database.GetKeeAgentSettings().AllowAutoLoadExpiredEntryKey) {
             continue;
           }
