@@ -1,4 +1,4 @@
-Unreleased
+v0.13.6 (2023-12-23)
 --------------------
 * Fix incomplete implementation of ED448 keys.
 * Fix checking expired entries using incorrect time zone.

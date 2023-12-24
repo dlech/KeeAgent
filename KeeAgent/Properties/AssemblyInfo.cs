@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("David Lechner")]
 [assembly: AssemblyProduct("KeePass Plugin")]
-[assembly: AssemblyCopyright("2012-2023")]
+[assembly: AssemblyCopyright("2012-2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -28,5 +28,5 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("0.13.5.0")]
-[assembly: AssemblyFileVersion("0.13.5.0")]
+[assembly: AssemblyVersion("0.13.6.0")]
+[assembly: AssemblyFileVersion("0.13.6.0")]
