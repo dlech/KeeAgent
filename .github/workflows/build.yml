@@ -1,4 +1,4 @@
-name: Build PLGX
+name: Build DLL/PLGX
 
 on: [push, pull_request]
 
@@ -17,14 +17,21 @@ jobs:
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v1.1
 
+    - name: Build DLL
+      run: msbuild /property:Configuration=ReleaseDll /t:build KeeAgent.sln
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: KeeAgent.dll
+        path: KeeAgent/bin/ReleaseDll/KeeAgent.dll
+
     - name: Build PLGX
       run: msbuild /property:Configuration=ReleasePlgx /t:build KeeAgent.sln
 
     - name: List PLGX
       run: ~\.nuget\packages\plgxtool\1.0.3\tools\PlgxTool.exe -l .\KeeAgent\bin\ReleasePlgx\KeeAgent.plgx
 
-    - name: Upload artifact
-      uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v3
       with:
         name: KeeAgent.plgx
         path: KeeAgent/bin/ReleasePlgx/KeeAgent.plgx

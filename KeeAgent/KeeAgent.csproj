@@ -258,6 +258,11 @@
       <Version>2.53.0.21099</Version>
       <ExcludeFromPlgx />
     </PackageReference>
+    <PackageReference Include="ILRepack">
+      <Version>2.0.20</Version>
+      <PrivateAssets>all</PrivateAssets>
+      <ExcludeFromPlgx />
+    </PackageReference>
     <PackageReference Include="PlgxTool">
       <Version>1.0.3</Version>
       <PrivateAssets>all</PrivateAssets>
@@ -276,6 +281,14 @@
   </ItemGroup>
   <PropertyGroup>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseDll|AnyCPU'">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\ReleaseDll</OutputPath>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>4</LangVersion>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleasePlgx|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>True</Optimize>
@@ -285,12 +298,20 @@
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="AfterBuild" Condition="'$(Configuration)' == 'ReleasePlgx'">
-    <CallTarget Targets="BuildPlgx" />
-    <Delete Files="$(OutDir)Microsoft.WindowsAPICodePack.dll;$(OutDir)Microsoft.WindowsAPICodePack.Shell.dll" />
+  <Target Name="ILMerge">
+    <Move SourceFiles="$(OutDir)KeeAgent.dll" DestinationFiles="$(OutDir)KeeAgentExt.dll" />
+    <Exec WorkingDirectory="$(OutDir)" Command="$(ILRepack) /out:KeeAgent.dll KeeAgentExt.dll Mono.Posix.dll SshAgentLib.WinForms.dll SshAgentLib.dll BouncyCastle.Crypto.dll Konscious.Security.Cryptography.Argon2.dll Konscious.Security.Cryptography.Blake2.dll System.Numerics.Vectors.dll System.Net.Sockets.dll" />
+  </Target>
+  <Target Name="DeleteDlls" AfterTargets="ILMerge;BuildPlgx">
+    <Delete Files="$(OutDir)KeeAgent.dll" Condition="'$(Configuration)' != 'ReleaseDll'" />
+    <Delete Files="$(OutDir)KeeAgentExt.dll" Condition="'$(Configuration)' == 'ReleaseDll'" />
     <Delete Files="$(OutDir)SshAgentLib.WinForms.dll;$(OutDir)SshAgentLib.dll;$(OutDir)BouncyCastle.Crypto.dll" />
     <Delete Files="$(OutDir)Konscious.Security.Cryptography.Argon2.dll;$(OutDir)Konscious.Security.Cryptography.Blake2.dll" />
-    <Delete Files="$(OutDir)System.Numerics.Vectors.dll;$(OutDir)System.Net.Sockets.dll" />
+    <Delete Files="$(OutDir)System.Numerics.Vectors.dll;$(OutDir)System.Net.Sockets.dll;$(OutDir)Mono.Posix.dll" />
+  </Target>
+  <Target Name="AfterBuild">
+    <CallTarget Targets="ILMerge" Condition="'$(Configuration)' == 'ReleaseDll'" />
+    <CallTarget Targets="BuildPlgx" Condition="'$(Configuration)' == 'ReleasePlgx'" />
   </Target>
   <ProjectExtensions>
     <MonoDevelop>
