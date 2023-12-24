@@ -1,3 +1,9 @@
+Unreleased
+--------------------
+* Fix incomplete implementation of ED448 keys.
+* Fix checking expired entries using incorrect time zone.
+* Fix incorrectly loading expired entries when loading a group.
+
 v0.13.5 (2023-03-26)
 --------------------
 * Fix issues with Windows OpenSSH named pipe locking up.
