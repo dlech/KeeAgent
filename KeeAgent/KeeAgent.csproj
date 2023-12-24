@@ -4,7 +4,7 @@
     <!-- For building .plgx -->
     <PlgxConfiguration>
       <Prerequisites>
-        <KeePassVersion>2.41</KeePassVersion>
+        <KeePassVersion>2.50</KeePassVersion>
         <DotNetVersion>4.6.2</DotNetVersion>
       </Prerequisites>
     </PlgxConfiguration>
@@ -255,8 +255,9 @@
   </ItemGroup>
   <ItemGroup Condition=" '$(OS)' != 'Unix' ">
     <PackageReference Include="KeePass" ExcludeAssets="Compile" GeneratePathProperty="true">
-      <Version>2.53.0.21099</Version>
+      <Version>2.50.0.21065</Version>
       <ExcludeFromPlgx />
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="ILRepack">
       <Version>2.0.20</Version>

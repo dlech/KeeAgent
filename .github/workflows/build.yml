@@ -14,7 +14,7 @@ jobs:
 
     - name: Install prerequisites
       run: |
-        choco install keepass.install
+        choco install keepass.install --version=2.50
         nuget restore
 
     - name: Setup MSBuild.exe
