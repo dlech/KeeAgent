@@ -254,7 +254,7 @@
     <None Include="Resources\help-3.png" />
   </ItemGroup>
   <ItemGroup Condition=" '$(OS)' != 'Unix' ">
-    <PackageReference Include="KeePass">
+    <PackageReference Include="KeePass" ExcludeAssets="Compile" GeneratePathProperty="true">
       <Version>2.53.0.21099</Version>
       <ExcludeFromPlgx />
     </PackageReference>
@@ -268,6 +268,18 @@
       <PrivateAssets>all</PrivateAssets>
       <ExcludeFromPlgx />
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup Condition=" '$(OS)' != 'Unix' and '$(Configuration)' == 'ReleaseDll' ">
+    <Reference Include="KeePass">
+      <HintPath>$(ProgramW6432)\KeePass Password Safe 2\KeePass.exe</HintPath>
+      <ExcludeFromPlgx />
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition=" '$(OS)' != 'Unix' and '$(Configuration)' != 'ReleaseDll' ">
+    <Reference Include="KeePass">
+      <HintPath>$(PkgKeePass)\lib\net462\KeePass.exe</HintPath>
+      <ExcludeFromPlgx />
+    </Reference>
   </ItemGroup>
   <ItemGroup Condition=" '$(OS)' == 'Unix' ">
     <Reference Include="KeePass">
