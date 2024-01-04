@@ -221,4 +221,7 @@
   <data name="OptionUseWindowsOpenSshPipe" xml:space="preserve">
     <value>Enable agent for Windows OpenSSH</value>
   </data>
+  <data name="OptionUseTitleAsComment" xml:space="preserve">
+      <value>Use entry Title as key Comment</value>
+  </data>
 </root>
