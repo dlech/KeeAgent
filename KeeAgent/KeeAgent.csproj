@@ -139,6 +139,7 @@
       <DependentUpon>ManageDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="KeeAgentExt.cs" />
+    <Compile Include="KeeAgentInteractiveUi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\OptionsPanel.cs">
       <SubType>UserControl</SubType>

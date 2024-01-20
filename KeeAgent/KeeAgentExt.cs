@@ -26,7 +26,6 @@ using KeePass.Util;
 using KeePass.Util.Spr;
 using KeePassLib;
 using KeePassLib.Utility;
-using SshAgentLib.Keys;
 
 namespace KeeAgent
 {
@@ -43,6 +42,7 @@ namespace KeeAgent
     bool saveBeforeCloseQuestionMessageShown = false;
     Dictionary<string, KeyFileInfo> keyFileMap = new Dictionary<string, KeyFileInfo>();
     KeeAgentColumnProvider columnProvider;
+    KeeAgentInteractiveUi interactiveUi;
 
     const string pluginNamespace = "KeeAgent";
     const string alwaysConfirmOptionName = pluginNamespace + ".AlwaysConfirm";
@@ -103,6 +103,7 @@ namespace KeeAgent
       var domainSocketPath =
         Environment.GetEnvironmentVariable(UnixClient.SshAuthSockName);
       try {
+        interactiveUi = new KeeAgentInteractiveUi();
         if (Options.AgentMode != AgentMode.Client) {
           if (isWindows) {
             // In windows, try to start an agent. If Pageant is running, we will
@@ -213,9 +214,7 @@ namespace KeeAgent
       string toHost)
     {
       var result = false;
-      pluginHost.MainWindow.Invoke(new Action(() =>
-        result = Default.ConfirmCallback(key, process, user, fromHost, toHost)
-      ));
+      interactiveUi.Invoke(() => result = Default.ConfirmCallback(key, process, user, fromHost, toHost));
       return result;
     }
 
@@ -236,6 +235,10 @@ namespace KeeAgent
       if (agentModeAgent != null) {
         // need to shutdown agent or app won't exit
         agentModeAgent.Dispose();
+      }
+
+      if (interactiveUi != null) {
+        interactiveUi.Dispose();
       }
     }
 
@@ -1238,13 +1241,13 @@ namespace KeeAgent
         return list;
       }
 
-      // TODO: Using the main thread here will cause a lockup with IOProtocolExt
-      pluginHost.MainWindow.Invoke((MethodInvoker)delegate {
+      interactiveUi.Invoke(() => {
         //var zIndex = pluginHost.MainWindow.GetZIndex();
         var dialog = new KeyPicker(list);
         dialog.Shown += (sender, e) => dialog.Activate();
+        dialog.StartPosition = FormStartPosition.CenterScreen;
         dialog.TopMost = true;
-        dialog.ShowDialog(pluginHost.MainWindow);
+        dialog.ShowDialog();
 
         if (dialog.DialogResult == DialogResult.OK) {
           list = dialog.SelectedKeys.ToList();
@@ -1252,8 +1255,6 @@ namespace KeeAgent
         else {
           list = Enumerable.Empty<ISshKey>();
         }
-
-        pluginHost.MainWindow.SetWindowPosBottom();
       });
 
       return list;
