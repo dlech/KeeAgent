@@ -7,13 +7,13 @@ namespace KeeAgent
   /// <summary>
   /// Provides a separate UI thread for interactive communication without interlocking with the MainWindow.
   /// </summary>
-  public sealed class KeeAgentInteractiveUi : IDisposable
+  public sealed class KeeAgentUiThread : IDisposable
   {
     private const string ComponentName = "KeeAgent Interactive UI";
     private SynchronizationContext _synchronizationContext;
     private ApplicationContext _applicationContext;
 
-    public KeeAgentInteractiveUi()
+    public KeeAgentUiThread()
     {
       var uiThread = new Thread(UiThreadMain) {
         Name = ComponentName,
@@ -25,24 +25,9 @@ namespace KeeAgent
 
     private void UiThreadMain()
     {
-      var mainForm = new Form {
-        // actually we don't need the window, but there is no other way to capture the SynchronizationContext
-        Name = ComponentName,
-        Text = ComponentName,
-        // some recommendations from https://stackoverflow.com/a/683991
-        FormBorderStyle = FormBorderStyle.FixedToolWindow, // to exclude from appearing in Alt-Tab
-        ShowInTaskbar = false, // to exclude from the Taskbar
-      };
-
-      mainForm.Load += (sender, args) => {
-        // capture SynchronizationContext to send messages to the message loop
-        _synchronizationContext = SynchronizationContext.Current;
-
-        // hide the form... we have to postpone the call, otherwise it stays visible
-        _synchronizationContext.Post(_ => mainForm.Hide(), null);
-      };
-
-      _applicationContext = new ApplicationContext(mainForm);
+      _synchronizationContext = new WindowsFormsSynchronizationContext();
+      SynchronizationContext.SetSynchronizationContext(_synchronizationContext);
+      _applicationContext = new ApplicationContext();
       Application.Run(_applicationContext);
     }
 
@@ -57,7 +42,9 @@ namespace KeeAgent
 
       var synchronizationContext = _synchronizationContext;
       _synchronizationContext = null;
-      synchronizationContext.Post(_ => _applicationContext.ExitThread(), null);
+      var applicationContext = _applicationContext;
+      _applicationContext = null;
+      synchronizationContext.Post(_ => applicationContext.ExitThread(), null);
     }
 
     /// <summary>

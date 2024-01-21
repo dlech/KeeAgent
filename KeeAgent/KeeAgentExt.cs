@@ -42,7 +42,7 @@ namespace KeeAgent
     bool saveBeforeCloseQuestionMessageShown = false;
     Dictionary<string, KeyFileInfo> keyFileMap = new Dictionary<string, KeyFileInfo>();
     KeeAgentColumnProvider columnProvider;
-    KeeAgentInteractiveUi interactiveUi;
+    KeeAgentUiThread _uiThread;
 
     const string pluginNamespace = "KeeAgent";
     const string alwaysConfirmOptionName = pluginNamespace + ".AlwaysConfirm";
@@ -103,7 +103,7 @@ namespace KeeAgent
       var domainSocketPath =
         Environment.GetEnvironmentVariable(UnixClient.SshAuthSockName);
       try {
-        interactiveUi = new KeeAgentInteractiveUi();
+        _uiThread = new KeeAgentUiThread();
         if (Options.AgentMode != AgentMode.Client) {
           if (isWindows) {
             // In windows, try to start an agent. If Pageant is running, we will
@@ -214,7 +214,7 @@ namespace KeeAgent
       string toHost)
     {
       var result = false;
-      interactiveUi.Invoke(() => result = Default.ConfirmCallback(key, process, user, fromHost, toHost));
+      _uiThread.Invoke(() => result = Default.ConfirmCallback(key, process, user, fromHost, toHost));
       return result;
     }
 
@@ -237,8 +237,8 @@ namespace KeeAgent
         agentModeAgent.Dispose();
       }
 
-      if (interactiveUi != null) {
-        interactiveUi.Dispose();
+      if (_uiThread != null) {
+        _uiThread.Dispose();
       }
     }
 
@@ -1241,7 +1241,7 @@ namespace KeeAgent
         return list;
       }
 
-      interactiveUi.Invoke(() => {
+      _uiThread.Invoke(() => {
         //var zIndex = pluginHost.MainWindow.GetZIndex();
         var dialog = new KeyPicker(list);
         dialog.Shown += (sender, e) => dialog.Activate();
