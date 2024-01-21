@@ -31,8 +31,8 @@ Windows
         :alt: screenshot of Windows Explorer showing KeePass 2.x Plugins directory
 
     .. note:: If you used the Windows installer to install KeePass, then the folder
-        will be ``C:\Program Files (x86)\KeePass Password Safe 2\Plugins`` (or
-        ``C:\Program Files\KeePass Password Safe 2\Plugins`` on 32-bit systems).
+        will be ``C:\Program Files\KeePass Password Safe 2\Plugins`` (or
+        ``Program Files (x86)`` for older versions of KeePass).
             
         If you are using the portable version of KeePass 2.x, then hopefully
         you remember where you installed it.
