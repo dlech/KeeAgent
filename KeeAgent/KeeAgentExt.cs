@@ -26,7 +26,6 @@ using KeePass.Util;
 using KeePass.Util.Spr;
 using KeePassLib;
 using KeePassLib.Utility;
-using SshAgentLib.Keys;
 
 namespace KeeAgent
 {
@@ -43,6 +42,7 @@ namespace KeeAgent
     bool saveBeforeCloseQuestionMessageShown = false;
     Dictionary<string, KeyFileInfo> keyFileMap = new Dictionary<string, KeyFileInfo>();
     KeeAgentColumnProvider columnProvider;
+    KeeAgentUiThread _uiThread;
 
     const string pluginNamespace = "KeeAgent";
     const string alwaysConfirmOptionName = pluginNamespace + ".AlwaysConfirm";
@@ -103,6 +103,7 @@ namespace KeeAgent
       var domainSocketPath =
         Environment.GetEnvironmentVariable(UnixClient.SshAuthSockName);
       try {
+        _uiThread = new KeeAgentUiThread();
         if (Options.AgentMode != AgentMode.Client) {
           if (isWindows) {
             // In windows, try to start an agent. If Pageant is running, we will
@@ -117,7 +118,7 @@ namespace KeeAgent
               // IMPORTANT: if you change either of these callbacks, you need
               // to make sure that they do not block the main event loop.
               pagent.FilterKeyListCallback = FilterKeyList;
-              pagent.ConfirmUserPermissionCallback = Default.ConfirmCallback;
+              pagent.ConfirmUserPermissionCallback = ConfirmUserPermissionCallback;
               agent = pagent;
               if (Options.UseCygwinSocket) {
                 StartCygwinSocket();
@@ -151,7 +152,7 @@ namespace KeeAgent
               // IMPORTANT: if you change either of these callbacks, you need
               // to make sure that they do not block the main event loop.
               unixAgent.FilterKeyListCallback = FilterKeyList;
-              unixAgent.ConfirmUserPermissionCallback = Default.ConfirmCallback;
+              unixAgent.ConfirmUserPermissionCallback = ConfirmUserPermissionCallback;
               agent = unixAgent;
               if (Options.UnixSocketPath == null) {
                 var autoModeMessage = Options.AgentMode == AgentMode.Auto
@@ -209,6 +210,14 @@ namespace KeeAgent
       return false;
     }
 
+    private bool ConfirmUserPermissionCallback(ISshKey key, Process process, string user, string fromHost,
+      string toHost)
+    {
+      var result = false;
+      _uiThread.Invoke(() => result = Default.ConfirmCallback(key, process, user, fromHost, toHost));
+      return result;
+    }
+
     public override void Terminate()
     {
       GlobalWindowManager.WindowAdded -= WindowAddedHandler;
@@ -226,6 +235,10 @@ namespace KeeAgent
       if (agentModeAgent != null) {
         // need to shutdown agent or app won't exit
         agentModeAgent.Dispose();
+      }
+
+      if (_uiThread != null) {
+        _uiThread.Dispose();
       }
     }
 
@@ -1228,13 +1241,13 @@ namespace KeeAgent
         return list;
       }
 
-      // TODO: Using the main thread here will cause a lockup with IOProtocolExt
-      pluginHost.MainWindow.Invoke((MethodInvoker)delegate {
+      _uiThread.Invoke(() => {
         //var zIndex = pluginHost.MainWindow.GetZIndex();
         var dialog = new KeyPicker(list);
         dialog.Shown += (sender, e) => dialog.Activate();
+        dialog.StartPosition = FormStartPosition.CenterScreen;
         dialog.TopMost = true;
-        dialog.ShowDialog(pluginHost.MainWindow);
+        dialog.ShowDialog();
 
         if (dialog.DialogResult == DialogResult.OK) {
           list = dialog.SelectedKeys.ToList();
@@ -1242,8 +1255,6 @@ namespace KeeAgent
         else {
           list = Enumerable.Empty<ISshKey>();
         }
-
-        pluginHost.MainWindow.SetWindowPosBottom();
       });
 
       return list;
