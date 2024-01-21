@@ -65,6 +65,9 @@ namespace KeeAgent.UI
       optionsList.CreateItem(ext.Options, "DisableKeyDecryptionProgressBar",
         optionsGroup, Translatable.OptionDisableKeyDecryptionProgressBar);
 
+      optionsList.CreateItem(ext.Options, "UseTitleAsComment",
+        optionsGroup, Translatable.OptionUseTitleAsComment);
+
       var agentModeOptionsGroup = new ListViewGroup("agentMode",
                           "Agent Mode Options (no effect in Client Mode)");
       customListViewEx.Groups.Add(agentModeOptionsGroup);

@@ -303,6 +303,15 @@ namespace KeeAgent {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use entry Title as key Comment.
+        /// </summary>
+        internal static string OptionUseTitleAsComment {
+            get {
+                return ResourceManager.GetString("OptionUseTitleAsComment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enable agent for Windows OpenSSH.
         /// </summary>
         internal static string OptionUseWindowsOpenSshPipe {

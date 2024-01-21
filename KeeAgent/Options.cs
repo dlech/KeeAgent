@@ -112,5 +112,10 @@ namespace KeeAgent
     /// When <c>true</c>, we will not display a progress bar during SSH key decryption.
     /// </summary>
     public bool DisableKeyDecryptionProgressBar { get; set; }
+    
+    /// <summary>
+    /// When <c>true</c>, use the entry's title as the key's comment.
+    /// </summary>
+    public static bool UseTitleAsComment { get; set; }
   }
 }
