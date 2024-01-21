@@ -11,7 +11,6 @@ namespace KeeAgent
   {
     private const string ComponentName = "KeeAgent Interactive UI";
     private SynchronizationContext _synchronizationContext;
-    private ApplicationContext _applicationContext;
 
     public KeeAgentUiThread()
     {
@@ -27,8 +26,7 @@ namespace KeeAgent
     {
       _synchronizationContext = new WindowsFormsSynchronizationContext();
       SynchronizationContext.SetSynchronizationContext(_synchronizationContext);
-      _applicationContext = new ApplicationContext();
-      Application.Run(_applicationContext);
+      Application.Run();
     }
 
     /// <summary>
@@ -42,9 +40,7 @@ namespace KeeAgent
 
       var synchronizationContext = _synchronizationContext;
       _synchronizationContext = null;
-      var applicationContext = _applicationContext;
-      _applicationContext = null;
-      synchronizationContext.Post(_ => applicationContext.ExitThread(), null);
+      synchronizationContext.Post(_ => Application.ExitThread(), null);
     }
 
     /// <summary>
