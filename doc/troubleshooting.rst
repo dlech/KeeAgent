@@ -76,10 +76,9 @@ Other issues
 
 Read everything here and still having problems?
 
-Report your issues on `GitHub`_ (preferred) or send me a `message`_.
+Report your issues on `GitHub`_.
 
 .. _`GitHub`: https://github.com/dlech/keeagent/issues
-.. _`message`: https://lechnology.com/contact
 
 
 Debugging
