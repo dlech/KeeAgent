@@ -1,4 +1,5 @@
 [tool.poetry]
+package-mode = false
 name = "keeagent-doc"
 version = "0.1.0"
 description = "KeeAgent Documentation"
