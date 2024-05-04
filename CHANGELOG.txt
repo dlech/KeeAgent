@@ -1,4 +1,4 @@
-v0.13.7 (2024-04-04)
+v0.13.7 (2024-05-04)
 --------------------
 * Fix focus issues with confirmation dialog (thanks ExtraClock).
 
