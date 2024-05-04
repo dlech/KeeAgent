@@ -80,3 +80,45 @@ Report your issues on `GitHub`_ (preferred) or send me a `message`_.
 
 .. _`GitHub`: https://github.com/dlech/keeagent/issues
 .. _`message`: https://lechnology.com/contact
+
+
+Debugging
+=========
+
+You can use Visual Studio to see a limited amount of debug information.
+
+Prerequisite: `Visual Studio 2022 <https://visualstudio.microsoft.com/vs/>`_
+with the *.NET desktop development* workload installed.
+
+    .. figure:: images/vs-dotnet-desktop-development.png
+        :alt: screenshot of Visual Studio Installer with .NET desktop development workload selected
+
+1. Start *KeePass*.
+
+2. Start *Visual Studio*.
+
+3. Select *Continue without code*.
+
+    .. figure:: images/vs-continue-without-code.png
+        :alt: screenshot of Visual Studio 2022 start screen "Continue without code" hyperlink
+
+4. Click the *Attach* button.
+
+    .. figure:: images/vs-attach.png
+        :alt: screenshot of Visual Studio 2022 start screen "Attach" button
+
+5. Select *KeePass* from the list of processes. Use the filter to find it quickly.
+
+    .. figure:: images/vs-attach-to-process-keepass.png
+        :alt: screenshot of Visual Studio 2022 "Attach to Process" dialog with "KeePass.exe" selected.
+
+6. Click the *Attach* button.
+
+7. Select the *Output* tab.
+    
+        .. figure:: images/vs-output-tab.png
+            :alt: screenshot of Visual Studio 2022 "Output" tab
+
+8. Reproduce the issue in KeePass/KeeAgent.
+
+9. Look for any useful information in the *Output* tab.
