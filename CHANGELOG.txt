@@ -1,3 +1,7 @@
+v0.13.7 (2024-04-04)
+--------------------
+* Fix focus issues with confirmation dialog (thanks ExtraClock).
+
 v0.13.6 (2023-12-23)
 --------------------
 * Fix incomplete implementation of ED448 keys.
