@@ -6,9 +6,9 @@ description = "KeeAgent Documentation"
 authors = ["David Lechner <david@lechnology.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.6"
-Sphinx = "1.8.5"
-sphinx-rtd-theme = "0.4.1"
+python = "^3.10"
+sphinx = "^7.3.7"
+sphinx-rtd-theme = "^2.0.0"
 
 [tool.poetry.dev-dependencies]
 
