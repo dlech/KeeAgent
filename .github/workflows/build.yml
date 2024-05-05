@@ -8,7 +8,7 @@ jobs:
     runs-on: windows-2022
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         submodules: true
 
@@ -18,12 +18,12 @@ jobs:
         nuget restore
 
     - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.1
+      uses: microsoft/setup-msbuild@v2
 
     - name: Build DLL
       run: msbuild /property:Configuration=ReleaseDll /t:build KeeAgent.sln
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: KeeAgent.dll
         path: KeeAgent/bin/ReleaseDll/KeeAgent.dll
@@ -34,7 +34,7 @@ jobs:
     - name: List PLGX
       run: ~\.nuget\packages\plgxtool\1.0.3\tools\PlgxTool.exe -l .\KeeAgent\bin\ReleasePlgx\KeeAgent.plgx
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: KeeAgent.plgx
         path: KeeAgent/bin/ReleasePlgx/KeeAgent.plgx
