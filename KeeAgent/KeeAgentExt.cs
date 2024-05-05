@@ -103,7 +103,10 @@ namespace KeeAgent
       var domainSocketPath =
         Environment.GetEnvironmentVariable(UnixClient.SshAuthSockName);
       try {
-        _uiThread = new KeeAgentUiThread();
+        // background UI thread breaks Mono
+        if (Type.GetType("Mono.Runtime") == null) {
+          _uiThread = new KeeAgentUiThread();
+        }
         if (Options.AgentMode != AgentMode.Client) {
           if (isWindows) {
             // In windows, try to start an agent. If Pageant is running, we will
@@ -117,8 +120,13 @@ namespace KeeAgent
               pagent.MessageReceived += PageantAgent_MessageReceived;
               // IMPORTANT: if you change either of these callbacks, you need
               // to make sure that they do not block the main event loop.
-              pagent.FilterKeyListCallback = FilterKeyList;
-              pagent.ConfirmUserPermissionCallback = ConfirmUserPermissionCallback;
+              if (Type.GetType("Mono.Runtime") == null) {
+                pagent.FilterKeyListCallback = FilterKeyList;
+                pagent.ConfirmUserPermissionCallback = ConfirmUserPermissionCallback;
+              } else {
+                pagent.FilterKeyListCallback = FilterKeyListMono;
+                pagent.ConfirmUserPermissionCallback = Default.ConfirmCallback;
+              }
               agent = pagent;
               if (Options.UseCygwinSocket) {
                 StartCygwinSocket();
@@ -151,8 +159,13 @@ namespace KeeAgent
               unixAgent.MessageReceived += PageantAgent_MessageReceived;
               // IMPORTANT: if you change either of these callbacks, you need
               // to make sure that they do not block the main event loop.
-              unixAgent.FilterKeyListCallback = FilterKeyList;
-              unixAgent.ConfirmUserPermissionCallback = ConfirmUserPermissionCallback;
+              if (Type.GetType("Mono.Runtime") == null) {
+                unixAgent.FilterKeyListCallback = FilterKeyList;
+                unixAgent.ConfirmUserPermissionCallback = ConfirmUserPermissionCallback;
+              } else {
+                unixAgent.FilterKeyListCallback = FilterKeyListMono;
+                unixAgent.ConfirmUserPermissionCallback = Default.ConfirmCallback;
+              }
               agent = unixAgent;
               if (Options.UnixSocketPath == null) {
                 var autoModeMessage = Options.AgentMode == AgentMode.Auto
@@ -1242,7 +1255,6 @@ namespace KeeAgent
       }
 
       _uiThread.Invoke(() => {
-        //var zIndex = pluginHost.MainWindow.GetZIndex();
         var dialog = new KeyPicker(list);
         dialog.Shown += (sender, e) => dialog.Activate();
         dialog.StartPosition = FormStartPosition.CenterScreen;
@@ -1255,6 +1267,32 @@ namespace KeeAgent
         else {
           list = Enumerable.Empty<ISshKey>();
         }
+      });
+
+      return list;
+    }
+
+    // same as above, but without the background UI thread
+    IEnumerable<ISshKey> FilterKeyListMono(IEnumerable<ISshKey> list)
+    {
+      if (!Options.UserPicksKeyOnRequestIdentities || !list.Any()) {
+        return list;
+      }
+
+      // TODO: Using the main thread here will cause a lockup with IOProtocolExt
+      pluginHost.MainWindow.Invoke((MethodInvoker)delegate {
+        var dialog = new KeyPicker(list);
+        dialog.Shown += (sender, e) => dialog.Activate();
+        dialog.TopMost = true;
+        dialog.ShowDialog(pluginHost.MainWindow);
+        if (dialog.DialogResult == DialogResult.OK) {
+          list = dialog.SelectedKeys.ToList();
+        }
+        else {
+          list = Enumerable.Empty<ISshKey>();
+        }
+
+        pluginHost.MainWindow.SetWindowPosBottom();
       });
 
       return list;
