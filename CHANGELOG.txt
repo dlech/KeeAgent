@@ -1,3 +1,7 @@
+v0.13.8 (2024-05-26)
+--------------------
+* Fix plugin breaks dialogs in KeePass when running on Mono.
+
 v0.13.7 (2024-05-04)
 --------------------
 * Fix focus issues with confirmation dialog (thanks ExtraClock).
