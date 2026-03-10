@@ -221,4 +221,7 @@
   <data name="OptionUseWindowsOpenSshPipe" xml:space="preserve">
     <value>Enable agent for Windows OpenSSH</value>
   </data>
+  <data name="OptionUseSourceInConfirmationDialog" xml:space="preserve">
+      <value>Use key source instead of key comment in confirmation dialog</value>
+  </data>
 </root>

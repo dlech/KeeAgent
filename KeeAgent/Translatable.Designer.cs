@@ -303,6 +303,15 @@ namespace KeeAgent {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use key source instead of key comment in confirmation dialog.
+        /// </summary>
+        internal static string OptionUseSourceInConfirmationDialog {
+            get {
+                return ResourceManager.GetString("OptionUseSourceInConfirmationDialog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enable agent for Windows OpenSSH.
         /// </summary>
         internal static string OptionUseWindowsOpenSshPipe {

@@ -112,5 +112,10 @@ namespace KeeAgent
     /// When <c>true</c>, we will not display a progress bar during SSH key decryption.
     /// </summary>
     public bool DisableKeyDecryptionProgressBar { get; set; }
+
+    /// <summary>
+    /// When <c>true</c>, use the entry's source instead of comment for the confirmation dialog.
+    /// </summary>
+    public static bool UseSourceInConfirmationDialog { get; set; }
   }
 }

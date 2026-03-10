@@ -64,12 +64,25 @@ namespace KeeAgent
       pluginNamespace + ".UserPicksKeyOnRequestIdentities";
     const string ignoreMissingExternalKeyFilesName = pluginNamespace + ".IgnoreMissingExternalKeyFilesName";
     const string disableKeyDecryptionProgressBarName = pluginNamespace + ".DisableKeyDecryptionProgressBar";
+    const string useSourceInConfirmationDialog = pluginNamespace + ".UseSourceInConfirmationDialog";
     const string keyFilePathSprPlaceholder = @"{KEEAGENT:KEYFILEPATH}";
     const string identFileOptSprPlaceholder = @"{KEEAGENT:IDENTFILEOPT}";
     const string groupMenuItemName = "KeeAgentGroupMenuItem";
     const string entryMenuItemName = "KeeAgentEntryMenuItem";
     const string entryMenuLoadSubmenuItemName = "KeeAgentEntryMenuLoadSubmenuItem";
     const string entryMenuUrlSubmenuItemName = "KeeAgentEntryMenuUrlSubmenuItem";
+
+
+    /**
+     * Ripped from: https://github.com/dlech/SshAgentLib/blob/6114528e9652457f0064099e6e39769fe6aaa39e/Ui/WinForms/Default.cs
+     * In order to implement https://github.com/dlech/KeeAgent/pull/355
+     *
+     * MessageBox options for topmost and focus from:
+     * https://msdn.microsoft.com/en-us/library/windows/desktop/ms645505(v=vs.85).aspx
+     */
+    const MessageBoxOptions TopMost = (MessageBoxOptions)0x00040000;
+    const MessageBoxOptions SetForeground = (MessageBoxOptions)0x00010000;
+    const MessageBoxOptions SystemModal = (MessageBoxOptions)0x00001000;
 
     class KeyFileInfo
     {
@@ -125,7 +138,7 @@ namespace KeeAgent
                 pagent.ConfirmUserPermissionCallback = ConfirmUserPermissionCallback;
               } else {
                 pagent.FilterKeyListCallback = FilterKeyListMono;
-                pagent.ConfirmUserPermissionCallback = Default.ConfirmCallback;
+                pagent.ConfirmUserPermissionCallback = ConfirmCallback;
               }
               agent = pagent;
               if (Options.UseCygwinSocket) {
@@ -164,7 +177,7 @@ namespace KeeAgent
                 unixAgent.ConfirmUserPermissionCallback = ConfirmUserPermissionCallback;
               } else {
                 unixAgent.FilterKeyListCallback = FilterKeyListMono;
-                unixAgent.ConfirmUserPermissionCallback = Default.ConfirmCallback;
+                unixAgent.ConfirmUserPermissionCallback = ConfirmCallback;
               }
               agent = unixAgent;
               if (Options.UnixSocketPath == null) {
@@ -227,8 +240,58 @@ namespace KeeAgent
       string toHost)
     {
       var result = false;
-      _uiThread.Invoke(() => result = Default.ConfirmCallback(key, process, user, fromHost, toHost));
+      _uiThread.Invoke(() => result = ConfirmCallback(key, process, user, fromHost, toHost));
       return result;
+    }
+
+
+
+    /// <summary>
+    /// Ripped from: https://github.com/dlech/SshAgentLib/blob/6114528e9652457f0064099e6e39769fe6aaa39e/Ui/WinForms/Default.cs
+    /// In order to implement https://github.com/dlech/KeeAgent/pull/355
+    /// </summary>
+    /// <param name="key"></param>
+    /// <param name="process"></param>
+    /// <param name="user"></param>
+    /// <param name="fromHost"></param>
+    /// <param name="toHost"></param>
+    /// <returns></returns>
+    public static bool ConfirmCallback(
+      ISshKey key,
+      Process process,
+      string user,
+      string fromHost,
+      string toHost
+    )
+    {
+      var programName = Strings.askConfirmKeyUnknownProcess;
+
+      if (process != null)
+      {
+        programName = string.Format(
+          "{0} ({1})",
+          process.MainWindowTitle,
+          process.ProcessName
+        );
+      }
+
+      // TODO: add user/host info to message
+
+      var result = MessageBox.Show(
+        string.Format(
+          Strings.askConfirmKey,
+          programName,
+          Options.UseSourceInConfirmationDialog ? key.Source : key.Comment,
+          key.GetMD5Fingerprint().ToHexString()
+        ),
+        Util.AssemblyTitle,
+        MessageBoxButtons.YesNo,
+        MessageBoxIcon.Question,
+        MessageBoxDefaultButton.Button2,
+        TopMost | SetForeground | SystemModal
+      );
+
+      return result == DialogResult.Yes;
     }
 
     public override void Terminate()
@@ -649,6 +712,7 @@ namespace KeeAgent
         Options.UserPicksKeyOnRequestIdentities);
       config.SetBool(ignoreMissingExternalKeyFilesName, Options.IgnoreMissingExternalKeyFiles);
       config.SetBool(disableKeyDecryptionProgressBarName, Options.DisableKeyDecryptionProgressBar);
+      config.SetBool(useSourceInConfirmationDialog, Options.UseSourceInConfirmationDialog);
     }
 
     private void LoadOptions()
@@ -672,6 +736,7 @@ namespace KeeAgent
         config.GetBool(userPicksKeyOnRequestIdentitiesOptionName, false);
       Options.IgnoreMissingExternalKeyFiles = config.GetBool(ignoreMissingExternalKeyFilesName, false);
       Options.DisableKeyDecryptionProgressBar = config.GetBool(disableKeyDecryptionProgressBarName, false);
+      Options.UseSourceInConfirmationDialog = config.GetBool(useSourceInConfirmationDialog, false);
 
       string defaultLogFileNameValue = Path.Combine(
           Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
