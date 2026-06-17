@@ -5,11 +5,16 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using KeePass.Forms;
 using KeePass.Util;
+using KeePass.Util.Spr;
+using KeePassLib;
 using KeePassLib.Security;
+using KeePassLib.Utility;
+using dlech.SshAgentLib;
 using SshAgentLib.Extension;
 using SshAgentLib.Keys;
 
@@ -19,6 +24,10 @@ namespace KeeAgent.UI
   {
     private PwEntryForm pwEntryForm;
     private readonly KeeAgentExt ext;
+    private string editableCommentOriginal;
+    private ISshKey pendingOldAgentKey;
+    private byte[] pendingNewPrivKeyBytes;
+    private byte[] pendingNewPubKeyBytes;
 
     public EntrySettings InitialSettings {
       get;
@@ -79,9 +88,12 @@ namespace KeeAgent.UI
           };
         }
 
-        pwEntryForm.FormClosing += delegate {
+        pwEntryForm.FormClosing += (sender2, e2) => {
           while (delayedUpdateKeyInfoTimer.Enabled) {
             Application.DoEvents();
+          }
+          if (!e2.Cancel && pwEntryForm.DialogResult == DialogResult.OK) {
+            ApplyPendingAgentReload();
           }
         };
       }
@@ -133,6 +145,7 @@ namespace KeeAgent.UI
         invalidKeyWarningIcon.Visible = !isLocationValid;
       }
 
+      var commentEditable = false;
       try {
         var key = CurrentSettings.TryGetSshPublicKey(pwEntryForm.EntryBinaries);
 
@@ -140,12 +153,126 @@ namespace KeeAgent.UI
         fingerprintTextBox.Text = key.Sha256Fingerprint;
         publicKeyTextBox.Text = key.AuthorizedKeysString;
         copyPublicKeyButton.Enabled = true;
+
+        // Comment is editable when the key is an unencrypted attachment.
+        if (CurrentSettings.Location != null &&
+            CurrentSettings.Location.SelectedType == EntrySettings.LocationType.Attachment &&
+            !string.IsNullOrEmpty(CurrentSettings.Location.AttachmentName)) {
+          var attach = pwEntryForm.EntryBinaries.Get(CurrentSettings.Location.AttachmentName);
+          if (attach != null) {
+            using (var ms = new MemoryStream(attach.ReadData())) {
+              commentEditable = !SshPrivateKey.Read(ms).IsEncrypted;
+            }
+          }
+        }
       }
       catch (Exception) {
         commentTextBox.Text = string.Empty;
         fingerprintTextBox.Text = string.Empty;
         publicKeyTextBox.Text = string.Empty;
         copyPublicKeyButton.Enabled = false;
+      }
+
+      commentTextBox.ReadOnly = !commentEditable;
+      editableCommentOriginal = commentEditable ? commentTextBox.Text : null;
+    }
+
+    private void commentTextBox_Leave(object sender, EventArgs e)
+    {
+      if (commentTextBox.ReadOnly) return;
+      if (commentTextBox.Text == editableCommentOriginal) return;
+      ApplyCommentChange();
+    }
+
+    private void ApplyCommentChange()
+    {
+      var loc = CurrentSettings.Location;
+      if (loc == null ||
+          loc.SelectedType != EntrySettings.LocationType.Attachment ||
+          string.IsNullOrEmpty(loc.AttachmentName)) {
+        return;
+      }
+
+      var attachName = loc.AttachmentName;
+      var attachment = pwEntryForm.EntryBinaries.Get(attachName);
+      if (attachment == null) return;
+
+      // On the first comment edit, capture the currently-loaded agent key so we
+      // can replace it when the entry dialog closes with OK.  We defer the live
+      // agent swap to FormClosing so a Cancel roll-back doesn't leave the agent
+      // in an inconsistent state.
+      if (pendingOldAgentKey == null && ext.agent != null) {
+        try {
+          var pubKey = CurrentSettings.TryGetSshPublicKey(pwEntryForm.EntryBinaries);
+          if (pubKey != null) {
+            pendingOldAgentKey = ext.agent.ListKeys()
+              .FirstOrDefault(k => pubKey.Matches(k.GetPublicKeyBlob()));
+          }
+        }
+        catch (Exception) { }
+      }
+
+      byte[] privateKeyBytes, publicKeyBytes;
+      try {
+        SshKeyGenerator.ChangeComment(
+          attachment.ReadData(),
+          commentTextBox.Text,
+          out privateKeyBytes,
+          out publicKeyBytes);
+      }
+      catch (Exception ex) {
+        MessageService.ShowWarning("KeeAgent: Failed to update comment:", ex.Message);
+        return;
+      }
+
+      pwEntryForm.EntryBinaries.Set(attachName, new ProtectedBinary(false, privateKeyBytes));
+      pwEntryForm.EntryBinaries.Set(attachName + ".pub", new ProtectedBinary(false, publicKeyBytes));
+      pwEntryForm.UpdateEntryBinaries(false, true);
+
+      editableCommentOriginal = commentTextBox.Text;
+
+      // Track the latest bytes; the FormClosing handler will use the final state.
+      pendingNewPrivKeyBytes = privateKeyBytes;
+      pendingNewPubKeyBytes = publicKeyBytes;
+
+      UpdateKeyInfoDelayed();
+    }
+
+    private void ApplyPendingAgentReload()
+    {
+      if (pendingOldAgentKey == null || pendingNewPrivKeyBytes == null) return;
+      try {
+        SshPrivateKey newPrivKey;
+        using (var ms = new MemoryStream(pendingNewPrivKeyBytes)) {
+          newPrivKey = SshPrivateKey.Read(ms);
+        }
+        string newComment;
+        var privateParam = newPrivKey.Decrypt(() => new byte[0], null, out newComment);
+
+        SshPublicKey newPubKey;
+        using (var ms = new MemoryStream(pendingNewPubKeyBytes)) {
+          newPubKey = SshPublicKey.Read(ms);
+        }
+
+        var newKey = new SshKey(
+          newPubKey.Parameter, privateParam, newComment,
+          newPubKey.Nonce, newPubKey.Certificate);
+        newKey.Source = pendingOldAgentKey.Source;
+        newKey.DestinationConstraint = pendingOldAgentKey.DestinationConstraint;
+        foreach (var c in pendingOldAgentKey.Constraints) {
+          newKey.AddConstraint(c);
+        }
+
+        ext.RemoveKey(pendingOldAgentKey);
+        ext.agent.AddKey(newKey);
+      }
+      catch (Exception) {
+        // Not critical — old key stays loaded if reload fails.
+      }
+      finally {
+        pendingOldAgentKey = null;
+        pendingNewPrivKeyBytes = null;
+        pendingNewPubKeyBytes = null;
       }
     }
 
@@ -180,6 +307,10 @@ namespace KeeAgent.UI
       pwEntryForm.UpdateEntryBinaries(true, false);
 
       var dialog = new ManageKeyFileDialog {
+        DefaultComment = pwEntryForm.EntryRef.Strings.ReadSafe(PwDefs.TitleField),
+        Passphrase = SprEngine.Compile(
+          pwEntryForm.EntryRef.Strings.ReadSafe(PwDefs.PasswordField),
+          new SprContext(pwEntryForm.EntryRef, pwEntryForm.EntryRef.GetDatabase(), SprCompileFlags.Deref)),
         Attachments = new AttachmentBindingList(pwEntryForm.EntryBinaries),
         KeyLocation = CurrentSettings.Location.DeepCopy(),
       };

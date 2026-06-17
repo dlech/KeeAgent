@@ -129,6 +129,7 @@
             resources.ApplyResources(this.commentTextBox, "commentTextBox");
             this.commentTextBox.Name = "commentTextBox";
             this.commentTextBox.ReadOnly = true;
+            this.commentTextBox.Leave += new System.EventHandler(this.commentTextBox_Leave);
             //
             // fingerprintTextBox
             //

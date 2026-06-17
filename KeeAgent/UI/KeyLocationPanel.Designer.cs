@@ -40,6 +40,10 @@
             this.fileRadioButton = new System.Windows.Forms.RadioButton();
             this.attachmentRadioButton = new System.Windows.Forms.RadioButton();
             this.attachButton = new System.Windows.Forms.Button();
+            this.generateRadioButton = new System.Windows.Forms.RadioButton();
+            this.generateCommentLabel = new System.Windows.Forms.Label();
+            this.generateCommentTextBox = new System.Windows.Forms.TextBox();
+            this.decryptRadioButton = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.locationSettingsBindingSource)).BeginInit();
             this.locationGroupBox.SuspendLayout();
             this.SuspendLayout();
@@ -59,6 +63,10 @@
             this.locationGroupBox.Controls.Add(this.attachmentComboBox);
             this.locationGroupBox.Controls.Add(this.fileRadioButton);
             this.locationGroupBox.Controls.Add(this.attachmentRadioButton);
+            this.locationGroupBox.Controls.Add(this.generateRadioButton);
+            this.locationGroupBox.Controls.Add(this.generateCommentLabel);
+            this.locationGroupBox.Controls.Add(this.generateCommentTextBox);
+            this.locationGroupBox.Controls.Add(this.decryptRadioButton);
             this.locationGroupBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedRadioButton", this.locationSettingsBindingSource, "SelectedType", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.locationGroupBox, "locationGroupBox");
             this.locationGroupBox.Name = "locationGroupBox";
@@ -119,14 +127,40 @@
             this.attachmentRadioButton.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
             // 
             // attachButton
-            // 
+            //
             resources.ApplyResources(this.attachButton, "attachButton");
             this.attachButton.Name = "attachButton";
             this.attachButton.UseVisualStyleBackColor = true;
             this.attachButton.Click += new System.EventHandler(this.attachButton_Click);
-            // 
+            //
+            // generateRadioButton
+            //
+            resources.ApplyResources(this.generateRadioButton, "generateRadioButton");
+            this.generateRadioButton.Name = "generateRadioButton";
+            this.generateRadioButton.TabStop = true;
+            this.generateRadioButton.UseVisualStyleBackColor = true;
+            this.generateRadioButton.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            //
+            // generateCommentLabel
+            //
+            resources.ApplyResources(this.generateCommentLabel, "generateCommentLabel");
+            this.generateCommentLabel.Name = "generateCommentLabel";
+            //
+            // generateCommentTextBox
+            //
+            resources.ApplyResources(this.generateCommentTextBox, "generateCommentTextBox");
+            this.generateCommentTextBox.Name = "generateCommentTextBox";
+            //
+            // decryptRadioButton
+            //
+            resources.ApplyResources(this.decryptRadioButton, "decryptRadioButton");
+            this.decryptRadioButton.Name = "decryptRadioButton";
+            this.decryptRadioButton.TabStop = true;
+            this.decryptRadioButton.UseVisualStyleBackColor = true;
+            this.decryptRadioButton.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            //
             // KeyLocationPanel
-            // 
+            //
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.locationGroupBox);
@@ -151,5 +185,9 @@
         private System.Windows.Forms.CheckBox saveKeyToTempFileCheckBox;
     private InPlaceMessage errorMessage;
     private System.Windows.Forms.Button attachButton;
+    private System.Windows.Forms.RadioButton generateRadioButton;
+    private System.Windows.Forms.Label generateCommentLabel;
+    private System.Windows.Forms.TextBox generateCommentTextBox;
+    private System.Windows.Forms.RadioButton decryptRadioButton;
   }
 }

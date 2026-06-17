@@ -182,6 +182,28 @@ namespace KeeAgent.UI
       UpdateControlStates();
     }
 
+    public bool IsGenerateSelected {
+      get { return generateRadioButton.Checked; }
+    }
+
+    public string GenerateComment {
+      get { return generateCommentTextBox.Text; }
+      set { generateCommentTextBox.Text = value; }
+    }
+
+    public bool IsDecryptSelected {
+      get { return decryptRadioButton.Checked; }
+    }
+
+    public string DecryptAttachmentName {
+      get { return attachmentComboBox.SelectedValue as string; }
+    }
+
+    public void SetDecryptEnabled(bool enabled)
+    {
+      decryptRadioButton.Enabled = enabled;
+    }
+
     private void UpdateControlStates()
     {
       attachmentComboBox.Enabled = attachmentRadioButton.Checked;
@@ -189,6 +211,8 @@ namespace KeeAgent.UI
       saveKeyToTempFileCheckBox.Enabled = attachmentRadioButton.Checked;
       fileNameTextBox.Enabled = fileRadioButton.Checked;
       browseButton.Enabled = fileRadioButton.Checked;
+      generateCommentLabel.Enabled = generateRadioButton.Checked;
+      generateCommentTextBox.Enabled = generateRadioButton.Checked;
     }
 
     private void radioButton_CheckedChanged(object sender, EventArgs e)

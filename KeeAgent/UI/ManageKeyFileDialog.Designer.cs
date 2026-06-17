@@ -36,25 +36,25 @@
             // 
             this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(456, 143);
+            this.cancelButton.Location = new System.Drawing.Point(456, 217);
             this.cancelButton.Margin = new System.Windows.Forms.Padding(2);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 2;
             this.cancelButton.Text = "&Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
-            // 
+            //
             // okButton
-            // 
+            //
             this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.okButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.okButton.Location = new System.Drawing.Point(377, 143);
+            this.okButton.Location = new System.Drawing.Point(377, 217);
             this.okButton.Margin = new System.Windows.Forms.Padding(2);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 23);
             this.okButton.TabIndex = 3;
             this.okButton.Text = "&OK";
             this.okButton.UseVisualStyleBackColor = true;
+            this.okButton.Click += new System.EventHandler(this.okButton_Click);
             // 
             // privateKeyLocationPanel
             // 
@@ -67,7 +67,7 @@
             this.privateKeyLocationPanel.Location = new System.Drawing.Point(15, 15);
             this.privateKeyLocationPanel.Margin = new System.Windows.Forms.Padding(6);
             this.privateKeyLocationPanel.Name = "privateKeyLocationPanel";
-            this.privateKeyLocationPanel.Size = new System.Drawing.Size(512, 118);
+            this.privateKeyLocationPanel.Size = new System.Drawing.Size(512, 192);
             this.privateKeyLocationPanel.TabIndex = 0;
             this.privateKeyLocationPanel.Title = "Private Key File Location";
             // 
@@ -77,7 +77,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(542, 177);
+            this.ClientSize = new System.Drawing.Size(542, 251);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.privateKeyLocationPanel);

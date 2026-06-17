@@ -156,8 +156,122 @@
   <data name="&gt;&gt;attachButton.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="generateRadioButton.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="generateRadioButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="generateRadioButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 95</value>
+  </data>
+  <data name="generateRadioButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 17</value>
+  </data>
+  <data name="generateRadioButton.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="generateRadioButton.Text" xml:space="preserve">
+    <value>Generate new Ed25519 key</value>
+  </data>
+  <data name="&gt;&gt;generateRadioButton.Name" xml:space="preserve">
+    <value>generateRadioButton</value>
+  </data>
+  <data name="&gt;&gt;generateRadioButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;generateRadioButton.Parent" xml:space="preserve">
+    <value>locationGroupBox</value>
+  </data>
+  <data name="&gt;&gt;generateRadioButton.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="generateCommentLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="generateCommentLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="generateCommentLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>97, 120</value>
+  </data>
+  <data name="generateCommentLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>55, 13</value>
+  </data>
+  <data name="generateCommentLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="generateCommentLabel.Text" xml:space="preserve">
+    <value>Comment:</value>
+  </data>
+  <data name="&gt;&gt;generateCommentLabel.Name" xml:space="preserve">
+    <value>generateCommentLabel</value>
+  </data>
+  <data name="&gt;&gt;generateCommentLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;generateCommentLabel.Parent" xml:space="preserve">
+    <value>locationGroupBox</value>
+  </data>
+  <data name="&gt;&gt;generateCommentLabel.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="generateCommentTextBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="generateCommentTextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>155, 117</value>
+  </data>
+  <data name="generateCommentTextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>284, 20</value>
+  </data>
+  <data name="generateCommentTextBox.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;generateCommentTextBox.Name" xml:space="preserve">
+    <value>generateCommentTextBox</value>
+  </data>
+  <data name="&gt;&gt;generateCommentTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;generateCommentTextBox.Parent" xml:space="preserve">
+    <value>locationGroupBox</value>
+  </data>
+  <data name="&gt;&gt;generateCommentTextBox.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="decryptRadioButton.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="decryptRadioButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="decryptRadioButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 143</value>
+  </data>
+  <data name="decryptRadioButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 17</value>
+  </data>
+  <data name="decryptRadioButton.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="decryptRadioButton.Text" xml:space="preserve">
+    <value>Decrypt existing key (uses entry password)</value>
+  </data>
+  <data name="&gt;&gt;decryptRadioButton.Name" xml:space="preserve">
+    <value>decryptRadioButton</value>
+  </data>
+  <data name="&gt;&gt;decryptRadioButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;decryptRadioButton.Parent" xml:space="preserve">
+    <value>locationGroupBox</value>
+  </data>
+  <data name="&gt;&gt;decryptRadioButton.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
   <data name="errorMessage.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 93</value>
+    <value>12, 167</value>
   </data>
   <data name="errorMessage.Size" type="System.Drawing.Size, System.Drawing">
     <value>427, 19</value>
@@ -355,7 +469,7 @@
     <value>0, 0</value>
   </data>
   <data name="locationGroupBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>445, 115</value>
+    <value>445, 192</value>
   </data>
   <data name="locationGroupBox.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -385,7 +499,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>445, 115</value>
+    <value>445, 192</value>
   </data>
   <data name="&gt;&gt;locationSettingsBindingSource.Name" xml:space="preserve">
     <value>locationSettingsBindingSource</value>
