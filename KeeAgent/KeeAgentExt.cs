@@ -958,6 +958,13 @@ namespace KeeAgent
           var settings = entry.GetKeeAgentSettings();
 
           if (settings.AllowUseOfSshKey) {
+            if (settings.AddAtDatabaseOpen &&
+                !IsAllowedOnCurrentHost(SprEngine.Compile(
+                    entry.Strings.ReadSafe("IfDevice"),
+                    new SprContext(entry, e.Database, SprCompileFlags.All)))) {
+              continue;
+            }
+
             // automatically create a .pub file for legacy keys to avoid errors later
             entry.TryAddPubFileForLegacyFileFormat();
 
@@ -984,6 +991,83 @@ namespace KeeAgent
         // can't be crashing KeePass
         Debug.Fail(ex.ToString());
       }
+    }
+
+    private static bool IsAllowedOnCurrentHost(string ifDevice)
+    {
+      if (string.IsNullOrEmpty(ifDevice)) {
+        return true;
+      }
+      var currentHost = System.Environment.MachineName;
+      bool hasNegative = false;
+      bool hasPositive = false;
+      bool matchedPositive = false;
+      foreach (var pattern in SplitIfDevicePatterns(ifDevice)) {
+        if (pattern.Length == 0) continue;
+        if (pattern[0] == '!') {
+          hasNegative = true;
+          var negPattern = pattern.Substring(1).Trim();
+          if (negPattern.Length > 0 && MatchesAutoTypePattern(negPattern, currentHost)) {
+            return false;
+          }
+        }
+        else {
+          hasPositive = true;
+          if (MatchesAutoTypePattern(pattern, currentHost)) {
+            matchedPositive = true;
+          }
+        }
+      }
+      // KeeAutoExec compat: once any exclusion pattern exists, positive patterns
+      // do not restrict further — the entry loads on all non-excluded hosts.
+      if (hasNegative) {
+        return true;
+      }
+      return !hasPositive || matchedPositive;
+    }
+
+    private static string[] SplitIfDevicePatterns(string ifDevice)
+    {
+      var parts = new List<string>();
+      int start = 0;
+      bool inRegex = false;
+      int i = 0;
+      while (i < ifDevice.Length) {
+        if (i + 1 < ifDevice.Length && ifDevice[i] == '/' && ifDevice[i + 1] == '/') {
+          inRegex = !inRegex;
+          i += 2;
+          continue;
+        }
+        if (!inRegex && ifDevice[i] == ',') {
+          var part = ifDevice.Substring(start, i - start).Trim();
+          if (part.Length > 0) {
+            parts.Add(part);
+          }
+          start = i + 1;
+        }
+        i++;
+      }
+      var last = ifDevice.Substring(start).Trim();
+      if (last.Length > 0) {
+        parts.Add(last);
+      }
+      return parts.ToArray();
+    }
+
+    private static bool MatchesAutoTypePattern(string strPattern, string strText)
+    {
+      int ccP = strPattern.Length;
+      if ((ccP > 4) && (strPattern[0] == '/') && (strPattern[1] == '/') &&
+        (strPattern[ccP - 2] == '/') && (strPattern[ccP - 1] == '/')) {
+        try {
+          string strRx = strPattern.Substring(2, ccP - 4);
+          return System.Text.RegularExpressions.Regex.IsMatch(strText, strRx,
+            System.Text.RegularExpressions.RegexOptions.IgnoreCase,
+            TimeSpan.FromSeconds(1));
+        }
+        catch (Exception) { return false; }
+      }
+      return StrUtil.SimplePatternMatch(strPattern, strText, StrUtil.CaseIgnoreCmp);
     }
 
     private void MainForm_FileClosing(object sender, FileClosingEventArgs e)
