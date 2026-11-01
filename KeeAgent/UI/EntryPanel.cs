@@ -1,4 +1,4 @@
-﻿// SPDX-License-Identifier: GPL-2.0-only
+// SPDX-License-Identifier: GPL-2.0-only
 // Copyright (c) 2012-2016,2022 David Lechner <david@lechnology.com>
 
 using System;
@@ -37,7 +37,7 @@ namespace KeeAgent.UI
 
       // Prevent InvalidOperationException in DataGridView.AdjustFillingColumns
       // when the mouse cursor happens to hover over the header cell upon form creation
-      _ = destinationConstraintDataGridView.TopLeftHeaderCell;
+      DataGridViewHeaderCell dummyHeaderCell = destinationConstraintDataGridView.TopLeftHeaderCell;
 
       // make transparent so tab styling shows
       SetStyle(ControlStyles.SupportsTransparentBackColor, true);

@@ -1,4 +1,4 @@
-﻿// SPDX-License-Identifier: GPL-2.0-only
+// SPDX-License-Identifier: GPL-2.0-only
 // Copyright (c) 2022 David Lechner <david@lechnology.com>
 
 using System;
@@ -16,7 +16,7 @@ namespace KeeAgent.UI
       InitializeComponent();
 
       // Prevent InvalidOperationException in DataGridView.AdjustFillingColumns
-      _ = this.dataGridView1.TopLeftHeaderCell;
+      DataGridViewHeaderCell dummyHeaderCell = this.dataGridView1.TopLeftHeaderCell;
 
       // fix up layout in Mono
       if (Type.GetType("Mono.Runtime") != null) {
