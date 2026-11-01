@@ -35,6 +35,10 @@ namespace KeeAgent.UI
       this.ext = ext;
       InitializeComponent();
 
+      // Prevent InvalidOperationException in DataGridView.AdjustFillingColumns
+      // when the mouse cursor happens to hover over the header cell upon form creation
+      _ = destinationConstraintDataGridView.TopLeftHeaderCell;
+
       // make transparent so tab styling shows
       SetStyle(ControlStyles.SupportsTransparentBackColor, true);
       BackColor = Color.Transparent;

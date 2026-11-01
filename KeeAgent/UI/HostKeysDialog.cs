@@ -15,6 +15,9 @@ namespace KeeAgent.UI
     {
       InitializeComponent();
 
+      // Prevent InvalidOperationException in DataGridView.AdjustFillingColumns
+      _ = this.dataGridView1.TopLeftHeaderCell;
+
       // fix up layout in Mono
       if (Type.GetType("Mono.Runtime") != null) {
         dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Left;

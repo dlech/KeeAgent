@@ -210,7 +210,7 @@
             //
             resources.ApplyResources(this.destinationConstraintDataGridView, "destinationConstraintDataGridView");
             this.destinationConstraintDataGridView.AutoGenerateColumns = false;
-            this.destinationConstraintDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.destinationConstraintDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
             this.destinationConstraintDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.fromHostDataGridViewTextBoxColumn,
             this.FromHostKeysColumn,
