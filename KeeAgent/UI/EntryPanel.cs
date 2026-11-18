@@ -35,6 +35,14 @@ namespace KeeAgent.UI
       this.ext = ext;
       InitializeComponent();
 
+      // Create the top left header cell now, while nothing is laying out yet. This grid has fill
+      // columns and auto-sizing column headers, so if the cell is still missing when the grid gets
+      // its handle with the pointer over it, WinForms ends up creating it from inside its own
+      // layout pass (AdjustFillingColumns -> OnColumnWidthChanged -> OnCellMouseEnter ->
+      // get_TopLeftHeaderCell) and the property setter re-enters that layout, throwing
+      // InvalidOperationException ("cannot be performed while an auto-filled column is resized").
+      destinationConstraintDataGridView.TopLeftHeaderCell = new DataGridViewTopLeftHeaderCell();
+
       // make transparent so tab styling shows
       SetStyle(ControlStyles.SupportsTransparentBackColor, true);
       BackColor = Color.Transparent;

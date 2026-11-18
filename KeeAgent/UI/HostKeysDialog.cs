@@ -15,6 +15,10 @@ namespace KeeAgent.UI
     {
       InitializeComponent();
 
+      // Same reentrancy guard as in EntryPanel: this grid also combines a fill column with
+      // auto-sizing column headers, so the top left header cell must exist before any layout runs.
+      dataGridView1.TopLeftHeaderCell = new DataGridViewTopLeftHeaderCell();
+
       // fix up layout in Mono
       if (Type.GetType("Mono.Runtime") != null) {
         dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Left;
